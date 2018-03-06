@@ -28,11 +28,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
          <a class="<?php if($this->uri->segment(1)=='lokasi' || $this->uri->segment(1)=='visimisi' ){echo 'active';}?> nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
            TENTANG KAMI
          </a>
-         <div class="dropdown-menu mr-5" aria-labelledby="navbarDropdown">
+         <div class="dropdown-menu bg-dark w-100" aria-labelledby="navbarDropdown">
            <a class="dropdown-item" href="<?php echo base_url();?>visimisi">Visi&Misi</a>
            <div class="dropdown-divider"></div>
            <a class="dropdown-item" href="<?php echo base_url(); ?>lokasi">Lokasi</a>
-           <div class="dropdown-divider"></div>
          </div>
        </li>
       </ul>

@@ -52,7 +52,7 @@ fieldset
 			font-size:14px;
 			font-weight:bold;
 			margin-bottom: 0px;
-			width: 35%;
+			width: 100%;
 			border: 1px solid #ddd;
 			border-radius: 4px;
 			padding: 5px 5px 5px 10px;
@@ -96,6 +96,10 @@ h6{
 
 .dropdown-item:hover{
   background-color: #b3b3b3;
+}
+
+.dropdown-item{
+  color: #FFFFFF;
 }
 
 .nav-link:hover{
