@@ -1,0 +1,38 @@
+DROP PROCEDURE IF EXISTS  `sp_get_stok_perlengkapan`;
+DELIMITER $$
+
+CREATE PROCEDURE `sp_get_stok_perlengkapan`(
+	in tgl_awal datetime,
+    in tgl_akhir datetime
+)
+BEGIN
+select 
+	SIMA_PERLENGKAPAN_MT.ID_PERLENGKAPAN,
+    SIMA_PERLENGKAPAN_MT.N_STOK - stok_dipinjam.jumlah_dipinjam as jumlah_tersisa
+from SIMA_PERLENGKAPAN_MT
+join (
+	select
+		SIMA_DETIL_PEMINJAMAN_PERLENGKAPAN_DT.ID_PERLENGKAPAN,
+		sum(SIMA_DETIL_PEMINJAMAN_PERLENGKAPAN_DT.N_KUANTITAS_TERSEDIA) as jumlah_dipinjam
+	from SIMA_PEMINJAMAN_TR 
+	join SIMA_DETIL_PEMINJAMAN_PERLENGKAPAN_DT
+	on SIMA_DETIL_PEMINJAMAN_PERLENGKAPAN_DT.ID_PEMINJAMAN = SIMA_PEMINJAMAN_TR.ID_PEMINJAMAN
+    where(
+			(
+				tgl_akhir >= SIMA_PEMINJAMAN_TR.DT_WAKTU_MULAI_PINJAM AND
+                tgl_awal <= SIMA_PEMINJAMAN_TR.DT_WAKTU_SELESAI_PINJAM
+            )
+            or (
+				tgl_awal <= SIMA_PEMINJAMAN_TR.DT_WAKTU_MULAI_PINJAM
+                and tgl_akhir >= SIMA_PEMINJAMAN_TR.DT_WAKTU_SELESAI_PINJAM
+            )
+            or (
+				tgl_awal >= SIMA_PEMINJAMAN_TR.DT_WAKTU_MULAI_PINJAM
+                and tgl_akhir <= SIMA_PEMINJAMAN_TR.DT_WAKTU_SELESAI_PINJAM
+            )
+        )
+	group by SIMA_DETIL_PEMINJAMAN_PERLENGKAPAN_DT.ID_PERLENGKAPAN
+) as stok_dipinjam
+on stok_dipinjam.ID_PERLENGKAPAN = SIMA_PERLENGKAPAN_MT.ID_PERLENGKAPAN;
+END $$
+DELIMITER ;

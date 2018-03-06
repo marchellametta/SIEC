@@ -1,0 +1,11 @@
+DCO.txt
+phpdoc.dist.xml
+readme.rst
+license.txt
+application/config/database.php
+assets/node_modules/
+SuratKonfirmasiPerizinan/
+images
+.vscode
+/.project
+*/*/MY_Access.php
