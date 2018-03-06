@@ -76,7 +76,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
          <div class="form-check panel-collapse collapse in" id="<?php echo "collapse". $row->id_ec ?>">
          <?php foreach ($row->topik_arr as $temp): ?>
            <div class="col-md-12">
-             <input class="form-check-input justone" type="checkbox" value="<?php echo $temp->id_topik ?>" name="topik[]">
+             <input class="form-check-input justone" type="checkbox" value="<?php echo $temp->id_topik ?>" name="topik[]" <?php if($selected===$row->id_ec) echo "checked"?>>
              <label class="form-check-label" for="defaultCheck1">
                <?php echo $temp->nama_topik ?>
              </label>
@@ -100,6 +100,8 @@ $('.selectall').click(function() {
        $($(this).data("checked")+' input:checkbox').prop('checked', false);
    }
 });
+
+
 
 $("input[type='checkbox'].justone").change(function(){
     var a = $("#"+$(this).parent().parent().attr('id')+" input[type='checkbox'].justone");
