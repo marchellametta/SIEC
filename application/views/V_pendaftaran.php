@@ -66,7 +66,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <?php foreach ($data as $row): ?>
      <div class="form-group col-md-12">
        <div class="form-check">
-         <input class="form-check-input selectall" type="checkbox" value="" name="defaultCheck1"  data-checked="#<?php echo "collapse". $row->id_ec ?>" id="<?php echo $row->id_ec ?>" <?php if($selected===$row->id_ec) echo "checked"?>>
+         <input class="form-check-input selectall" type="checkbox" value="<?php echo $row->id_ec ?>" name="kelas[]"  data-checked="#<?php echo "collapse". $row->id_ec ?>" <?php if($selected===$row->id_ec) echo "checked"?>>
          <label class="form-check-label" for="defaultCheck1">
            <?php echo $row->jenis_ec. " : ".$row->tema_ec ?>
          </label>
@@ -76,7 +76,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
          <div class="form-check panel-collapse collapse in" id="<?php echo "collapse". $row->id_ec ?>">
          <?php foreach ($row->topik_arr as $temp): ?>
            <div class="col-md-12">
-             <input class="form-check-input justone" type="checkbox" value="<?php echo $temp->id_topik ?>" name="check[]">
+             <input class="form-check-input justone" type="checkbox" value="<?php echo $temp->id_topik ?>" name="topik[]">
              <label class="form-check-label" for="defaultCheck1">
                <?php echo $temp->nama_topik ?>
              </label>

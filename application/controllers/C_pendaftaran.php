@@ -37,6 +37,7 @@ class C_Pendaftaran extends CI_Controller{
          $post_data = $this->input->post();
          $hashed_pw = password_hash($post_data['password'], PASSWORD_DEFAULT);
          $this->load->model('T_peserta');
+          $this->load->model('T_peserta_topik');
          $this->T_peserta->insert([
            'nama' => $post_data['nama'],
            'alamat' => $post_data['alamat'],
@@ -49,7 +50,9 @@ class C_Pendaftaran extends CI_Controller{
            'password' => $hashed_pw
          ]);
          $id_peserta = $this->db->insert_id();
-         echo $id_peserta;
+         foreach ($post_data['topik'] as $row) {
+           $this->T_peserta_topik->attach_peserta_topik($id_peserta,$row);
+         }
     }
   }
 }

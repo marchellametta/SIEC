@@ -29,6 +29,12 @@ box-shadow: 10px 10px 46px 0px rgba(0,0,0,0.75);
 box-shadow: 10px 10px 46px 0px rgba(0,0,0,0.75);
 }
 
+.shadow:hover{
+  -webkit-box-shadow: 3px 3px 14px -1px rgba(0,0,0,0.75);
+-moz-box-shadow: 3px 3px 14px -1px rgba(0,0,0,0.75);
+box-shadow: 3px 3px 14px -1px rgba(0,0,0,0.75);
+}
+
 fieldset
 	{
 		border: 1px solid #ddd !important;
@@ -64,6 +70,18 @@ fieldset
   font-size: 18px;
 }
 
+h5{
+  font-family: "BebasNeue Regular";
+  letter-spacing: 1px;
+  font-size: 35px;
+}
+
+h6{
+  font-family: "BebasNeue Regular";
+  letter-spacing: 1px;
+  font-size: 25px;
+}
+
 .nav-item>a:active{
   color:#990000;
 }
@@ -71,6 +89,26 @@ fieldset
 .hidden {
   display:none;
 }
+
+.dropdown:hover>.dropdown-menu {
+  display: block;
+}
+
+.dropdown-item:hover{
+  background-color: #b3b3b3;
+}
+
+.nav-link:hover{
+  color: #FFFFFF;
+}
+
+.nav-link.active{
+  color: #FFFFFF!important;
+  border-bottom: 2px solid white;
+}
+
+
+
 
 </style>
 </head>
