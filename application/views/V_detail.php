@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 ?>
-<div class="mr-3 ml-3">
+<div class="mr-3 ml-3 mt-5">
   <div class="row mb-5">
     <div class="col-md-3 col-lg-3 border-right"><img class="w-100" src="<?php echo base_url();?>images/<?php echo $data->gambar;?>"></div>
     <div class="col-md-9 col-lg-9 ">

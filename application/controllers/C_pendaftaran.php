@@ -6,6 +6,10 @@ class C_Pendaftaran extends CI_Controller{
 
   public function index(){
     if($this->input->method() == 'get'){
+      $selected=0;
+      if(!empty($_GET)){
+        $selected = $this->input->get()['c'];
+      }
        $this->load->model('Vw_data_ec');
        $this->load->model('Vw_data_topik');
        $data = $this->Vw_data_ec->getActive();
@@ -18,7 +22,8 @@ class C_Pendaftaran extends CI_Controller{
        $this->load->view('V_header');
        $this->load->view('V_navbar');
        $this->load->view('V_pendaftaran',[
-         'data' => $complete
+         'data' => $complete,
+         'selected' => $selected
        ]);
     } else if($this->input->method() == 'post'){
 

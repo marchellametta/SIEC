@@ -66,7 +66,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <?php foreach ($data as $row): ?>
      <div class="form-group col-md-12">
        <div class="form-check">
-         <input class="form-check-input selectall" type="checkbox" value="" name="defaultCheck1"  data-checked="#<?php echo "collapse". $row->id_ec ?>">
+         <input class="form-check-input selectall" type="checkbox" value="" name="defaultCheck1"  data-checked="#<?php echo "collapse". $row->id_ec ?>" id="<?php echo $row->id_ec ?>" <?php if($selected===$row->id_ec) echo "checked"?>>
          <label class="form-check-label" for="defaultCheck1">
            <?php echo $row->jenis_ec. " : ".$row->tema_ec ?>
          </label>
