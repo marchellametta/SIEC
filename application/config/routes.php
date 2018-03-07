@@ -59,6 +59,7 @@ $route['tambahkelas'] = 'C_informasi/tambah';
 $route['lokasi'] = 'C_lokasi/index';
 $route['visimisi'] = 'C_visimisi/index';
 $route['jadwal'] = 'C_jadwal/index';
+$route['profile/(:num)'] = 'C_user_profile/view/$1';
 $route['pendaftaran'] = 'C_pendaftaran/index';
 $route['pendaftaran/daftar'] = 'C_pendaftaran/daftar';
 $route['detail/(:num)'] = 'C_informasi/detailEC/$1';

@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 ?>
-<div class="mr-3 ml-3 mt-5">
+<div class="mr-sm-2 ml-sm-2 mr-md-5 ml-md-5 mt-5">
   <form method="post" action="<?php echo base_url('pendaftaran/daftar') ?>">
     <fieldset>
     <legend>Profil Umum</legend>

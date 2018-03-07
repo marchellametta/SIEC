@@ -15,15 +15,21 @@ defined('BASEPATH') OR exit('No direct script access allowed');
   <meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
 body{
-  padding-top:80px;
-}
-.navbar {
-  -webkit-box-shadow: 10px 10px 46px 0px rgba(0,0,0,0.75);
--moz-box-shadow: 10px 10px 46px 0px rgba(0,0,0,0.75);
-box-shadow: 10px 10px 46px 0px rgba(0,0,0,0.75);
+  padding-top:105px;
 }
 
-.card:hover {
+@media screen and (max-width: 500px) {
+    body {
+        padding-top:20%;
+    }
+}
+
+@media screen and (max-width: 560px) {
+    body {
+        padding-top:19%;
+    }
+}
+.navbar {
   -webkit-box-shadow: 10px 10px 46px 0px rgba(0,0,0,0.75);
 -moz-box-shadow: 10px 10px 46px 0px rgba(0,0,0,0.75);
 box-shadow: 10px 10px 46px 0px rgba(0,0,0,0.75);
@@ -72,14 +78,21 @@ fieldset
 
 h5{
   font-family: "BebasNeue Regular";
-  letter-spacing: 1px;
-  font-size: 35px;
+  letter-spacing: 2px;
+  font-size: 40px;
+  font-weight: 900;
 }
 
 h6{
   font-family: "BebasNeue Regular";
   letter-spacing: 1px;
   font-size: 25px;
+}
+
+h3{
+  font-family: "BebasNeue Regular";
+  letter-spacing: 1px;
+  font-size: 15px;
 }
 
 .nav-item>a:active{
@@ -111,8 +124,27 @@ h6{
   border-bottom: 2px solid white;
 }
 
+.navbar-brand{
+   max-width:75% !important;
+}
 
+.pt-10,
+.py-10 {
+  padding-top: 6rem !important;
+}
 
+.big-icon{
+  font-size: 25px;
+}
+
+.profile td {
+  white-space: normal !important;
+  word-wrap: break-word;
+  vertical-align: top;
+}
+table {
+  table-layout: fixed;
+}
 
 </style>
 </head>
