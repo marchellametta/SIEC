@@ -11,7 +11,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
       </div>
       <div class="form-group col-md-6">
         <label for="alamat">Alamat</label>
-        <input type="textarea" class="form-control" name="alamat" placeholder="Alamat">
+        <textarea class="form-control" rows="5" name="alamat" placeholder="Alamat"></textarea>
       </div>
       <div class="form-row ml-2">
         <div class="form-group col-md-3">
