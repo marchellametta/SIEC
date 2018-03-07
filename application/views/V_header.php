@@ -16,6 +16,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <style>
 body{
   padding-top:105px;
+  background-color: #e0e0d1;
 }
 
 @media screen and (max-width: 500px) {
@@ -36,9 +37,9 @@ box-shadow: 10px 10px 46px 0px rgba(0,0,0,0.75);
 }
 
 .shadow:hover{
-  -webkit-box-shadow: 3px 3px 14px -1px rgba(0,0,0,0.75);
--moz-box-shadow: 3px 3px 14px -1px rgba(0,0,0,0.75);
-box-shadow: 3px 3px 14px -1px rgba(0,0,0,0.75);
+  -webkit-box-shadow: 10px 10px 13px 0px rgba(0,0,0,0.75);
+-moz-box-shadow: 10px 10px 13px 0px rgba(0,0,0,0.75);
+box-shadow: 10px 10px 13px 0px rgba(0,0,0,0.75);
 }
 
 fieldset
@@ -95,6 +96,7 @@ h3{
   font-size: 15px;
 }
 
+
 .nav-item>a:active{
   color:#990000;
 }
@@ -145,6 +147,7 @@ h3{
 table {
   table-layout: fixed;
 }
+
 
 </style>
 </head>

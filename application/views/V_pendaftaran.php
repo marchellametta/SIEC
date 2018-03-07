@@ -56,7 +56,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
      </div>
      <div class="form-group col-md-6">
        <label for="retypePassword">Ketik Ulang Password</label>
-       <input type="password" class="form-control" name="retypePassword" placeholder="Password">
+       <input type="password" class="form-control" name="password_retype" placeholder="Password">
      </div>
     </fieldset>
 

@@ -3,7 +3,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 ?>
 <div class="fixed-top">
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <a class="navbar-brand border-right mw-25" href="<?php echo base_url(); ?>"><img class="img-fluid" src="<?php echo base_url();?>images/logo.png"></a>
+    <a class="navbar-brand border-right mw-25" href="<?php echo base_url(); ?>"><img class="img-responsive w-100" src="<?php echo base_url();?>images/logo.png"></a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>

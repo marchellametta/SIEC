@@ -24,7 +24,7 @@ class T_peserta extends CI_Model{
     public function get($id){
         /* No Error Handling yet! */
         $this->db->where('id_peserta',$id);
-        return $this->db->get($this->table_name)->result();
+        return $this->db->get($this->table_name)->row();
     }
 
     public function insert($args)
