@@ -9,6 +9,7 @@ class C_Beranda extends CI_Controller{
        $this->load->view('V_header');
        $this->load->view('V_navbar');
        $this->load->view('V_beranda');
+       $this->load->view('V_footer');
     } else if($this->input->method() == 'post'){
 
 
