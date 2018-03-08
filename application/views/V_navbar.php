@@ -2,6 +2,20 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 ?>
 <div class="fixed-top">
+  <div class="text-right bg-black">
+    <div class="dropdown">
+    <button class="btn btn-sm dropdown-toggle bg-black text-white" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      Dropdown button
+    </button>
+    <div class="dropdown-menu bg-black" aria-labelledby="dropdownMenuButton">
+      <small class="dropdown-item text-white" href="#">Kelas Saya</small>
+      <div class="dropdown-divider"></div>
+      <small class="dropdown-item text-white" href="#">Profil Saya</small>
+      <div class="dropdown-divider"></div>
+      <small class="dropdown-item text-white" href="#">Log Out</small>
+    </div>
+  </div>
+  </div>
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <a class="navbar-brand border-right mw-25" href="<?php echo base_url(); ?>"><img class="img-responsive w-100" src="<?php echo base_url();?>images/logo.png"></a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -23,9 +37,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
            TENTANG KAMI
          </a>
          <div class="dropdown-menu bg-dark w-100" aria-labelledby="navbarDropdown">
-           <a class="dropdown-item" href="<?php echo base_url();?>visimisi">Visi&Misi</a>
+           <a class="dropdown-item text-white" href="<?php echo base_url();?>visimisi">Visi&Misi</a>
            <div class="dropdown-divider"></div>
-           <a class="dropdown-item" href="<?php echo base_url(); ?>lokasi">Lokasi</a>
+           <a class="dropdown-item text-white" href="<?php echo base_url(); ?>lokasi">Lokasi</a>
          </div>
        </li>
       </ul>

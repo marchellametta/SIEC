@@ -37,7 +37,7 @@ class C_User_profile extends CI_Controller{
          'email' => $post_data['email']
        ]);
 
-       redirect('profile/'.$id, 'refresh');
+       redirect('profil/'.$id, 'refresh');
     } else if($this->input->method() == 'get'){
 
 
@@ -62,7 +62,7 @@ class C_User_profile extends CI_Controller{
        }
 
 
-       redirect('profile/'.$id, 'refresh');
+       redirect('profil/'.$id, 'refresh');
     } else if($this->input->method() == 'get'){
 
 

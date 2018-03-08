@@ -6,6 +6,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
   <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Bitter" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <script type="text/javascript" src="<?php echo base_url() ?>assets/jquery/jquery-1.11.1.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
   <script type="text/javascript" src="<?php echo base_url() ?>assets/bootstrap/js/bootstrap.js"></script>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
@@ -105,7 +106,7 @@ h3{
   display:none;
 }
 
-.dropdown:hover>.dropdown-menu {
+.navbar .dropdown:hover>.dropdown-menu {
   display: block;
 }
 
@@ -113,9 +114,6 @@ h3{
   background-color: #b3b3b3;
 }
 
-.dropdown-item{
-  color: #FFFFFF;
-}
 
 .nav-link:hover{
   color: #FFFFFF;
@@ -139,13 +137,17 @@ h3{
   font-size: 25px;
 }
 
-.profile td {
+.profil td {
   white-space: normal !important;
   word-wrap: break-word;
   vertical-align: top;
 }
 table {
   table-layout: fixed;
+}
+
+.bg-black{
+  background-color: #333333;
 }
 
 

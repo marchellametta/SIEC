@@ -10,7 +10,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <div class="col-md-9 col-lg-9">
       <fieldset>
       <legend>Profil Umum</legend>
-      <table class="profile ml-3" id="table-profil-user">
+      <table class="profil ml-3" id="table-profil-user">
         <tr>
           <th class="w-25"></th>
           <th class="w-5"></th>
@@ -57,7 +57,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
           <td><?php echo $data->email ?></td>
         </tr>
       </table>
-      <form class="hidden" method="post" action="<?php echo base_url() . "/profile/editProfil/". $data->id_peserta?>" id="form-profil-user">
+      <form class="hidden" method="post" action="<?php echo base_url() . "/profil/editProfil/". $data->id_peserta?>" id="form-profil-user">
           <div class="form-group col-md-12">
             <label for="nama">Nama Lengkap</label>
             <input type="text" value="<?php echo $data->nama; ?>" class="form-control" name="nama" placeholder="Nama Lengkap">
@@ -107,7 +107,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
     </fieldset>
 
-    <form method="post" action="<?php echo base_url() . "/profile/editPassword/". $data->id_peserta?>" class="hidden mt-3" id="form-akun-user">
+    <form method="post" action="<?php echo base_url() . "/profil/editPassword/". $data->id_peserta?>" class="hidden mt-3" id="form-akun-user">
       <fieldset>
       <legend>Ubah Password</legend>
       <div class="form-group col-md-6">

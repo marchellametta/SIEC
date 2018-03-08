@@ -21,7 +21,7 @@ class T_peserta_topik extends CI_Model{
 
     public function getPeserta($id){
         /* No Error Handling yet! */
-        $this->db->where('id_peserta',$id);
+        $this->db->where('id_topik',$id);
         return $this->db->get($this->table_name)->result();
     }
 
