@@ -20,9 +20,26 @@ body{
   background-color: #e0e0d1;
 }
 
+
 @media screen and (max-width: 500px) {
     body {
         padding-top:20%;
+    }
+
+    h5{
+      font-size: 1.8rem!important;
+    }
+
+    h6{
+      font-size: 1.2rem!important;
+    }
+
+    h2{
+      font-size: 1.5rem!important;
+    }
+
+    .nav-item{
+      font-size: 18px!important;
     }
 }
 
@@ -75,26 +92,26 @@ fieldset
 .nav-item{
   font-family: "BebasNeue Regular";
   letter-spacing: 1px;
-  font-size: 18px;
+  font-size: 22px;
 }
 
 h5{
   font-family: "BebasNeue Regular";
   letter-spacing: 2px;
-  font-size: 40px;
+  font-size: 2.3rem;
   font-weight: 900;
 }
 
 h6{
   font-family: "BebasNeue Regular";
   letter-spacing: 1px;
-  font-size: 25px;
+  font-size: 1.5rem;
 }
 
 h3{
   font-family: "BebasNeue Regular";
   letter-spacing: 1px;
-  font-size: 15px;
+  font-size: 1rem;
 }
 
 
