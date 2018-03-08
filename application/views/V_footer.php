@@ -1,14 +1,13 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 ?>
-<div class="pt-10">
-  <footer class="footer bg-dark text-light pb-3">
+  <footer class="footer bg-dark text-light pb-3 navbar-fixed-bottom">
     <div class="row ml-3 mr-3">
     <div class="col-md-4 text-center">
 
       <h3 class="mt-3 text-center">UNPAR OFFICIAL WEBSITE</h3>
 
-      <img class="w-25" src="<?php echo base_url()?>images/unpar.png">
+      <a href="http://unpar.ac.id/"><img class="w-25" src="<?php echo base_url()?>images/unpar.png"></a>
 
 
     </div>
@@ -42,4 +41,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     </div>
   </div>
   </footer>
-</div>
+
+  <script>
+
+  $(document).ready(function() {
+
+   var docHeight = $(window).height();
+   var footerHeight = $('.footer').outerHeight();
+   var footerTop = $('.footer').position().top + footerHeight;
+
+   if (footerTop < docHeight) {
+    $('.footer').css('margin-top', (docHeight - footerTop) + 'px');
+   }
+  });
+ </script>

@@ -23,7 +23,7 @@ body{
 
 @media screen and (max-width: 500px) {
     body {
-        padding-top:20%;
+        padding-top:25%!important;
     }
 
     h5{
