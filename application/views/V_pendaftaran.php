@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 ?>
-<div class="mr-sm-2 ml-sm-2 mr-md-5 ml-md-5 mt-5">
+<div class="mr-3 ml-3 mr-sm-3 ml-sm-3 mr-md-5 ml-md-5 mt-5">
   <form method="post" action="<?php echo base_url('pendaftaran/daftar') ?>">
     <fieldset>
     <legend>Profil Umum</legend>
@@ -71,7 +71,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
            <?php echo $row->jenis_ec. " : ".$row->tema_ec ?>
          </label>
          <?php if ($row->status_peserta == 2 ): ?>
-           <a class="ml-3" href="#" data-toggle="collapse" data-target="#<?php echo "collapse". $row->id_ec ?>"><i class="fa fa-plus-square mr-1 ml-1"></i>Pilih Topik</a>
+           <a class="" href="#" data-toggle="collapse" data-target="#<?php echo "collapse". $row->id_ec ?>"><i class="fa fa-plus-square mr-1 ml-1"></i>Pilih Topik</a>
          <?php endif; ?>
          <div class="form-check panel-collapse collapse in" id="<?php echo "collapse". $row->id_ec ?>">
          <?php foreach ($row->topik_arr as $temp): ?>

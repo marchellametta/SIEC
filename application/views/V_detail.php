@@ -1,12 +1,12 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 ?>
-<div class="mr-sm-2 ml-sm-2 mr-md-5 ml-md-5 mt-5">
+<div class="mr-3 ml-3 mr-sm-3 ml-sm-3 mr-md-5 ml-md-5 mt-5">
   <div class="row mb-5">
     <div class="col-md-3 col-lg-3 border-right"><img class="w-100" src="<?php echo base_url();?>images/<?php echo $data->gambar;?>"></div>
     <div class="col-md-9 col-lg-9 ">
       <div class="row">
-        <h6 class="col-md-9 col-lg-9"><?php echo $data->jenis_ec;?> :</h6>
+        <h6 class="col-md-9 col-lg-9 mt-4 mt-sm-0 mt-md-0 mt-lg-0"><?php echo $data->jenis_ec;?> :</h6>
         <div class="col-md-3 col-lg-3"><a class="float-right" href="#"><i class="fa fa-calendar mr-1"></i>Lihat Jadwal</a></div>
       </div>
       <div><h2><?php echo $data->tema_ec;?></h2></div>
