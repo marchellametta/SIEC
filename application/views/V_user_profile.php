@@ -2,7 +2,7 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 ?>
 <div class="mr-sm-2 ml-sm-2 mr-md-5 ml-md-5 mt-5">
-  <div class="text-left ml-4"><h5>PROFIL ANDA</h5></div>
+  <div class="text-left ml-4"><h5>PROFIL SAYA</h5></div>
   <div class="row mr-3 ml-3 pb-3 pt-3">
     <div class="col-md-3 col-lg-3">
       <img class="w-100" src="<?php echo base_url() ?>images/profile.png">

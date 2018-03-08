@@ -61,6 +61,7 @@ $route['visimisi'] = 'C_visimisi/index';
 $route['jadwal'] = 'C_jadwal/index';
 $route['profil/(:num)'] = 'C_user_profile/view/$1';
 $route['kelas-saya'] = 'C_kelas_user/getEC';
+$route['kelas'] = 'C_kelas_panitia/getEC';
 $route['kelas-saya/detail/(:num)'] = 'C_kelas_user/getTopik/$1';
 $route['profil/editProfil/(:num)'] = 'C_user_profile/editProfil/$1';
 $route['profil/editPassword/(:num)'] = 'C_user_profile/editPassword/$1';
