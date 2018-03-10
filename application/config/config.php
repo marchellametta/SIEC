@@ -297,8 +297,8 @@ $config['log_file_permissions'] = 0644;
 |
 */
 $config['log_date_format'] = 'Y-m-d H:i:s';
-$config['view_date_format'] = 'd-m-Y H:i';
-$config['db_date_format'] = 'Y-m-d H:i:s';
+$config['view_date_format'] = 'd-m-Y';
+$config['db_date_format'] = 'Y-m-d';
 
 /*
 |--------------------------------------------------------------------------

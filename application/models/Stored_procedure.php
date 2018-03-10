@@ -34,4 +34,12 @@ class Stored_procedure extends CI_Model{
       $query->free_result();
       return $result;
     }
+
+    public function get_jadwal_ec($id_ec){
+      $query = $this->db->query("call get_jadwal_ec('".$id_ec."')");
+      mysqli_next_result( $this->db->conn_id );
+      $result = $query->result();
+      $query->free_result();
+      return $result;
+    }
 }
