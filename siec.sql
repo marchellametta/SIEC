@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 08, 2018 at 09:05 AM
+-- Generation Time: Mar 10, 2018 at 04:53 AM
 -- Server version: 10.1.30-MariaDB
 -- PHP Version: 7.2.2
 
@@ -39,6 +39,16 @@ select data_ec.id_ec, data_ec.tema_ec, data_ec.deskripsi, data_ec.gambar, data_e
             select id_topik from peserta_topik where peserta_topik.id_peserta=id_peserta
         )
     ) AND data_ec.tahun_pelaksanaan=tahun$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `get_jadwal_ec` (IN `id_ec` INT)  NO SQL
+select data_topik.id_topik, data_topik.id_ec, data_topik.nama_topik, data_topik.nama, jadwal.id_jadwal, jadwal.tanggal, jadwal.lokasi, jadwal.jam_mulai, jadwal.jam_selesai  from data_topik join jadwal on jadwal.id_topik=data_topik.id_topik where data_topik.id_ec=id_ec$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `get_jumlah_peserta_ec` (IN `id_ec` INT)  NO SQL
+select count(peserta.id_peserta) as jumlah_peserta from peserta where peserta.id_peserta in (
+    select peserta_topik.id_peserta from peserta_topik WHERE id_topik in (
+       select topik_ec.id_topik from topik_ec where topik_ec.id_ec=id_ec
+    )
+)$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `get_topik_peserta` (IN `id_peserta` INT, IN `id_ec` INT, IN `tahun` INT)  NO SQL
 select * from data_topik where data_topik.id_topik in (SELECT a.id_topik FROM (SELECT topik_ec.id_topik, topik_ec.id_ec from topik_ec WHERE topik_ec.id_topik in (select id_topik from peserta_topik where peserta_topik.id_peserta=id_peserta)) as a join (SELECT ec.id_ec FROM ec WHERE ec.tahun_pelaksanaan=tahun and ec.id_ec=id_ec) as b on a.id_ec = b.id_ec)$$
@@ -99,16 +109,18 @@ CREATE TABLE `ec` (
   `status_peserta` int(1) NOT NULL,
   `biaya` int(11) NOT NULL,
   `deskripsi` varchar(500) NOT NULL,
-  `gambar` varchar(100) DEFAULT NULL
+  `gambar` varchar(100) DEFAULT NULL,
+  `biaya_per_topik` int(11) DEFAULT NULL,
+  `kapasitas_peserta` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `ec`
 --
 
-INSERT INTO `ec` (`id_ec`, `id_jenis_ec`, `semester_pelaksanaan`, `tahun_pelaksanaan`, `tema_ec`, `status_evaluasi`, `status_peserta`, `biaya`, `deskripsi`, `gambar`) VALUES
-(1, 1, 1, 2018, 'Philosophy of Mind', 1, 2, 350000, 'alskjlsadjflajsdfljasldjflasjdlfjlasjf', 'mind.jpg'),
-(2, 2, 1, 2018, 'Nasib Agama Lokal', 2, 1, 400000, 'lsadfjalskdjflaksj', 'dummy.jpg');
+INSERT INTO `ec` (`id_ec`, `id_jenis_ec`, `semester_pelaksanaan`, `tahun_pelaksanaan`, `tema_ec`, `status_evaluasi`, `status_peserta`, `biaya`, `deskripsi`, `gambar`, `biaya_per_topik`, `kapasitas_peserta`) VALUES
+(1, 1, 1, 2018, 'Philosophy of Mind', 1, 2, 350000, 'alskjlsadjflajsdfljasldjflasjdlfjlasjf', 'mind.jpg', NULL, NULL),
+(2, 2, 1, 2018, 'Nasib Agama Lokal', 2, 1, 400000, 'lsadfjalskdjflaksj', 'dummy.jpg', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -122,8 +134,16 @@ CREATE TABLE `jadwal` (
   `lokasi` varchar(100) NOT NULL,
   `jam_mulai` datetime NOT NULL,
   `jam_selesai` datetime NOT NULL,
-  `log_panitia` int(11) NOT NULL
+  `log_panitia` int(11) NOT NULL,
+  `id_topik` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `jadwal`
+--
+
+INSERT INTO `jadwal` (`id_jadwal`, `tanggal`, `lokasi`, `jam_mulai`, `jam_selesai`, `log_panitia`, `id_topik`) VALUES
+(6, '2018-03-10', 'Ruang Auditorium', '2018-03-10 19:00:00', '2018-03-10 21:00:00', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -296,7 +316,8 @@ ALTER TABLE `ec`
 --
 ALTER TABLE `jadwal`
   ADD PRIMARY KEY (`id_jadwal`),
-  ADD KEY `log_panitia` (`log_panitia`);
+  ADD KEY `log_panitia` (`log_panitia`),
+  ADD KEY `id_topik` (`id_topik`);
 
 --
 -- Indexes for table `jadwal_topik`
@@ -358,7 +379,7 @@ ALTER TABLE `ec`
 -- AUTO_INCREMENT for table `jadwal`
 --
 ALTER TABLE `jadwal`
-  MODIFY `id_jadwal` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_jadwal` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `jenisec`
@@ -393,6 +414,12 @@ ALTER TABLE `topik_ec`
 --
 ALTER TABLE `ec`
   ADD CONSTRAINT `jenis_ec_constraint` FOREIGN KEY (`id_jenis_ec`) REFERENCES `jenisec` (`id_jenis_ec`);
+
+--
+-- Constraints for table `jadwal`
+--
+ALTER TABLE `jadwal`
+  ADD CONSTRAINT `jadwal_ibfk_1` FOREIGN KEY (`id_topik`) REFERENCES `topik_ec` (`id_topik`);
 
 --
 -- Constraints for table `jadwal_topik`
