@@ -20,6 +20,7 @@ class C_Kelas_panitia extends CI_Controller{
        $this->load->view('V_daftar_kelas',[
          'data' => $complete
        ]);
+       $this->load->view('V_footer');
     } else if($this->input->method() == 'post'){
 
 
@@ -38,6 +39,7 @@ class C_Kelas_panitia extends CI_Controller{
          'data' => $data,
          'topik_arr' => $topik_arr
        ]);
+       $this->load->view('V_footer');
     } else if($this->input->method() == 'post'){
 
 

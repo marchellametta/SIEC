@@ -1,8 +1,10 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 ?>
-<div class="mr-3 ml-3 mr-sm-3 ml-sm-3 mr-md-5 ml-md-5 mt-5">
+<div class="mr-3 ml-3 mr-sm-3 ml-sm-3 mr-md-5 ml-md-5 mt-5 mb-5">
+  <?php $this->load->view('V_template_breadcrumb', ['viewName' => 'V_informasi']) ?>
   <div class="row ml-3 mr-3">
+
     <div class="col-12 col-sm-6 col-lg-7 col-xl-7"><h5>INFORMASI KELAS EC YANG DIBUKA</h5></div>
     <div class="col-12 col-sm-6 col-lg-5 col-xl-5">
       <div class="row">

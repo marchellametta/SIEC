@@ -13,6 +13,7 @@ class C_Informasi extends CI_Controller{
        $this->load->view('V_informasi',[
          'data' => $data
        ]);
+       $this->load->view('V_footer');
     } else if($this->input->method() == 'post'){
 
 
@@ -24,6 +25,7 @@ class C_Informasi extends CI_Controller{
        $this->load->view('V_header');
        $this->load->view('V_navbar');
        $this->load->view('V_tambah_kelas');
+       $this->load->view('V_footer');
     } else if($this->input->method() == 'post'){
 
 
@@ -42,6 +44,7 @@ class C_Informasi extends CI_Controller{
          'data' => $data,
          'topik_arr' => $topik_arr
        ]);
+       $this->load->view('V_footer');
     } else if($this->input->method() == 'post'){
 
 

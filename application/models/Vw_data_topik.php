@@ -18,6 +18,12 @@ class Vw_data_topik extends CI_Model{
         return $query->result();
     }
 
+    public function get($id){
+        /* No Error Handling yet! */
+        $this->db->where('id_topik',$id);
+        return $this->db->get($this->table_name)->row();
+    }
+
     public function getAllTopik($id_ec){
         /* No Error Handling yet! */
         $this->db->where('id_ec',$id_ec);

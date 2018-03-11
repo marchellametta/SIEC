@@ -16,6 +16,7 @@ class C_Jadwal extends CI_Controller{
          'data' =>$data,
          'ec' => $ec
        ]);
+       $this->load->view('V_footer');
     } else if($this->input->method() == 'post'){
 
 

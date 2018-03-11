@@ -159,6 +159,8 @@ h3{
   word-wrap: break-word;
   vertical-align: top;
 }
+
+
 table {
   table-layout: fixed;
 }

@@ -25,6 +25,7 @@ class C_Pendaftaran extends CI_Controller{
          'data' => $complete,
          'selected' => $selected
        ]);
+       $this->load->view('V_footer');
     } else if($this->input->method() == 'post'){
 
 
@@ -38,6 +39,8 @@ class C_Pendaftaran extends CI_Controller{
          $hashed_pw = password_hash($post_data['password'], PASSWORD_DEFAULT);
          $this->load->model('T_peserta');
           $this->load->model('T_peserta_topik');
+
+          $this->db->trans_begin();
          $this->T_peserta->insert([
            'nama' => $post_data['nama'],
            'alamat' => $post_data['alamat'],
@@ -52,6 +55,12 @@ class C_Pendaftaran extends CI_Controller{
          $id_peserta = $this->db->insert_id();
          foreach ($post_data['topik'] as $row) {
            $this->T_peserta_topik->attach_peserta_topik($id_peserta,$row);
+         }
+         if ($this->db->trans_status() === FALSE){
+           $this->db->trans_rollback();
+         }else{
+           $this->db->trans_commit();
+           redirect('', 'refresh');
          }
     }
   }

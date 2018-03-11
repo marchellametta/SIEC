@@ -13,6 +13,7 @@ class C_Kelas_user extends CI_Controller{
        $this->load->view('V_kelas_user',[
          'data' => $data
        ]);
+       $this->load->view('V_footer');
     } else if($this->input->method() == 'post'){
 
 
@@ -31,6 +32,7 @@ class C_Kelas_user extends CI_Controller{
          'data' => $data,
          'topik_arr' => $topik_arr
        ]);
+       $this->load->view('V_footer');
     } else if($this->input->method() == 'post'){
 
 

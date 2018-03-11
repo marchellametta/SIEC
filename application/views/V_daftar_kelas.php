@@ -1,9 +1,9 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 ?>
-<div class="mr-3 ml-3 mr-sm-3 ml-sm-3 mr-md-5 ml-md-5 mt-5">
+<div class="mr-3 ml-3 mr-sm-3 ml-sm-3 mr-md-5 ml-md-5 mt-5 mb-5">
   <div class="text-left ml-3"><h5>KELAS SAYA</h5></div>
-
+  <?php $this->load->view('V_template_breadcrumb', ['viewName' => 'V_daftar_kelas']) ?>
   <?php foreach ($data as $row): ?>
   <div class="card mt-4 shadow ml-3 mr-3">
     <div class="card-body">
@@ -14,7 +14,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
           <h2 class="card-title"><?php echo $row->tema_ec;?></h2>
           <p class="card-text"><?php echo $row->deskripsi;?></p>
           <p class="card-text text-muted mt-5"><?php echo "Jumlah Peserta: ". $row->jumlah_peserta;?></p>
-          <a href="<?php echo ($row->status_evaluasi==1)? base_url() .'kelas-saya/detail/'. $row->id_ec : base_url() .'isi-evaluasi/'. $row->id_ec;?>" class="border-right pr-2"><i class="fa fa-edit mr-1 ml-1"></i>Isi Absensi</a>
+          <a href="<?php echo base_url() .'absensi/daftar-topik/'. $row->id_ec;?>" class="border-right pr-2"><i class="fa fa-edit mr-1 ml-1"></i>Isi Absensi</a>
           <a href="<?php echo base_url();?>jadwal/<?php echo $row->id_ec;?>" class="border-right pr-2"><i class="fa fa-file-pdf-o mr-1 ml-1"></i>Cetak Sertifikat</a>
           <a href="<?php echo base_url();?>jadwal/<?php echo $row->id_ec;?>" class="pr-2"><i class="fa fa-pie-chart mr-1 ml-1"></i>Lihat Hasil Evaluasi</a>
         </div>

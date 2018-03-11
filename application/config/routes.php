@@ -68,3 +68,5 @@ $route['profil/editPassword/(:num)'] = 'C_user_profile/editPassword/$1';
 $route['pendaftaran'] = 'C_pendaftaran/index';
 $route['pendaftaran/daftar'] = 'C_pendaftaran/daftar';
 $route['detail/(:num)'] = 'C_informasi/detailEC/$1';
+$route['absensi/(:num)'] = 'C_absensi/index/$1';
+$route['absensi/daftar-topik/(:num)'] = 'C_absensi/getTopik/$1';

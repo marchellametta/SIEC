@@ -27,6 +27,14 @@ class Stored_procedure extends CI_Model{
       return $result;
     }
 
+    public function get_all_peserta_topik($id_topik){
+      $query = $this->db->query("call get_all_peserta_topik('".$id_topik."')");
+      mysqli_next_result( $this->db->conn_id );
+      $result = $query->result();
+      $query->free_result();
+      return $result;
+    }
+
     public function get_jumlah_peserta_ec($id_ec){
       $query = $this->db->query("call get_jumlah_peserta_ec('".$id_ec."')");
       mysqli_next_result( $this->db->conn_id );

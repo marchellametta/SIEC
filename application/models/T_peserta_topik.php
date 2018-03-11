@@ -4,6 +4,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class T_peserta_topik extends CI_Model{
     public $id_topik;
     public $id_peserta;
+    public $status_hadir;
+
 
     private $table_name = 'peserta_topik';
 
@@ -23,6 +25,13 @@ class T_peserta_topik extends CI_Model{
         /* No Error Handling yet! */
         $this->db->where('id_topik',$id);
         return $this->db->get($this->table_name)->result();
+    }
+
+    public function edit($id, $id_peserta, $args){
+        /* No Error Handling yet! */
+        $this->db->where('id_topik',$id);
+        $this->db->where('id_peserta',$id_peserta);
+        return $this->db->update($this->table_name,$args);
     }
 
     public function attach_peserta_topik($id_peserta, $id_topik){
