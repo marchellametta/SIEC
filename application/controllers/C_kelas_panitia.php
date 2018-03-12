@@ -12,7 +12,7 @@ class C_Kelas_panitia extends CI_Controller{
       $complete = array();
       foreach ($data as $row) {
         $jumlah_peserta = $this->Stored_procedure->get_jumlah_peserta_ec($row->id_ec);
-        $row->jumlah_peserta = $jumlah_peserta[0]->jumlah_peserta;
+        $row->jumlah_peserta = $jumlah_peserta->jumlah_peserta;
         array_push($complete,$row);
       }
        $this->load->view('V_header');

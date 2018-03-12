@@ -9,7 +9,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
       <h6><?php echo $data->jenis_ec;?> :</h6>
       <div><h2><?php echo $data->tema_ec;?></h2></div>
       <p><?php echo $data->deskripsi;?></p>
-      <a id="link-jadwal" href="<?php echo base_url();?>jadwal/<?php echo $data->id_ec;?>"><i class="fa fa-calendar mr-1"></i>Lihat Jadwal</a>
+      <a id="link-jadwal" href="<?php echo base_url();?>informasi/jadwal/<?php echo $data->id_ec;?>"><i class="fa fa-calendar mr-1"></i>Lihat Jadwal</a>
     </div>
   </div>
   <?php foreach ($topik_arr as $row): ?>

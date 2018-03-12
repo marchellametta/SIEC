@@ -6,7 +6,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
   <ol class="breadcrumb">
     <li class="breadcrumb-item"><a href="<?php echo base_url() ?>"><i class="fa fa-home mr-1"></i>Beranda</a></li>
     <li class="breadcrumb-item"><a href="<?php echo base_url() ?>informasi">Informasi</a></li>
-    <li class="breadcrumb-item"><a href="<?php echo base_url() ?>detail/<?php echo $ec->id_ec ?>">Detail</a></li>
+    <li class="breadcrumb-item"><a href="<?php echo base_url() ?>informasi/detail/<?php echo $ec->id_ec ?>">Detail</a></li>
     <li class="breadcrumb-item active" aria-current="page">Jadwal</li>
   </ol>
 </nav>

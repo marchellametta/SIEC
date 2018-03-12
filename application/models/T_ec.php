@@ -17,6 +17,9 @@ class T_ec extends CI_Model{
     public $lembaga;
     public $jabatan;
     public $jenis_ec;
+    public $biaya_per_topik;
+    public $kapasitas_peserta;
+
 
     private $table_name = 'ec';
 

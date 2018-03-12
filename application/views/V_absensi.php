@@ -6,7 +6,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <ol class="breadcrumb">
       <li class="breadcrumb-item"><a href="<?php echo base_url() ?> "><i class="fa fa-home mr-1"></i>Beranda</a></li>
       <li class="breadcrumb-item" ><a href="<?php echo base_url() ?>kelas">Daftar Kelas</a></li>
-      <li class="breadcrumb-item" ><a href="<?php echo base_url()."absensi/daftar-topik/". $ec->id_ec ?>">Daftar Topik</a></li>
+      <li class="breadcrumb-item" ><a href="<?php echo base_url()."kelas/absensi/daftar-topik/". $ec->id_ec ?>">Daftar Topik</a></li>
       <li class="breadcrumb-item active" aria-current="page">Daftar Kehadiran</li>
 
     </ol>
@@ -15,7 +15,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <div class="text-left ml-3"><h5><?php echo 'Daftar Kehadiran Kelas ' . $topik->nama_topik ?></h5></div>
   <div class="text-left ml-3"><h6><?php echo $ec->jenis_ec. " : " . $ec->tema_ec; ?></h6></div>
   <div class="text-left ml-3"><h6><?php echo $topik->tanggal . ", " . $topik->jam_mulai . " - ". $topik->jam_selesai ?></h6></div>
-  <form method="post" action="<?php echo base_url() ?>absensi/<?php echo $topik->id_topik ?>">
+  <form method="post" action="<?php echo base_url() ?>kelas/absensi/<?php echo $topik->id_topik ?>">
   <table class="table table-hover table-striped table-bordered absensi mt-5">
     <thead class="thead-dark">
       <tr>

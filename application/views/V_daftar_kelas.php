@@ -14,7 +14,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
           <h2 class="card-title"><?php echo $row->tema_ec;?></h2>
           <p class="card-text"><?php echo $row->deskripsi;?></p>
           <p class="card-text text-muted mt-5"><?php echo "Jumlah Peserta: ". $row->jumlah_peserta;?></p>
-          <a href="<?php echo base_url() .'absensi/daftar-topik/'. $row->id_ec;?>" class="border-right pr-2"><i class="fa fa-edit mr-1 ml-1"></i>Isi Absensi</a>
+          <a href="<?php echo base_url() .'kelas/absensi/daftar-topik/'. $row->id_ec;?>" class="border-right pr-2"><i class="fa fa-edit mr-1 ml-1"></i>Isi Absensi</a>
           <a href="<?php echo base_url();?>jadwal/<?php echo $row->id_ec;?>" class="border-right pr-2"><i class="fa fa-file-pdf-o mr-1 ml-1"></i>Cetak Sertifikat</a>
           <a href="<?php echo base_url();?>jadwal/<?php echo $row->id_ec;?>" class="pr-2"><i class="fa fa-pie-chart mr-1 ml-1"></i>Lihat Hasil Evaluasi</a>
         </div>
