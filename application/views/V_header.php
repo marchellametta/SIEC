@@ -115,12 +115,12 @@ h3{
 }
 
 
-.nav-item>a:active{
-  color:#990000;
-}
-
 .hidden {
   display:none;
+}
+
+.navbar .dropdown .dropdown-menu .dropdown-item {
+  font-size: 22px;
 }
 
 .navbar .dropdown:hover>.dropdown-menu {

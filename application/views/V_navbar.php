@@ -4,7 +4,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <div class="fixed-top">
   <div class="text-right bg-black">
     <div class="dropdown">
-    <button class="btn btn-sm dropdown-toggle bg-black text-white" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    <button class="btn btn-sm dropdown-toggle bg-black text-white" type="button" id="dropdownMenuButton" data-toggle="dropdown" data-disabled="true" aria-haspopup="true" aria-expanded="false">
       Dropdown button
     </button>
     <div class="dropdown-menu bg-black" aria-labelledby="dropdownMenuButton">
