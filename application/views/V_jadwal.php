@@ -10,9 +10,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <li class="breadcrumb-item active" aria-current="page">Jadwal</li>
   </ol>
 </nav>
-  <div class="text-left ml-3"><h5>Jadwal Kelas</h5></div>
-  <div class="text-left ml-3"><h5><?php echo $ec->jenis_ec. " : " . $ec->tema_ec; ?></h5></div>
-  <table class="table table-hover table-striped table-bordered">
+  <div class="text-left ml-3"><h5>Jadwal Kelas <?php echo $ec->jenis_ec. " : " . $ec->tema_ec ; ?></h5></div>
+  <table class="table table-hover table-striped table-bordered d-none d-sm-block">
     <thead class="thead-dark">
       <tr>
         <th scope="col">Tanggal</th>
@@ -34,4 +33,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <?php endforeach ?>
     </tbody>
   </table>
+  <div class="d-sm-none mt-4">
+    <?php foreach ($data as $row): ?>
+    <div class="card mt-2">
+      <div class="card-body">
+        <p class="card-title m-0"><?php echo "<b>Tanggal</b> : ".date($this->config->item('view_date_format'),strtotime($row->tanggal));?></p>
+        <p class="card-text m-0"><?php echo "<b>Lokasi</b> : ". $row->lokasi;?></p>
+        <p class="card-text m-0"><?php echo "<b>Jam</b> : ".$row->jam_mulai . " - " . $row->jam_selesai;?></p>
+        <p class="card-text m-0"><?php echo "<b>Topik</b> : ".$row->nama_topik;?></p>
+        <p class="card-text m-0"><?php echo "<b>Narasumber</b> : ".$row->nama;?></p>
+      </div>
+    </div>
+    <?php endforeach ?>
+  </div>
 </div>

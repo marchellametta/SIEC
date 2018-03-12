@@ -4,7 +4,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <div class="mr-3 ml-3 mr-sm-3 ml-sm-3 mr-md-5 ml-md-5 mt-5 mb-5">
   <?php $this->load->view('V_template_breadcrumb', ['viewName' => 'V_visimisi']) ?>
   <div class="text-left ml-3"><h5>Visi</h5></div>
-  <div class="row mr-3 ml-3 pb-5 pt-4 border-bottom">
+  <div class="row mr-3 ml-3 pb-5 pt-4 border-bottom border-dark">
     <div class="col-md-6 col-lg-6">
       <img class="w-100" src="<?php echo base_url() ?>images/dummy3.jpg">
     </div>

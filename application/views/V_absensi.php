@@ -12,7 +12,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     </ol>
   </nav>
 
-<div class="text-left ml-3"><h5><?php echo 'Daftar Kehadiran Kelas ' . $topik->nama_topik ?></h5></div>
+<div class="text-left ml-3"><h5><?php echo 'Daftar Kehadiran ' . $topik->nama_topik ?></h5></div>
   <div class="text-left ml-3"><h6><?php echo $ec->jenis_ec. " : " . $ec->tema_ec; ?></h6></div>
   <div class="text-left ml-3"><h6><?php echo $topik->tanggal . ", " . $topik->jam_mulai . " - ". $topik->jam_selesai ?></h6></div>
   <form method="post" action="<?php echo base_url() ?>kelas/absensi/<?php echo $topik->id_topik ?>">
