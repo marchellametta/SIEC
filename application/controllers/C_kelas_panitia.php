@@ -55,7 +55,7 @@ class C_Kelas_panitia extends CI_Controller{
   public function cetakSertifikat($id){
     $this->load->helper('template_engine');
     $en = new TemplateEngine($this,$id);
-    $mpdf=new mPDF('','A6', 0, '', 0, 0, 0, 0, 0, 0, '');
+    $mpdf=new mPDF('','A5', 0, '', 0, 0, 0, 0, 0, 0, '');
     //$mpdf = new mPDF();
     $mpdf->WriteHTML($en->renderOutput());
     $mpdf->Output();
