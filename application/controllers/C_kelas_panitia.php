@@ -53,11 +53,20 @@ class C_Kelas_panitia extends CI_Controller{
   }
 
   public function cetakSertifikat($id){
+    $this->load->model('Stored_procedure');
+    $peserta = $this->Stored_procedure->get_all_peserta_ec($id);
     $this->load->helper('template_engine');
     $en = new TemplateEngine($this,$id);
     $mpdf=new mPDF('','A5', 0, '', 0, 0, 0, 0, 0, 0, '');
+    $mpdf->SetWatermarkImage('../SIEC/images/sertif.png',1);
+    $mpdf->watermarkImgBehind = true;
+    $mpdf->showWatermarkImage = true;
     //$mpdf = new mPDF();
-    $mpdf->WriteHTML($en->renderOutput());
+    foreach ($peserta as $row) {
+      $mpdf->WriteHTML($en->renderOutput());
+      $mpdf->AddPage();
+    }
+    //$mpdf->WriteHTML($en->renderOutput());
     $mpdf->Output();
   }
 }
