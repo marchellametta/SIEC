@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-require_once('application/helpers/mpdf61/mpdf.php');
+require_once('application/helpers/mpdf60/mpdf.php');
 
 class C_Kelas_panitia extends CI_Controller{
 
@@ -55,9 +55,9 @@ class C_Kelas_panitia extends CI_Controller{
   public function cetakSertifikat($id){
     $this->load->helper('template_engine');
     $en = new TemplateEngine($this,$id);
-    $html = "<div>hai</div>";
-    $mpdf = new mPDF();
-    $mpdf->WriteHTML($html);
+    $mpdf=new mPDF('','A6', 0, '', 0, 0, 0, 0, 0, 0, '');
+    //$mpdf = new mPDF();
+    $mpdf->WriteHTML($en->renderOutput());
     $mpdf->Output();
   }
 }
