@@ -1,6 +1,8 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
+require_once('application/helpers/mpdf61/mpdf.php');
+
 class C_Kelas_panitia extends CI_Controller{
 
 
@@ -50,23 +52,13 @@ class C_Kelas_panitia extends CI_Controller{
     }
   }
 
-  public function getTopik($id){
-    if($this->input->method() == 'get'){
-      $this->load->model('Stored_procedure');
-      $this->load->model('Vw_data_ec');
-      $data = $this->Vw_data_ec->get($id);
-      $topik_arr = $this->Stored_procedure->get_topik_peserta(7,$id);
-       $this->load->view('V_header');
-       $this->load->view('V_navbar');
-       $this->load->view('V_list_evaluasi_kelas_user',[
-         'data' => $data,
-         'topik_arr' => $topik_arr
-       ]);
-       $this->load->view('V_footer');
-    } else if($this->input->method() == 'post'){
-
-
-    }
+  public function cetakSertifikat($id){
+    $this->load->helper('template_engine');
+    $en = new TemplateEngine($this,$id);
+    $html = "<div>hai</div>";
+    $mpdf = new mPDF();
+    $mpdf->WriteHTML($html);
+    $mpdf->Output();
   }
 }
 ?>

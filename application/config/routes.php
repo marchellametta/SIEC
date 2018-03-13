@@ -70,3 +70,4 @@ $route['pendaftaran/daftar'] = 'C_pendaftaran/daftar';
 $route['informasi/detail/(:num)'] = 'C_informasi/detailEC/$1';
 $route['kelas/absensi/(:num)'] = 'C_absensi/index/$1';
 $route['kelas/absensi/daftar-topik/(:num)'] = 'C_absensi/getTopik/$1';
+$route['kelas/cetak-sertifikat/(:num)'] = 'C_kelas_panitia/cetakSertifikat/$1';

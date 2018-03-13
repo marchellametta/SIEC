@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 10, 2018 at 04:53 AM
+-- Generation Time: Mar 13, 2018 at 09:18 AM
 -- Server version: 10.1.30-MariaDB
 -- PHP Version: 7.2.2
 
@@ -33,6 +33,11 @@ select * from peserta where peserta.id_peserta in (
     )
 )$$
 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `get_all_peserta_topik` (IN `id_topik` INT)  NO SQL
+select * from peserta where peserta.id_peserta in (
+    select peserta_topik.id_peserta from peserta_topik WHERE peserta_topik.id_topik=id_topik 
+)$$
+
 CREATE DEFINER=`root`@`localhost` PROCEDURE `get_ec_peserta` (IN `id_peserta` INT, IN `tahun` INT)  NO SQL
 select data_ec.id_ec, data_ec.tema_ec, data_ec.deskripsi, data_ec.gambar, data_ec.jenis_ec, data_ec.status_evaluasi from data_ec where data_ec.id_ec in (
         select topik_ec.id_ec from topik_ec where topik_ec.id_topik in(
@@ -48,6 +53,11 @@ select count(peserta.id_peserta) as jumlah_peserta from peserta where peserta.id
     select peserta_topik.id_peserta from peserta_topik WHERE id_topik in (
        select topik_ec.id_topik from topik_ec where topik_ec.id_ec=id_ec
     )
+)$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `get_jumlah_peserta_topik` (IN `id_topik` INT)  NO SQL
+select count(peserta.id_peserta) as jumlah_peserta from peserta where peserta.id_peserta in (
+    select peserta_topik.id_peserta from peserta_topik WHERE peserta_topik.id_topik=id_topik
 )$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `get_topik_peserta` (IN `id_peserta` INT, IN `id_ec` INT, IN `tahun` INT)  NO SQL
@@ -74,6 +84,8 @@ CREATE TABLE `data_ec` (
 ,`biaya` int(11)
 ,`gambar` varchar(100)
 ,`deskripsi` varchar(500)
+,`kapasitas_peserta` int(11)
+,`biaya_per_topik` int(11)
 ,`jenis_ec` varchar(100)
 );
 
@@ -91,6 +103,10 @@ CREATE TABLE `data_topik` (
 ,`profesi` varchar(100)
 ,`lembaga` varchar(250)
 ,`jabatan` varchar(100)
+,`tanggal` date
+,`lokasi` varchar(100)
+,`jam_mulai` datetime
+,`jam_selesai` datetime
 );
 
 -- --------------------------------------------------------
@@ -120,7 +136,7 @@ CREATE TABLE `ec` (
 
 INSERT INTO `ec` (`id_ec`, `id_jenis_ec`, `semester_pelaksanaan`, `tahun_pelaksanaan`, `tema_ec`, `status_evaluasi`, `status_peserta`, `biaya`, `deskripsi`, `gambar`, `biaya_per_topik`, `kapasitas_peserta`) VALUES
 (1, 1, 1, 2018, 'Philosophy of Mind', 1, 2, 350000, 'alskjlsadjflajsdfljasldjflasjdlfjlasjf', 'mind.jpg', NULL, NULL),
-(2, 2, 1, 2018, 'Nasib Agama Lokal', 2, 1, 400000, 'lsadfjalskdjflaksj', 'dummy.jpg', NULL, NULL);
+(2, 2, 1, 2018, 'Nasib Agama Lokal', 2, 1, 400000, 'lsadfjalskdjflaksj', 'dummy.jpg', NULL, 10);
 
 -- --------------------------------------------------------
 
@@ -143,7 +159,9 @@ CREATE TABLE `jadwal` (
 --
 
 INSERT INTO `jadwal` (`id_jadwal`, `tanggal`, `lokasi`, `jam_mulai`, `jam_selesai`, `log_panitia`, `id_topik`) VALUES
-(6, '2018-03-10', 'Ruang Auditorium', '2018-03-10 19:00:00', '2018-03-10 21:00:00', 1, 1);
+(6, '2018-03-10', 'Ruang Auditorium', '2018-03-10 19:00:00', '2018-03-10 21:00:00', 1, 1),
+(7, '2018-03-17', 'Ruang 10317', '2018-03-17 19:00:00', '2018-03-17 21:00:00', 1, 2),
+(8, '2018-03-10', 'Ruang 9122', '2018-03-10 19:00:00', '2018-03-10 21:00:00', 1, 3);
 
 -- --------------------------------------------------------
 
@@ -240,7 +258,10 @@ CREATE TABLE `peserta` (
 --
 
 INSERT INTO `peserta` (`id_peserta`, `nama`, `alamat`, `pekerjaan`, `lembaga`, `pendidikan_terakhir`, `kota`, `no_hp`, `email`, `password`) VALUES
-(7, 'Marchella Metta', 'Taman Kopo Indah 2', 'Mahasiswa', 'UNPAR', 2, 'Bandung', '087822714078', 'morningracoon@gmail.com', '$2y$10$b0qq18SNS/Pjz.ZxRy8YVuNVAGhrbgt4DRstFZ/8OdYXJM3AJ3eBy');
+(7, 'Marchella Metta', 'Taman Kopo Indah 2', 'Mahasiswa', 'UNPAR', 2, 'Bandung', '087822714078', 'morningracoon@gmail.com', '$2y$10$b0qq18SNS/Pjz.ZxRy8YVuNVAGhrbgt4DRstFZ/8OdYXJM3AJ3eBy'),
+(8, 'Kelvin Tandika', 'Taman Holis Indah', 'Mahasiswa', 'UNPAR', 1, 'Bandung', '087822714078', 'kelvin@mail.com', '$2y$10$CgXW5YHHbM/00WfbskrhHeVHuUfcYH7.32ea/4hjECaDg7gP1oz4S'),
+(9, 'abc', 'def', 'Pegawai', 'UNPAR', 3, 'Bandung', '087822714078', 'abc@mail.com', '$2y$10$/gToF/ukTzXfy4fPJ8Gup.zSi.u.QUyWg/VDw7BvBWsKknDsgFRhC'),
+(10, 'Roxy', 'Taman Kopo', 'Mahasiswa', 'UNPAR', 1, 'Bandung', '087822714078', 'roxy@mail.com', '$2y$10$V7om3UT8NRIrjWgBHZBsGuJTr.mP4/stRwQQcnTfQ/R096AnGvoqG');
 
 -- --------------------------------------------------------
 
@@ -250,15 +271,24 @@ INSERT INTO `peserta` (`id_peserta`, `nama`, `alamat`, `pekerjaan`, `lembaga`, `
 
 CREATE TABLE `peserta_topik` (
   `id_topik` int(11) NOT NULL,
-  `id_peserta` int(11) NOT NULL
+  `id_peserta` int(11) NOT NULL,
+  `status_hadir` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `peserta_topik`
 --
 
-INSERT INTO `peserta_topik` (`id_topik`, `id_peserta`) VALUES
-(1, 7);
+INSERT INTO `peserta_topik` (`id_topik`, `id_peserta`, `status_hadir`) VALUES
+(1, 7, 1),
+(1, 8, NULL),
+(2, 8, NULL),
+(1, 9, NULL),
+(2, 9, NULL),
+(3, 9, NULL),
+(1, 10, NULL),
+(2, 10, NULL),
+(3, 10, NULL);
 
 -- --------------------------------------------------------
 
@@ -289,7 +319,7 @@ INSERT INTO `topik_ec` (`id_topik`, `nama_topik`, `log_panitia`, `id_ec`) VALUES
 --
 DROP TABLE IF EXISTS `data_ec`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `data_ec`  AS  select `ec`.`id_ec` AS `id_ec`,`ec`.`semester_pelaksanaan` AS `semester_pelaksanaan`,`ec`.`tahun_pelaksanaan` AS `tahun_pelaksanaan`,`ec`.`tema_ec` AS `tema_ec`,`ec`.`status_evaluasi` AS `status_evaluasi`,`ec`.`status_peserta` AS `status_peserta`,`ec`.`biaya` AS `biaya`,`ec`.`gambar` AS `gambar`,`ec`.`deskripsi` AS `deskripsi`,`jenisec`.`jenis_ec` AS `jenis_ec` from (`ec` join `jenisec` on((`ec`.`id_jenis_ec` = `jenisec`.`id_jenis_ec`))) ;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `data_ec`  AS  select `ec`.`id_ec` AS `id_ec`,`ec`.`semester_pelaksanaan` AS `semester_pelaksanaan`,`ec`.`tahun_pelaksanaan` AS `tahun_pelaksanaan`,`ec`.`tema_ec` AS `tema_ec`,`ec`.`status_evaluasi` AS `status_evaluasi`,`ec`.`status_peserta` AS `status_peserta`,`ec`.`biaya` AS `biaya`,`ec`.`gambar` AS `gambar`,`ec`.`deskripsi` AS `deskripsi`,`ec`.`kapasitas_peserta` AS `kapasitas_peserta`,`ec`.`biaya_per_topik` AS `biaya_per_topik`,`jenisec`.`jenis_ec` AS `jenis_ec` from (`ec` join `jenisec` on((`ec`.`id_jenis_ec` = `jenisec`.`id_jenis_ec`))) ;
 
 -- --------------------------------------------------------
 
@@ -298,7 +328,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 DROP TABLE IF EXISTS `data_topik`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `data_topik`  AS  select `topik_ec`.`id_topik` AS `id_topik`,`topik_ec`.`id_ec` AS `id_ec`,`topik_ec`.`nama_topik` AS `nama_topik`,`narasumber`.`nama` AS `nama`,`narasumber`.`profesi` AS `profesi`,`narasumber`.`lembaga` AS `lembaga`,`narasumber`.`jabatan` AS `jabatan` from ((`narasumber` join `narasumber_topik` on((`narasumber`.`id_narasumber` = `narasumber_topik`.`id_narasumber`))) join `topik_ec` on((`topik_ec`.`id_topik` = `narasumber_topik`.`id_topik`))) ;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `data_topik`  AS  select `topik_ec`.`id_topik` AS `id_topik`,`topik_ec`.`id_ec` AS `id_ec`,`topik_ec`.`nama_topik` AS `nama_topik`,`narasumber`.`nama` AS `nama`,`narasumber`.`profesi` AS `profesi`,`narasumber`.`lembaga` AS `lembaga`,`narasumber`.`jabatan` AS `jabatan`,`jadwal`.`tanggal` AS `tanggal`,`jadwal`.`lokasi` AS `lokasi`,`jadwal`.`jam_mulai` AS `jam_mulai`,`jadwal`.`jam_selesai` AS `jam_selesai` from (((`narasumber` join `narasumber_topik` on((`narasumber`.`id_narasumber` = `narasumber_topik`.`id_narasumber`))) join `topik_ec` on((`topik_ec`.`id_topik` = `narasumber_topik`.`id_topik`))) join `jadwal` on((`jadwal`.`id_topik` = `topik_ec`.`id_topik`))) ;
 
 --
 -- Indexes for dumped tables
@@ -379,7 +409,7 @@ ALTER TABLE `ec`
 -- AUTO_INCREMENT for table `jadwal`
 --
 ALTER TABLE `jadwal`
-  MODIFY `id_jadwal` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id_jadwal` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `jenisec`
@@ -397,7 +427,7 @@ ALTER TABLE `narasumber`
 -- AUTO_INCREMENT for table `peserta`
 --
 ALTER TABLE `peserta`
-  MODIFY `id_peserta` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id_peserta` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `topik_ec`
