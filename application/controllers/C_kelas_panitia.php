@@ -68,8 +68,10 @@ class C_Kelas_panitia extends CI_Controller{
         $post_data = $this->input->post();
         $this->cetakSertifikatSatuan($id,$post_data);
       }else{
+        $post_data = $this->input->post();
+        $post_data['batas_lulus'] = 0;
         $this->load->model('Stored_procedure');
-        $peserta = $this->Stored_procedure->get_all_peserta_ec($id);
+        $peserta = $this->Stored_procedure->get_peserta_lulus($id,$post_data['batas_lulus']);
         $this->load->helper('template_engine');
         $en = new TemplateEngine($this,$id);
         $mpdf=new mPDF('','A5', 0, '', 0, 0, 0, 0, 0, 0, '');
