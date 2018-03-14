@@ -6,6 +6,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
   <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Bitter" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <script type="text/javascript" src="<?php echo base_url() ?>assets/jquery/jquery-1.11.1.min.js"></script>
+  <script type="text/javascript" src="<?php echo base_url() ?>assets/jquery/jquery_ui/jquery-ui.min.js"></script>
+  <script type="text/javascript" src="<?php echo base_url() ?>assets/jquery/jquery-number/jquery.number.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
   <script type="text/javascript" src="<?php echo base_url() ?>assets/bootstrap/js/bootstrap.js"></script>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
@@ -13,6 +15,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
   <script src="https://cdn.jsdelivr.net/npm/gijgo@1.8.1/combined/js/gijgo.min.js" type="text/javascript"></script>
   <script type="text/javascript" src="<?php echo base_url() ?>assets/utilities/dynamic-data-render.js"></script>
   <link href="https://cdn.jsdelivr.net/npm/gijgo@1.8.1/combined/css/gijgo.min.css" rel="stylesheet" type="text/css" />
+  <link rel="stylesheet" type="text/css" href="<?php echo base_url() ?>assets/jquery/jquery_ui/jquery-ui.min.css">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
 body{

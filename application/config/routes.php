@@ -71,4 +71,4 @@ $route['informasi/detail/(:num)'] = 'C_informasi/detailEC/$1';
 $route['kelas/absensi/(:num)'] = 'C_absensi/index/$1';
 $route['kelas/absensi/daftar-topik/(:num)'] = 'C_absensi/getTopik/$1';
 $route['kelas/cetak-sertifikat/(:num)'] = 'C_kelas_panitia/cetakSertifikat/$1';
-$route['kelas/cetak-sertifikat-satuan/(:num)/(:num)'] = 'C_kelas_panitia/cetakSertifikatSatuan/$1/$2';
+$route['peserta/search'] = 'C_search_api/search_peserta';

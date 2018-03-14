@@ -47,13 +47,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
      </div>
      <fieldset id="peserta_toggle" class="hidden mt-2">
        <legend>Pilih Peserta</legend>
-       <div class="row ml-2">
-         <div class="form-group col-md-12">
-           <label for="nama_top">Nama Peserta</label>
-           <div class="row ml-2">
-             <input type="text" class="form-control col-10" name="peran_top" placeholder="">
-           </div>
-         </div>
+       <div class="form-group col-md-12">
+         <label for="nama_top">Nama Peserta</label>
+         <input id="input-peserta" type="text" class="form-control col-10" name="nama_peserta" placeholder="">
+         <input id="input-id-peserta" class="hidden" name="id_peserta">
+         <span class="help-block"></span>
        </div>
      </fieldset>
      <div class="text-right mt-3">
@@ -74,4 +72,51 @@ $(function () {
            }
        });
    });
+
+   $(function () {
+     var baseUrl = '<?php echo base_url() ?>';
+
+     var inputPeserta= $('#input-peserta');
+     var realInputPeserta = $('#input-id-peserta');
+
+     inputPeserta.autocomplete({
+       source : function(req,res){
+         var postData = {
+           nama : inputPeserta.val(),
+           id_ec : '<?php echo $ec->id_ec ?>'
+         };
+         var url = baseUrl + 'peserta/search';
+         $.get(url,postData).then(function(suggestions){
+             var tmp = suggestions.map(function(item){
+               return {
+                 label : item.nama,
+                 value : item.id_peserta
+               };
+             });
+             res(tmp);
+           });
+         },
+         select : function(e,ui){
+            e.preventDefault();
+            e.target.value = ui.item.label;
+            realInputPeserta.val(ui.item.value).keyup();
+          },
+          focus : function(e,ui){
+             e.preventDefault();
+             e.target.value = ui.item.label;
+             realInputPeserta.val(ui.item.value).keyup();
+           },
+          change : function(e, ui) {
+            e.preventDefault();
+            if (ui.item == null) {
+              e.target.value = '';
+              realInputPeserta.val('').keyup();
+            }
+          }
+     });
+    });
+
+
+
+
 </script>

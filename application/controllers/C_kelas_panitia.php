@@ -64,34 +64,35 @@ class C_Kelas_panitia extends CI_Controller{
       ]);
       $this->load->view('V_footer');
     }else if($this->input->method() == 'post'){
-      $post_data = $this->input->post();
-      $this->load->model('Stored_procedure');
-      $peserta = $this->Stored_procedure->get_all_peserta_ec($id);
-      $this->load->helper('template_engine');
-      $en = new TemplateEngine($this,$id);
-      $mpdf=new mPDF('','A5', 0, '', 0, 0, 0, 0, 0, 0, '');
-      $mpdf->SetWatermarkImage('../SIEC/images/sertif.png',1);
-      $mpdf->watermarkImgBehind = true;
-      $mpdf->showWatermarkImage = true;
-      //$mpdf = new mPDF();
-      foreach ($peserta as $row) {
-        $mpdf->WriteHTML($en->renderOutput($post_data['nama_top'],$post_data['nama_left'],$post_data['peran_top'],$post_data['peran_left'],$row->nama, "Peserta"));
-        $mpdf->AddPage();
+      if(!empty($_POST['id_peserta'])){
+        $post_data = $this->input->post();
+        $this->cetakSertifikatSatuan($id,$post_data);
+      }else{
+        $this->load->model('Stored_procedure');
+        $peserta = $this->Stored_procedure->get_all_peserta_ec($id);
+        $this->load->helper('template_engine');
+        $en = new TemplateEngine($this,$id);
+        $mpdf=new mPDF('','A5', 0, '', 0, 0, 0, 0, 0, 0, '');
+        $mpdf->SetWatermarkImage('../SIEC/images/sertif.png',1);
+        $mpdf->watermarkImgBehind = true;
+        $mpdf->showWatermarkImage = true;
+        //$mpdf = new mPDF();
+        foreach ($peserta as $row) {
+          $mpdf->WriteHTML($en->renderOutput($post_data['nama_top'],$post_data['nama_left'],$post_data['peran_top'],$post_data['peran_left'],$row->nama, "Peserta"));
+          $mpdf->AddPage();
+        }
+        //$mpdf->WriteHTML($en->renderOutput());
+        $mpdf->Output();
       }
-      //$mpdf->WriteHTML($en->renderOutput());
-      $mpdf->Output();
+
 
     }
 
   }
 
-  public function cetakSertifikatSatuan($id_ec, $id_peserta){
-    if($this->input->method() == 'get'){
-      
-    }else if($this->input->method() == 'post'){
-      $post_data = $this->input->post();
+  private function cetakSertifikatSatuan($id_ec, $post_data){
       $this->load->model('T_peserta');
-      $peserta = $this->T_peserta->get($id_peserta);
+      $peserta = $this->T_peserta->get($post_data['id_peserta']);
       $this->load->helper('template_engine');
       $en = new TemplateEngine($this,$id);
       $mpdf=new mPDF('','A5', 0, '', 0, 0, 0, 0, 0, 0, '');
@@ -103,9 +104,6 @@ class C_Kelas_panitia extends CI_Controller{
       $mpdf->AddPage();
       //$mpdf->WriteHTML($en->renderOutput());
       $mpdf->Output();
-
-    }
-
   }
 }
 ?>

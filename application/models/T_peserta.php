@@ -39,5 +39,14 @@ class T_peserta extends CI_Model{
         /* No Error Handling yet! */
         $this->db->where('id_peserta',$id);
         return $this->db->update($this->table_name,$args);
-    }
+   }
+
+   public function search($args){
+     if(isset($args['nama'])){
+           $this->db->like('nama',$args['nama']);
+     }
+       return $this->db->get($this->table_name)->result();
+   }
+
+
 }

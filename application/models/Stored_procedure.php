@@ -58,4 +58,12 @@ class Stored_procedure extends CI_Model{
       $query->free_result();
       return $result;
     }
+
+    public function search_peserta_ec($id_ec,$nama){
+      $query = $this->db->query("call search_peserta_ec('".$id_ec."','".$nama."')");
+      mysqli_next_result( $this->db->conn_id );
+      $result = $query->result();
+      $query->free_result();
+      return $result;
+    }
 }
