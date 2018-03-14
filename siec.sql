@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.7.7
+-- version 4.7.4
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 13, 2018 at 09:18 AM
+-- Generation Time: Mar 14, 2018 at 02:48 PM
 -- Server version: 10.1.30-MariaDB
--- PHP Version: 7.2.2
+-- PHP Version: 5.6.33
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -60,11 +60,22 @@ select count(peserta.id_peserta) as jumlah_peserta from peserta where peserta.id
     select peserta_topik.id_peserta from peserta_topik WHERE peserta_topik.id_topik=id_topik
 )$$
 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `get_peserta_lulus` (IN `batas_lulus` INT, IN `id` INT)  NO SQL
+SELECT * FROM peserta WHERE id_peserta in (select a.id_peserta from (SELECT peserta_topik.id_peserta,COUNT(status_hadir) as kehadiran from peserta_topik GROUP BY id_peserta) as a
+    where (a.kehadiran / (select b.jumlah_topik from (select id_ec,count(id_topik) as jumlah_topik from topik_ec GROUP BY id_ec) as b where b.id_ec=id))>=(batas_lulus/100))$$
+
 CREATE DEFINER=`root`@`localhost` PROCEDURE `get_topik_peserta` (IN `id_peserta` INT, IN `id_ec` INT, IN `tahun` INT)  NO SQL
 select * from data_topik where data_topik.id_topik in (SELECT a.id_topik FROM (SELECT topik_ec.id_topik, topik_ec.id_ec from topik_ec WHERE topik_ec.id_topik in (select id_topik from peserta_topik where peserta_topik.id_peserta=id_peserta)) as a join (SELECT ec.id_ec FROM ec WHERE ec.tahun_pelaksanaan=tahun and ec.id_ec=id_ec) as b on a.id_ec = b.id_ec)$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `get_topik_peserta_main` (IN `id_peserta` INT, IN `id_ec` INT)  NO SQL
 SELECT * from data_topik WHERE data_topik.id_topik in (select id_topik from peserta_topik where peserta_topik.id_peserta=id_peserta) AND data_topik.id_ec=id_ec$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `search_peserta_ec` (IN `id_ec` INT, IN `nama` VARCHAR(100))  NO SQL
+select * from peserta where peserta.id_peserta in (
+    select peserta_topik.id_peserta from peserta_topik WHERE id_topik in (
+       select topik_ec.id_topik from topik_ec where topik_ec.id_ec=id_ec
+    )
+) AND peserta.nama LIKE CONCAT('%', nama, '%')$$
 
 DELIMITER ;
 
@@ -250,18 +261,19 @@ CREATE TABLE `peserta` (
   `kota` varchar(100) NOT NULL,
   `no_hp` varchar(15) NOT NULL,
   `email` varchar(100) DEFAULT NULL,
-  `password` varchar(100) DEFAULT NULL
+  `password` varchar(100) DEFAULT NULL,
+  `agama` int(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `peserta`
 --
 
-INSERT INTO `peserta` (`id_peserta`, `nama`, `alamat`, `pekerjaan`, `lembaga`, `pendidikan_terakhir`, `kota`, `no_hp`, `email`, `password`) VALUES
-(7, 'Marchella Metta', 'Taman Kopo Indah 2', 'Mahasiswa', 'UNPAR', 2, 'Bandung', '087822714078', 'morningracoon@gmail.com', '$2y$10$b0qq18SNS/Pjz.ZxRy8YVuNVAGhrbgt4DRstFZ/8OdYXJM3AJ3eBy'),
-(8, 'Kelvin Tandika', 'Taman Holis Indah', 'Mahasiswa', 'UNPAR', 1, 'Bandung', '087822714078', 'kelvin@mail.com', '$2y$10$CgXW5YHHbM/00WfbskrhHeVHuUfcYH7.32ea/4hjECaDg7gP1oz4S'),
-(9, 'abc', 'def', 'Pegawai', 'UNPAR', 3, 'Bandung', '087822714078', 'abc@mail.com', '$2y$10$/gToF/ukTzXfy4fPJ8Gup.zSi.u.QUyWg/VDw7BvBWsKknDsgFRhC'),
-(10, 'Roxy', 'Taman Kopo', 'Mahasiswa', 'UNPAR', 1, 'Bandung', '087822714078', 'roxy@mail.com', '$2y$10$V7om3UT8NRIrjWgBHZBsGuJTr.mP4/stRwQQcnTfQ/R096AnGvoqG');
+INSERT INTO `peserta` (`id_peserta`, `nama`, `alamat`, `pekerjaan`, `lembaga`, `pendidikan_terakhir`, `kota`, `no_hp`, `email`, `password`, `agama`) VALUES
+(7, 'Marchella Metta', 'Taman Kopo Indah 2', 'Mahasiswa', 'UNPAR', 2, 'Bandung', '087822714078', 'morningracoon@gmail.com', '$2y$10$b0qq18SNS/Pjz.ZxRy8YVuNVAGhrbgt4DRstFZ/8OdYXJM3AJ3eBy', 2),
+(8, 'Kelvin Tandika', 'Taman Holis Indah', 'Mahasiswa', 'UNPAR', 1, 'Bandung', '087822714078', 'kelvin@mail.com', '$2y$10$CgXW5YHHbM/00WfbskrhHeVHuUfcYH7.32ea/4hjECaDg7gP1oz4S', 0),
+(9, 'abc', 'def', 'Pegawai', 'UNPAR', 3, 'Bandung', '087822714078', 'abc@mail.com', '$2y$10$/gToF/ukTzXfy4fPJ8Gup.zSi.u.QUyWg/VDw7BvBWsKknDsgFRhC', 0),
+(10, 'Roxy', 'Taman Kopo', 'Mahasiswa', 'UNPAR', 1, 'Bandung', '087822714078', 'roxy@mail.com', '$2y$10$V7om3UT8NRIrjWgBHZBsGuJTr.mP4/stRwQQcnTfQ/R096AnGvoqG', 0);
 
 -- --------------------------------------------------------
 
@@ -280,7 +292,6 @@ CREATE TABLE `peserta_topik` (
 --
 
 INSERT INTO `peserta_topik` (`id_topik`, `id_peserta`, `status_hadir`) VALUES
-(1, 7, 1),
 (1, 8, NULL),
 (2, 8, NULL),
 (1, 9, NULL),
@@ -288,7 +299,8 @@ INSERT INTO `peserta_topik` (`id_topik`, `id_peserta`, `status_hadir`) VALUES
 (3, 9, NULL),
 (1, 10, NULL),
 (2, 10, NULL),
-(3, 10, NULL);
+(3, 10, NULL),
+(1, 7, 1);
 
 -- --------------------------------------------------------
 
