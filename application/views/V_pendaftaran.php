@@ -6,26 +6,26 @@ defined('BASEPATH') OR exit('No direct script access allowed');
   <form method="post" action="<?php echo base_url('pendaftaran/daftar') ?>">
     <fieldset>
     <legend>Profil Umum</legend>
-      <div class="form-group col-md-6">
+      <div class="form-group col-md-8 col-lg-6">
         <label for="nama">Nama Lengkap</label>
         <input type="text" class="form-control" name="nama" placeholder="Nama Lengkap">
       </div>
-      <div class="form-group col-md-6">
+      <div class="form-group col-md-8 col-lg-6">
         <label for="alamat">Alamat</label>
         <textarea class="form-control" rows="5" name="alamat" placeholder="Alamat"></textarea>
       </div>
       <div class="form-row ml-2">
-        <div class="form-group col-md-3">
+        <div class="form-group col-md-4 col-lg-3">
           <label for="pekerjaan">Pekerjaan</label>
           <input type="text" class="form-control" name="pekerjaan" placeholder="Pekerjaan">
         </div>
-        <div class="form-group col-md-3">
+        <div class="form-group col-md-4 col-lg-3">
           <label for="lembaga">Lembaga</label>
           <input type="text" class="form-control" name="lembaga" placeholder="Lembaga">
         </div>
       </div>
       <div class="form-row ml-2">
-        <div class="form-group col-md-4 col-lg-2">
+        <div class="form-group col-md-4 col-lg-3">
           <label for="pendidikan">Pendidikan terakhir</label>
           <select class="form-control" name="pendidikan">
             <option value="1">SMA</option>
@@ -34,11 +34,24 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             <option value="4">S2</option>
           </select>
         </div>
-        <div class="form-group col-md-4 col-lg-2">
+        <div class="form-group col-md-4 col-lg-3">
           <label for="kota">Kota Asal</label>
           <input type="text" class="form-control" name="kota" placeholder="Kota Asal">
         </div>
-        <div class="form-group col-md-4 col-lg-2">
+      </div>
+      <div class="form-row ml-2">
+        <div class="form-group col-md-4 col-lg-3">
+          <label for="agama">Agama</label>
+          <select class="form-control" name="agama">
+            <option value="1">Katolik</option>
+            <option value="2">Kristen</option>
+            <option value="3">Islam</option>
+            <option value="4">Buddha</option>
+            <option value="5">Hindu</option>
+            <option value="6">Lainnya</option>
+          </select>
+        </div>
+        <div class="form-group col-md-4 col-lg-3">
           <label for="nohp">Nomor HP</label>
           <input type="text" class="form-control" name="nohp" placeholder="Nomor HP">
         </div>

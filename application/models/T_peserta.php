@@ -12,6 +12,8 @@ class T_peserta extends CI_Model{
     public $no_hp;
     public $email;
     public $password;
+    public $agama;
+
 
     private $table_name = 'peserta';
 

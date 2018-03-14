@@ -53,21 +53,59 @@ class C_Kelas_panitia extends CI_Controller{
   }
 
   public function cetakSertifikat($id){
-    $this->load->model('Stored_procedure');
-    $peserta = $this->Stored_procedure->get_all_peserta_ec($id);
-    $this->load->helper('template_engine');
-    $en = new TemplateEngine($this,$id);
-    $mpdf=new mPDF('','A5', 0, '', 0, 0, 0, 0, 0, 0, '');
-    $mpdf->SetWatermarkImage('../SIEC/images/sertif.png',1);
-    $mpdf->watermarkImgBehind = true;
-    $mpdf->showWatermarkImage = true;
-    //$mpdf = new mPDF();
-    foreach ($peserta as $row) {
-      $mpdf->WriteHTML($en->renderOutput());
-      $mpdf->AddPage();
+    if($this->input->method() == 'get'){
+      $this->load->model('Vw_data_ec');
+      $ec = $this->Vw_data_ec->get($id);
+
+      $this->load->view('V_header');
+      $this->load->view('V_navbar');
+      $this->load->view('V_cetak_sertifikat',[
+        'ec' => $ec
+      ]);
+      $this->load->view('V_footer');
+    }else if($this->input->method() == 'post'){
+      $post_data = $this->input->post();
+      $this->load->model('Stored_procedure');
+      $peserta = $this->Stored_procedure->get_all_peserta_ec($id);
+      $this->load->helper('template_engine');
+      $en = new TemplateEngine($this,$id);
+      $mpdf=new mPDF('','A5', 0, '', 0, 0, 0, 0, 0, 0, '');
+      $mpdf->SetWatermarkImage('../SIEC/images/sertif.png',1);
+      $mpdf->watermarkImgBehind = true;
+      $mpdf->showWatermarkImage = true;
+      //$mpdf = new mPDF();
+      foreach ($peserta as $row) {
+        $mpdf->WriteHTML($en->renderOutput($post_data['nama_top'],$post_data['nama_left'],$post_data['peran_top'],$post_data['peran_left'],$row->nama, "Peserta"));
+        $mpdf->AddPage();
+      }
+      //$mpdf->WriteHTML($en->renderOutput());
+      $mpdf->Output();
+
     }
-    //$mpdf->WriteHTML($en->renderOutput());
-    $mpdf->Output();
+
+  }
+
+  public function cetakSertifikatSatuan($id_ec, $id_peserta){
+    if($this->input->method() == 'get'){
+      
+    }else if($this->input->method() == 'post'){
+      $post_data = $this->input->post();
+      $this->load->model('T_peserta');
+      $peserta = $this->T_peserta->get($id_peserta);
+      $this->load->helper('template_engine');
+      $en = new TemplateEngine($this,$id);
+      $mpdf=new mPDF('','A5', 0, '', 0, 0, 0, 0, 0, 0, '');
+      $mpdf->SetWatermarkImage('../SIEC/images/sertif.png',1);
+      $mpdf->watermarkImgBehind = true;
+      $mpdf->showWatermarkImage = true;
+      //$mpdf = new mPDF();
+      $mpdf->WriteHTML($en->renderOutput($post_data['nama_top'],$post_data['nama_left'],$post_data['peran_top'],$post_data['peran_left'],$peserta->nama, "Peserta"));
+      $mpdf->AddPage();
+      //$mpdf->WriteHTML($en->renderOutput());
+      $mpdf->Output();
+
+    }
+
   }
 }
 ?>

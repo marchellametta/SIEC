@@ -48,6 +48,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
           <td><?php echo $data->kota; ?></td>
         </tr>
         <tr>
+          <td>Agama</td>
+          <td>:</td>
+          <td><?php echo $data->agama; ?></td>
+        </tr>
+        <tr>
           <td>Nomor HP</td>
           <td>:</td>
           <td><?php echo $data->no_hp; ?></td>

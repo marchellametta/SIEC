@@ -34,7 +34,9 @@ class C_User_profile extends CI_Controller{
          'pendidikan_terakhir' => intval($post_data['pendidikan']),
          'kota' => $post_data['kota'],
          'no_hp' => $post_data['nohp'],
-         'email' => $post_data['email']
+         'email' => $post_data['email'],
+         'agama' => $post_data['agama']
+
        ]);
 
        redirect('profil/'.$id, 'refresh');

@@ -75,7 +75,8 @@ class C_Pendaftaran extends CI_Controller{
            'kota' => $post_data['kota'],
            'no_hp' => $post_data['nohp'],
            'email' => $post_data['email'],
-           'password' => $hashed_pw
+           'password' => $hashed_pw,
+           'agama' => $post_data['agama']
          ]);
          $id_peserta = $this->db->insert_id();
          foreach ($post_data['topik'] as $row) {
