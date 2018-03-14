@@ -29,52 +29,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
   </div>
   <?php endforeach ?>
 </div>
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h4 class="modal-title" id="exampleModalLabel">Cetak Sertifikat</h4>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-         <div class="form-group col-md-12">
-           <label for="inputEmail4">Topik</label>
-           <input type="email" class="form-control" id="inputEmail4" placeholder="Email">
-         </div>
-         <div class="form-group col-md-12">
-           <label for="inputPassword4">Narasumber</label>
-           <input type="password" class="form-control" id="inputPassword4" placeholder="Password">
-         </div>
-         <div class="form-group col-md-12">
-           <label for="inputEmail">Tanggal</label>
-           <input class="form-control" id="datepicker" />
-         </div>
-         <div class="form-group col-md-12">
-           <label for="inputPassword">Jam</label>
-           <div class="row">
-             <div class="col-md-3">
-               <input type="password" class="form-control" id="inputPassword">
-             </div>
-             <a>-</a>
-             <div class="col-md-3">
-               <input type="password" class="form-control" id="inputPassword">
-             </div>
-           </div>
-         </div>
-         <div class="form-group col-md-12">
-           <label for="inputPassword">Lokasi</label>
-           <input type="password" class="form-control" id="inputPassword" placeholder="Password">
-         </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button id="tambah-topik-submit" type="button" class="btn btn-primary" data-dismiss="modal">Save changes</button>
-      </div>
-    </div>
-  </div>
-</div>
 
 
 <script>
