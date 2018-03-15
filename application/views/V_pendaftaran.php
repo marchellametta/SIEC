@@ -80,17 +80,20 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <?php foreach ($data as $row): ?>
      <div class="form-group col-md-12">
        <div class="form-check">
-         <input class="form-check-input selectall" type="checkbox" value="<?php echo $row->id_ec ?>" name="kelas[]"  data-checked="#<?php echo "collapse". $row->id_ec ?>" <?php if($selected===$row->id_ec) echo "checked"?>>
+         <input class="form-check-input selectall" type="checkbox" value="<?php echo $row->id_ec ?>" name="kelas[]"  data-biaya="<?php echo $row->biaya ?>" data-checked="#<?php echo "collapse". $row->id_ec ?>" <?php if($selected===$row->id_ec) echo "checked"?>>
          <label class="form-check-label" for="defaultCheck1">
-           <?php echo $row->jenis_ec. " : ".$row->tema_ec ?>
+           <?php echo $row->jenis_ec. ": ".$row->tema_ec."     <b>(Biaya: Rp. ".$row->biaya.",00)</b>" ?>
          </label>
          <?php if ($row->status_peserta == 2 ): ?>
-           <a class="" href="#" data-toggle="collapse" data-target="#<?php echo "collapse". $row->id_ec ?>"><i class="fa fa-plus-square mr-1 ml-1"></i>Pilih Topik</a>
+           <div><a class="" href="#" data-toggle="collapse" data-target="#<?php echo "collapse". $row->id_ec ?>"><i class="fa fa-plus-square mr-1 ml-1"></i>Pilih Topik</a></div>
          <?php endif; ?>
          <div class="form-check panel-collapse collapse in" id="<?php echo "collapse". $row->id_ec ?>">
+          <a><b>
+            <?php echo "Biaya Per Topik : Rp. ".$row->biaya_per_topik.",00" ?>
+          </b></a>
          <?php foreach ($row->topik_arr as $temp): ?>
            <div class="col-md-12">
-             <input class="form-check-input justone" type="checkbox" value="<?php echo $temp->id_topik ?>" name="topik[]" <?php if($selected===$row->id_ec) echo "checked"?>>
+             <input class="form-check-input justone" type="checkbox" value="<?php echo $temp->id_topik ?>" data-checked="#<?php echo "collapse". $row->id_ec ?>" data-biaya="<?php echo $row->biaya ?>" data-biaya-topik="<?php echo $row->biaya_per_topik ?>" name="topik[]" <?php if($selected===$row->id_ec) echo "checked"?>>
              <label class="form-check-label" for="defaultCheck1">
                <?php echo $temp->nama_topik ?>
              </label>
@@ -100,6 +103,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
        </div>
      </div>
      <?php endforeach ?>
+     <small class="text-muted ml-3 mt-3">*Kelas yang ada dalam daftar pilihan adalah kelas dengan kursi yang masih tersedia</small>
+     <div class="ml-3 mt-3"><a id="total-biaya"></a></div>
      <div class="text-right">
        <input type="submit" value="Daftar" class="btn btn-primary">
      </div>
@@ -107,11 +112,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
   </form>
 </div>
 <script>
+
+$( document ).ready(function() {
+    recalculate();
+});
+
 $('.selectall').click(function() {
    if ($(this).is(':checked')) {
        $($(this).data("checked")+' input:checkbox').prop('checked', true);
+       recalculate();
    } else {
        $($(this).data("checked")+' input:checkbox').prop('checked', false);
+       recalculate();
    }
 });
 
@@ -120,11 +132,30 @@ $('.selectall').click(function() {
 $("input[type='checkbox'].justone").change(function(){
     var a = $("#"+$(this).parent().parent().attr('id')+" input[type='checkbox'].justone");
     if(a.length == a.filter(":checked").length){
-        $('[data-checked="#collapse1"].selectall').prop('checked', true);
+      $('[data-checked="'+$(this).data("checked")+'"].selectall').prop('checked', true);
+      recalculate();
     }
     else {
-        $('[data-checked="#collapse1"].selectall').prop('checked', false);
+      $('[data-checked="'+$(this).data("checked")+'"].selectall').prop('checked', false);
+      recalculate();
     }
 });
+
+function recalculate(){
+    var sum =0 ;
+    $("input[type=checkbox]:checked.selectall").each(function(){
+      sum += parseInt($(this).data("biaya"));
+    });
+
+    $("input[type=checkbox]:checked.justone").each(function(){
+      if($('[data-checked="'+$(this).data("checked")+'"].selectall').is(':checked')){
+      }else{
+        sum += parseInt($(this).data("biaya-topik"));
+      }
+    });
+
+    $("#total-biaya").html("<b>Total Biaya: Rp. "+(sum)+",00</b>");
+}
+
 
 </script>
