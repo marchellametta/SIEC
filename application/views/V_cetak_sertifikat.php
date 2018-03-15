@@ -5,19 +5,30 @@ defined('BASEPATH') OR exit('No direct script access allowed');
   <div class="text-left ml-3"><h5><?php echo 'Cetak Sertifikat ' . $ec->jenis_ec. " : " . $ec->tema_ec; ?></h5></div>
   <div class="col-md-8 col-lg-6">
     <form method="post" action="<?php echo base_url().'kelas/cetak-sertifikat/' .$ec->id_ec; ?>">
+      <fieldset class="mt-4">
+        <legend>Pengaturan Batas Kelulusan</legend>
+        <div class="row ml-2">
+          <div class="form-group col-md-6">
+            <label for="batas_lulus">Batas Lulus</label>
+            <div class="row ml-2">
+              <input type="number" class="form-control col-4 col-md-4" value="<?php echo $ec->batas_lulus?>" name="batas_lulus" placeholder=""><a class="col-2 col-md-2 pt-1">%</a>
+            </div>
+          </div>
+        </div>
+      </fieldset>
      <fieldset class="mt-4">
        <legend>Pengaturan Letak Nama</legend>
        <div class="row ml-2">
          <div class="form-group col-md-6">
-           <label for="nama_top">Jarak dari atas halaman</label>
+           <label for="nama_top">Jarak Dari Atas Halaman</label>
            <div class="row ml-2">
-             <input type="number" class="form-control col-4 col-md-4" value="<?php echo $data->nama_top?>" name="nama_top" placeholder=""><a class="col-2 col-md-2 pt-1">cm</a>
+             <input type="number" class="form-control col-4 col-md-4" value="<?php if(isset($sertifikat->nama_top)) echo $sertifikat->nama_top?>" name="nama_top" placeholder=""><a class="col-2 col-md-2 pt-1">cm</a>
            </div>
          </div>
          <div class="form-group col-md-6">
-           <label for="nama_top">Jarak dari kiri halaman</label>
+           <label for="nama_top">Jarak Dari Kiri Halaman</label>
            <div class="row ml-2">
-             <input type="number" class="form-control col-4 col-md-4" value="<?php echo $data->nama_left?>" name="nama_left" placeholder=""><a class="col-2 col-md-2 pt-1">cm</a>
+             <input type="number" class="form-control col-4 col-md-4" value="<?php if(isset($sertifikat->nama_left)) echo $sertifikat->nama_left?>" name="nama_left" placeholder=""><a class="col-2 col-md-2 pt-1">cm</a>
            </div>
          </div>
        </div>
@@ -28,13 +39,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
          <div class="form-group col-md-6">
            <label for="nama_top">Jarak dari atas halaman</label>
            <div class="row ml-2">
-             <input type="number" class="form-control col-4 col-md-4" value="<?php echo $data->peran_top?>" name="peran_top" placeholder=""><a class="col-2 col-md-2 pt-1">cm</a>
+             <input type="number" class="form-control col-4 col-md-4" value="<?php if(isset($sertifikat->peran_top)) echo $sertifikat->peran_top?>" name="peran_top" placeholder=""><a class="col-2 col-md-2 pt-1">cm</a>
            </div>
          </div>
          <div class="form-group col-md-6">
            <label for="nama_top">Jarak dari kiri halaman</label>
            <div class="row ml-2">
-             <input type="number" class="form-control col-4 col-md-4" value="<?php echo $data->peran_left?>" name="peran_left" placeholder=""><a class="col-2 col-md-2 pt-1">cm</a>
+             <input type="number" class="form-control col-4 col-md-4" value="<?php if(isset($sertifikat->peran_left)) echo $sertifikat->peran_left?>" name="peran_left" placeholder=""><a class="col-2 col-md-2 pt-1">cm</a>
            </div>
          </div>
        </div>

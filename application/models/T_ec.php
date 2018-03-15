@@ -19,6 +19,8 @@ class T_ec extends CI_Model{
     public $jenis_ec;
     public $biaya_per_topik;
     public $kapasitas_peserta;
+    public $batas_lulus;
+
 
 
     private $table_name = 'ec';
@@ -34,6 +36,12 @@ class T_ec extends CI_Model{
         $this->db->where('id_ec',$id);
         return $this->db->get($this->table_name)->result();
     }
+
+    public function edit($id,$args){
+         /* No Error Handling yet! */
+         $this->db->where('id_ec',$id);
+         return $this->db->update($this->table_name,$args);
+     }
 
     public function getActive(){
         /* No Error Handling yet! */

@@ -37,7 +37,7 @@ class C_Absensi extends CI_Controller{
           ]);
         }
       }
-      //redirect('kelas/absensi/daftar-topik/'.$topik->id_ec, 'refresh');
+      redirect('kelas/absensi/daftar-topik/'.$topik->id_ec, 'refresh');
 
     }
   }

@@ -148,12 +148,15 @@ class C_Kelas_panitia extends CI_Controller{
   public function cetakSertifikat($id){
     if($this->input->method() == 'get'){
       $this->load->model('Vw_data_ec');
+      $this->load->model('T_Sertifikat');
       $ec = $this->Vw_data_ec->get($id);
+      $sertifikat = $this->T_Sertifikat->get($id);
 
       $this->load->view('V_header');
       $this->load->view('V_navbar');
       $this->load->view('V_cetak_sertifikat',[
-        'ec' => $ec
+        'ec' => $ec,
+        'sertifikat' => $sertifikat
       ]);
       $this->load->view('V_footer');
     }else if($this->input->method() == 'post'){
@@ -162,8 +165,28 @@ class C_Kelas_panitia extends CI_Controller{
         $this->cetakSertifikatSatuan($id,$post_data);
       }else{
         $post_data = $this->input->post();
-        $post_data['batas_lulus'] = 0;
         $this->load->model('Stored_procedure');
+        $this->load->model('T_Sertifikat');
+        $this->load->model('T_ec');
+
+        $this->db->trans_begin();
+        $this->T_ec->edit($id,[
+          'batas_lulus' => $post_data['batas_lulus']
+        ]);
+        $this->T_Sertifikat->insert([
+           'nama_top' => $post_data['nama_top'],
+           'nama_left' => $post_data['nama_left'],
+           'peran_top' => $post_data['peran_top'],
+           'peran_left' => $post_data['peran_left'],
+           'id_ec' => $id
+        ]);
+        if ($this->db->trans_status() === FALSE){
+          $this->db->trans_rollback();
+          redirect('kelas/cetak-sertifikat/'.$id, 'refresh');
+        }else{
+          $this->db->trans_commit();
+        }
+
         $peserta = $this->Stored_procedure->get_peserta_lulus($id,$post_data['batas_lulus']);
         $this->load->helper('template_engine');
         $en = new TemplateEngine($this,$id);

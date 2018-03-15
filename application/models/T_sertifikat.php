@@ -1,16 +1,16 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class T_jadwal extends CI_Model{
-    public $id_jadwal;
-    public $tanggal;
-    public $lokasi;
-    public $jam_mulai;
-    public $jam_selesai;
-    public $log_panitia;
-    public $id_topik;
+class T_Sertifikat extends CI_Model{
+    public $id_sertifikat;
+    public $gambar;
+    public $nama_top;
+    public $nama_left;
+    public $peran_top;
+    public $peran_left;
+    public $id_ec;
 
-    private $table_name = 'jadwal';
+    private $table_name = 'sertifikat';
 
     public function all(){
         /* No Error Handling yet! */
@@ -20,7 +20,7 @@ class T_jadwal extends CI_Model{
 
     public function get($id){
         /* No Error Handling yet! */
-        $this->db->where('id_topik',$id);
+        $this->db->where('id_ec',$id);
         return $this->db->get($this->table_name)->row();
     }
 
@@ -32,7 +32,7 @@ class T_jadwal extends CI_Model{
 
    public function edit($id,$args){
         /* No Error Handling yet! */
-        $this->db->where('id_topik',$id);
+        $this->db->where('id_ec',$id);
         return $this->db->update($this->table_name,$args);
     }
 }
