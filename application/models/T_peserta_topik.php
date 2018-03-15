@@ -5,7 +5,7 @@ class T_peserta_topik extends CI_Model{
     public $id_topik;
     public $id_peserta;
     public $status_hadir;
-    public $status_bayar;    
+    public $status_bayar;
 
 
     private $table_name = 'peserta_topik';
@@ -31,6 +31,12 @@ class T_peserta_topik extends CI_Model{
     public function edit($id, $id_peserta, $args){
         /* No Error Handling yet! */
         $this->db->where('id_topik',$id);
+        $this->db->where('id_peserta',$id_peserta);
+        return $this->db->update($this->table_name,$args);
+    }
+
+    public function editBayar($id_peserta, $args){
+        /* No Error Handling yet! */
         $this->db->where('id_peserta',$id_peserta);
         return $this->db->update($this->table_name,$args);
     }

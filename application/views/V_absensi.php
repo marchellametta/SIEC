@@ -29,7 +29,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <td><?php echo $row->nama;?></td>
         <td class="text-center">
           <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="<?php echo $row->id_peserta?>" name= "hadir[]">
+            <input class="form-check-input" type="checkbox" value="<?php echo $row->id_peserta?>" name= "hadir[]" <?php if($row->status_hadir==1) echo "checked"?>>
           </div>
         </td>
       </tr>

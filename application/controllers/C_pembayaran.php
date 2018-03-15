@@ -20,12 +20,20 @@ class C_Pembayaran extends CI_Controller{
     } else if($this->input->method() == 'post'){
       $this->load->model('T_peserta_topik');
       $post_data = $this->input->post();
-      foreach ($post_data['bayar'] as $row) {
-        $this->T_peserta_topik->edit($id,$row,[
-          'status_bayar' => 1
+      $peserta = $this->Stored_procedure->get_all_peserta_ec($id);
+      foreach ($peserta as $row) {
+        $this->T_peserta_topik->editBayar($row->id_peserta,[
+          'status_bayar' => 0
         ]);
       }
-      redirect('kelas/', 'refresh');
+      if(isset($_POST['bayar'])){
+        foreach ($post_data['bayar'] as $row) {
+          $this->T_peserta_topik->editBayar($row,[
+            'status_bayar' => 1
+          ]);
+        }
+      }
+      redirect('kelas/aktif', 'refresh');
 
     }
   }
