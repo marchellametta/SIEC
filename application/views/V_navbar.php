@@ -26,17 +26,26 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <li class="nav-item">
           <a class="<?php if($this->uri->segment(1)==''){echo 'active';}?> nav-link" href="<?php echo base_url(); ?>">BERANDA</a>
         </li>
-        <li class="nav-item">
-          <a class="<?php if($this->uri->segment(1)=='informasi'){echo 'active';}?> nav-link" href="<?php echo base_url(); ?>informasi">INFORMASI</a>
-        </li>
+        <li class="nav-item dropdown">
+         <a class="<?php if($this->uri->segment(1)=='informasi' ){echo 'active';}?> nav-link dropdown-toggle" href="#" id="informasiDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+           INFORMASI
+         </a>
+         <div class="dropdown-menu bg-dark" aria-labelledby="informasiDropdown">
+           <a class="dropdown-item text-white" href="<?php echo base_url();?>informasi/aktif">Kelas yang Sedang Berjalan</a>
+           <div class="dropdown-divider"></div>
+           <a class="dropdown-item text-white" href="<?php echo base_url(); ?>informasi/riwayat">Riwayat Kelas</a>
+           <div class="dropdown-divider"></div>
+           <a class="dropdown-item text-white" href="<?php echo base_url(); ?>informasi/mendatang">Kelas Mendatang</a>
+         </div>
+       </li>
         <li class="nav-item">
           <a class="<?php if($this->uri->segment(1)=='pendaftaran'){echo 'active';}?> nav-link" href="<?php echo base_url(); ?>pendaftaran">PENDAFTARAN</a>
         </li>
         <li class="nav-item dropdown mr-2">
-         <a class="<?php if($this->uri->segment(1)=='lokasi' || $this->uri->segment(1)=='visimisi' ){echo 'active';}?> nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+         <a class="<?php if($this->uri->segment(1)=='lokasi' || $this->uri->segment(1)=='visimisi' ){echo 'active';}?> nav-link dropdown-toggle" href="#" id="tentangKamiDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
            TENTANG KAMI
          </a>
-         <div class="dropdown-menu bg-dark w-100" aria-labelledby="navbarDropdown">
+         <div class="dropdown-menu bg-dark w-100" aria-labelledby="tentangKamiDropdown">
            <a class="dropdown-item text-white" href="<?php echo base_url();?>visimisi">Visi&Misi</a>
            <div class="dropdown-divider"></div>
            <a class="dropdown-item text-white" href="<?php echo base_url(); ?>lokasi">Lokasi</a>

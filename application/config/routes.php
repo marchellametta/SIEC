@@ -54,7 +54,9 @@ $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
 
 $route['login'] = 'Login_Controller/login';
-$route['informasi'] = 'C_informasi/index';
+$route['informasi/aktif'] = 'C_informasi/aktif';
+$route['informasi/riwayat'] = 'C_informasi/riwayat';
+$route['informasi/mendatang'] = 'C_informasi/akanDatang';
 $route['tambahkelas'] = 'C_informasi/tambah';
 $route['lokasi'] = 'C_lokasi/index';
 $route['visimisi'] = 'C_visimisi/index';

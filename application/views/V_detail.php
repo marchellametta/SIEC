@@ -12,6 +12,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
       <a id="link-jadwal" href="<?php echo base_url();?>informasi/jadwal/<?php echo $data->id_ec;?>"><i class="fa fa-calendar mr-1"></i>Lihat Jadwal</a>
     </div>
   </div>
+  <?php if(empty($topik_arr)):?>
+  <div class="alert alert-info mb-0 mt-5" role="alert">
+    <i class="fa fa-info-circle mr-2"></i>Rangkaian topik belum tersedia
+  </div>
+  <?php else : ?>
   <?php foreach ($topik_arr as $row): ?>
     <div class="card mt-3 shadow">
       <div class="card-body">
@@ -21,4 +26,5 @@ defined('BASEPATH') OR exit('No direct script access allowed');
       </div>
     </div>
     <?php endforeach ?>
+  <?php endif; ?>
   </div>

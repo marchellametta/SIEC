@@ -5,7 +5,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
   <?php $this->load->view('V_template_breadcrumb', ['viewName' => 'V_informasi']) ?>
   <div class="row ml-3 mr-3">
 
-    <div class="col-12 col-sm-6 col-lg-7 col-xl-7"><h5>INFORMASI KELAS EC YANG DIBUKA</h5></div>
+    <div class="col-12 col-sm-6 col-lg-7 col-xl-7"><h5>INFORMASI RIWAYAT KELAS</h5></div>
     <div class="col-12 col-sm-6 col-lg-5 col-xl-5">
       <div class="row">
         <div class="col-12 col-sm-4 col-lg-3">
@@ -23,7 +23,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     </div>
   </div>
 
-  <?php foreach ($data as $row): ?>
+  <?php foreach ($riwayat as $row): ?>
   <div class="card mt-4 shadow ml-3 mr-3">
     <div class="card-body">
       <div class="row">
@@ -37,13 +37,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
           <?php endif; ?>
           <?php if($row->status_peserta==2):?>
           <div class="alert alert-info mb-0 mt-5" role="alert">
-            <i class="fa fa-info-circle mr-2"></i>Anda dapat mendaftar untuk sebagian topik saja dari kelas ini
+            <i class="fa fa-info-circle mr-2"></i>Peserta dapat mendaftar untuk sebagian topik saja dari kelas ini
           </div>
           <p class= "mt-2"><a tabindex="0" class= "" role="button" data-toggle="popover" data-placement="right" data-trigger="focus" data-html="true" data-content="<?php echo $row->jumlah_peserta?>"><i class="fa fa-external-link"></i>Jumlah Peserta</a></p>
           <?php endif; ?>
           <a href="<?php echo base_url();?>informasi/detail/<?php echo $row->id_ec;?>" class="border-right pr-2 border-dark"><i class="fa fa-external-link mr-1 ml-1"></i>Detail</a>
-          <a href="<?php echo base_url();?>informasi/jadwal/<?php echo $row->id_ec;?>" class="border-right pr-2 border-dark"><i class="fa fa-calendar mr-1 ml-1"></i>Lihat Jadwal</a>
-          <a href="<?php echo base_url();?>pendaftaran?c=<?php echo $row->id_ec;?>"><i class="fa fa-edit mr-1 ml-1 border-dark"></i>Daftar</a>
+          <a href="<?php echo base_url();?>informasi/jadwal/<?php echo $row->id_ec;?>" class=""><i class="fa fa-calendar mr-1 ml-1"></i>Lihat Jadwal</a>
         </div>
       </div>
     </div>
