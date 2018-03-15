@@ -5,6 +5,7 @@ class T_peserta_topik extends CI_Model{
     public $id_topik;
     public $id_peserta;
     public $status_hadir;
+    public $status_bayar;    
 
 
     private $table_name = 'peserta_topik';

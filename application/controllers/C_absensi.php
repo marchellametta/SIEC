@@ -21,14 +21,14 @@ class C_Absensi extends CI_Controller{
        ]);
        $this->load->view('V_footer');
     } else if($this->input->method() == 'post'){
-      $this->load->model("T_peserta_topik");
+      $this->load->model('T_peserta_topik');
       $post_data = $this->input->post();
       foreach ($post_data['hadir'] as $row) {
         $this->T_peserta_topik->edit($id,$row,[
           'status_hadir' => 1
         ]);
       }
-      redirect('absensi/daftar-topik/'.$topik->id_ec, 'refresh');
+      redirect('kelas/absensi/daftar-topik/'.$topik->id_ec, 'refresh');
 
     }
   }

@@ -2,10 +2,28 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 $base_url = base_url();
 $breadcrumbRules = [
-  'V_informasi' => [
+  'V_informasi_aktif' => [
     'crumbs' => [
       1 => [
-        'text' => 'Informasi',
+        'text' => 'Informasi Kelas yang Sedang Berlangsung',
+        'link' => '#',
+        'active' => true
+      ]
+    ]
+  ],
+  'V_informasi_akan_datang' => [
+    'crumbs' => [
+      1 => [
+        'text' => 'Informasi Kelas Mendatang',
+        'link' => '#',
+        'active' => true
+      ]
+    ]
+  ],
+  'V_informasi_riwayat' => [
+    'crumbs' => [
+      1 => [
+        'text' => 'Informasi Riwayat Kelas',
         'link' => '#',
         'active' => true
       ]
@@ -99,6 +117,19 @@ $breadcrumbRules = [
       ],
       2 => [
         'text' => 'Daftar Topik',
+        'link' => '#',
+        'active' => true
+      ]
+    ]
+  ],
+  'V_pembayaran' => [
+    'crumbs' => [
+      1 => [
+        'text' => 'Daftar Kelas',
+        'link' => $base_url.'kelas',
+      ],
+      2 => [
+        'text' => 'Daftar Pembayaran',
         'link' => '#',
         'active' => true
       ]
