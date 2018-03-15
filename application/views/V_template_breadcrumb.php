@@ -11,7 +11,7 @@ $breadcrumbRules = [
       ]
     ]
   ],
-  'V_informasi_akan_datang' => [
+  'V_informasi_akan' => [
     'crumbs' => [
       1 => [
         'text' => 'Informasi Kelas Mendatang',
@@ -100,10 +100,28 @@ $breadcrumbRules = [
       ]
     ]
   ],
-  'V_daftar_kelas' => [
+  'V_daftar_kelas_aktif' => [
     'crumbs' => [
       1 => [
-        'text' => 'Daftar Kelas',
+        'text' => 'Daftar Kelas yang Sedang Berlangsung',
+        'link' => '#',
+        'active' => true
+      ]
+    ]
+  ],
+  'V_daftar_kelas_akan' => [
+    'crumbs' => [
+      1 => [
+        'text' => 'Daftar Kelas Mendatang',
+        'link' => '#',
+        'active' => true
+      ]
+    ]
+  ],
+  'V_daftar_kelas_riwayat' => [
+    'crumbs' => [
+      1 => [
+        'text' => 'Daftar Riwayat Kelas',
         'link' => '#',
         'active' => true
       ]

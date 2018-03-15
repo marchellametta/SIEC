@@ -11,9 +11,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
   </ol>
 </nav>
   <div class="text-left ml-3"><h5>Jadwal Kelas <?php echo $ec->jenis_ec. " : " . $ec->tema_ec ; ?></h5></div>
-  <?php if(empty($topik_arr)):?>
+  <?php if(empty($data)):?>
   <div class="alert alert-info mb-0 mt-5" role="alert">
-    <i class="fa fa-info-circle mr-2"></i>Jadwal belum tersedia
+    <i class="fa fa-info-circle mr-2"></i>Jadwal tidak tersedia
   </div>
   <?php else : ?>
   <table class="table table-hover table-striped table-bordered d-none d-sm-block">

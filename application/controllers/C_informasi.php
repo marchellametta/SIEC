@@ -40,8 +40,9 @@ class C_Informasi extends CI_Controller{
 
       $this->load->view('V_header');
       $this->load->view('V_navbar');
-      $this->load->view('V_informasi_aktif',[
-        'aktif' => $aktif
+      $this->load->view('V_informasi',[
+        'data' => $aktif,
+        'tipe' => 'aktif'
       ]);
       $this->load->view('V_footer');
     } else if($this->input->method() == 'post'){
@@ -85,8 +86,9 @@ class C_Informasi extends CI_Controller{
       }
       $this->load->view('V_header');
       $this->load->view('V_navbar');
-      $this->load->view('V_informasi_riwayat',[
-        'riwayat' => $riwayat
+      $this->load->view('V_informasi',[
+        'data' => $riwayat,
+        'tipe' => 'riwayat'
       ]);
       $this->load->view('V_footer');
     } else if($this->input->method() == 'post'){
@@ -130,8 +132,9 @@ class C_Informasi extends CI_Controller{
       }
       $this->load->view('V_header');
       $this->load->view('V_navbar');
-      $this->load->view('V_informasi_akan_datang',[
-        'akan' => $akan
+      $this->load->view('V_informasi',[
+        'data' => $akan,
+        'tipe' => 'akan'
       ]);
       $this->load->view('V_footer');
     } else if($this->input->method() == 'post'){

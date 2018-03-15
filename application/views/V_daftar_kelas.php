@@ -2,7 +2,7 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 ?>
 <div class="mr-3 ml-3 mr-sm-3 ml-sm-3 mr-md-5 ml-md-5 mt-5 mb-5">
-<?php $this->load->view('V_template_breadcrumb', ['viewName' => 'V_daftar_kelas']) ?>
+<?php $this->load->view('V_template_breadcrumb', ['viewName' => 'V_daftar_kelas_'.$tipe]) ?>
   <div class="text-left ml-3"><h5>DAFTAR KELAS</h5></div>
   <?php foreach ($data as $row): ?>
   <div class="card mt-4 shadow ml-3 mr-3">
@@ -20,10 +20,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
           <p class="card-text text-muted mt-5"><i class="fa fa-info-circle mr-1"></i>Peserta lepas diperbolehkan</p>
           <p class= "card-text"><a tabindex="0" class= "" role="button" data-toggle="popover" data-placement="right" data-trigger="focus" data-html="true" data-content="<?php echo $row->jumlah_peserta?>"><i class="fa fa-external-link"></i>Jumlah Peserta</a></p>
           <?php endif; ?>
+          <a href="<?php echo base_url() .'informasi/detail/'. $row->id_ec;?>" class="<?php if($tipe!=='akan') echo 'border-right border-dark'?> pr-2 "><i class="fa fa-external-link mr-1 ml-1"></i>Detail</a>
+          <?php if($tipe=='aktif'):?>
           <a href="<?php echo base_url() .'kelas/absensi/daftar-topik/'. $row->id_ec;?>" class="border-right pr-2 border-dark"><i class="fa fa-edit mr-1 ml-1"></i>Absensi</a>
+          <?php endif; ?>
+          <?php if($tipe=='aktif' || $tipe=='riwayat'):?>
           <a href="<?php echo base_url() .'kelas/pembayaran/'. $row->id_ec;?>" class="border-right pr-2 border-dark"><i class="fa fa-edit mr-1 ml-1"></i>Status Pembayaran</a>
+          <?php endif; ?>
+          <?php if($tipe!=='akan'):?>
           <a href="<?php echo base_url();?>kelas/cetak-sertifikat/<?php echo $row->id_ec;?>" class="border-right pr-2 border-dark"><i class="fa fa-file-pdf-o mr-1 ml-1"></i>Cetak Sertifikat</a>
           <a href="<?php echo base_url();?>jadwal/<?php echo $row->id_ec;?>" class="pr-2"><i class="fa fa-pie-chart mr-1 ml-1 border-dark"></i>Lihat Hasil Evaluasi</a>
+          <?php endif; ?>
         </div>
       </div>
     </div>

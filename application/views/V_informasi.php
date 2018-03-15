@@ -2,10 +2,15 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 ?>
 <div class="mr-3 ml-3 mr-sm-3 ml-sm-3 mr-md-5 ml-md-5 mt-5 mb-5">
-  <?php $this->load->view('V_template_breadcrumb', ['viewName' => 'V_informasi_akan_datang']) ?>
+  <?php $this->load->view('V_template_breadcrumb', ['viewName' => 'V_informasi_'.$tipe]) ?>
   <div class="row ml-3 mr-3">
-
+    <?php if($tipe=='aktif'):?>
+    <div class="col-12 col-sm-6 col-lg-7 col-xl-7"><h5>INFORMASI KELAS EC YANG SEDANG BERJALAN</h5></div>
+    <?php elseif($tipe=='akan'):?>
     <div class="col-12 col-sm-6 col-lg-7 col-xl-7"><h5>INFORMASI KELAS EC YANG AKAN DIBUKA SEMESTER DEPAN</h5></div>
+  <?php else: ?>
+    <div class="col-12 col-sm-6 col-lg-7 col-xl-7"><h5>INFORMASI RIWAYAT KELAS</h5></div>
+  <?php endif; ?>
     <div class="col-12 col-sm-6 col-lg-5 col-xl-5">
       <div class="row">
         <div class="col-12 col-sm-4 col-lg-3">
@@ -23,7 +28,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     </div>
   </div>
 
-  <?php foreach ($akan as $row): ?>
+  <?php foreach ($data as $row): ?>
   <div class="card mt-4 shadow ml-3 mr-3">
     <div class="card-body">
       <div class="row">
@@ -42,8 +47,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
           <p class= "mt-2"><a tabindex="0" class= "" role="button" data-toggle="popover" data-placement="right" data-trigger="focus" data-html="true" data-content="<?php echo $row->jumlah_peserta?>"><i class="fa fa-external-link"></i>Jumlah Peserta</a></p>
           <?php endif; ?>
           <a href="<?php echo base_url();?>informasi/detail/<?php echo $row->id_ec;?>" class="border-right pr-2 border-dark"><i class="fa fa-external-link mr-1 ml-1"></i>Detail</a>
-          <a href="<?php echo base_url();?>informasi/jadwal/<?php echo $row->id_ec;?>" class="border-right pr-2 border-dark"><i class="fa fa-calendar mr-1 ml-1"></i>Lihat Jadwal</a>
-          <a href="<?php echo base_url();?>pendaftaran?c=<?php echo $row->id_ec;?>"><i class="fa fa-edit mr-1 ml-1 border-dark"></i>Daftar</a>
+          <a href="<?php echo base_url();?>informasi/jadwal/<?php echo $row->id_ec;?>" class="<?php if($tipe!=='riwayat') echo 'border-right border-dark'?> pr-2"><i class="fa fa-calendar mr-1 ml-1"></i>Lihat Jadwal</a>
+          <?php if($tipe!=='riwayat'):?>
+            <a href="<?php echo base_url();?>pendaftaran?c=<?php echo $row->id_ec;?>"><i class="fa fa-edit mr-1 ml-1 border-dark"></i>Daftar</a>
+          <?php endif; ?>
         </div>
       </div>
     </div>

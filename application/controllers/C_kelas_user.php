@@ -4,7 +4,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class C_Kelas_user extends CI_Controller{
 
 
-  public function getEC(){
+  public function aktif(){
     if($this->input->method() == 'get'){
       $this->load->model('Stored_procedure');
       $data = $this->Stored_procedure->get_ec_peserta(7);

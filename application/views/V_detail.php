@@ -14,7 +14,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
   </div>
   <?php if(empty($topik_arr)):?>
   <div class="alert alert-info mb-0 mt-5" role="alert">
-    <i class="fa fa-info-circle mr-2"></i>Rangkaian topik belum tersedia
+    <i class="fa fa-info-circle mr-2"></i>Rangkaian topik tidak tersedia
   </div>
   <?php else : ?>
   <?php foreach ($topik_arr as $row): ?>
