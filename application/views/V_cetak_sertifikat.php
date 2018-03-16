@@ -4,7 +4,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <div class="mr-3 ml-3 mr-sm-3 ml-sm-3 mr-md-5 ml-md-5 mt-5 mb-5">
   <div class="text-left ml-3"><h5><?php echo 'Cetak Sertifikat ' . $ec->jenis_ec. " : " . $ec->tema_ec; ?></h5></div>
   <div class="col-md-8 col-lg-6">
-    <form method="post" action="<?php echo base_url().'kelas/cetak-sertifikat/' .$ec->id_ec; ?>">
+    <form method="post" action="<?php echo base_url().'kelas/cetak-sertifikat/' .$ec->id_ec; ?>" enctype="multipart/form-data">
       <fieldset class="mt-4">
         <legend>Pengaturan Batas Kelulusan</legend>
         <div class="row ml-2">
@@ -12,6 +12,19 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             <label for="batas_lulus">Batas Lulus</label>
             <div class="row ml-2">
               <input type="number" class="form-control col-4 col-md-4" value="<?php echo $ec->batas_lulus?>" name="batas_lulus" placeholder=""><a class="col-2 col-md-2 pt-1">%</a>
+            </div>
+          </div>
+        </div>
+      </fieldset>
+      <fieldset class="mt-4">
+        <legend>Pengaturan Gambar Background</legend>
+        <div class="row ml-2">
+          <div class="form-group col-md-8">
+            <label for="input-gambar" class="control-label">Gambar</label>
+            <div class="input-group">
+              <span id="input-gambar-icon" class="input-group-addon border"><i class="fa fa-upload p-2"></i></span>
+              <input type="file" accept="image/*" name="gambar-file" id="input-gambar-file" class="hidden">
+              <input type="text" placeholder="Pilih Gambar" id="input-gambar" name="gambar" class="form-control cursor" readonly>
             </div>
           </div>
         </div>
@@ -127,6 +140,15 @@ $(function () {
      });
     });
 
+    $('#input-gambar').add('#input-gambar-icon').on('click', function(event) {
+              event.preventDefault();
+              $('#input-gambar-file').click();
+            });
+
+            $('#input-gambar-file').on('change', function() {
+              var filename = $(this).val().split(/(\\|\/)/g).pop();
+              $('#input-gambar').val(filename).keyup();
+            });
 
 
 

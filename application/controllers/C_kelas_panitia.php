@@ -160,26 +160,57 @@ class C_Kelas_panitia extends CI_Controller{
       ]);
       $this->load->view('V_footer');
     }else if($this->input->method() == 'post'){
+      $this->load->helper('upload_file');
+      $this->load->model('T_ec');
+      $post_data = $this->input->post();
+      $res="";
+      if(!empty($_FILES['gambar-file']['name'])){
+      $res = upload_file($this,[
+        'field_name' => 'gambar-file',
+        'upload_path' => 'images/sertifikat',
+        'file_name' => $post_data['gambar'],
+        'max_size' => 8192
+      ]);
+      }
+      if(isset($res->error_code){
+        echo $res->errors;
+        die();
+      }else if(!isset($res->error_code)){
+        $post_data['gambar'] = $res;
+      }
+
       if(!empty($_POST['id_peserta'])){
-        $post_data = $this->input->post();
         $this->cetakSertifikatSatuan($id,$post_data);
       }else{
-        $post_data = $this->input->post();
         $this->load->model('Stored_procedure');
         $this->load->model('T_Sertifikat');
-        $this->load->model('T_ec');
+
 
         $this->db->trans_begin();
         $this->T_ec->edit($id,[
           'batas_lulus' => $post_data['batas_lulus']
         ]);
-        $this->T_Sertifikat->insert([
-           'nama_top' => $post_data['nama_top'],
-           'nama_left' => $post_data['nama_left'],
-           'peran_top' => $post_data['peran_top'],
-           'peran_left' => $post_data['peran_left'],
-           'id_ec' => $id
-        ]);
+        $data_sertif = $this->T_Sertifikat->get($id);
+        if(empty($data_sertif)){
+          $this->T_Sertifikat->insert([
+             'gambar' => $post_data['gambar'],
+             'nama_top' => $post_data['nama_top'],
+             'nama_left' => $post_data['nama_left'],
+             'peran_top' => $post_data['peran_top'],
+             'peran_left' => $post_data['peran_left'],
+             'id_ec' => $id
+          ]);
+        }else{
+          $this->T_Sertifikat->edit($id,[
+             'gambar' => $post_data['gambar'],
+             'nama_top' => $post_data['nama_top'],
+             'nama_left' => $post_data['nama_left'],
+             'peran_top' => $post_data['peran_top'],
+             'peran_left' => $post_data['peran_left'],
+             'id_ec' => $id
+          ]);
+        }
+
         if ($this->db->trans_status() === FALSE){
           $this->db->trans_rollback();
           redirect('kelas/cetak-sertifikat/'.$id, 'refresh');
@@ -191,7 +222,7 @@ class C_Kelas_panitia extends CI_Controller{
         $this->load->helper('template_engine');
         $en = new TemplateEngine($this,$id);
         $mpdf=new mPDF('','A5', 0, '', 0, 0, 0, 0, 0, 0, '');
-        $mpdf->SetWatermarkImage('../SIEC/images/sertif.png',1);
+        $mpdf->SetWatermarkImage('../SIEC/'.$post_data['gambar'],1);
         $mpdf->watermarkImgBehind = true;
         $mpdf->showWatermarkImage = true;
         //$mpdf = new mPDF();
@@ -214,7 +245,7 @@ class C_Kelas_panitia extends CI_Controller{
       $this->load->helper('template_engine');
       $en = new TemplateEngine($this,$id);
       $mpdf=new mPDF('','A5', 0, '', 0, 0, 0, 0, 0, 0, '');
-      $mpdf->SetWatermarkImage('../SIEC/images/sertif.png',1);
+      $mpdf->SetWatermarkImage('../SIEC/'.$post_data['gambar'],1);
       $mpdf->watermarkImgBehind = true;
       $mpdf->showWatermarkImage = true;
       //$mpdf = new mPDF();
