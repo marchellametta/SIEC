@@ -105,10 +105,31 @@ defined('BASEPATH') OR exit('No direct script access allowed');
      <?php endforeach ?>
      <small class="text-muted ml-3 mt-3">*Kelas yang ada dalam daftar pilihan adalah kelas dengan kursi yang masih tersedia</small>
      <div class="ml-3 mt-3"><a id="total-biaya"></a></div>
+     </fieldset>
      <div class="text-right">
-       <input type="submit" value="Daftar" class="btn btn-primary">
+       <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal_konfirmasi">
+         Daftar
+       </button>
      </div>
-    </fieldset>
+     <div class="modal fade" id="modal_konfirmasi">
+       <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <a class="modal-title"><b>Konfirmasi Pendaftaran</b></a>
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+          </div>
+          <div class="modal-body">
+            Apakah Anda yakin untuk mendaftar?
+          </div>
+          <div class="modal-footer">
+            <div class="text-right">
+              <input type="submit" value="Daftar" class="btn btn-success">
+              <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </form>
 </div>
 <script>
