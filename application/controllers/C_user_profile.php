@@ -9,8 +9,8 @@ class C_User_profile extends CI_Controller{
        $this->load->view('V_header');
        $this->load->view('V_navbar');
 
-       $this->load->model('T_peserta');
-       $data = $this->T_peserta->get($id);
+       $this->load->model('T_user');
+       $data = $this->T_user->get($id);
        $this->load->view('V_user_profile',[
          'data' => $data
        ]);
@@ -25,8 +25,8 @@ class C_User_profile extends CI_Controller{
     if($this->input->method() == 'post'){
        $post_data = $this->input->post();
 
-       $this->load->model('T_peserta');
-       $this->T_peserta->edit($id,[
+       $this->load->model('T_user');
+       $this->T_user->edit($id,[
          'nama' => $post_data['nama'],
          'alamat' => $post_data['alamat'],
          'pekerjaan' => $post_data['pekerjaan'],
@@ -48,14 +48,14 @@ class C_User_profile extends CI_Controller{
 
   public function editPassword($id){
     if($this->input->method() == 'post'){
-      $this->load->model('T_peserta');
-      $db_password = $this->T_peserta->get($id)->password;
+      $this->load->model('T_user');
+      $db_password = $this->T_user->get($id)->password;
        $post_data = $this->input->post();
 
        $match = password_verify($post_data['password_lama'] ,$db_password);
 
        if($match==true){
-         $this->T_peserta->edit($id,[
+         $this->T_user->edit($id,[
            'password' => password_hash($post_data['password_baru'], PASSWORD_DEFAULT)
          ]);
        }else{

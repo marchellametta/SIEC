@@ -63,7 +63,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
           <td><?php echo $data->email ?></td>
         </tr>
       </table>
-      <form class="hidden" method="post" action="<?php echo base_url() . "/profil/editProfil/". $data->id_peserta?>" id="form-profil-user">
+      <form class="hidden" method="post" action="<?php echo base_url() . "profil/editProfil/". $data->id_user?>" id="form-profil-user">
           <div class="form-group col-md-12">
             <label for="nama">Nama Lengkap</label>
             <input type="text" value="<?php echo $data->nama; ?>" class="form-control" name="nama" placeholder="Nama Lengkap">
@@ -113,7 +113,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
     </fieldset>
 
-    <form method="post" action="<?php echo base_url() . "/profil/editPassword/". $data->id_peserta?>" class="hidden mt-3" id="form-akun-user">
+    <form method="post" action="<?php echo base_url() . "/profil/editPassword/". $data->id_user?>" class="hidden mt-3" id="form-akun-user">
       <fieldset>
       <legend>Ubah Password</legend>
       <div class="form-group col-md-6">

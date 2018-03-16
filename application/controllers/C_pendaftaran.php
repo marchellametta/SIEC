@@ -1,4 +1,4 @@
-<?php
+T_user<?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class C_Pendaftaran extends CI_Controller{
@@ -62,11 +62,11 @@ class C_Pendaftaran extends CI_Controller{
     } else if($this->input->method() == 'post'){
          $post_data = $this->input->post();
          $hashed_pw = password_hash($post_data['password'], PASSWORD_DEFAULT);
-         $this->load->model('T_peserta');
+         $this->load->model('T_user');
           $this->load->model('T_peserta_topik');
 
           $this->db->trans_begin();
-         $this->T_peserta->insert([
+         $this->T_user->insert([
            'nama' => $post_data['nama'],
            'alamat' => $post_data['alamat'],
            'pekerjaan' => $post_data['pekerjaan'],

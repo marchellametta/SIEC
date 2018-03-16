@@ -319,8 +319,8 @@ class C_Kelas_panitia extends CI_Controller{
   }
 
   private function cetakSertifikatSatuan($id_ec, $post_data){
-      $this->load->model('T_peserta');
-      $peserta = $this->T_peserta->get($post_data['id_peserta']);
+      $this->load->model('T_user');
+      $peserta = $this->T_user->get($post_data['id_peserta']);
       $this->load->helper('template_engine');
       $en = new TemplateEngine($this,$id);
       $mpdf=new mPDF('','A5', 0, '', 0, 0, 0, 0, 0, 0, '');
