@@ -46,7 +46,7 @@ class C_Pembayaran extends CI_Controller{
       $post_data = $this->input->post();
       $peserta = $this->Stored_procedure->get_all_peserta_ec($id);
       foreach ($peserta as $row) {
-        $this->T_peserta_topik->editBayar($row->id_peserta,[
+        $this->T_peserta_topik->editBayar($row->id_user,[
           'status_bayar' => 0
         ]);
       }
