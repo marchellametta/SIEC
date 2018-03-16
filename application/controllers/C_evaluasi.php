@@ -11,7 +11,7 @@ class C_Evaluasi extends CI_Controller{
 
        $this->load->view('V_header');
        $this->load->view('V_navbar');
-       $this->load->view('V_evaluasi_ecf',[
+       $this->load->view('V_evaluasi_eccr_ecl',[
          'ec' => $ec
        ]);
        $this->load->view('V_footer');
