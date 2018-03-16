@@ -1,8 +1,8 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class T_peserta extends CI_Model{
-    public $id_peserta;
+class T_User extends CI_Model{
+    public $id_user;
     public $nama;
     public $alamat;
     public $pekerjaan;
@@ -15,7 +15,7 @@ class T_peserta extends CI_Model{
     public $agama;
 
 
-    private $table_name = 'peserta';
+    private $table_name = 'user';
 
     public function all(){
         /* No Error Handling yet! */
@@ -25,7 +25,7 @@ class T_peserta extends CI_Model{
 
     public function get($id){
         /* No Error Handling yet! */
-        $this->db->where('id_peserta',$id);
+        $this->db->where('id_user',$id);
         return $this->db->get($this->table_name)->row();
     }
 
@@ -37,7 +37,7 @@ class T_peserta extends CI_Model{
 
    public function edit($id,$args){
         /* No Error Handling yet! */
-        $this->db->where('id_peserta',$id);
+        $this->db->where('id_user',$id);
         return $this->db->update($this->table_name,$args);
    }
 
@@ -48,5 +48,10 @@ class T_peserta extends CI_Model{
        return $this->db->get($this->table_name)->result();
    }
 
+   public function login($email){
+       /* No Error Handling yet! */
+       $this->db->where('email',$email);
+       return $this->db->get($this->table_name)->row();
+   }
 
 }
