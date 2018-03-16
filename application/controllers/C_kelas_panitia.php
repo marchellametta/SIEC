@@ -168,11 +168,11 @@ class C_Kelas_panitia extends CI_Controller{
       $res = upload_file($this,[
         'field_name' => 'gambar-file',
         'upload_path' => 'images/sertifikat',
-        'file_name' => $post_data['gambar'],
+        'file_name' => $this->T_ec->get($id)[0]->tema_ec."-".$post_data['gambar'],
         'max_size' => 8192
       ]);
       }
-      if(isset($res->error_code){
+      if(isset($res->error_code)){
         echo $res->errors;
         die();
       }else if(!isset($res->error_code)){

@@ -1,4 +1,4 @@
-<?php 
+<?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 /*
@@ -15,12 +15,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  */
 function upload_file($ctrl,$args){
     $upload_config = [];
+    $upload_config['overwrite'] = TRUE;
     $field_name;
 
     if(!isset($args['field_name'])){
     /// return kode error jika field_name tidak diisi
         return (object)[
-            'error_code' => 1 
+            'error_code' => 1
         ];
     }else{
         $field_name = $args['field_name'];
