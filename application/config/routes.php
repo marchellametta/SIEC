@@ -79,3 +79,4 @@ $route['kelas/absensi/daftar-topik/(:num)'] = 'C_absensi/getTopik/$1';
 $route['kelas/pembayaran/(:num)'] = 'C_pembayaran/index/$1';
 $route['kelas/cetak-sertifikat/(:num)'] = 'C_kelas_panitia/cetakSertifikat/$1';
 $route['peserta/search'] = 'C_search_api/search_peserta';
+$route['kelas-saya/isi-evaluasi/(:num)'] = 'C_evaluasi/index/$1';

@@ -15,7 +15,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
           <h2 class="card-title"><?php echo $row->tema_ec;?></h2>
           <p class="card-text"><?php echo $row->deskripsi;?></p>
           <a href="<?php echo base_url();?>informasi/detail/<?php echo $row->id_ec;?>" class="border-right pr-2 border-dark"><i class="fa fa-external-link mr-1 ml-1"></i>Detail</a>
-          <a href="<?php echo ($row->status_evaluasi==2)? base_url() .'kelas-saya/detail/'. $row->id_ec : base_url() .'isi-evaluasi/'. $row->id_ec;?>" class="border-right pr-2 border-dark"><i class="fa fa-edit mr-1 ml-1"></i>Isi Evaluasi</a>
+          <a href="<?php echo ($row->status_evaluasi==2)? base_url() .'kelas-saya/detail/'. $row->id_ec : base_url() .'kelas-saya/isi-evaluasi/'. $row->id_ec;?>" class="border-right pr-2 border-dark"><i class="fa fa-edit mr-1 ml-1"></i>Isi Evaluasi</a>
           <a href="<?php echo base_url();?>informasi/jadwal/<?php echo $row->id_ec;?>" class="pr-2"><i class="fa fa-calendar mr-1 ml-1"></i>Lihat Jadwal</a>
         </div>
       </div>
