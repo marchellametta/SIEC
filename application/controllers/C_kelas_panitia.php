@@ -6,7 +6,7 @@ require_once('application/helpers/mpdf60/mpdf.php');
 class C_Kelas_panitia extends CI_Controller{
   public function __construct(){
     parent::__construct();
-    if($this->session->userdata('username') == null && $this->session->userdata('nama') == null){
+    if($this->session->userdata('nama') == null && $this->session->userdata('user_id') == null){
       redirect('/login');
     }
   }

@@ -5,7 +5,7 @@ class C_Pembayaran extends CI_Controller{
 
   public function __construct(){
     parent::__construct();
-    if($this->session->userdata('username') == null && $this->session->userdata('nama') == null){
+    if($this->session->userdata('nama') == null && $this->session->userdata('id_user') == null){
       redirect('/login');
     }
   }

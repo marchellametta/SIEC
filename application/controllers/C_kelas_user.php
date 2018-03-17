@@ -4,7 +4,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class C_Kelas_user extends CI_Controller{
   public function __construct(){
     parent::__construct();
-    if($this->session->userdata('username') == null && $this->session->userdata('nama') == null){
+    if($this->session->userdata('nama') == null && $this->session->userdata('id_user') == null){
       redirect('/login');
     }
   }
