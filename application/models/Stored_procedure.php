@@ -74,4 +74,12 @@ class Stored_procedure extends CI_Model{
       $query->free_result();
       return $result;
     }
+
+    public function get_tagihan_peserta_ec($id_ec,$id_peserta){
+      $query = $this->db->query("call get_tagihan_peserta_ec('".$id_ec."','".$id_peserta."')");
+      mysqli_next_result( $this->db->conn_id );
+      $result = $query->result();
+      $query->free_result();
+      return $result;
+    }
 }

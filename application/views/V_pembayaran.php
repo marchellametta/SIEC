@@ -9,17 +9,19 @@ defined('BASEPATH') OR exit('No direct script access allowed');
   <table class="table table-hover table-striped table-bordered absensi mt-5">
     <thead class="thead-dark">
       <tr>
-        <th scope="col" class="text-center">Nama Peserta</th>
-        <th scope="col" class="text-center">Status Pembayaran</th>
+        <th scope="col" class="text-center w-50">Nama Peserta</th>
+        <th scope="col" class="text-center w-10">Total Biaya</th>
+        <th scope="col" class="text-center w-10">Status Pembayaran</th>
       </tr>
     </thead>
     <tbody>
       <?php foreach ($data as $row): ?>
       <tr>
         <td><?php echo $row->nama;?></td>
+        <td><?php echo "Rp. ".$row->tagihan.",00";?></td>
         <td class="text-center">
           <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="<?php echo $row->id_user?>" name= "bayar[]">
+            <input class="form-check-input" type="checkbox" value="<?php echo $row->id_user?>" name= "bayar[]" <?php if($row->bayar=='false') echo "checked"?>>
           </div>
         </td>
       </tr>
@@ -28,7 +30,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
   </table>
   <div class="text-right">
     <input type="submit" value="Simpan" class="btn btn-success">
-    <input type="submit" value="Batal" class="btn btn-danger">
+    <a href="<?php echo base_url().'kelas/aktif'?>"><button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button></a>
   </div>
 </form>
 </div>

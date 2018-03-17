@@ -29,13 +29,18 @@ class C_Kelas_user extends CI_Controller{
     }
     if($this->input->method() == 'get'){
       $this->load->model('Stored_procedure');
-      $data = $this->Stored_procedure->get_ec_peserta(7);
-       $this->load->view('V_header');
-       $this->load->view('V_navbar');
-       $this->load->view('V_kelas_user',[
-         'data' => $data
-       ]);
-       $this->load->view('V_footer');
+      $data = $this->Stored_procedure->get_ec_peserta($this->session->userdata('id_user'));
+      foreach ($data as $row) {
+        $tagihan = $this->Stored_procedure->get_tagihan_peserta_ec($row->id_ec,$this->session->userdata('id_user'));
+        $row->tagihan = $tagihan[0]->tagihan;
+        $row->bayar = $tagihan[0]->bayar;
+      }
+      $this->load->view('V_header');
+      $this->load->view('V_navbar');
+      $this->load->view('V_kelas_user',[
+        'data' => $data
+      ]);
+      $this->load->view('V_footer');
     } else if($this->input->method() == 'post'){
 
 
@@ -65,7 +70,7 @@ class C_Kelas_user extends CI_Controller{
       $this->load->model('Stored_procedure');
       $this->load->model('Vw_data_ec');
       $data = $this->Vw_data_ec->get($id);
-      $topik_arr = $this->Stored_procedure->get_topik_peserta(7,$id);
+      $topik_arr = $this->Stored_procedure->get_topik_peserta($this->session->userdata('id_user'),$id);
        $this->load->view('V_header');
        $this->load->view('V_navbar');
        $this->load->view('V_list_evaluasi_kelas_user',[

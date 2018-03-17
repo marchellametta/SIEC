@@ -35,6 +35,11 @@ class C_Pembayaran extends CI_Controller{
        $this->load->view('V_header');
        $this->load->view('V_navbar');
        $data = $this->Stored_procedure->get_all_peserta_ec($id);
+       foreach ($data as $row) {
+         $tagihan = $this->Stored_procedure->get_tagihan_peserta_ec($id,$row->id_user);
+         $row->bayar = $tagihan[0]->bayar;
+         $row->tagihan = $tagihan[0]->tagihan;
+       }
        $ec = $this->Vw_data_ec->get($id);
        $this->load->view('V_pembayaran',[
          'data' => $data,
@@ -42,19 +47,27 @@ class C_Pembayaran extends CI_Controller{
        ]);
        $this->load->view('V_footer');
     } else if($this->input->method() == 'post'){
+      $this->load->model('Stored_procedure');
       $this->load->model('T_peserta_topik');
       $post_data = $this->input->post();
       $peserta = $this->Stored_procedure->get_all_peserta_ec($id);
+
       foreach ($peserta as $row) {
-        $this->T_peserta_topik->editBayar($row->id_user,[
-          'status_bayar' => 0
-        ]);
+        $topik = $this->Stored_procedure->get_topik_peserta($row->id_user,$id);
+        foreach ($topik as $temp) {
+          $this->T_peserta_topik->editBayar($temp->id_topik, $row->id_user,[
+            'status_bayar' => 0
+          ]);
+        }
       }
       if(isset($_POST['bayar'])){
         foreach ($post_data['bayar'] as $row) {
-          $this->T_peserta_topik->editBayar($row,[
-            'status_bayar' => 1
-          ]);
+          $topik = $this->Stored_procedure->get_topik_peserta($row,$id);
+          foreach ($topik as $temp) {
+            $this->T_peserta_topik->editBayar($temp->id_topik, $row,[
+              'status_bayar' => 1
+            ]);
+          }
         }
       }
       redirect('kelas/aktif', 'refresh');
