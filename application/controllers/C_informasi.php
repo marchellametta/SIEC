@@ -145,11 +145,88 @@ class C_Informasi extends CI_Controller{
 
   public function tambah(){
     if($this->input->method() == 'get'){
+       $this->load->model('T_jenis_ec');
+       $jenis_ec = $this->T_jenis_ec->all();
+
        $this->load->view('V_header');
        $this->load->view('V_navbar');
-       $this->load->view('V_tambah_kelas');
+       $this->load->view('V_tambah_kelas',[
+         'jenis_ec' => $jenis_ec
+       ]);
        $this->load->view('V_footer');
     } else if($this->input->method() == 'post'){
+      $post_data = $this->input->post();
+      var_dump($post_data);
+
+      $this->load->model('T_ec');
+      $this->load->model('T_topik_ec');
+      $this->load->model('T_jadwal');
+      $this->load->helper('upload_file');
+
+      $topik = json_decode($post_data['topik']);
+
+      $res="";
+      if(!empty($_FILES['gambar-file']['name'])){
+      $res = upload_file($this,[
+        'field_name' => 'gambar-file',
+        'upload_path' => 'images/sertifikat',
+        'file_name' => $this->T_ec->get($id)[0]->tema_ec."-".$post_data['gambar'],
+        'max_size' => 8192
+      ]);
+      }
+      if(isset($res->error_code)){
+        echo $res->errors;
+        die();
+      }else if(!isset($res->error_code)){
+        $post_data['gambar'] = $res;
+      }
+
+      $status_evaluasi = (isset($post_data['evaluasi-mingguan'])) ? 2 : 1;
+      $status_peserta = (isset($post_data['peserta-lepas'])) ? 2 : 1;
+
+
+      $this->db->trans_begin();
+      $this->T_ec->insert([
+       'id_jenis_ec' => $post_data['jenis-ec'],
+       'tema_ec' => $post_data['tema'],
+       'status_evaluasi' => $status_evaluasi,
+       'status_peserta' => $status_peserta,
+       'biaya' => $post_data['biaya'],
+       'gambar' => $post_data['gambar'],
+       'semester_pelaksanaan' => $post_data['semester'],
+       'tahun_pelaksanaan' => $post_data['tahun'],
+       'deskripsi' => $post_data['deskripsi'],
+       'biaya_per_topik' => (isset($post_data['biaya-topik'])) ? 2 : 1,
+       'kapasitas_peserta' => (isset($post_data['kapasitas'])) ? 2 : 1
+     ]);
+     $id_ec = $this->db->insert_id();
+     foreach ($topik as $row) {
+       $this->T_topik_ec->insert([
+         'id_ec' => $id_ec,
+         'nama_topik' => $row->topik
+       ]);
+
+       $jam = explode(" - ",$str);
+
+       $id_topik = $this->db->insert_id();
+       $this->T_jadwal->insert([
+         'id_topik' => $id_topik,
+         'tanggal' => $row->tanggal,
+         'lokasi' => $row->lokasi,
+         'tanggal' => $jam[0],
+         'tanggal' => $jam[1],
+       ]);
+     }
+     $this->T_user_roles->insert([
+       'user_id' => $id_panitia,
+       'role_id' => 1
+     ]);
+     if ($this->db->trans_status() === FALSE){
+       $this->db->trans_rollback();
+     }else{
+       $this->db->trans_commit();
+       redirect('', 'refresh');
+     }
 
 
     }

@@ -1,4 +1,4 @@
-T_user<?php
+<?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class C_Pendaftaran extends CI_Controller{
@@ -57,12 +57,33 @@ class C_Pendaftaran extends CI_Controller{
     }
   }
 
+  public function panitia(){
+    if($this->input->method() == 'get'){
+       $this->load->model('Vw_data_ec');
+       $this->load->model('Vw_data_topik');
+       $this->load->model('Stored_procedure');
+
+       $data = $this->Vw_data_ec->getActive();
+
+       $this->load->view('V_header');
+       $this->load->view('V_navbar');
+       $this->load->view('V_pendaftaran_panitia',[
+         'data' => $data
+       ]);
+       $this->load->view('V_footer');
+    } else if($this->input->method() == 'post'){
+
+
+    }
+  }
+
   public function daftar(){
     if($this->input->method() == 'get'){
     } else if($this->input->method() == 'post'){
          $post_data = $this->input->post();
          $hashed_pw = password_hash($post_data['password'], PASSWORD_DEFAULT);
          $this->load->model('T_user');
+         $this->load->model('T_user_roles');
           $this->load->model('T_peserta_topik');
 
           $this->db->trans_begin();
@@ -82,6 +103,49 @@ class C_Pendaftaran extends CI_Controller{
          foreach ($post_data['topik'] as $row) {
            $this->T_peserta_topik->attach_peserta_topik($id_peserta,$row);
          }
+         $this->T_user_roles->insert([
+           'user_id' => $id_peserta,
+           'role_id' => 2
+         ]);
+         if ($this->db->trans_status() === FALSE){
+           $this->db->trans_rollback();
+         }else{
+           $this->db->trans_commit();
+           redirect('', 'refresh');
+         }
+    }
+  }
+
+  public function daftarPanitia(){
+    if($this->input->method() == 'get'){
+    } else if($this->input->method() == 'post'){
+         $post_data = $this->input->post();
+         $hashed_pw = password_hash($post_data['password'], PASSWORD_DEFAULT);
+         $this->load->model('T_user');
+         $this->load->model('T_user_roles');
+          $this->load->model('T_panitia_ec');
+
+          $this->db->trans_begin();
+         $this->T_user->insert([
+           'nama' => $post_data['nama'],
+           'alamat' => $post_data['alamat'],
+           'pekerjaan' => $post_data['pekerjaan'],
+           'lembaga' => $post_data['lembaga'],
+           'pendidikan_terakhir' => intval($post_data['pendidikan']),
+           'kota' => $post_data['kota'],
+           'no_hp' => $post_data['nohp'],
+           'email' => $post_data['email'],
+           'password' => $hashed_pw,
+           'agama' => $post_data['agama']
+         ]);
+         $id_panitia = $this->db->insert_id();
+         foreach ($post_data['kelas'] as $row) {
+           $this->T_panitia_ec->attach_panitia_ec($id_panitia,$row);
+         }
+         $this->T_user_roles->insert([
+           'user_id' => $id_panitia,
+           'role_id' => 1
+         ]);
          if ($this->db->trans_status() === FALSE){
            $this->db->trans_rollback();
          }else{
