@@ -79,7 +79,7 @@ class C_Absensi extends CI_Controller{
     // I'm using the URI to keep this pretty simple ( http://www.example.com/test/this ) would be 'test_this'
     $acl_test = $this->uri->segment(1).'_';
     $acl_test .= $this->uri->segment(2).'_';
-    $acl_test .= $this->uri->segment(3).'_';
+    $acl_test .= $this->uri->segment(3);
 
 
     // If the user does not have permission either in 'user_perms' or 'role_perms' redirect to login, or restricted, etc

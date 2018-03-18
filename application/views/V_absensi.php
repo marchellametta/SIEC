@@ -5,7 +5,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
   <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
       <li class="breadcrumb-item"><a href="<?php echo base_url() ?> "><i class="fa fa-home mr-1"></i>Beranda</a></li>
-      <li class="breadcrumb-item" ><a href="<?php echo base_url() ?>kelas">Daftar Kelas</a></li>
+      <li class="breadcrumb-item" ><a href="<?php echo base_url() ?>kelas/aktif">Daftar Kelas</a></li>
       <li class="breadcrumb-item" ><a href="<?php echo base_url()."kelas/absensi/daftar-topik/". $ec->id_ec ?>">Daftar Topik</a></li>
       <li class="breadcrumb-item active" aria-current="page">Daftar Kehadiran</li>
 

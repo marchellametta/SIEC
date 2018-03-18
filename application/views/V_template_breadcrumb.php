@@ -131,7 +131,7 @@ $breadcrumbRules = [
     'crumbs' => [
       1 => [
         'text' => 'Daftar Kelas',
-        'link' => $base_url.'kelas',
+        'link' => $base_url.'kelas/aktif',
       ],
       2 => [
         'text' => 'Daftar Topik',
@@ -144,10 +144,32 @@ $breadcrumbRules = [
     'crumbs' => [
       1 => [
         'text' => 'Daftar Kelas',
-        'link' => $base_url.'kelas',
+        'link' => $base_url.'kelas/aktif',
       ],
       2 => [
         'text' => 'Daftar Pembayaran',
+        'link' => '#',
+        'active' => true
+      ]
+    ]
+  ],
+  'V_cetak_sertifikat' => [
+    'crumbs' => [
+      1 => [
+        'text' => 'Daftar Kelas',
+        'link' => $base_url.'kelas/aktif',
+      ],
+      2 => [
+        'text' => 'Cetak Sertifikat',
+        'link' => '#',
+        'active' => true
+      ]
+    ]
+  ],
+  'V_acl' => [
+    'crumbs' => [
+      1 => [
+        'text' => 'Pengaturan Pengguna',
         'link' => '#',
         'active' => true
       ]

@@ -30,12 +30,13 @@ class C_Login extends CI_Controller{
         if (password_verify($password, $hashed_pw)) {
           $this->session->set_userdata('id_user',$user->id_user);
           $this->session->set_userdata('nama',$user->nama);
-          $this->load->view('V_header');
-          $this->load->view('V_navbar');
-          $this->load->view('V_login',[
-            'result' => "Login berhasil, " . $user->nama . "!"
-          ]);
-          $this->load->view('V_footer');
+          // $this->load->view('V_header');
+          // $this->load->view('V_navbar');
+          // $this->load->view('V_login',[
+          //   'result' => "Login berhasil, " . $user->nama . "!"
+          // ]);
+          // $this->load->view('V_footer');
+          redirect('' );
         } else {
           $this->load->view('V_header');
           $this->load->view('V_navbar');

@@ -2,6 +2,7 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 ?>
 <div class="mr-3 ml-3 mr-sm-3 ml-sm-3 mr-md-5 ml-md-5 mt-5 mb-5">
+  <?php $this->load->view('V_template_breadcrumb', ['viewName' => 'V_cetak_sertifikat']) ?>
   <div class="text-left ml-3"><h5><?php echo 'Cetak Sertifikat ' . $ec->jenis_ec. " : " . $ec->tema_ec; ?></h5></div>
   <div class="col-md-8 col-lg-6">
     <form method="post" action="<?php echo base_url().'kelas/cetak-sertifikat/' .$ec->id_ec; ?>" enctype="multipart/form-data">

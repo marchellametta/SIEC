@@ -38,7 +38,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
    var footerTop = $('.footer').position().top + footerHeight;
 
    if (footerTop < docHeight) {
-    $('.footer').css('margin-top', (docHeight - footerTop) + 'px');
+    $('.footer').css('margin-top', 50+(docHeight - footerTop) + 'px');
    }
   });
  </script>
