@@ -156,7 +156,6 @@ class C_Informasi extends CI_Controller{
        $this->load->view('V_footer');
     } else if($this->input->method() == 'post'){
       $post_data = $this->input->post();
-      var_dump($post_data);
 
       $this->load->model('T_ec');
       $this->load->model('T_topik_ec');
@@ -169,16 +168,34 @@ class C_Informasi extends CI_Controller{
       if(!empty($_FILES['gambar-file']['name'])){
       $res = upload_file($this,[
         'field_name' => 'gambar-file',
-        'upload_path' => 'images/sertifikat',
-        'file_name' => $this->T_ec->get($id)[0]->tema_ec."-".$post_data['gambar'],
+        'upload_path' => 'images',
+        'file_name' => $post_data['tema'],
         'max_size' => 8192
       ]);
       }
       if(isset($res->error_code)){
-        echo $res->errors;
+        echo '1'. $res->errors;
         die();
       }else if(!isset($res->error_code)){
         $post_data['gambar'] = $res;
+      }
+
+      $res="";
+      if(!empty($_FILES['pdf-file']['name'])){
+      $res = upload_file($this,[
+        'field_name' => 'pdf-file',
+        'upload_path' => 'Modul',
+        'file_name' => $post_data['tema'],
+        'max_size' => 8192
+      ]);
+      }
+
+
+      if(isset($res->error_code)){
+        echo '2'.$res->errors;
+        die();
+      }else if(!isset($res->error_code)){
+        $post_data['modul'] = $res;
       }
 
       $status_evaluasi = (isset($post_data['evaluasi-mingguan'])) ? 2 : 1;
@@ -196,8 +213,9 @@ class C_Informasi extends CI_Controller{
        'semester_pelaksanaan' => $post_data['semester'],
        'tahun_pelaksanaan' => $post_data['tahun'],
        'deskripsi' => $post_data['deskripsi'],
-       'biaya_per_topik' => (isset($post_data['biaya-topik'])) ? 2 : 1,
-       'kapasitas_peserta' => (isset($post_data['kapasitas'])) ? 2 : 1
+       'biaya_per_topik' => (isset($post_data['biaya-topik'])) ? $post_data['biaya-topik'] : NULL,
+       'kapasitas_peserta' => (isset($post_data['kapasitas'])) ? $post_data['kapasitas'] : NULL,
+       'modul_pdf' => $post_data['modul']
      ]);
      $id_ec = $this->db->insert_id();
      foreach ($topik as $row) {
@@ -206,26 +224,22 @@ class C_Informasi extends CI_Controller{
          'nama_topik' => $row->topik
        ]);
 
-       $jam = explode(" - ",$str);
+       $jam = explode(" - ",$row->jam);
 
        $id_topik = $this->db->insert_id();
        $this->T_jadwal->insert([
          'id_topik' => $id_topik,
-         'tanggal' => $row->tanggal,
+         'tanggal' => date($this->config->item('db_date_format'),strtotime($row->tanggal)),
          'lokasi' => $row->lokasi,
-         'tanggal' => $jam[0],
-         'tanggal' => $jam[1],
+         'jam_mulai' => $jam[0],
+         'jam_selesai' => $jam[1],
        ]);
      }
-     $this->T_user_roles->insert([
-       'user_id' => $id_panitia,
-       'role_id' => 1
-     ]);
      if ($this->db->trans_status() === FALSE){
        $this->db->trans_rollback();
      }else{
        $this->db->trans_commit();
-       redirect('', 'refresh');
+       //redirect('', 'refresh');
      }
 
 

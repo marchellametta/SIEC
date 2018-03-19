@@ -15,6 +15,8 @@ class T_ec extends CI_Model{
   public $biaya_per_topik;
   public $kapasitas_peserta;
   public $batas_lulus;
+  public $modul_pdf;
+
 
 
 
@@ -30,6 +32,12 @@ class T_ec extends CI_Model{
         /* No Error Handling yet! */
         $this->db->where('id_ec',$id);
         return $this->db->get($this->table_name)->result();
+    }
+
+    public function insert($args)
+    {
+        /* No Error Handling yet! */
+        return $this->db->insert($this->table_name,$args);
     }
 
     public function edit($id,$args){

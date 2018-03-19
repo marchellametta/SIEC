@@ -18,6 +18,7 @@ function upload_file($ctrl,$args){
     $upload_config['overwrite'] = TRUE;
     $field_name;
 
+
     if(!isset($args['field_name'])){
     /// return kode error jika field_name tidak diisi
         return (object)[
@@ -54,8 +55,9 @@ function upload_file($ctrl,$args){
 
     if(!isset($args['allowed_types'])){
     /// memberikan 'default value' jenis file jika allowed_types tidak diisi
-        $upload_config['allowed_types'] = 'png|jpg';
+        $upload_config['allowed_types'] = 'png|jpg|pdf';
     }else{
+
         $upload_config['allowed_types'] = $args['allowed_types'];
 
     }

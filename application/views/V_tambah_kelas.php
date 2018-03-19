@@ -2,7 +2,7 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 ?>
 <div class="mr-3 ml-3 mr-sm-3 ml-sm-3 mr-md-5 ml-md-5 mt-5 mb-5">
-  <form method="post" action="<?php echo base_url('tambahkelas') ?>">
+  <form method="post" action="<?php echo base_url('tambahkelas') ?>" enctype="multipart/form-data">
     <input type="hidden" id="str" name="topik" value="" />
     <fieldset>
     <legend>Data Umum</legend>
@@ -31,12 +31,22 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <label for="tema">Tema Umum</label>
         <input type="text" class="form-control" name="tema" placeholder="Tema Umum">
       </div>
-      <div class="form-group col-md-3">
-        <label for="input-gambar" class="control-label">Gambar</label>
-        <div class="input-group">
-          <span id="input-gambar-icon" class="input-group-addon border"><i class="fa fa-upload p-2"></i></span>
-          <input type="file" accept="image/*" name="gambar-file" id="input-gambar-file" class="hidden">
-          <input type="text" placeholder="Pilih Gambar" id="input-gambar" name="gambar" class="form-control cursor" readonly>
+      <div class="row ml-2">
+        <div class="form-group col-md-3">
+          <label for="input-gambar" class="control-label">Gambar</label>
+          <div class="input-group">
+            <span id="input-gambar-icon" class="input-group-addon border"><i class="fa fa-upload p-2"></i></span>
+            <input type="file" accept="image/*" name="gambar-file" id="input-gambar-file" class="hidden">
+            <input type="text" placeholder="Pilih Gambar" id="input-gambar" name="gambar" class="form-control cursor" readonly>
+          </div>
+        </div>
+        <div class="form-group col-md-3">
+          <label for="input-pdf" class="control-label">Modul</label>
+          <div class="input-group">
+            <span id="input-pdf-icon" class="input-group-addon border"><i class="fa fa-upload p-2"></i></span>
+            <input type="file" accept=".pdf" name="pdf-file" id="input-pdf-file" class="hidden">
+            <input type="text" placeholder="Pilih PDF" id="input-pdf" name="pdf" class="form-control cursor" readonly>
+          </div>
         </div>
       </div>
       <div class="form-group col-md-12">
@@ -216,6 +226,16 @@ $(document).ready(function(){
               var filename = $(this).val().split(/(\\|\/)/g).pop();
               $('#input-gambar').val(filename).keyup();
             });
+
+            $('#input-pdf').add('#input-pdf-icon').on('click', function(event) {
+                      event.preventDefault();
+                      $('#input-pdf-file').click();
+                    });
+
+                    $('#input-pdf-file').on('change', function() {
+                      var filename = $(this).val().split(/(\\|\/)/g).pop();
+                      $('#input-pdf').val(filename).keyup();
+                    });
 
 });
 
