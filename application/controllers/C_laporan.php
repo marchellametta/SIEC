@@ -6,29 +6,51 @@ class C_Laporan extends CI_Controller{
 
   public function index($id){
     if($this->input->method() == 'get'){
+      $this->load->model('T_evaluasi_ecf');
        $this->load->model('Stored_procedure');
        $this->load->model('Vw_data_ec');
        $this->load->model('Vw_data_topik');
-       $this->load->view('V_header');
-       $this->load->view('V_navbar');
-       $pekerjaan = $this->Stored_procedure->get_statistik_pekerjaan($id);
-       $jumlah_peserta = $this->Stored_procedure->get_jumlah_peserta_ec($id);
-       $kehadiran = $this->Stored_procedure->get_persentase_kehadiran_peserta($id);
+
        $ec = $this->Vw_data_ec->get($id);
+       $status_evaluasi = $ec->status_evaluasi;
+       $evaluasi_tema="";
+       if($ec->jenis_ec=="Extension Course Filsafat"){
+         $evaluasi_tema = $this->T_evaluasi_ecf->all($id);
+       }else{
+         $evaluasi_tema = $this->Stored_procedure->get_hasil_evaluasi_tema($id);
+       }
+
+
        $topik_arr = $this->Vw_data_topik->getAllTopik($ec->id_ec);
        $counter = 1;
        foreach ($topik_arr as $row) {
          $row->jumlah_peserta = $this->Stored_procedure->get_jumlah_peserta_topik($row->id_topik)->jumlah_peserta;
          $row->jumlah_hadir = $this->Stored_procedure->get_jumlah_peserta_topik_hadir($row->id_topik)->jumlah_peserta;
+         // if($status_evaluasi==2){
+         //   $evaluasi_topik = $this->T_evaluasi_topik->get($row->id_topik);
+         //   $row->evaluasi = $evaluasi_topik;
+         // }
          $row->num = $counter;
          $counter += 1;
        }
+
+
+       $pekerjaan = $this->Stored_procedure->get_statistik_pekerjaan($id);
+       $jumlah_peserta = $this->Stored_procedure->get_jumlah_peserta_ec($id);
+
+       $kehadiran = $this->Stored_procedure->get_persentase_kehadiran_peserta($id);
+
+
+
+       $this->load->view('V_header');
+       $this->load->view('V_navbar');
        $this->load->view('V_laporan',[
          'topik_arr' =>$topik_arr,
          'ec' => $ec,
          'pekerjaan' => $pekerjaan,
          'jumlah_peserta' => $jumlah_peserta,
-         'kehadiran' => $kehadiran
+         'kehadiran' => $kehadiran,
+         'evaluasi_tema' => $evaluasi_tema
        ]);
        $this->load->view('V_footer');
     } else if($this->input->method() == 'post'){

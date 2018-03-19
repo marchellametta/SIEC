@@ -9,9 +9,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <option value="jumlah_kehadiran">Laporan Jumlah Kehadiran Peserta</option>
         <option value="pekerjaan">Laporan Statistik Pekerjaan Peserta</option>
         <option value="kehadiran">Laporan Persentase Kehadiran Peserta</option>
+        <option value="evaluasi">Hasil Evaluasi</option>
       </select>
     </div>
-    <table class="table table-hover table-striped table-bordered ml-3" id="jumlah_kehadiran">
+    <table class="table table-hover table-striped table-bordered ml-3 content" id="jumlah_kehadiran">
     <thead class="thead-dark">
       <tr>
         <th scope="col">No</th>
@@ -31,7 +32,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <?php endforeach ?>
     </tbody>
   </table>
-  <table class="table table-hover table-striped table-bordered ml-3 hidden" id="pekerjaan">
+  <table class="table table-hover table-striped table-bordered ml-3 hidden content" id="pekerjaan">
     <thead class="thead-dark">
       <tr>
         <th scope="col">No</th>
@@ -49,7 +50,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <?php endforeach ?>
     </tbody>
   </table>
-  <table class="table table-hover table-striped table-bordered ml-3 hidden" id="kehadiran">
+  <table class="table table-hover table-striped table-bordered ml-3 hidden content" id="kehadiran">
     <thead class="thead-dark">
       <tr>
         <th scope="col">No</th>
@@ -67,18 +68,69 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <?php endforeach ?>
     </tbody>
   </table>
+  <div id="evaluasi" class="content hidden">
+  <table class="table table-hover table-striped table-bordered ml-3">
+    <thead class="thead-dark">
+      <?php if($ec->jenis_ec=="Extension Course Filsafat"):?>
+        <tr>
+          <th scope="col">Soal1</th>
+          <th scope="col">Soal2</th>
+          <th scope="col">Soal3</th>
+        </tr>
+      <?php else: ?>
+      <tr>
+        <th scope="col">Soal</th>
+        <th scope="col">Nilai 5</th>
+        <th scope="col">Nilai 4</th>
+        <th scope="col">Nilai 3</th>
+        <th scope="col">Nilai 2</th>
+        <th scope="col">Nilai 1</th>
+      </tr>
+    <?php endif ?>
+
+    </thead>
+    <tbody>
+      <?php if($ec->jenis_ec=="Extension Course Filsafat"):?>
+        <?php foreach ($evaluasi_tema as $row): ?>
+        <tr>
+          <td><?php echo $row->soal1 ?></td>
+          <td><?php echo $row->soal2 ?></td>
+          <td><?php echo $row->soal3 ?></td>
+        </tr>
+      <?php endforeach ?>
+      <?php else: ?>
+      <?php foreach ($evaluasi_tema as $row): ?>
+      <tr>
+        <td><?php echo $row->soal1 ?></td>
+        <td><?php echo $row->nilai_5 ?></td>
+        <td><?php echo $row->nilai_4 ?></td>
+        <td><?php echo $row->nilai_3 ?></td>
+        <td><?php echo $row->nilai_2 ?></td>
+        <td><?php echo $row->nilai_1 ?></td>
+      </tr>
+    <?php endforeach ?>
+  <?php endif ?>
+
+    </tbody>
+  </table>
+</div>
   <div class="text-right">
     <input type="submit" id="simpan" value="Unduh Laporan" class="btn btn-primary">
   </div>
 </form>
+<div class="container col-md-6 hidden">
+  <div id="chartContainer" style="position: relative; left: 50px; border: 2px solid #73AD21; height: 360px; width: 90%;"></div>
+</div>
+
 
 </div>
 <script>
+
 $('#jenis-laporan').change(function() {
         var x = $(this).val();
         // and update the hidden input's value
         //alert('#'+x);
-        $('.table').hide();
+        $('.content').hide();
         $('#'+x).show();
     });
 </script>

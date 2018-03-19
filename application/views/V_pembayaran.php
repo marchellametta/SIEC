@@ -18,7 +18,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
       <?php foreach ($data as $row): ?>
       <tr>
         <td><?php echo $row->nama;?></td>
-        <td><?php echo "Rp. ".$row->tagihan.",00";?></td>
+        <td><?php echo "Rp. ".number_format($row->tagihan).",00";?></td>
         <td class="text-center">
           <div class="form-check">
             <input class="form-check-input" type="checkbox" value="<?php echo $row->id_user?>" name= "bayar[]" <?php if($row->bayar=='false') echo "checked"?>>

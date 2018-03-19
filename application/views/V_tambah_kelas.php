@@ -55,11 +55,19 @@ defined('BASEPATH') OR exit('No direct script access allowed');
       </div>
       <div class="form-group col-md-3">
         <label for="biaya">Biaya</label>
-         <input type="text" class="form-control" name="biaya" placeholder="Biaya">
+        <div class="input-group">
+          <span class="input-group-addon p-2">Rp</span>
+          <input type="text" placeholder="Biaya" id="input-biaya" class="form-control">
+          <input type="number" id="real-input-biaya" name="biaya" class="hidden">
+        </div>
       </div>
       <div class="form-group hidden col-md-3" id="biaya_toggle">
         <label for="biaya-topik">Biaya per Topik</label>
-        <input type="text" class="form-control" name="biaya-topik" placeholder="Biaya per Topik">
+        <div class="input-group">
+          <span class="input-group-addon p-2">Rp</span>
+          <input type="text" placeholder="Biaya" id="input-biaya-topik" class="form-control">
+          <input type="number" id="real-input-biaya-topik" name="biaya-topik" class="hidden">
+        </div>
       </div>
       <div class="form-group hidden col-md-3" id="kapasitas_toggle">
         <label for="kapasitas">Kapasitas Peserta</label>
@@ -217,6 +225,18 @@ $(document).ready(function(){
       sendTableArticles();
     });
 
+    $('#input-biaya').number(true, 2, ',', '.');
+
+    $('#input-biaya').on('keyup',function(e){
+      $('#real-input-biaya').val($('#input-biaya').val()).keyup();
+    });
+
+    $('#input-biaya-topik').number(true, 2, ',', '.');
+
+    $('#input-biaya-topik').on('keyup',function(e){
+      $('#real-input-biaya-topik').val($('#input-biaya-topik').val()).keyup();
+    });
+
     $('#input-gambar').add('#input-gambar-icon').on('click', function(event) {
               event.preventDefault();
               $('#input-gambar-file').click();
@@ -240,7 +260,6 @@ $(document).ready(function(){
 });
 
 function sendTableArticles() {
-    alert("hai");
     var columns = [
         'tanggal',
         'jam',
