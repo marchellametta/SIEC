@@ -56,6 +56,9 @@ $route['translate_uri_dashes'] = FALSE;
 $route['login'] = 'C_login/index';
 $route['logout'] = 'C_login/logout';
 $route['acl'] = 'C_acl/index';
+$route['laporan/(:num)'] = 'C_laporan/index/$1';
+$route['laporan/unduh/(:num)'] = 'C_laporan/unduh/$1';
+
 
 $route['informasi/aktif'] = 'C_informasi/aktif';
 $route['informasi/riwayat'] = 'C_informasi/riwayat';

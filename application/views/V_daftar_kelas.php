@@ -29,7 +29,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
           <?php endif; ?>
           <?php if($tipe!=='akan'):?>
           <a href="<?php echo base_url();?>kelas/cetak-sertifikat/<?php echo $row->id_ec;?>" class="border-right pr-2 border-dark"><i class="fa fa-file-pdf-o mr-1 ml-1"></i>Cetak Sertifikat</a>
-          <a href="<?php echo base_url();?>jadwal/<?php echo $row->id_ec;?>" class="pr-2"><i class="fa fa-pie-chart mr-1 ml-1 border-dark"></i>Lihat Hasil Evaluasi</a>
+          <a href="<?php echo base_url();?>laporan/<?php echo $row->id_ec;?>" class="pr-2"><i class="fa fa-pie-chart mr-1 ml-1 border-dark"></i>Lihat Laporan</a>
           <?php endif; ?>
         </div>
       </div>
