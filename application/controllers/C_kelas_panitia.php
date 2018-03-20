@@ -34,10 +34,11 @@ class C_Kelas_panitia extends CI_Controller{
 
 
       $this->load->model('Stored_procedure');
-      $this->load->model('Vw_data_ec');
+      $this->load->model('Vw_data_ec_panitia');
       $this->load->model('Vw_data_topik');
 
-      $data = $this->Vw_data_ec->getActive();
+
+      $data = $this->Vw_data_ec_panitia->getActive($id_user);
       $complete = array();
       foreach ($data as $row) {
         if($row->status_peserta==1){
@@ -98,11 +99,12 @@ class C_Kelas_panitia extends CI_Controller{
       redirect('');
     }
     if($this->input->method() == 'get'){
-      $this->load->model('Vw_data_ec');
+      $this->load->model('Vw_data_ec_panitia');
       $this->load->model('Vw_data_topik');
       $this->load->model('Stored_procedure');
 
-      $data = $this->Vw_data_ec->getRecent();
+      $data = $this->Vw_data_ec_panitia->getRecent($id_user);
+
       $riwayat = array();
       foreach ($data as $row) {
         if($row->status_peserta==1){
@@ -162,11 +164,12 @@ class C_Kelas_panitia extends CI_Controller{
       redirect('');
     }
     if($this->input->method() == 'get'){
-      $this->load->model('Vw_data_ec');
+      $this->load->model('Vw_data_ec_panitia');
       $this->load->model('Vw_data_topik');
       $this->load->model('Stored_procedure');
 
-      $data = $this->Vw_data_ec->getSoon();
+      $data = $this->Vw_data_ec_panitia->getSoon($id_user);
+
       $akan = array();
       foreach ($data as $row) {
         if($row->status_peserta==1){

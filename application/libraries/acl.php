@@ -183,4 +183,66 @@ class acl
             return false;
         }
     }
+
+    function hasProfileIdPermission($user_id) {
+
+        if ($user_id==$this->userID)
+        {
+           return true;
+        } else {
+            return false;
+        }
+    }
+
+    function hasECIdPermission($user_id,$id) {
+      $this->ci->load->model('Stored_procedure');
+      $ec = $this->ci->Stored_procedure->get_ec_peserta($user_id);
+      foreach ($ec as $row) {
+        if ($row->id_ec==$id)
+        {
+           return true;
+        }
+      }
+      return false;
+    }
+
+    function hasTopikIdPermission($user_id,$id) {
+      $this->ci->load->model('Vw_data_topik');
+      $this->ci->load->model('Stored_procedure');
+      $id_ec = $this->ci->Vw_data_topik->get($id)->id_ec;
+      $topik = $this->ci->Stored_procedure->get_topik_peserta($user_id,$id_ec);
+      foreach ($topik as $row) {
+        if ($row->id_ec==$id)
+        {
+           return true;
+        }
+      }
+      return false;
+    }
+
+    function hasPanitiaECIdPermission($user_id,$id) {
+      $this->ci->load->model('T_panitia_ec');
+      $ec = $this->ci->T_panitia_ec->getListEC($user_id);
+      foreach ($ec as $row) {
+        if ($row->id_ec==$id)
+        {
+           return true;
+        }
+      }
+      return false;
+    }
+
+    function hasPanitiaTopikIdPermission($user_id,$id) {
+      $this->ci->load->model('Vw_data_topik');
+      $this->ci->load->model('Stored_procedure');
+      $id_ec = $this->ci->Vw_data_topik->get($id)->id_ec;
+      $topik = $this->ci->Stored_procedure->get_topik_panitia($user_id,$id_ec);
+      foreach ($topik as $row) {
+        if ($row->id_ec==$id)
+        {
+           return true;
+        }
+      }
+      return false;
+    }
 }

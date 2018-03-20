@@ -20,6 +20,12 @@ class T_panitia_ec extends CI_Model{
         return $this->db->get($this->table_name)->row();
     }
 
+    public function getListEC($id_panitia){
+        /* No Error Handling yet! */
+        $this->db->where('id_panitia',$id_panitia);
+        return $this->db->get($this->table_name)->result();
+    }
+
     public function attach_panitia_ec($id_panitia, $id_ec){
         return $this->db->insert($this->table_name,[
             'id_panitia' => $id_panitia,

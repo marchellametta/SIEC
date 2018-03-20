@@ -29,7 +29,7 @@ class C_Kelas_user extends CI_Controller{
     }
     if($this->input->method() == 'get'){
       $this->load->model('Stored_procedure');
-      $data = $this->Stored_procedure->get_ec_peserta($this->session->userdata('id_user'));
+      $data = $this->Stored_procedure->get_ec_peserta($id_user);
       foreach ($data as $row) {
         $tagihan = $this->Stored_procedure->get_tagihan_peserta_ec($row->id_ec,$this->session->userdata('id_user'));
         $row->tagihan = $tagihan[0]->tagihan;
@@ -63,7 +63,7 @@ class C_Kelas_user extends CI_Controller{
     $acl_test .= $this->uri->segment(2);
 
     // If the user does not have permission either in 'user_perms' or 'role_perms' redirect to login, or restricted, etc
-    if ( !$this->acl->hasPermission($acl_test) ) {
+    if ( !$this->acl->hasPermission($acl_test) || !$this->acl->hasECIdPermission($id_user,$id)) {
       redirect('');
     }
     if($this->input->method() == 'get'){

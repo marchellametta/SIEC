@@ -56,8 +56,8 @@ $route['translate_uri_dashes'] = FALSE;
 $route['login'] = 'C_login/index';
 $route['logout'] = 'C_login/logout';
 $route['acl'] = 'C_acl/index';
-$route['laporan/(:num)'] = 'C_laporan/index/$1';
-$route['laporan/unduh/(:num)'] = 'C_laporan/unduh/$1';
+$route['kelas/laporan/(:num)'] = 'C_laporan/index/$1';
+$route['kelas/laporan/unduh/(:num)'] = 'C_laporan/unduh/$1';
 
 
 $route['informasi/aktif'] = 'C_informasi/aktif';
@@ -71,7 +71,7 @@ $route['profil/(:num)'] = 'C_user_profile/view/$1';
 $route['kelas-saya'] = 'C_kelas_user/aktif';
 $route['kelas/aktif'] = 'C_kelas_panitia/aktif';
 $route['kelas/riwayat'] = 'C_kelas_panitia/riwayat';
-$route['kelas/mendatang'] = 'C_kelas_panitia/akanDatang';
+//$route['kelas/mendatang'] = 'C_kelas_panitia/akanDatang';
 $route['kelas-saya/detail/(:num)'] = 'C_kelas_user/getTopik/$1';
 $route['profil/editProfil/(:num)'] = 'C_user_profile/editProfil/$1';
 $route['profil/editPassword/(:num)'] = 'C_user_profile/editPassword/$1';

@@ -25,7 +25,7 @@ class C_Evaluasi extends CI_Controller{
     $acl_test .= $this->uri->segment(2);
 
     // If the user does not have permission either in 'user_perms' or 'role_perms' redirect to login, or restricted, etc
-    if ( !$this->acl->hasPermission($acl_test) ) {
+    if ( !$this->acl->hasPermission($acl_test) || !$this->acl->hasECIdPermission($id_user,$id)) {
       redirect('');
     }
     if($this->input->method() == 'get'){
@@ -88,10 +88,12 @@ class C_Evaluasi extends CI_Controller{
     // Get the perm key
     // I'm using the URI to keep this pretty simple ( http://www.example.com/test/this ) would be 'test_this'
     $acl_test = $this->uri->segment(1).'_';
-    $acl_test .= $this->uri->segment(2);
+    $acl_test .= $this->uri->segment(2).'_';
+    $acl_test .= $this->uri->segment(3);
+
 
     // If the user does not have permission either in 'user_perms' or 'role_perms' redirect to login, or restricted, etc
-    if ( !$this->acl->hasPermission($acl_test) ) {
+    if ( !$this->acl->hasPermission($acl_test) || !$this->acl->hasTopikIdPermission($id_user,$id) ) {
       redirect('');
     }
     if($this->input->method() == 'get'){
@@ -100,6 +102,9 @@ class C_Evaluasi extends CI_Controller{
 
       $topik = $this->Vw_data_topik->get($id);
       $ec = $this->Vw_data_ec->get($topik->id_ec);
+      if($ec->status_evaluasi==1){
+        redirect('');
+      }
       if($ec->jenis_ec == "Extension Course Filsafat"){
         $this->load->view('V_header');
         $this->load->view('V_navbar');

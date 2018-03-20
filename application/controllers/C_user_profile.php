@@ -25,7 +25,7 @@ class C_User_profile extends CI_Controller{
     $acl_test = $this->uri->segment(1);
 
     // If the user does not have permission either in 'user_perms' or 'role_perms' redirect to login, or restricted, etc
-    if ( !$this->acl->hasPermission($acl_test) ) {
+    if ( !$this->acl->hasPermission($acl_test) || !$this->acl->hasProfileIdPermission($id) ) {
       redirect('');
     }
     if($this->input->method() == 'get'){
@@ -59,7 +59,7 @@ class C_User_profile extends CI_Controller{
     $acl_test = $this->uri->segment(1);
 
     // If the user does not have permission either in 'user_perms' or 'role_perms' redirect to login, or restricted, etc
-    if ( !$this->acl->hasPermission($acl_test) ) {
+    if ( !$this->acl->hasPermission($acl_test) || !$this->acl->hasProfileIdPermission($id)) {
       redirect('');
     }
     if($this->input->method() == 'post'){
@@ -101,7 +101,7 @@ class C_User_profile extends CI_Controller{
     $acl_test = $this->uri->segment(1);
 
     // If the user does not have permission either in 'user_perms' or 'role_perms' redirect to login, or restricted, etc
-    if ( !$this->acl->hasPermission($acl_test) ) {
+    if ( !$this->acl->hasPermission($acl_test) || !$this->acl->hasProfileIdPermission($id) ) {
       redirect('');
     }
     if($this->input->method() == 'post'){
