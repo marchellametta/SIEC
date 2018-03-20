@@ -54,11 +54,11 @@ class C_Kelas_panitia extends CI_Controller{
           $all_topik = $this->Vw_data_topik->getAllTopik($row->id_ec);
           $jumlah_peserta = "";
           foreach ($all_topik as $topik) {
-            $jumlah_peserta .= $topik->nama_topik." : ". $this->Stored_procedure->get_jumlah_peserta_topik($topik->id_topik)->jumlah_peserta;
+            $jumlah_peserta .= '<a href="'.base_url().'kelas/peserta/topik/'.$topik->id_topik.'">'.$topik->nama_topik." : ". $this->Stored_procedure->get_jumlah_peserta_topik($topik->id_topik)->jumlah_peserta;
             if($row->kapasitas_peserta!=NULL){
-              $jumlah_peserta.="/".$row->kapasitas_peserta."<br>";
+              $jumlah_peserta.="/".$row->kapasitas_peserta."</a><br>";
             }else{
-              $jumlah_peserta.="<br>";
+              $jumlah_peserta.="</a><br>";
             }
           }
           $row->jumlah_peserta = $jumlah_peserta;
@@ -335,6 +335,45 @@ class C_Kelas_panitia extends CI_Controller{
       $mpdf->AddPage();
       //$mpdf->WriteHTML($en->renderOutput());
       $mpdf->Output();
+  }
+
+  public function pesertaTopik($id){
+    if($this->input->method() == 'get'){
+      $this->load->model('Stored_procedure');
+      $this->load->model('Vw_data_topik');
+      $this->load->model('Vw_data_ec');
+      $this->load->view('V_header');
+      $this->load->view('V_navbar');
+      $data = $this->Stored_procedure->get_all_peserta_topik($id);
+      $topik = $this->Vw_data_topik->get($id);
+      $ec = $this->Vw_data_ec->get($topik->id_ec);
+      $this->load->view('V_list_peserta',[
+        'data' => $data,
+        'topik' => $topik,
+        'ec' => $ec
+      ]);
+      $this->load->view('V_footer');
+    } else if($this->input->method() == 'post'){
+
+    }
+  }
+
+  public function pesertaEC($id){
+    if($this->input->method() == 'get'){
+      $this->load->model('Stored_procedure');
+      $this->load->model('Vw_data_ec');
+      $this->load->view('V_header');
+      $this->load->view('V_navbar');
+      $data = $this->Stored_procedure->get_all_peserta_ec($id);
+      $ec = $this->Vw_data_ec->get($id);
+      $this->load->view('V_list_peserta',[
+        'data' => $data,
+        'ec' => $ec
+      ]);
+      $this->load->view('V_footer');
+    } else if($this->input->method() == 'post'){
+
+    }
   }
 }
 ?>

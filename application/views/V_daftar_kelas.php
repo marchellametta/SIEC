@@ -14,11 +14,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
           <h2 class="card-title"><?php echo $row->tema_ec;?></h2>
           <p class="card-text"><?php echo $row->deskripsi;?></p>
           <?php if($row->status_peserta==1):?>
-          <p class="card-text text-muted mt-5"><?php echo "Jumlah Peserta: ". $row->jumlah_peserta;?></p>
+          <p class="card-text text-muted mt-5"><?php echo "Jumlah Peserta: <a href=".base_url()."/kelas/peserta/".$row->id_ec.">". $row->jumlah_peserta;?></p>
           <?php endif; ?>
           <?php if($row->status_peserta==2):?>
           <p class="card-text text-muted mt-5"><i class="fa fa-info-circle mr-1"></i>Peserta lepas diperbolehkan</p>
-          <p class= "card-text"><a tabindex="0" class= "" role="button" data-toggle="popover" data-placement="right" data-trigger="focus" data-html="true" data-content="<?php echo $row->jumlah_peserta?>"><i class="fa fa-external-link"></i>Jumlah Peserta</a></p>
+          <p class= "card-text"><a tabindex="0" class= "" role="button" data-toggle="popover" data-placement="right" data-trigger="focus" data-html="true" data-content='<?php echo $row->jumlah_peserta?>'><i class="fa fa-external-link"></i>Jumlah Peserta</a></p>
           <?php endif; ?>
           <a href="<?php echo base_url() .'informasi/detail/'. $row->id_ec;?>" class="<?php if($tipe!=='akan') echo 'border-right border-dark'?> pr-2 "><i class="fa fa-external-link mr-1 ml-1"></i>Detail</a>
           <?php if($tipe=='aktif'):?>
