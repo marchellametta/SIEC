@@ -6,7 +6,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
   <div class="text-left ml-4"><h5>PROFIL SAYA</h5></div>
   <div class="row mr-3 ml-3 pb-3 pt-3">
     <div class="col-md-3 col-lg-3">
-      <img class="w-100" src="<?php echo base_url() ?>images/profile.png">
+      <img class="w-100" src="<?php echo base_url().$data->foto ?>">
     </div>
     <div class="col-md-9 col-lg-9">
       <fieldset>

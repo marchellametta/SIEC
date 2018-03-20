@@ -15,6 +15,7 @@ class C_Pendaftaran extends CI_Controller{
        $this->load->model('Stored_procedure');
 
        $data = $this->Vw_data_ec->getActive();
+
        $complete = array();
        foreach ($data as $row) {
          if($row->kapasitas_peserta!=NULL && $row->status_peserta==1){
@@ -84,7 +85,8 @@ class C_Pendaftaran extends CI_Controller{
          $hashed_pw = password_hash($post_data['password'], PASSWORD_DEFAULT);
          $this->load->model('T_user');
          $this->load->model('T_user_roles');
-          $this->load->model('T_peserta_topik');
+         $this->load->model('T_peserta_topik');
+          $this->load->helper('upload_file_helper');
 
           if($post_data['password']!==$post_data['password_retype'])
           {
@@ -100,6 +102,22 @@ class C_Pendaftaran extends CI_Controller{
             ]);
             $this->load->view('V_footer');
           }else{
+            $res="";
+            if(!empty($_FILES['gambar-file']['name'])){
+            $res = upload_file($this,[
+              'field_name' => 'gambar-file',
+              'upload_path' => 'images/foto',
+              'file_name' => $post_data['gambar'],
+              'max_size' => 8192
+            ]);
+            }
+            if(isset($res->error_code)){
+              echo $res->errors;
+              die();
+            }else if(!isset($res->error_code)){
+              $post_data['gambar'] = $res;
+            }
+
             $this->db->trans_begin();
            $this->T_user->insert([
              'nama' => $post_data['nama'],
@@ -111,7 +129,8 @@ class C_Pendaftaran extends CI_Controller{
              'no_hp' => $post_data['nohp'],
              'email' => $post_data['email'],
              'password' => $hashed_pw,
-             'agama' => $post_data['agama']
+             'agama' => $post_data['agama'],
+             'foto' => $post_data['gambar']
            ]);
            $id_peserta = $this->db->insert_id();
            foreach ($post_data['topik'] as $row) {
@@ -141,6 +160,8 @@ class C_Pendaftaran extends CI_Controller{
          $this->load->model('T_user');
          $this->load->model('T_user_roles');
           $this->load->model('T_panitia_ec');
+          $this->load->helper('upload_file_helper');
+
 
           if($post_data['password']!==$post_data['password_retype'])
           {
@@ -156,7 +177,21 @@ class C_Pendaftaran extends CI_Controller{
             ]);
             $this->load->view('V_footer');
           }else{
-
+            $res="";
+            if(!empty($_FILES['gambar-file']['name'])){
+            $res = upload_file($this,[
+              'field_name' => 'gambar-file',
+              'upload_path' => 'images/foto',
+              'file_name' => $post_data['gambar'],
+              'max_size' => 8192
+            ]);
+            }
+            if(isset($res->error_code)){
+              echo $res->errors;
+              die();
+            }else if(!isset($res->error_code)){
+              $post_data['gambar'] = $res;
+            }
           $this->db->trans_begin();
          $this->T_user->insert([
            'nama' => $post_data['nama'],
@@ -168,7 +203,8 @@ class C_Pendaftaran extends CI_Controller{
            'no_hp' => $post_data['nohp'],
            'email' => $post_data['email'],
            'password' => $hashed_pw,
-           'agama' => $post_data['agama']
+           'agama' => $post_data['agama'],
+           'foto' => $post_data['gambar']
          ]);
          $id_panitia = $this->db->insert_id();
          foreach ($post_data['kelas'] as $row) {
