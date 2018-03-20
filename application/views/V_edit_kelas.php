@@ -117,7 +117,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 <td><?php echo $row->lokasi ?></td>
                 <td><?php echo $row->nama_topik ?></td>
                 <td><?php echo $row->nama ?></td>
-                <td><button type="button" class="btn btn-danger btn-sm hapus" data-dismiss="modal"><i class="fa fa-close mr-1"></i>Hapus</button></td>
+                <td><button type="button" class="btn btn-danger btn-sm hapus"><i class="fa fa-close mr-1"></i>Hapus</button></td>
                 <td class="hidden status"><?php echo $row->status ?></td>
               </tr>
             <?php endforeach;?>
@@ -202,7 +202,7 @@ $(document).ready(function(){
      var jammulai = $('#jammulai').val();
      var jamselesai = $('#jamselesai').val();
      var lokasi = $('#lokasi').val();
-     var button = '<button type="button" class="btn btn-danger btn-sm hapus" data-dismiss="modal"><i class="fa fa-close mr-1"></i>Hapus</button>';
+     var button = '<button type="button" class="btn btn-danger btn-sm hapus"><i class="fa fa-close mr-1"></i>Hapus</button>';
      var status = 1;
 
 

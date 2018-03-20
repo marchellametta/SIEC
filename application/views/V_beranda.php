@@ -15,15 +15,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 <!-- The slideshow -->
 <div class="carousel-inner">
-  <div class="carousel-item active">
-    <img class="d-block w-100" src="<?php echo base_url();?>images/banner1.jpg">
-  </div>
-  <div class="carousel-item">
-    <img class="d-block w-100" src="<?php echo base_url();?>images/banner2.jpg">
-  </div>
-  <div class="carousel-item">
-    <img class="d-block w-100" src="<?php echo base_url();?>images/banner3.jpg">
-  </div>
+  <?php foreach ($banner as $row): ?>
+    <div class="carousel-item">
+      <img class="d-block w-100" src="<?php echo base_url().$row->banner;?>">
+    </div>
+  <?php endforeach; ?>
 </div>
 
 <!-- Left and right controls -->
@@ -68,6 +64,7 @@ function carouselNormalization() {
 }
 
 $( document ).ready(function() {
+   $( '.carousel-item' ).first().addClass('active');
     carouselNormalization();
 });
 

@@ -56,6 +56,11 @@ $route['translate_uri_dashes'] = FALSE;
 $route['login'] = 'C_login/index';
 $route['logout'] = 'C_login/logout';
 $route['acl'] = 'C_acl/index';
+$route['kelola-beranda'] = 'C_beranda/edit';
+$route['kelola-berita/(:num)'] = 'C_beranda/editBerita/$1';
+$route['hapus-berita/(:num)'] = 'C_beranda/hapusBerita/$1';
+$route['tambah-berita'] = 'C_beranda/tambahBerita';
+
 $route['kelas/laporan/(:num)'] = 'C_laporan/index/$1';
 $route['kelas/laporan/unduh/(:num)'] = 'C_laporan/unduh/$1';
 

@@ -179,7 +179,6 @@ class C_Informasi extends CI_Controller{
       }else if(!isset($res->error_code)){
         $post_data['gambar'] = $res;
       }
-
       $res="";
       if(!empty($_FILES['pdf-file']['name'])){
       $res = upload_file($this,[
@@ -189,7 +188,6 @@ class C_Informasi extends CI_Controller{
         'max_size' => 8192
       ]);
       }
-
 
       if(isset($res->error_code)){
         echo '2'.$res->errors;

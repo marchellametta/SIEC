@@ -64,6 +64,7 @@ function upload_file($ctrl,$args){
 
 /// mengkonfigurasi library upload
     $ctrl->load->library('upload', $upload_config);
+    $ctrl->upload->initialize($upload_config);
 
 /// melakukan upload
     if(! $ctrl->upload->do_upload($field_name)){
