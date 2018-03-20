@@ -40,7 +40,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <tr>
           <td>Pendidikan Terakhir</td>
           <td>:</td>
-          <td><?php echo $data->pendidikan_terakhir; ?></td>
+          <td>
+            <?php if($data->pendidikan_terakhir==1): ?>
+              <?php echo "SMA";?>
+            <?php elseif($data->pendidikan_terakhir==2): ?>
+              <?php echo "D3";?>
+            <?php elseif($data->pendidikan_terakhir==3): ?>
+              <?php echo "S1";?>
+            <?php elseif($data->pendidikan_terakhir==4): ?>
+              <?php echo "S2";?>
+            <?php endif; ?>
+          </td>
         </tr>
         <tr>
           <td>Kota asal</td>
@@ -50,7 +60,21 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <tr>
           <td>Agama</td>
           <td>:</td>
-          <td><?php echo $data->agama; ?></td>
+          <td>
+            <?php if($data->agama==1): ?>
+              <?php echo "Katolik";?>
+            <?php elseif($data->agama==2): ?>
+              <?php echo "Kristen";?>
+            <?php elseif($data->agama==3): ?>
+              <?php echo "Islam";?>
+            <?php elseif($data->agama==4): ?>
+              <?php echo "Buddha";?>
+            <?php elseif($data->agama==5): ?>
+              <?php echo "Hindu";?>
+            <?php elseif($data->agama==4): ?>
+              <?php echo "Lainnya";?>    
+            <?php endif; ?>
+          </td>
         </tr>
         <tr>
           <td>Nomor HP</td>
