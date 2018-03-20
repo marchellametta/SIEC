@@ -1,20 +1,43 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 ?>
+
 <div class="fixed-top">
-  <div class="text-right bg-black">
+  <div class="d-flex flex-row-reverse bg-black">
     <div class="dropdown">
-    <button class="btn btn-sm dropdown-toggle bg-black text-white" type="button" id="dropdownMenuButton" data-toggle="dropdown" data-disabled="true" aria-haspopup="true" aria-expanded="false">
-      Dropdown button
+      <button class="btn btn-sm dropdown-toggle bg-black text-white" type="button" id="role" data-toggle="dropdown" data-disabled="true" aria-haspopup="true" aria-expanded="false">
+        Anda masuk sebagai <b id="role-text"><?php echo $this->session->userdata('current_roles') ?></b>
+      </button>
+      <div class="dropdown-menu dropdown-menu-right bg-black" aria-labelledby="role">
+        <?php foreach ($this->session->userdata('roles') as $row) :?>
+          <a class="dropdown-item text-white" href="#"><?php echo $row->role_name?></a>
+        <?php endforeach; ?>
+      </div>
+    </div>
+    <div class="dropdown hidden" id="peserta">
+    <button class="btn btn-sm dropdown-toggle bg-black text-white" type="button" id="menu" data-toggle="dropdown" data-disabled="true" aria-haspopup="true" aria-expanded="false">
+      Selamat Datang, <b><?php echo $this->session->userdata('nama') ?></b>
     </button>
-    <div class="dropdown-menu bg-black" aria-labelledby="dropdownMenuButton">
+    <div class="dropdown-menu bg-black" aria-labelledby="menu">
       <small class="dropdown-item text-white" href="#">Kelas Saya</small>
       <div class="dropdown-divider"></div>
       <small class="dropdown-item text-white" href="#">Profil Saya</small>
       <div class="dropdown-divider"></div>
       <small class="dropdown-item text-white" href="#">Log Out</small>
     </div>
-  </div>
+    </div>
+    <div class="dropdown hidden" id="panitia">
+    <button class="btn btn-sm dropdown-toggle bg-black text-white" type="button" id="menu" data-toggle="dropdown" data-disabled="true" aria-haspopup="true" aria-expanded="false">
+      Selamat Datang, <b><?php echo $this->session->userdata('nama') ?></b>
+    </button>
+    <div class="dropdown-menu bg-black" aria-labelledby="menu">
+      <small class="dropdown-item text-white" href="#">Daftar Kelas</small>
+      <div class="dropdown-divider"></div>
+      <small class="dropdown-item text-white" href="#">Profil Saya</small>
+      <div class="dropdown-divider"></div>
+      <small class="dropdown-item text-white" href="#">Log Out</small>
+    </div>
+    </div>
   </div>
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <a class="navbar-brand border-right mw-25" href="<?php echo base_url(); ?>"><img class="img-responsive w-100" src="<?php echo base_url();?>images/logo.png"></a>
@@ -56,3 +79,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
   </nav>
 
 </div>
+<script>
+$( document ).ready(function() {
+    $('#'+$('#role-text').text()).show();
+});
+</script>

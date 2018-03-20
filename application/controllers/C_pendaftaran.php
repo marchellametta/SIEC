@@ -86,33 +86,50 @@ class C_Pendaftaran extends CI_Controller{
          $this->load->model('T_user_roles');
           $this->load->model('T_peserta_topik');
 
-          $this->db->trans_begin();
-         $this->T_user->insert([
-           'nama' => $post_data['nama'],
-           'alamat' => $post_data['alamat'],
-           'pekerjaan' => $post_data['pekerjaan'],
-           'lembaga' => $post_data['lembaga'],
-           'pendidikan_terakhir' => intval($post_data['pendidikan']),
-           'kota' => $post_data['kota'],
-           'no_hp' => $post_data['nohp'],
-           'email' => $post_data['email'],
-           'password' => $hashed_pw,
-           'agama' => $post_data['agama']
-         ]);
-         $id_peserta = $this->db->insert_id();
-         foreach ($post_data['topik'] as $row) {
-           $this->T_peserta_topik->attach_peserta_topik($id_peserta,$row);
-         }
-         $this->T_user_roles->insert([
-           'user_id' => $id_peserta,
-           'role_id' => 2
-         ]);
-         if ($this->db->trans_status() === FALSE){
-           $this->db->trans_rollback();
-         }else{
-           $this->db->trans_commit();
-           redirect('', 'refresh');
-         }
+          if($post_data['password']!==$post_data['password_retype'])
+          {
+            $selected=0;
+            $this->load->model('Vw_data_ec');
+            $data = $this->Vw_data_ec->getActive();
+            $this->load->view('V_header');
+            $this->load->view('V_navbar');
+            $this->load->view('V_pendaftaran',[
+              'selected' => $selected,
+              'data' => $data,
+              'error' => 'Password tidak sama'
+            ]);
+            $this->load->view('V_footer');
+          }else{
+            $this->db->trans_begin();
+           $this->T_user->insert([
+             'nama' => $post_data['nama'],
+             'alamat' => $post_data['alamat'],
+             'pekerjaan' => $post_data['pekerjaan'],
+             'lembaga' => $post_data['lembaga'],
+             'pendidikan_terakhir' => intval($post_data['pendidikan']),
+             'kota' => $post_data['kota'],
+             'no_hp' => $post_data['nohp'],
+             'email' => $post_data['email'],
+             'password' => $hashed_pw,
+             'agama' => $post_data['agama']
+           ]);
+           $id_peserta = $this->db->insert_id();
+           foreach ($post_data['topik'] as $row) {
+             $this->T_peserta_topik->attach_peserta_topik($id_peserta,$row);
+           }
+           $this->T_user_roles->insert([
+             'user_id' => $id_peserta,
+             'role_id' => 2
+           ]);
+           if ($this->db->trans_status() === FALSE){
+             $this->db->trans_rollback();
+           }else{
+             $this->db->trans_commit();
+             redirect('', 'refresh');
+           }
+          }
+
+
     }
   }
 
@@ -124,6 +141,21 @@ class C_Pendaftaran extends CI_Controller{
          $this->load->model('T_user');
          $this->load->model('T_user_roles');
           $this->load->model('T_panitia_ec');
+
+          if($post_data['password']!==$post_data['password_retype'])
+          {
+            $selected=0;
+            $this->load->model('Vw_data_ec');
+            $data = $this->Vw_data_ec->getActive();
+            $this->load->view('V_header');
+            $this->load->view('V_navbar');
+            $this->load->view('V_pendaftaran',[
+              'selected' => $selected,
+              'data' => $data,
+              'error' => 'Password tidak sama'
+            ]);
+            $this->load->view('V_footer');
+          }else{
 
           $this->db->trans_begin();
          $this->T_user->insert([
@@ -150,8 +182,9 @@ class C_Pendaftaran extends CI_Controller{
            $this->db->trans_rollback();
          }else{
            $this->db->trans_commit();
-           redirect('', 'refresh');
+           //redirect('', 'refresh');
          }
+       }
     }
   }
 }

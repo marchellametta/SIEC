@@ -72,6 +72,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
        <label for="retypePassword">Ketik Ulang Password</label>
        <input type="password" class="form-control" name="password_retype" placeholder="Password">
      </div>
+     <?php if (isset($error)): ?>
+          <div class="alert alert-danger alert-dismissable">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            <?php echo $error; ?>
+          </div>
+      <?php endif ?>
     </fieldset>
 
     <fieldset class="mt-4">

@@ -64,6 +64,7 @@ $route['informasi/aktif'] = 'C_informasi/aktif';
 $route['informasi/riwayat'] = 'C_informasi/riwayat';
 $route['informasi/mendatang'] = 'C_informasi/akanDatang';
 $route['tambahkelas'] = 'C_informasi/tambah';
+$route['editkelas/(:num)'] = 'C_informasi/edit/$1';
 $route['lokasi'] = 'C_lokasi/index';
 $route['visimisi'] = 'C_visimisi/index';
 $route['informasi/jadwal/(:num)'] = 'C_jadwal/index/$1';

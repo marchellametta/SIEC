@@ -195,7 +195,7 @@ class C_Informasi extends CI_Controller{
         echo '2'.$res->errors;
         die();
       }else if(!isset($res->error_code)){
-        $post_data['modul'] = $res;
+        $post_data['pdf'] = $res;
       }
 
       $status_evaluasi = (isset($post_data['evaluasi-mingguan'])) ? 2 : 1;
@@ -215,25 +215,149 @@ class C_Informasi extends CI_Controller{
        'deskripsi' => $post_data['deskripsi'],
        'biaya_per_topik' => (isset($post_data['biaya-topik'])) ? $post_data['biaya-topik'] : NULL,
        'kapasitas_peserta' => (isset($post_data['kapasitas'])) ? $post_data['kapasitas'] : NULL,
-       'modul_pdf' => $post_data['modul']
+       'modul_pdf' => $post_data['pdf']
      ]);
      $id_ec = $this->db->insert_id();
      foreach ($topik as $row) {
-       $this->T_topik_ec->insert([
-         'id_ec' => $id_ec,
-         'nama_topik' => $row->topik
-       ]);
+       if($row->status==1){
+         $this->T_topik_ec->insert([
+           'id_ec' => $id_ec,
+           'nama_topik' => $row->topik,
+           'nama' => $row->narasumber
+         ]);
 
-       $jam = explode(" - ",$row->jam);
+         $jam = explode(" - ",$row->jam);
 
-       $id_topik = $this->db->insert_id();
-       $this->T_jadwal->insert([
-         'id_topik' => $id_topik,
-         'tanggal' => date($this->config->item('db_date_format'),strtotime($row->tanggal)),
-         'lokasi' => $row->lokasi,
-         'jam_mulai' => $jam[0],
-         'jam_selesai' => $jam[1],
+         $id_topik = $this->db->insert_id();
+         $this->T_jadwal->insert([
+           'id_topik' => $id_topik,
+           'tanggal' => date($this->config->item('db_date_format'),strtotime($row->tanggal)),
+           'lokasi' => $row->lokasi,
+           'jam_mulai' => $jam[0],
+           'jam_selesai' => $jam[1],
+         ]);
+       }
+     }
+     if ($this->db->trans_status() === FALSE){
+       $this->db->trans_rollback();
+     }else{
+       $this->db->trans_commit();
+       //redirect('', 'refresh');
+     }
+
+
+    }
+  }
+
+  public function edit($id){
+    if($this->input->method() == 'get'){
+       $this->load->model('T_jenis_ec');
+       $this->load->model('Vw_data_ec');
+       $this->load->model('Vw_data_topik');
+       $jenis_ec = $this->T_jenis_ec->all();
+       $ec = $this->Vw_data_ec->get($id);
+       $topik = $this->Vw_data_topik->getAllTopik($id);
+       foreach ($topik as $row) {
+         $row->status = 3;
+       }
+
+       $this->load->view('V_header');
+       $this->load->view('V_navbar');
+       $this->load->view('V_edit_kelas',[
+         'jenis_ec' => $jenis_ec,
+         'ec' => $ec,
+         'topik' => $topik
        ]);
+       $this->load->view('V_footer');
+    } else if($this->input->method() == 'post'){
+      $post_data = $this->input->post();
+
+      $this->load->model('T_ec');
+      $this->load->model('T_topik_ec');
+      $this->load->model('T_jadwal');
+      $this->load->helper('upload_file');
+
+      $topik = json_decode($post_data['topik']);
+
+      $res="";
+      if(!empty($_FILES['gambar-file']['name'])){
+      $res = upload_file($this,[
+        'field_name' => 'gambar-file',
+        'upload_path' => 'images',
+        'file_name' => $post_data['tema'],
+        'max_size' => 8192
+      ]);
+      if(isset($res->error_code)){
+        echo '1'. $res->errors;
+        die();
+      }else if(!isset($res->error_code)){
+        $post_data['gambar'] = $res;
+      }
+      }
+
+
+      $res="";
+      if(!empty($_FILES['pdf-file']['name'])){
+      $res = upload_file($this,[
+        'field_name' => 'pdf-file',
+        'upload_path' => 'Modul',
+        'file_name' => $post_data['tema'],
+        'max_size' => 8192
+      ]);
+      if(isset($res->error_code)){
+        echo '2'.$res->errors;
+        die();
+      }else if(!isset($res->error_code)){
+        $post_data['pdf'] = $res;
+      }
+      }
+
+
+
+      $status_evaluasi = (isset($post_data['evaluasi-mingguan'])) ? 2 : 1;
+      $status_peserta = (isset($post_data['peserta-lepas'])) ? 2 : 1;
+
+      $post_data['biaya-topik'] = ($status_peserta==1) ? NULL : $post_data['biaya-topik'];
+      $post_data['kapasitas'] = (isset($post_data['sistem-kuota'])) ? $post_data['kapasitas'] : NULL;
+
+
+      $this->db->trans_begin();
+      $this->T_ec->edit($id,[
+       'id_jenis_ec' => $post_data['jenis-ec'],
+       'tema_ec' => $post_data['tema'],
+       'status_evaluasi' => $status_evaluasi,
+       'status_peserta' => $status_peserta,
+       'biaya' => $post_data['biaya'],
+       'gambar' => $post_data['gambar'],
+       'semester_pelaksanaan' => $post_data['semester'],
+       'tahun_pelaksanaan' => $post_data['tahun'],
+       'deskripsi' => $post_data['deskripsi'],
+       'biaya_per_topik' => (isset($post_data['biaya-topik'])) ? $post_data['biaya-topik'] : NULL,
+       'kapasitas_peserta' => (isset($post_data['kapasitas'])) ? $post_data['kapasitas'] : NULL,
+       'modul_pdf' => $post_data['pdf']
+     ]);
+     foreach ($topik as $row) {
+       if($row->status==1){
+         $this->T_topik_ec->insert([
+           'id_ec' => $id,
+           'nama_topik' => $row->topik,
+           'nama' => $row->narasumber
+         ]);
+
+         $jam = explode(" - ",$row->jam);
+
+         $id_topik = $this->db->insert_id();
+         $this->T_jadwal->insert([
+           'id_topik' => $id_topik,
+           'tanggal' => date($this->config->item('db_date_format'),strtotime($row->tanggal)),
+           'lokasi' => $row->lokasi,
+           'jam_mulai' => $jam[0],
+           'jam_selesai' => $jam[1],
+         ]);
+       }else if($row->status==2){
+         $this->T_jadwal->delete($row->id_topik);
+         $this->T_topik_ec->delete($row->id_topik);
+       }
      }
      if ($this->db->trans_status() === FALSE){
        $this->db->trans_rollback();

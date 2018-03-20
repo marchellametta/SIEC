@@ -19,6 +19,11 @@ class T_user_roles extends CI_Model{
         $this->db->where('role_id',$role_id);
         return $this->db->get($this->table_name)->row();
     }
+    public function getRole($user_id){
+        /* No Error Handling yet! */
+        $this->db->where('user_id',$user_id);
+        return $this->db->get($this->table_name)->row();
+    }
 
     public function insert($args)
    {

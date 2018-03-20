@@ -35,7 +35,8 @@ class C_User_profile extends CI_Controller{
        $this->load->model('T_user');
        $data = $this->T_user->get($id);
        $this->load->view('V_user_profile',[
-         'data' => $data
+         'data' => $data,
+         'show' => ''
        ]);
        $this->load->view('V_footer');
     } else if($this->input->method() == 'post'){
@@ -111,17 +112,32 @@ class C_User_profile extends CI_Controller{
 
        $match = password_verify($post_data['password_lama'] ,$db_password);
 
-       if($match==true){
-         $this->T_user->edit($id,[
-           'password' => password_hash($post_data['password_baru'], PASSWORD_DEFAULT)
+       if($post_data['password_baru']!==$post_data['password_retype']){
+         $this->load->view('V_header');
+         $this->load->view('V_navbar');
+
+         $this->load->model('T_user');
+         $data = $this->T_user->get($id);
+         $this->load->view('V_user_profile',[
+           'data' => $data,
+           'error' => 'Password baru tidak sama',
+           'show' => 'password'
          ]);
+         $this->load->view('V_footer');
+
        }else{
-         echo "gagal";
-         die();
+         if($match==true){
+           $this->T_user->edit($id,[
+             'password' => password_hash($post_data['password_baru'], PASSWORD_DEFAULT)
+           ]);
+         }else{
+           echo "gagal";
+           die();
+         }
+         redirect('profil/'.$id, 'refresh');
        }
 
 
-       redirect('profil/'.$id, 'refresh');
     } else if($this->input->method() == 'get'){
 
 
