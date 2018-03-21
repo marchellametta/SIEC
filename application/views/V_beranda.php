@@ -11,6 +11,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
   <li data-target="#beranda" data-slide-to="0" class="active"></li>
   <li data-target="#beranda" data-slide-to="1"></li>
   <li data-target="#beranda" data-slide-to="2"></li>
+  <li data-target="#beranda" data-slide-to="3"></li>
+  <li data-target="#beranda" data-slide-to="4"></li>
 </ul>
 
 <!-- The slideshow -->
@@ -46,7 +48,7 @@ function carouselNormalization() {
       items.each(function() { //add heights to array
         heights.push($(this).height());
       });
-      tallest = Math.min.apply(null, heights); //cache largest value
+      tallest = Math.min.apply(1000, heights); //cache largest value
       items.each(function() {
         $(this).css('height', tallest + 'px');
       });
@@ -65,7 +67,10 @@ function carouselNormalization() {
 
 $( document ).ready(function() {
    $( '.carousel-item' ).first().addClass('active');
-    carouselNormalization();
+});
+
+$(window).on("load", function() {
+  carouselNormalization();
 });
 
 </script>

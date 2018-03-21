@@ -56,6 +56,7 @@ $route['translate_uri_dashes'] = FALSE;
 $route['login'] = 'C_login/index';
 $route['logout'] = 'C_login/logout';
 $route['acl'] = 'C_acl/index';
+$route['change-role/(:num)'] = 'C_login/changeRole/$1';
 $route['kelola-beranda'] = 'C_beranda/edit';
 $route['kelola-berita/(:num)'] = 'C_beranda/editBerita/$1';
 $route['hapus-berita/(:num)'] = 'C_beranda/hapusBerita/$1';

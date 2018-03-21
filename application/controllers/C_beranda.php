@@ -22,6 +22,23 @@ class C_Beranda extends CI_Controller{
   }
 
   public function edit(){
+    // Use whatever user script you would like, just make sure it has an ID field to tie into the ACL with
+    $id_user = $this->session->userdata('id_user');
+
+    // Get the user's ID and add it to the config array
+    $config = array('userID'=>$id_user);
+
+    // Load the ACL library and pas it the config array
+    $this->load->library('acl',$config);
+
+    // Get the perm key
+    // I'm using the URI to keep this pretty simple ( http://www.example.com/test/this ) would be 'test_this'
+    $acl_test = $this->uri->segment(1);
+
+    // If the user does not have permission either in 'user_perms' or 'role_perms' redirect to login, or restricted, etc
+    if ( !$this->acl->hasPermission($acl_test) ) {
+      redirect('');
+    }
     if($this->input->method() == 'get'){
       $this->load->model('T_berita');
       $data = $this->T_berita->all();
@@ -143,6 +160,23 @@ class C_Beranda extends CI_Controller{
   }
 
   public function editBerita($id){
+    // Use whatever user script you would like, just make sure it has an ID field to tie into the ACL with
+    $id_user = $this->session->userdata('id_user');
+
+    // Get the user's ID and add it to the config array
+    $config = array('userID'=>$id_user);
+
+    // Load the ACL library and pas it the config array
+    $this->load->library('acl',$config);
+
+    // Get the perm key
+    // I'm using the URI to keep this pretty simple ( http://www.example.com/test/this ) would be 'test_this'
+    $acl_test = $this->uri->segment(1);
+
+    // If the user does not have permission either in 'user_perms' or 'role_perms' redirect to login, or restricted, etc
+    if ( !$this->acl->hasPermission($acl_test) ) {
+      redirect('');
+    }
     if($this->input->method() == 'get'){
       $this->load->model('T_berita');
 
@@ -187,6 +221,23 @@ class C_Beranda extends CI_Controller{
   }
 
   public function hapusBerita($id){
+    // Use whatever user script you would like, just make sure it has an ID field to tie into the ACL with
+    $id_user = $this->session->userdata('id_user');
+
+    // Get the user's ID and add it to the config array
+    $config = array('userID'=>$id_user);
+
+    // Load the ACL library and pas it the config array
+    $this->load->library('acl',$config);
+
+    // Get the perm key
+    // I'm using the URI to keep this pretty simple ( http://www.example.com/test/this ) would be 'test_this'
+    $acl_test = $this->uri->segment(1);
+
+    // If the user does not have permission either in 'user_perms' or 'role_perms' redirect to login, or restricted, etc
+    if ( !$this->acl->hasPermission($acl_test) ) {
+      redirect('');
+    }
       $this->load->model('T_berita');
 
       $this->T_berita->delete($id);
@@ -195,6 +246,23 @@ class C_Beranda extends CI_Controller{
   }
 
   public function tambahBerita(){
+    // Use whatever user script you would like, just make sure it has an ID field to tie into the ACL with
+    $id_user = $this->session->userdata('id_user');
+
+    // Get the user's ID and add it to the config array
+    $config = array('userID'=>$id_user);
+
+    // Load the ACL library and pas it the config array
+    $this->load->library('acl',$config);
+
+    // Get the perm key
+    // I'm using the URI to keep this pretty simple ( http://www.example.com/test/this ) would be 'test_this'
+    $acl_test = $this->uri->segment(1);
+
+    // If the user does not have permission either in 'user_perms' or 'role_perms' redirect to login, or restricted, etc
+    if ( !$this->acl->hasPermission($acl_test) ) {
+      redirect('');
+    }
     if($this->input->method() == 'get'){
        $this->load->view('V_header');
        $this->load->view('V_navbar');

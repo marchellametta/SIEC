@@ -24,7 +24,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
           </div>
         </div>
       </fieldset>
-      <input type="submit" id="simpan" value="Simpan" class="btn btn-success">
+      <input type="submit" id="simpan" value="Simpan" class="btn btn-success mt-3">
     </form>
   </div>
 </div>

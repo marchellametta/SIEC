@@ -43,7 +43,7 @@ class C_Kelas_panitia extends CI_Controller{
       foreach ($data as $row) {
         if($row->status_peserta==1){
           $jumlah_peserta = $this->Stored_procedure->get_jumlah_peserta_ec($row->id_ec);
-          if($row->kapasitas_peserta!=NULL){
+          if($row->kapasitas_peserta!=0){
             $jumlah_peserta->jumlah_peserta.="/".$row->kapasitas_peserta."<br>";
           }else{
             $jumlah_peserta->jumlah_peserta.="<br>";
@@ -55,7 +55,7 @@ class C_Kelas_panitia extends CI_Controller{
           $jumlah_peserta = "";
           foreach ($all_topik as $topik) {
             $jumlah_peserta .= '<a href="'.base_url().'kelas/peserta/topik/'.$topik->id_topik.'">'.$topik->nama_topik." : ". $this->Stored_procedure->get_jumlah_peserta_topik($topik->id_topik)->jumlah_peserta;
-            if($row->kapasitas_peserta!=NULL){
+            if($row->kapasitas_peserta!=0){
               $jumlah_peserta.="/".$row->kapasitas_peserta."</a><br>";
             }else{
               $jumlah_peserta.="</a><br>";
@@ -109,7 +109,7 @@ class C_Kelas_panitia extends CI_Controller{
       foreach ($data as $row) {
         if($row->status_peserta==1){
           $jumlah_peserta = $this->Stored_procedure->get_jumlah_peserta_ec($row->id_ec);
-          if($row->kapasitas_peserta!=NULL){
+          if($row->kapasitas_peserta!=0){
             $jumlah_peserta->jumlah_peserta.="/".$row->kapasitas_peserta."<br>";
           }else{
             $jumlah_peserta->jumlah_peserta.="<br>";
@@ -121,7 +121,7 @@ class C_Kelas_panitia extends CI_Controller{
           $jumlah_peserta = "";
           foreach ($all_topik as $topik) {
             $jumlah_peserta .= $topik->nama_topik." : ". $this->Stored_procedure->get_jumlah_peserta_topik($topik->id_topik)->jumlah_peserta;
-            if($row->kapasitas_peserta!=NULL){
+            if($row->kapasitas_peserta!=0){
               $jumlah_peserta.="/".$row->kapasitas_peserta."<br>";
             }else{
               $jumlah_peserta.="<br>";
@@ -174,7 +174,7 @@ class C_Kelas_panitia extends CI_Controller{
       foreach ($data as $row) {
         if($row->status_peserta==1){
           $jumlah_peserta = $this->Stored_procedure->get_jumlah_peserta_ec($row->id_ec);
-          if($row->kapasitas_peserta!=NULL){
+          if($row->kapasitas_peserta!=0){
             $jumlah_peserta->jumlah_peserta.="/".$row->kapasitas_peserta."<br>";
           }else{
             $jumlah_peserta->jumlah_peserta.="<br>";
@@ -186,7 +186,7 @@ class C_Kelas_panitia extends CI_Controller{
           $jumlah_peserta = "";
           foreach ($all_topik as $topik) {
             $jumlah_peserta .= $topik->nama_topik." : ". $this->Stored_procedure->get_jumlah_peserta_topik($topik->id_topik)->jumlah_peserta;
-            if($row->kapasitas_peserta!=NULL){
+            if($row->kapasitas_peserta!=0){
               $jumlah_peserta.="/".$row->kapasitas_peserta."<br>";
             }else{
               $jumlah_peserta.="<br>";

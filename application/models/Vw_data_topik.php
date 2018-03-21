@@ -5,6 +5,10 @@ class Vw_data_topik extends CI_Model{
     public $id_ec;
     public $id_topik;
     public $nama_topik;
+    public $tanggal;
+    public $lokasi;
+    public $jam_mulai;
+    public $jam_selesai;
     public $nama;
     public $profesi;
     public $lembaga;

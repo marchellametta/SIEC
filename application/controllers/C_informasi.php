@@ -15,7 +15,7 @@ class C_Informasi extends CI_Controller{
       foreach ($data as $row) {
         if($row->status_peserta==1){
           $jumlah_peserta = $this->Stored_procedure->get_jumlah_peserta_ec($row->id_ec);
-          if($row->kapasitas_peserta!=NULL){
+          if($row->kapasitas_peserta!=0){
             $jumlah_peserta->jumlah_peserta.="/".$row->kapasitas_peserta."<br>";
           }else{
             $jumlah_peserta->jumlah_peserta.="<br>";
@@ -27,7 +27,7 @@ class C_Informasi extends CI_Controller{
           $jumlah_peserta = "";
           foreach ($all_topik as $topik) {
             $jumlah_peserta .= $topik->nama_topik." : ". $this->Stored_procedure->get_jumlah_peserta_topik($topik->id_topik)->jumlah_peserta;
-            if($row->kapasitas_peserta!=NULL){
+            if($row->kapasitas_peserta!=0){
               $jumlah_peserta.="/".$row->kapasitas_peserta."<br>";
             }else{
               $jumlah_peserta.="<br>";
@@ -62,7 +62,7 @@ class C_Informasi extends CI_Controller{
       foreach ($data as $row) {
         if($row->status_peserta==1){
           $jumlah_peserta = $this->Stored_procedure->get_jumlah_peserta_ec($row->id_ec);
-          if($row->kapasitas_peserta!=NULL){
+          if($row->kapasitas_peserta!=0){
             $jumlah_peserta->jumlah_peserta.="/".$row->kapasitas_peserta."<br>";
           }else{
             $jumlah_peserta->jumlah_peserta.="<br>";
@@ -74,7 +74,7 @@ class C_Informasi extends CI_Controller{
           $jumlah_peserta = "";
           foreach ($all_topik as $topik) {
             $jumlah_peserta .= $topik->nama_topik." : ". $this->Stored_procedure->get_jumlah_peserta_topik($topik->id_topik)->jumlah_peserta;
-            if($row->kapasitas_peserta!=NULL){
+            if($row->kapasitas_peserta!=0){
               $jumlah_peserta.="/".$row->kapasitas_peserta."<br>";
             }else{
               $jumlah_peserta.="<br>";
@@ -108,7 +108,7 @@ class C_Informasi extends CI_Controller{
       foreach ($data as $row) {
         if($row->status_peserta==1){
           $jumlah_peserta = $this->Stored_procedure->get_jumlah_peserta_ec($row->id_ec);
-          if($row->kapasitas_peserta!=NULL){
+          if($row->kapasitas_peserta!=0){
             $jumlah_peserta->jumlah_peserta.="/".$row->kapasitas_peserta."<br>";
           }else{
             $jumlah_peserta->jumlah_peserta.="<br>";
@@ -120,7 +120,7 @@ class C_Informasi extends CI_Controller{
           $jumlah_peserta = "";
           foreach ($all_topik as $topik) {
             $jumlah_peserta .= $topik->nama_topik." : ". $this->Stored_procedure->get_jumlah_peserta_topik($topik->id_topik)->jumlah_peserta;
-            if($row->kapasitas_peserta!=NULL){
+            if($row->kapasitas_peserta!=0){
               $jumlah_peserta.="/".$row->kapasitas_peserta."<br>";
             }else{
               $jumlah_peserta.="<br>";
@@ -144,6 +144,23 @@ class C_Informasi extends CI_Controller{
   }
 
   public function tambah(){
+    // Use whatever user script you would like, just make sure it has an ID field to tie into the ACL with
+    $id_user = $this->session->userdata('id_user');
+
+    // Get the user's ID and add it to the config array
+    $config = array('userID'=>$id_user);
+
+    // Load the ACL library and pas it the config array
+    $this->load->library('acl',$config);
+
+    // Get the perm key
+    // I'm using the URI to keep this pretty simple ( http://www.example.com/test/this ) would be 'test_this'
+    $acl_test = $this->uri->segment(1);
+
+    // If the user does not have permission either in 'user_perms' or 'role_perms' redirect to login, or restricted, etc
+    if ( !$this->acl->hasPermission($acl_test) ) {
+      redirect('');
+    }
     if($this->input->method() == 'get'){
        $this->load->model('T_jenis_ec');
        $jenis_ec = $this->T_jenis_ec->all();
@@ -157,9 +174,12 @@ class C_Informasi extends CI_Controller{
     } else if($this->input->method() == 'post'){
       $post_data = $this->input->post();
 
+
       $this->load->model('T_ec');
       $this->load->model('T_topik_ec');
       $this->load->model('T_jadwal');
+      $this->load->model('T_narasumber');
+      $this->load->model('T_narasumber_topik');
       $this->load->helper('upload_file');
 
       $topik = json_decode($post_data['topik']);
@@ -220,8 +240,7 @@ class C_Informasi extends CI_Controller{
        if($row->status==1){
          $this->T_topik_ec->insert([
            'id_ec' => $id_ec,
-           'nama_topik' => $row->topik,
-           'nama' => $row->narasumber
+           'nama_topik' => $row->topik
          ]);
 
          $jam = explode(" - ",$row->jam);
@@ -234,6 +253,18 @@ class C_Informasi extends CI_Controller{
            'jam_mulai' => $jam[0],
            'jam_selesai' => $jam[1],
          ]);
+
+         $this->T_narasumber->insert([
+           'profesi' => $row->profesi,
+           'jabatan' => $row->jabatan,
+           'lembaga' => $row->lembaga,
+           'nama' => $row->narasumber
+         ]);
+
+         $id_narasumber = $this->db->insert_id();
+
+         $this->T_narasumber_topik->attach_narasumber_topik($id_narasumber, $id_topik);
+
        }
      }
      if ($this->db->trans_status() === FALSE){
@@ -248,10 +279,29 @@ class C_Informasi extends CI_Controller{
   }
 
   public function edit($id){
+    // Use whatever user script you would like, just make sure it has an ID field to tie into the ACL with
+    $id_user = $this->session->userdata('id_user');
+
+    // Get the user's ID and add it to the config array
+    $config = array('userID'=>$id_user);
+
+    // Load the ACL library and pas it the config array
+    $this->load->library('acl',$config);
+
+    // Get the perm key
+    // I'm using the URI to keep this pretty simple ( http://www.example.com/test/this ) would be 'test_this'
+    $acl_test = $this->uri->segment(1);
+
+    // If the user does not have permission either in 'user_perms' or 'role_perms' redirect to login, or restricted, etc
+    if ( !$this->acl->hasPermission($acl_test) ) {
+      redirect('');
+    }
     if($this->input->method() == 'get'){
        $this->load->model('T_jenis_ec');
        $this->load->model('Vw_data_ec');
        $this->load->model('Vw_data_topik');
+       $this->load->model('T_narasumber');
+       $this->load->model('T_narasumber_topik');
        $jenis_ec = $this->T_jenis_ec->all();
        $ec = $this->Vw_data_ec->get($id);
        $topik = $this->Vw_data_topik->getAllTopik($id);
@@ -352,8 +402,22 @@ class C_Informasi extends CI_Controller{
            'jam_mulai' => $jam[0],
            'jam_selesai' => $jam[1],
          ]);
+
+         $this->T_narasumber->insert([
+           'profesi' => $row->profesi,
+           'jabatan' => $row->jabatan,
+           'lembaga' => $row->lembaga,
+           'nama' => $row->narasumber
+         ]);
+
+         $id_narasumber = $this->db->insert_id();
+
+         $this->T_narasumber_topik->attach_narasumber_topik($id_narasumber, $id_topik);
        }else if($row->status==2){
          $this->T_jadwal->delete($row->id_topik);
+         $id_narasumber = $this->T_narasumber->getNarasumber($row->id_topik);
+         $this->T_narasumber_topik->dettach_narasumber_topik($id_narasumber);
+         $this->T_narasumber->delete($id_narasumber);
          $this->T_topik_ec->delete($row->id_topik);
        }
      }

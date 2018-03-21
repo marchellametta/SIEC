@@ -9,7 +9,7 @@ class acl
     function __construct($config=array()) {
         $this->ci = &get_instance();
         $this->userID = floatval($config['userID']);
-        $this->userRoles = $this->getUserRoles();
+        $this->userRoles = array($this->ci->session->userdata('current_roles_id'));
         $this->buildACL();
     }
 
@@ -155,6 +155,10 @@ class acl
             $perms[$pK] = array('perm' => $pK,'inheritted' => false,'value' => $hP,'name' => $this->getPermNameFromID($row->permID),'id' => $row->permID);
         }
         return $perms;
+    }
+
+    function changeRole() {
+      $this->userRoles = array($this->ci->session->userdata('current_roles_id'));
     }
 
     function hasRole($roleID) {

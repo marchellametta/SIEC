@@ -103,6 +103,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
            <th class="w-10">Lokasi</th>
            <th class="w-25">Topik</th>
            <th class="w-20">Narasumber</th>
+           <th class="hidden">Profesi</th>
+           <th class="hidden">Lembaga</th>
+           <th class="hidden">Jabatan</th>
            <th class="w-10">Aksi</th>
            <th class="hidden">Status</th>
            </tr>
@@ -134,6 +137,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
          <div class="form-group col-md-12">
            <label for="narasumber">Narasumber</label>
            <input type="text" class="form-control" id="narasumber" placeholder="Narasumber">
+         </div>
+         <div class="form-group col-md-12">
+           <label for="profesi">Profesi</label>
+           <input type="text" class="form-control" id="profesi" placeholder="Profesi">
+         </div>
+         <div class="form-group col-md-12">
+           <label for="lembaga">Lembaga</label>
+           <input type="text" class="form-control" id="lembaga" placeholder="Lembaga">
+         </div>
+         <div class="form-group col-md-12">
+           <label for="jabatan">Jabatan</label>
+           <input type="text" class="form-control" id="jabatan" placeholder="Jabatan">
          </div>
          <div class="form-group col-md-12">
            <label for="tanggal">Tanggal</label>
@@ -185,6 +200,9 @@ $(document).ready(function(){
     $("#tambah-topik-submit").click(function(){
        var topik = $('#topik').val();
        var narasumber = $('#narasumber').val();
+       var profesi = $('#profesi').val();
+       var lembaga = $('#lembaga').val();
+       var jabatan = $('#jabatan').val();
        var tanggal = $('#tanggal-text').val();
        var jammulai = $('#jammulai').val();
        var jamselesai = $('#jamselesai').val();
@@ -193,7 +211,7 @@ $(document).ready(function(){
        var status = 1;
 
 
-        $("tbody").append("<tr>"+"<td>"+tanggal+"</td>"+"<td>"+jammulai+" - "+jamselesai+"</td>"+"<td>"+lokasi+"</td>"+"<td>"+topik+"</td>"+"<td>"+narasumber+"</td>"+"<td>"+button+"</td>"+"<td class="+'hidden'+">"+status+"</td>"+"</tr>");
+        $("tbody").append("<tr>"+"<td>"+tanggal+"</td>"+"<td>"+jammulai+" - "+jamselesai+"</td>"+"<td>"+lokasi+"</td>"+"<td>"+topik+"</td>"+"<td>"+narasumber+"</td>"+"<td class="+'hidden'+">"+profesi+"</td>"+"<td class="+'hidden'+">"+lembaga+"</td>"+"<td class="+'hidden'+">"+jabatan+"</td>"+"<td>"+button+"</td>"+"<td class="+'hidden'+">"+status+"</td>"+"</tr>");
         $('#form').trigger("reset");
     });
 
@@ -273,6 +291,9 @@ function sendTableArticles() {
         'lokasi',
         'topik',
         'narasumber',
+        'profesi',
+        'lembaga',
+        'jabatan',
         'aksi',
         'status'
     ];

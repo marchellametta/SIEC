@@ -4,26 +4,33 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 <div class="fixed-top">
   <div class="d-flex flex-row-reverse bg-black">
+    <?php if($this->session->userdata('id_user')): ?>
     <div class="dropdown">
       <button class="btn btn-sm dropdown-toggle bg-black text-white" type="button" id="role" data-toggle="dropdown" data-disabled="true" aria-haspopup="true" aria-expanded="false">
-        Anda masuk sebagai <b id="role-text"><?php echo $this->session->userdata('current_roles') ?></b>
+        Anda masuk sebagai <b id="role-text"><?php echo $this->session->userdata('current_roles')->role_name ?></b>
       </button>
       <div class="dropdown-menu dropdown-menu-right bg-black" aria-labelledby="role">
         <?php foreach ($this->session->userdata('roles') as $row) :?>
-          <a class="dropdown-item text-white" href="#"><?php echo $row->role_name?></a>
+          <a class="dropdown-item text-white" href="<?php echo base_url()."change-role/".$row->role_id?>"><?php echo $row->role_name?></a>
+          <div class="dropdown-divider"></div>
         <?php endforeach; ?>
       </div>
     </div>
+  <?php else: ?>
+    <button class="btn btn-sm bg-black text-white" type="button">
+      <i class="fa fa-sign-in mr-1"></i>Login
+    </button>
+  <?php endif; ?>
     <div class="dropdown hidden" id="peserta">
     <button class="btn btn-sm dropdown-toggle bg-black text-white" type="button" id="menu" data-toggle="dropdown" data-disabled="true" aria-haspopup="true" aria-expanded="false">
       Selamat Datang, <b><?php echo $this->session->userdata('nama') ?></b>
     </button>
     <div class="dropdown-menu bg-black" aria-labelledby="menu">
-      <small class="dropdown-item text-white" href="#">Kelas Saya</small>
+      <a href="<?php echo base_url()."kelas-saya"?>"><small class="dropdown-item text-white"><i class="fa fa-list-alt text-white mr-1"></i>Kelas Saya</small></a>
       <div class="dropdown-divider"></div>
-      <small class="dropdown-item text-white" href="#">Profil Saya</small>
+      <a href="<?php echo base_url()."profil/".$this->session->userdata('id_user')?>"><small class="dropdown-item text-white"><i class="fa fa-user text-white mr-1"></i>Profil Saya</small></a>
       <div class="dropdown-divider"></div>
-      <small class="dropdown-item text-white" href="#">Log Out</small>
+      <a href="<?php echo base_url()."logout"?>"><small class="dropdown-item text-white"><i class="fa fa-sign-out mr-1"></i>Log Out</small></a>
     </div>
     </div>
     <div class="dropdown hidden" id="panitia">
@@ -31,12 +38,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
       Selamat Datang, <b><?php echo $this->session->userdata('nama') ?></b>
     </button>
     <div class="dropdown-menu bg-black" aria-labelledby="menu">
-      <small class="dropdown-item text-white" href="#">Daftar Kelas</small>
+      <a href="<?php echo base_url()."kelas/aktif"?>"><small class="dropdown-item text-white"><i class="fa fa-list-alt text-white mr-1"></i>Daftar Kelas</small></a>
       <div class="dropdown-divider"></div>
-      <small class="dropdown-item text-white" href="#">Profil Saya</small>
+      <a href="<?php echo base_url()."profil/".$this->session->userdata('id_user')?>"><small class="dropdown-item text-white"><i class="fa fa-user text-white mr-1"></i>Profil Saya</small></a>
       <div class="dropdown-divider"></div>
-      <small class="dropdown-item text-white" href="#">Log Out</small>
+      <a href="<?php echo base_url()."logout"?>"><small class="dropdown-item text-white" href="<?php echo base_url()."logout"?>"><i class="fa fa-sign-out mr-1"></i>Log Out</small></a>
     </div>
+    </div>
+    <div id="admin" class="hidden">
+      <button class="btn btn-sm bg-black text-white" type="button">
+        Selamat Datang, <b><?php echo $this->session->userdata('nama') ?></b>
+      </button>
     </div>
   </div>
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">

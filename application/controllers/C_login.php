@@ -34,7 +34,9 @@ class C_Login extends CI_Controller{
           $this->session->set_userdata('id_user',$user->id_user);
           $this->session->set_userdata('nama',$user->nama);
           $this->session->set_userdata('roles',$roles);
-          $this->session->set_userdata('current_roles',$roles[0]->role_name);
+          $this->session->set_userdata('current_roles',$roles[0]);
+          $this->session->set_userdata('current_roles_id',$roles[0]->role_id);
+
           // $this->load->view('V_header');
           // $this->load->view('V_navbar');
           // $this->load->view('V_login',[
@@ -58,7 +60,16 @@ class C_Login extends CI_Controller{
   public function logout(){
     $this->session->unset_userdata('id_user');
     $this->session->unset_userdata('nama');
+    $this->session->unset_userdata('current_roles');
     redirect('/login');
+  }
+
+  public function changeRole($role_id){
+    $this->load->model('Vw_data_user_roles');
+    $role = $this->Vw_data_user_roles->get($role_id,$this->session->userdata('id_user'));
+    $this->session->set_userdata('current_roles',$role);
+    $this->session->set_userdata('current_roles_id',$role->role_id);
+    redirect('');
   }
 }
 ?>

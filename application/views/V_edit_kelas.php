@@ -83,7 +83,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
           <label class="form-check-label" for="inlineCheckbox2">Evaluasi Mingguan</label>
         </div>
         <div class="form-check form-check-inline">
-          <input class="form-check-input" type="checkbox" name="sistem-kuota" id="inlineCheckbox3" value="1" <?php if($ec->kapasitas_peserta!==NULL) echo 'checked' ?>>
+          <input class="form-check-input" type="checkbox" name="sistem-kuota" id="inlineCheckbox3" value="1" <?php if($ec->kapasitas_peserta!=0) echo 'checked' ?>>
           <label class="form-check-label" for="inlineCheckbox3">Pembatasan Kuota Peserta</label>
        </div>
       </div>
