@@ -211,8 +211,8 @@ class C_Informasi extends CI_Controller{
        'semester_pelaksanaan' => $post_data['semester'],
        'tahun_pelaksanaan' => $post_data['tahun'],
        'deskripsi' => $post_data['deskripsi'],
-       'biaya_per_topik' => (isset($post_data['biaya-topik'])) ? $post_data['biaya-topik'] : NULL,
-       'kapasitas_peserta' => (isset($post_data['kapasitas'])) ? $post_data['kapasitas'] : NULL,
+       'biaya_per_topik' => (isset($post_data['biaya-topik'])) ? $post_data['biaya-topik'] : 0,
+       'kapasitas_peserta' => (isset($post_data['kapasitas'])) ? $post_data['kapasitas'] : 0,
        'modul_pdf' => $post_data['pdf']
      ]);
      $id_ec = $this->db->insert_id();
@@ -315,8 +315,8 @@ class C_Informasi extends CI_Controller{
       $status_evaluasi = (isset($post_data['evaluasi-mingguan'])) ? 2 : 1;
       $status_peserta = (isset($post_data['peserta-lepas'])) ? 2 : 1;
 
-      $post_data['biaya-topik'] = ($status_peserta==1) ? NULL : $post_data['biaya-topik'];
-      $post_data['kapasitas'] = (isset($post_data['sistem-kuota'])) ? $post_data['kapasitas'] : NULL;
+      $post_data['biaya-topik'] = ($status_peserta==1) ? 0 : $post_data['biaya-topik'];
+      $post_data['kapasitas'] = (isset($post_data['sistem-kuota'])) ? $post_data['kapasitas'] : 0;
 
 
       $this->db->trans_begin();
@@ -330,8 +330,8 @@ class C_Informasi extends CI_Controller{
        'semester_pelaksanaan' => $post_data['semester'],
        'tahun_pelaksanaan' => $post_data['tahun'],
        'deskripsi' => $post_data['deskripsi'],
-       'biaya_per_topik' => (isset($post_data['biaya-topik'])) ? $post_data['biaya-topik'] : NULL,
-       'kapasitas_peserta' => (isset($post_data['kapasitas'])) ? $post_data['kapasitas'] : NULL,
+       'biaya_per_topik' => (isset($post_data['biaya-topik'])) ? $post_data['biaya-topik'] : 0,
+       'kapasitas_peserta' => (isset($post_data['kapasitas'])) ? $post_data['kapasitas'] : 0,
        'modul_pdf' => $post_data['pdf']
      ]);
      foreach ($topik as $row) {

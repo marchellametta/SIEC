@@ -18,14 +18,14 @@ class C_Pendaftaran extends CI_Controller{
 
        $complete = array();
        foreach ($data as $row) {
-         if($row->kapasitas_peserta!=NULL && $row->status_peserta==1){
+         if($row->kapasitas_peserta!=0 && $row->status_peserta==1){
            $jumlah_peserta = $this->Stored_procedure->get_jumlah_peserta_ec($row->id_ec);
            if($row->kapasitas_peserta>$jumlah_peserta->jumlah_peserta){
              $topik_arr = $this->Vw_data_topik->getAllTopik($row->id_ec);
              $row->topik_arr = $topik_arr;
              array_push($complete,$row);
            }
-         }else if($row->kapasitas_peserta!=NULL && $row->status_peserta==2){
+         }else if($row->kapasitas_peserta!=0 && $row->status_peserta==2){
             $all_topik = $this->Vw_data_topik->getAllTopik($row->id_ec);
             $topik_arr = array();
             foreach ($all_topik as $topik) {
