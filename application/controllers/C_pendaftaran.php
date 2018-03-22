@@ -22,11 +22,12 @@ class C_Pendaftaran extends CI_Controller{
        $complete = array();
        foreach ($data as $row) {
          if($row->kapasitas_peserta!=0 && $row->status_peserta==1){
+           $topik_arr=="";
            $jumlah_peserta = $this->Stored_procedure->get_jumlah_peserta_ec($row->id_ec);
            if($row->kapasitas_peserta>$jumlah_peserta->jumlah_peserta){
              $topik_arr = $this->Vw_data_topik->getAllActiveTopik($row->id_ec);
-             $row->topik_arr = $topik_arr;
            }
+           $row->topik_arr = $topik_arr;
            array_push($complete,$row);
          }else if($row->kapasitas_peserta!=0 && $row->status_peserta==2){
             $all_topik = $this->Vw_data_topik->getAllActiveTopik($row->id_ec);
@@ -38,9 +39,9 @@ class C_Pendaftaran extends CI_Controller{
                 array_push($topik_arr,$topik);
               }
             }
-            if(!empty($topik_arr)){
+            //if(!empty($topik_arr)){
               $row->topik_arr = $topik_arr;
-            }
+            //}
             array_push($complete,$row);
 
          }else{

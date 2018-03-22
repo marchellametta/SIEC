@@ -96,7 +96,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
        <div class="form-check">
          <input class="form-check-input selectall" type="checkbox" value="<?php echo $row->id_ec ?>" name="kelas[]"  data-biaya="<?php echo $row->biaya ?>" data-checked="#<?php echo "collapse". $row->id_ec ?>" <?php if($selected===$row->id_ec) echo "checked"?>>
          <label class="form-check-label" for="defaultCheck1">
-           <?php echo $row->jenis_ec. ": ".$row->tema_ec."     <b>(Biaya: Rp. ".$row->biaya.",00)</b>" ?>
+           <?php echo $row->jenis_ec. ": ".$row->tema_ec."     <b>(Biaya: Rp. ".number_format($row->biaya,2,",",".").")</b>" ?>
          </label>
          <?php if ($row->status_peserta == 2 ): ?>
            <div><a class="" href="#" data-toggle="collapse" data-target="#<?php echo "collapse". $row->id_ec ?>"><i class="fa fa-plus-square mr-1 ml-1"></i>Pilih Topik</a></div>
@@ -199,7 +199,20 @@ function recalculate(){
       }
     });
 
-    $("#total-biaya").html("<b>Total Biaya: Rp. "+(sum)+",00</b>");
+    $("#total-biaya").html("<b>Total Biaya: Rp. "+(addCommas(sum))+",00</b>");
+
+}
+
+function addCommas(nStr) {
+    nStr += '';
+    var x = nStr.split('.');
+    var x1 = x[0];
+    var x2 = x.length > 1 ? '.' + x[1] : '';
+    var rgx = /(\d+)(\d{3})/;
+    while (rgx.test(x1)) {
+        x1 = x1.replace(rgx, '$1' + '.' + '$2');
+    }
+    return x1 + x2;
 }
 
 
