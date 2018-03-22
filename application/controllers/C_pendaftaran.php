@@ -15,6 +15,9 @@ class C_Pendaftaran extends CI_Controller{
        $this->load->model('Stored_procedure');
 
        $data = $this->Vw_data_ec->getActive();
+       $soon = $this->Vw_data_ec->getSoon();
+
+       $data = array_merge($data,$soon);
 
        $complete = array();
        foreach ($data as $row) {
@@ -23,8 +26,8 @@ class C_Pendaftaran extends CI_Controller{
            if($row->kapasitas_peserta>$jumlah_peserta->jumlah_peserta){
              $topik_arr = $this->Vw_data_topik->getAllActiveTopik($row->id_ec);
              $row->topik_arr = $topik_arr;
-             array_push($complete,$row);
            }
+           array_push($complete,$row);
          }else if($row->kapasitas_peserta!=0 && $row->status_peserta==2){
             $all_topik = $this->Vw_data_topik->getAllActiveTopik($row->id_ec);
             $topik_arr = array();
@@ -37,8 +40,9 @@ class C_Pendaftaran extends CI_Controller{
             }
             if(!empty($topik_arr)){
               $row->topik_arr = $topik_arr;
-              array_push($complete,$row);
             }
+            array_push($complete,$row);
+
          }else{
            $topik_arr = $this->Vw_data_topik->getAllActiveTopik($row->id_ec);
            $row->topik_arr = $topik_arr;
