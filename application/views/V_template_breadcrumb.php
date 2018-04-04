@@ -174,6 +174,28 @@ $breadcrumbRules = [
         'active' => true
       ]
     ]
+  ],
+  'V_edit_beranda' => [
+    'crumbs' => [
+      1 => [
+        'text' => 'Kelola Beranda',
+        'link' => '#',
+        'active' => true
+      ]
+    ]
+  ],
+  'V_edit_berita' => [
+    'crumbs' => [
+      1 => [
+        'text' => 'Kelola Beranda',
+        'link' => $base_url.'kelola-beranda',
+      ],
+      2 => [
+        'text' => 'Kelola Berita',
+        'link' => '#',
+        'active' => true
+      ]
+    ]
   ]
 ];
 

@@ -16,8 +16,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
           <p class="card-text"><?php echo $row->deskripsi;?></p>
           <a href="<?php echo base_url();?>informasi/detail/<?php echo $row->id_ec;?>" class="border-right pr-2 border-dark"><i class="fa fa-external-link mr-1 ml-1"></i>Detail</a>
           <a href="<?php echo ($row->status_evaluasi==2)? base_url() .'kelas-saya/detail/'. $row->id_ec : base_url() .'kelas-saya/isi-evaluasi/'. $row->id_ec;?>" class="border-right pr-2 border-dark"><i class="fa fa-edit mr-1 ml-1"></i>Isi Evaluasi</a>
-          <a href="<?php echo base_url();?>informasi/jadwal/<?php echo $row->id_ec;?>" class="border-right pr-2 border-dark"><i class="fa fa-calendar mr-1 ml-1"></i>Lihat Jadwal</a>
-          <a href="<?php echo base_url().$row->modul_pdf;?>" class="pr-2"><i class="fa fa-file-pdf-o mr-1 ml-1"></i>Lihat Modul</a>
+          <?php if($row->modul_pdf!=NULL): ?>
+            <a href="<?php echo base_url();?>informasi/jadwal/<?php echo $row->id_ec;?>" class="border-right pr-2 border-dark"><i class="fa fa-calendar mr-1 ml-1"></i>Lihat Jadwal</a>
+            <a href="<?php echo base_url().$row->modul_pdf;?>" target="_blank" class="pr-2"><i class="fa fa-file-pdf-o mr-1 ml-1"></i>Lihat Modul</a>
+          <?php else: ?>
+            <a href="<?php echo base_url();?>informasi/jadwal/<?php echo $row->id_ec;?>" class="pr-2"><i class="fa fa-calendar mr-1 ml-1"></i>Lihat Jadwal</a>
+          <?php endif; ?>
           <?php if($row->bayar=='true'):?>
           <p class="card-text text-muted mt-5"><i class="fa fa-info-circle mr-1"></i>Total biaya yang harus dibayar : Rp. <?php echo number_format($row->tagihan)?>,00</p>
           <?php endif; ?>

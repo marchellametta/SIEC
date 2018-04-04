@@ -45,10 +45,19 @@ defined('BASEPATH') OR exit('No direct script access allowed');
       <a href="<?php echo base_url()."logout"?>"><small class="dropdown-item text-white" href="<?php echo base_url()."logout"?>"><i class="fa fa-sign-out mr-1"></i>Log Out</small></a>
     </div>
     </div>
-    <div id="admin" class="hidden">
-      <button class="btn btn-sm bg-black text-white" type="button">
-        Selamat Datang, <b><?php echo $this->session->userdata('nama') ?></b>
-      </button>
+    <div class="dropdown hidden" id="admin">
+    <button class="btn btn-sm dropdown-toggle bg-black text-white" type="button" id="menu" data-toggle="dropdown" data-disabled="true" aria-haspopup="true" aria-expanded="false">
+      Selamat Datang, <b><?php echo $this->session->userdata('nama') ?></b>
+    </button>
+    <div class="dropdown-menu bg-black" aria-labelledby="menu">
+      <a href="<?php echo base_url()."kelola-beranda"?>"><small class="dropdown-item text-white"><i class="fa fa-list-alt text-white mr-1"></i>Kelola Beranda</small></a>
+      <div class="dropdown-divider"></div>
+      <a href="<?php echo base_url()."acl"?>"><small class="dropdown-item text-white"><i class="fa fa-user text-white mr-1"></i>Pengaturan Pengguna</small></a>
+      <div class="dropdown-divider"></div>
+      <a href="<?php echo base_url()."pendaftaran/panitia"?>"><small class="dropdown-item text-white"><i class="fa fa-user text-white mr-1"></i>Pendaftaran Panitia</small></a>
+      <div class="dropdown-divider"></div>
+      <a href="<?php echo base_url()."logout"?>"><small class="dropdown-item text-white" href="<?php echo base_url()."logout"?>"><i class="fa fa-sign-out mr-1"></i>Log Out</small></a>
+    </div>
     </div>
   </div>
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
