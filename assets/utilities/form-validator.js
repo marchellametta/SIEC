@@ -1,9 +1,9 @@
 (function( $ ){
-    
+
     /* Polyfill */
     Number.isInteger = Number.isInteger || function(value) {
-        return typeof value === 'number' && 
-            isFinite(value) && 
+        return typeof value === 'number' &&
+            isFinite(value) &&
             Math.floor(value) === value;
     };
     /* End of Polyfill */
@@ -92,7 +92,7 @@
             return stat;
         },
         valid_ip : function( val){
-            return 
+            return
             /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/
                 .test(val);
         },
@@ -244,6 +244,10 @@
                 }
         /// jika elemen 'input' atau 'textarea' mendapat event 'keyup' lakukan validasi
             }else{
+              curr.on('blur',checkRules);
+              if(settings.forceEvaluateIfNotEmpty){
+                  curr.trigger('blur');
+              }
                 curr.on('keyup',checkRules);
                 if(settings.forceEvaluateIfNotEmpty){
                     curr.trigger('keyup');

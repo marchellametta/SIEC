@@ -3,25 +3,29 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 ?>
 <div class="mr-3 ml-3 mr-sm-3 ml-sm-3 mr-md-5 ml-md-5 mt-5 mb-5">
   <?php $this->load->view('V_template_breadcrumb', ['viewName' => 'V_pendaftaran']) ?>
-  <form method="post" action="<?php echo base_url('pendaftaran/daftar') ?>" enctype="multipart/form-data">
+  <form method="post" id="form" action="<?php echo base_url('pendaftaran/daftar') ?>" enctype="multipart/form-data">
     <fieldset>
     <legend>Profil Umum</legend>
       <div class="form-group col-md-8 col-lg-6">
         <label for="nama">Nama Lengkap</label>
         <input type="text" class="form-control" name="nama" placeholder="Nama Lengkap">
+        <span class="help-block text-danger"></span>
       </div>
       <div class="form-group col-md-8 col-lg-6">
         <label for="alamat">Alamat</label>
         <textarea class="form-control" rows="5" name="alamat" placeholder="Alamat"></textarea>
+        <span class="help-block text-danger"></span>
       </div>
       <div class="form-row ml-2">
         <div class="form-group col-md-4 col-lg-3">
           <label for="pekerjaan">Pekerjaan</label>
           <input type="text" class="form-control" name="pekerjaan" placeholder="Pekerjaan">
+          <span class="help-block text-danger"></span>
         </div>
         <div class="form-group col-md-4 col-lg-3">
           <label for="lembaga">Lembaga</label>
           <input type="text" class="form-control" name="lembaga" placeholder="Lembaga">
+          <span class="help-block text-danger"></span>
         </div>
       </div>
       <div class="form-row ml-2">
@@ -33,10 +37,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             <option value="3">S1</option>
             <option value="4">S2</option>
           </select>
+          <span class="help-block text-danger"></span>
         </div>
         <div class="form-group col-md-4 col-lg-3">
           <label for="kota">Kota Asal</label>
           <input type="text" class="form-control" name="kota" placeholder="Kota Asal">
+          <span class="help-block text-danger"></span>
         </div>
       </div>
       <div class="form-row ml-2">
@@ -50,10 +56,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             <option value="5">Hindu</option>
             <option value="6">Lainnya</option>
           </select>
+          <span class="help-block text-danger"></span>
         </div>
         <div class="form-group col-md-4 col-lg-3">
           <label for="nohp">Nomor HP</label>
           <input type="text" class="form-control" name="nohp" placeholder="Nomor HP">
+          <span class="help-block text-danger"></span>
         </div>
       </div>
       <div class="form-group col-md-4 col-lg-3">
@@ -63,6 +71,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
           <input type="file" accept="image/*" name="gambar-file" id="input-gambar-file" class="hidden">
           <input type="text" placeholder="Pilih Gambar" id="input-gambar" name="gambar" class="form-control cursor" readonly>
         </div>
+        <span class="help-block text-danger"></span>
       </div>
     </fieldset>
 
@@ -184,6 +193,14 @@ $("input[type='checkbox'].justone").change(function(){
       $('[data-checked="'+$(this).data("checked")+'"].selectall').prop('checked', false);
       recalculate();
     }
+
+
+});
+
+var rules = JSON.parse('<?php echo $rules ?>');
+$('#form').applyRules({
+  formRules : rules,
+  externalErrors : ''
 });
 
 function recalculate(){

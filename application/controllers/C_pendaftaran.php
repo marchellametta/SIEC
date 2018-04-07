@@ -13,6 +13,7 @@ class C_Pendaftaran extends CI_Controller{
        $this->load->model('Vw_data_ec');
        $this->load->model('Vw_data_topik');
        $this->load->model('Stored_procedure');
+       $this->load->helper('config_rules');
 
        $data = $this->Vw_data_ec->getActive();
        $soon = $this->Vw_data_ec->getSoon();
@@ -59,7 +60,8 @@ class C_Pendaftaran extends CI_Controller{
        $this->load->view('V_navbar');
        $this->load->view('V_pendaftaran',[
          'data' => $complete,
-         'selected' => $selected
+         'selected' => $selected,
+         'rules' => json_encode(get_rules('form-pendaftaran-peserta'))
        ]);
        $this->load->view('V_footer');
     } else if($this->input->method() == 'post'){
@@ -109,6 +111,11 @@ class C_Pendaftaran extends CI_Controller{
   public function daftar(){
     if($this->input->method() == 'get'){
     } else if($this->input->method() == 'post'){
+      if ($this->form_validation->run('form-pendaftaran-peserta') == FALSE){
+        echo "gagal";
+        var_dump($this->form_validation->error_array());
+        die();
+      }else{
          $post_data = $this->input->post();
          $hashed_pw = password_hash($post_data['password'], PASSWORD_DEFAULT);
          $this->load->model('T_user');
@@ -176,7 +183,7 @@ class C_Pendaftaran extends CI_Controller{
            }
           }
 
-
+      }
     }
   }
 
