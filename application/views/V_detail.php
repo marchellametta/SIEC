@@ -10,6 +10,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
       <div><h2><?php echo $data->tema_ec;?></h2></div>
       <p><?php echo $data->deskripsi;?></p>
       <a id="link-jadwal" href="<?php echo base_url();?>informasi/jadwal/<?php echo $data->id_ec;?>"><i class="fa fa-calendar mr-1"></i>Lihat Jadwal</a>
+      <div class="col-12 col-sm-4 col-lg-3 mt-3 pl-0 hidden panitia">
+        <a href="<?php echo base_url().'editkelas/'.$data->id_ec?>"><button class="btn btn-primary shadow"><i class="fa fa-edit pr-1"></i>Edit</button></a>
+      </div>
     </div>
   </div>
   <?php if(empty($topik_arr)):?>
@@ -21,8 +24,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <div class="card mt-3 shadow">
       <div class="card-body">
         <h4 class="card-title"><?php echo $row->nama_topik;?></h4>
-        <p class="card-text"><?php echo $row->nama;?></p>
-        <a href="#" class="btn btn-primary">Go somewhere</a>
+        <p class="card-text"><?php echo '<b>Narasumber</b>  :  '. $row->nama;?></p>
       </div>
     </div>
     <?php endforeach ?>

@@ -2,17 +2,24 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 ?>
 <div class="mr-3 ml-3 mr-sm-3 ml-sm-3 mr-md-5 ml-md-5 mt-5 mb-5">
-  <form method="post" action="<?php echo base_url().'editkelas/'.$ec->id_ec ?>" enctype="multipart/form-data">
+  <?php if (isset($error_message)): ?>
+      <div class="alert alert-danger alert-dismissable">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+        <?php echo $error_message ;?>
+      </div>
+  <?php endif ?>
+  <form method="post" id="form" action="<?php echo base_url().'editkelas/'.$ec->id_ec ?>" enctype="multipart/form-data">
     <input type="hidden" id="str" name="topik" value="" />
     <fieldset>
     <legend>Data Umum</legend>
      <div class="form-group col-md-6">
-       <label for="pendidikan">Jenis EC</label>
+       <label for="jenis-ec">Jenis EC</label>
        <select class="form-control" name="jenis-ec">
          <?php foreach ($jenis_ec as $row): ?>
          <option value="<?php echo $row->id_jenis_ec ?>"><?php echo $row->jenis_ec ?></option>
        <?php endforeach; ?>
        </select>
+       <span class="help-block text-danger"><?php if(isset($error_array['jenis-ec'])) echo $error_array['jenis-ec']?></span>
      </div>
      <div class="row ml-1">
        <div class="form-group col-md-3">
@@ -21,15 +28,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
            <option value="1" <?php if($ec->semester_pelaksanaan==1) echo 'selected'; ?>>Ganjil</option>
            <option value="2" <?php if($ec->semester_pelaksanaan==2) echo 'selected'; ?>>Genap</option>
          </select>
+         <span class="help-block text-danger"><?php if(isset($error_array['semester'])) echo $error_array['semester']?></span>
        </div>
        <div class="form-group col-md-3">
          <label for="tahun">Tahun Pelaksanaan</label>
          <input type="number" value="<?php echo $ec->tahun_pelaksanaan ?>" class="form-control" name="tahun" placeholder="Tahun">
+         <span class="help-block text-danger"><?php if(isset($error_array['tahun'])) echo $error_array['tahun']?></span>
        </div>
      </div>
       <div class="form-group col-md-6">
         <label for="tema">Tema Umum</label>
         <input type="text"  value="<?php echo $ec->tema_ec ?>"class="form-control" name="tema" placeholder="Tema Umum">
+        <span class="help-block text-danger"><?php if(isset($error_array['tema'])) echo $error_array['tema']?></span>
       </div>
       <div class="row ml-2">
         <div class="form-group col-md-3">
@@ -52,26 +62,30 @@ defined('BASEPATH') OR exit('No direct script access allowed');
       <div class="form-group col-md-12">
         <label for="deskripsi">Deskripsi</label>
          <textarea class="form-control" rows="5" name="deskripsi"><?php echo $ec->deskripsi ?></textarea>
+         <span class="help-block text-danger"><?php if(isset($error_array['deskripsi'])) echo $error_array['deskripsi']?></span>
       </div>
       <div class="form-group col-md-3">
         <label for="biaya">Biaya</label>
         <div class="input-group">
           <span class="input-group-addon p-2">Rp</span>
-          <input type="text" placeholder="Biaya" id="input-biaya"  value="<?php echo $ec->biaya ?>" class="form-control">
+          <input type="text" placeholder="Biaya" id="input-biaya"  value="<?php echo $ec->biaya ?>" name="biaya" class="form-control">
           <input type="number" id="real-input-biaya" value="<?php echo $ec->biaya ?>" name="biaya" class="hidden">
         </div>
+        <span class="help-block text-danger"><?php if(isset($error_array['biaya'])) echo $error_array['biaya']?></span>
       </div>
       <div class="form-group hidden col-md-3" id="biaya_toggle">
         <label for="biaya-topik">Biaya per Topik</label>
         <div class="input-group">
           <span class="input-group-addon p-2">Rp</span>
-          <input type="text" placeholder="Biaya" id="input-biaya-topik" value="<?php echo $ec->biaya_per_topik ?>" class="form-control">
+          <input type="text" placeholder="Biaya" id="input-biaya-topik" name="biaya-topik" value="<?php echo $ec->biaya_per_topik ?>" class="form-control">
           <input type="number" id="real-input-biaya-topik" value="<?php echo $ec->biaya_per_topik ?>" name="biaya-topik" class="hidden">
         </div>
+        <span class="help-block text-danger"><?php if(isset($error_array['biaya-topik'])) echo $error_array['biaya-topik']?></span>
       </div>
       <div class="form-group hidden col-md-3" id="kapasitas_toggle">
         <label for="kapasitas">Kapasitas Peserta</label>
         <input type="text" class="form-control" value="<?php echo $ec->kapasitas_peserta ?>" name="kapasitas" placeholder="Kapasitas">
+        <span class="help-block text-danger"><?php if(isset($error_array['kapasitas'])) echo $error_array['kapasitas']?></span>
       </div>
       <div class="form-group col-md-12">
         <div class="form-check form-check-inline">
@@ -293,6 +307,51 @@ $(document).ready(function(){
                       var filename = $(this).val().split(/(\\|\/)/g).pop();
                       $('#input-pdf').val(filename).keyup();
                     });
+
+                    var rules = JSON.parse('<?php echo $rules ?>');
+                    var form = $('#form');
+
+                    if($("#inlineCheckbox3").is(':checked')){
+            					rules = rules.concat(JSON.parse('<?php echo $kapasitas_rules ?>'));
+            				}
+                    if($("#inlineCheckbox1").is(':checked')){
+            					rules = rules.concat(JSON.parse('<?php echo $biaya_topik_rules ?>'));
+            				}
+                    console.log(rules);
+                    form.applyRules({
+                      formRules : rules,
+                      externalErrors : ''
+                    });
+
+
+                    $("#inlineCheckbox3").on('change',function(){
+            					var currentRules = JSON.parse('<?php echo $rules ?>');
+            					if($(this).is(':checked')){
+            						currentRules = currentRules.concat(JSON.parse('<?php echo $kapasitas_rules ?>'));
+            					}
+                      if($("#inlineCheckbox1").is(':checked')){
+            						currentRules = currentRules.concat(JSON.parse('<?php echo $biaya_topik_rules ?>'));
+            					}
+
+            					form.applyRules({
+            						formRules : currentRules,
+                      	externalErrors : ''
+            					});
+            				});
+
+                    $("#inlineCheckbox1").on('change',function(){
+            					var currentRules = JSON.parse('<?php echo $rules ?>');
+            					if($(this).is(':checked')){
+            						currentRules = currentRules.concat(JSON.parse('<?php echo $biaya_topik_rules ?>'));
+            					}
+                      if($("#inlineCheckbox3").is(':checked')){
+            						currentRules = currentRules.concat(JSON.parse('<?php echo $kapasitas_rules ?>'));
+            					}
+                      form.applyRules({
+            						formRules : currentRules,
+                      	externalErrors : ''
+            					});
+            				});
 
 });
 

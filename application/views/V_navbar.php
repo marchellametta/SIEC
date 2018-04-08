@@ -23,7 +23,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
       </button>
     </a>
   <?php endif; ?>
-    <div class="dropdown hidden" id="peserta">
+    <div class="dropdown hidden peserta">
     <button class="btn btn-sm dropdown-toggle bg-black text-white" type="button" id="menu" data-toggle="dropdown" data-disabled="true" aria-haspopup="true" aria-expanded="false">
       Selamat Datang, <b><?php echo $this->session->userdata('nama') ?></b>
     </button>
@@ -35,7 +35,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
       <a href="<?php echo base_url()."logout"?>"><small class="dropdown-item text-white"><i class="fa fa-sign-out mr-1"></i>Log Out</small></a>
     </div>
     </div>
-    <div class="dropdown hidden" id="panitia">
+    <div class="dropdown hidden panitia">
     <button class="btn btn-sm dropdown-toggle bg-black text-white" type="button" id="menu" data-toggle="dropdown" data-disabled="true" aria-haspopup="true" aria-expanded="false">
       Selamat Datang, <b><?php echo $this->session->userdata('nama') ?></b>
     </button>
@@ -47,7 +47,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
       <a href="<?php echo base_url()."logout"?>"><small class="dropdown-item text-white" href="<?php echo base_url()."logout"?>"><i class="fa fa-sign-out mr-1"></i>Log Out</small></a>
     </div>
     </div>
-    <div class="dropdown hidden" id="admin">
+    <div class="dropdown hidden admin">
     <button class="btn btn-sm dropdown-toggle bg-black text-white" type="button" id="menu" data-toggle="dropdown" data-disabled="true" aria-haspopup="true" aria-expanded="false">
       Selamat Datang, <b><?php echo $this->session->userdata('nama') ?></b>
     </button>
@@ -104,6 +104,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 </div>
 <script>
 $( document ).ready(function() {
-    $('#'+$('#role-text').text()).show();
+    $('.'+$('#role-text').text()).show();
 });
 </script>

@@ -13,8 +13,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
   <?php endif; ?>
     <div class="col-12 col-sm-6 col-lg-5 col-xl-5">
       <div class="row">
-        <div class="col-12 col-sm-4 col-lg-3">
-          <a href="#" class="btn btn-primary shadow"><i class="fa fa-plus"></i>Tambah</a>
+        <div class="col-12 col-sm-4 col-lg-3 hidden panitia">
+          <a href="<?php echo base_url().'tambahkelas'?>" class="btn btn-primary shadow"><i class="fa fa-plus"></i>Tambah</a>
         </div>
         <div class="col-12 col-sm-8 col-lg-9 mt-2 mt-sm-0 mt-md-0 mt-lg-0">
           <div class="input-group">
@@ -59,6 +59,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 </div>
 
 <script>
+
 $(function () {
   $('[data-toggle="popover"]').popover({
     container: 'body'
