@@ -5,6 +5,9 @@ class C_Login extends CI_Controller{
 
 
   public function index(){
+    if($this->session->userdata('nama') != null && $this->session->userdata('id_user') != null){
+      redirect('');
+    }
     if($this->input->method() == 'get'){
        $this->load->view('V_header');
        $this->load->view('V_navbar');
@@ -67,6 +70,9 @@ class C_Login extends CI_Controller{
   public function changeRole($role_id){
     $this->load->model('Vw_data_user_roles');
     $role = $this->Vw_data_user_roles->get($role_id,$this->session->userdata('id_user'));
+    if($role==null){
+      redirect('');
+    }
     $this->session->set_userdata('current_roles',$role);
     $this->session->set_userdata('current_roles_id',$role->role_id);
     redirect('');
