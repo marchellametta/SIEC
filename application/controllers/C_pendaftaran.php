@@ -4,73 +4,86 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class C_Pendaftaran extends CI_Controller{
 
 
-  public function index(){
+  public function index($post_data=null, $error_array=null){
+    $this->load->model('Vw_data_ec');
+    $this->load->model('Vw_data_topik');
+    $this->load->model('Stored_procedure');
+    $this->load->helper('config_rules');
+
+    $data = $this->Vw_data_ec->getActive();
+    $soon = $this->Vw_data_ec->getSoon();
+
+    $data = array_merge($data,$soon);
+
+    $complete = array();
+    foreach ($data as $row) {
+      if($row->kapasitas_peserta!=0 && $row->status_peserta==1){
+        $topik_arr=="";
+        $jumlah_peserta = $this->Stored_procedure->get_jumlah_peserta_ec($row->id_ec);
+        if($row->kapasitas_peserta>$jumlah_peserta->jumlah_peserta){
+          $topik_arr = $this->Vw_data_topik->getAllActiveTopik($row->id_ec);
+        }
+        if(!empty($topik_arr)){
+          $row->topik_arr = $topik_arr;
+          array_push($complete,$row);
+        }
+
+      }else if($row->kapasitas_peserta!=0 && $row->status_peserta==2){
+         $all_topik = $this->Vw_data_topik->getAllActiveTopik($row->id_ec);
+         $topik_arr = array();
+         foreach ($all_topik as $topik) {
+           $jumlah_peserta = $this->Stored_procedure->get_jumlah_peserta_topik($topik->id_topik);
+           if($row->kapasitas_peserta > $jumlah_peserta->jumlah_peserta)
+           {
+             array_push($topik_arr,$topik);
+           }
+         }
+         if(!empty($topik_arr)){
+           $row->topik_arr = $topik_arr;
+           array_push($complete,$row);
+         }
+
+      }else{
+        $topik_arr = $this->Vw_data_topik->getAllActiveTopik($row->id_ec);
+        if(!empty($topik_arr)){
+          $row->topik_arr = $topik_arr;
+          array_push($complete,$row);
+        }
+      }
+    }
     if($this->input->method() == 'get'){
       $selected=0;
       if(!empty($_GET)){
         $selected = $this->input->get()['c'];
       }
-       $this->load->model('Vw_data_ec');
-       $this->load->model('Vw_data_topik');
-       $this->load->model('Stored_procedure');
-       $this->load->helper('config_rules');
 
-       $data = $this->Vw_data_ec->getActive();
-       $soon = $this->Vw_data_ec->getSoon();
-
-       $data = array_merge($data,$soon);
-
-       $complete = array();
-       foreach ($data as $row) {
-         if($row->kapasitas_peserta!=0 && $row->status_peserta==1){
-           $topik_arr=="";
-           $jumlah_peserta = $this->Stored_procedure->get_jumlah_peserta_ec($row->id_ec);
-           if($row->kapasitas_peserta>$jumlah_peserta->jumlah_peserta){
-             $topik_arr = $this->Vw_data_topik->getAllActiveTopik($row->id_ec);
-           }
-           if(!empty($topik_arr)){
-             $row->topik_arr = $topik_arr;
-             array_push($complete,$row);
-           }
-
-         }else if($row->kapasitas_peserta!=0 && $row->status_peserta==2){
-            $all_topik = $this->Vw_data_topik->getAllActiveTopik($row->id_ec);
-            $topik_arr = array();
-            foreach ($all_topik as $topik) {
-              $jumlah_peserta = $this->Stored_procedure->get_jumlah_peserta_topik($topik->id_topik);
-              if($row->kapasitas_peserta > $jumlah_peserta->jumlah_peserta)
-              {
-                array_push($topik_arr,$topik);
-              }
-            }
-            if(!empty($topik_arr)){
-              $row->topik_arr = $topik_arr;
-              array_push($complete,$row);
-            }
-
-         }else{
-           $topik_arr = $this->Vw_data_topik->getAllActiveTopik($row->id_ec);
-           if(!empty($topik_arr)){
-             $row->topik_arr = $topik_arr;
-             array_push($complete,$row);
-           }
-         }
-       }
        $this->load->view('V_header');
        $this->load->view('V_navbar');
        $this->load->view('V_pendaftaran',[
          'data' => $complete,
          'selected' => $selected,
-         'rules' => json_encode(get_rules('form-pendaftaran-peserta'))
+         'rules' => json_encode(get_rules('form-pendaftaran-peserta-jquery'))
        ]);
        $this->load->view('V_footer');
     } else if($this->input->method() == 'post'){
+      $error_message="";
+      if($error_array){
+        $error_message="Terjadi kesalahan pengisian data";
+      }
+      $this->load->view('V_header');
+      $this->load->view('V_navbar');
+      $this->load->view('V_pendaftaran',[
+        'data' => $complete,
+        'rules' => json_encode(get_rules('form-pendaftaran-peserta-jquery')),
+        'post_data' => $post_data,
+        'error_array' => $error_array,
+        'error_message' => $error_message
 
-
+      ]);
     }
   }
 
-  public function panitia(){
+  public function panitia($post_data=null, $error_array=null){
     // Use whatever user script you would like, just make sure it has an ID field to tie into the ACL with
     $id_user = $this->session->userdata('id_user');
 
@@ -89,34 +102,48 @@ class C_Pendaftaran extends CI_Controller{
     if ( !$this->acl->hasPermission($acl_test) ) {
       redirect('');
     }
+
+    $this->load->model('Vw_data_ec');
+    $this->load->model('Vw_data_topik');
+    $this->load->helper('config_rules');
+    $this->load->model('Stored_procedure');
+
+    $data = $this->Vw_data_ec->getActive();
+
     if($this->input->method() == 'get'){
-       $this->load->model('Vw_data_ec');
-       $this->load->model('Vw_data_topik');
-       $this->load->model('Stored_procedure');
-
-       $data = $this->Vw_data_ec->getActive();
-
        $this->load->view('V_header');
        $this->load->view('V_navbar');
        $this->load->view('V_pendaftaran_panitia',[
-         'data' => $data
+         'data' => $data,
+         'rules' => json_encode(get_rules('form-pendaftaran-panitia'))
        ]);
        $this->load->view('V_footer');
     } else if($this->input->method() == 'post'){
+      $error_message="";
+      if($error_array){
+        $error_message="Terjadi kesalahan pengisian data";
+      }
+      $this->load->view('V_header');
+      $this->load->view('V_navbar');
+      $this->load->view('V_pendaftaran_panitia',[
+        'data' => $data,
+        'rules' => json_encode(get_rules('form-pendaftaran-panitia')),
+        'error_array' => $error_array,
+        'post_data' => $post_data,
+        'error_message' => $error_message
 
-
+      ]);
+      $this->load->view('V_footer');
     }
   }
 
   public function daftar(){
+    $post_data = $this->input->post();
     if($this->input->method() == 'get'){
     } else if($this->input->method() == 'post'){
       if ($this->form_validation->run('form-pendaftaran-peserta') == FALSE){
-        echo "gagal";
-        var_dump($this->form_validation->error_array());
-        die();
+        $this->index($post_data,$this->form_validation->error_array());
       }else{
-         $post_data = $this->input->post();
          $hashed_pw = password_hash($post_data['password'], PASSWORD_DEFAULT);
          $this->load->model('T_user');
          $this->load->model('T_user_roles');
@@ -208,7 +235,10 @@ class C_Pendaftaran extends CI_Controller{
     }
     if($this->input->method() == 'get'){
     } else if($this->input->method() == 'post'){
-         $post_data = $this->input->post();
+      $post_data = $this->input->post();
+      if ($this->form_validation->run('form-pendaftaran-panitia') == FALSE){
+        $this->panitia($post_data,$this->form_validation->error_array());
+      }else{
          $hashed_pw = password_hash($post_data['password'], PASSWORD_DEFAULT);
          $this->load->model('T_user');
          $this->load->model('T_user_roles');
@@ -274,6 +304,7 @@ class C_Pendaftaran extends CI_Controller{
            //redirect('', 'refresh');
          }
        }
+      }
     }
   }
 }

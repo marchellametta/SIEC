@@ -202,7 +202,7 @@
         formItems.each(function(){
             var curr = $(this);
         /// membuat atribut 'clean' dari elemen menjadi true
-            curr.attr('clean','true');
+            //curr.attr('clean','true');
             var field = curr.attr('name');
         /// ambil elemen yang menjadi 'label input'
             var labelElem = curr.siblings(settings.labelSelector);
@@ -219,9 +219,11 @@
             }
         /// jika field memiliki rules 'required' maka tambahkan '*' dibelakang 'label input'
             if(settings.formRules[field] && settings.formRules[field].rules.indexOf('required') != -1){
-                var content = labelElem.html();
-                if(content[content.length - 1] != '*'){
-                    labelElem.html(labelElem.html() + '*');
+                if(!curr.is(':checkbox')){
+                  var content = labelElem.html();
+                  if(content[content.length - 1] != '*'){
+                      labelElem.html(labelElem.html() + '*');
+                  }
                 }
             }
         /// jika field memiliki 'externalError' atau error yang berasal dari server-side utamakan 'externalError'
@@ -244,10 +246,6 @@
                 }
         /// jika elemen 'input' atau 'textarea' mendapat event 'keyup' lakukan validasi
             }else{
-              curr.on('blur',checkRules);
-              if(settings.forceEvaluateIfNotEmpty){
-                  curr.trigger('blur');
-              }
                 curr.on('keyup',checkRules);
                 if(settings.forceEvaluateIfNotEmpty){
                     curr.trigger('keyup');

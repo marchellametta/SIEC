@@ -2,34 +2,45 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 ?>
 <div class="mr-3 ml-3 mr-sm-3 ml-sm-3 mr-md-5 ml-md-5 mt-5 mb-5">
-  <form method="post" action="<?php echo base_url('tambahkelas') ?>" enctype="multipart/form-data">
+  <?php if (isset($error_message)): ?>
+      <div class="alert alert-danger alert-dismissable">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+        <?php echo $error_message ;?>
+      </div>
+  <?php endif ?>
+  <form method="post" id="form" action="<?php echo base_url('tambahkelas') ?>" enctype="multipart/form-data">
     <input type="hidden" id="str" name="topik" value="" />
     <fieldset>
     <legend>Data Umum</legend>
      <div class="form-group col-md-6">
-       <label for="pendidikan">Jenis EC</label>
+       <label for="jenis-ec">Jenis EC</label>
        <select class="form-control" name="jenis-ec">
          <?php foreach ($jenis_ec as $row): ?>
-         <option value="<?php echo $row->id_jenis_ec ?>"><?php echo $row->jenis_ec ?></option>
+         <option value="<?php echo $row->id_jenis_ec ?>" <?php if(isset($post_data['jenis-ec'])) if($post_data['jenis-ec']==$row->id_jenis_ec) echo 'selected'?>><?php echo $row->jenis_ec ?></option>
        <?php endforeach; ?>
        </select>
+       <span class="help-block text-danger"><?php if(isset($error_array['jenis-ec'])) echo $error_array['jenis-ec']?></span>
      </div>
      <div class="row ml-1">
        <div class="form-group col-md-3">
          <label for="pendidikan">Semester Pelaksanaan</label>
          <select class="form-control" name="semester">
-           <option value="1">Ganjil</option>
-           <option value="2">Genap</option>
+           <option value="1" <?php if(isset($post_data['semester'])) if($post_data['semester']==1) echo 'selected'?>>Ganjil</option>
+           <option value="2" <?php if(isset($post_data['semester'])) if($post_data['semester']==2) echo 'selected'?>>Genap</option>
          </select>
+         <span class="help-block text-danger"><?php if(isset($error_array['semester'])) echo $error_array['semester']?></span>
+
        </div>
        <div class="form-group col-md-3">
          <label for="tahun">Tahun Pelaksanaan</label>
-         <input type="number" class="form-control" name="tahun" placeholder="Tahun">
+         <input type="number" class="form-control" name="tahun" placeholder="Tahun" value="<?php if(isset($post_data['tahun'])) echo $post_data['tahun']?>">
+         <span class="help-block text-danger"><?php if(isset($error_array['tahun'])) echo $error_array['tahun']?></span>
        </div>
      </div>
       <div class="form-group col-md-6">
         <label for="tema">Tema Umum</label>
-        <input type="text" class="form-control" name="tema" placeholder="Tema Umum">
+        <input type="text" class="form-control" name="tema" placeholder="Tema Umum" value="<?php if(isset($post_data['tema'])) echo $post_data['tema']?>">
+        <span class="help-block text-danger"><?php if(isset($error_array['tema'])) echo $error_array['tema']?></span>
       </div>
       <div class="row ml-2">
         <div class="form-group col-md-3">
@@ -51,39 +62,43 @@ defined('BASEPATH') OR exit('No direct script access allowed');
       </div>
       <div class="form-group col-md-12">
         <label for="deskripsi">Deskripsi</label>
-         <textarea class="form-control" rows="5" name="deskripsi"></textarea>
+         <textarea class="form-control" rows="5" name="deskripsi"><?php if(isset($post_data['deskripsi'])) echo $post_data['deskripsi']?></textarea>
+         <span class="help-block text-danger"><?php if(isset($error_array['deskripsi'])) echo $error_array['deskripsi']?></span>
       </div>
       <div class="form-group col-md-3">
         <label for="biaya">Biaya</label>
         <div class="input-group">
           <span class="input-group-addon p-2">Rp</span>
-          <input type="text" placeholder="Biaya" id="input-biaya" class="form-control">
+          <input type="text" placeholder="Biaya" name="biaya" id="input-biaya" class="form-control" value="<?php if(isset($post_data['biaya'])) echo $post_data['biaya']?>">
           <input type="number" id="real-input-biaya" name="biaya" class="hidden">
         </div>
+        <span class="help-block text-danger"><?php if(isset($error_array['biaya'])) echo $error_array['biaya']?></span>
       </div>
       <div class="form-group hidden col-md-3" id="biaya_toggle">
         <label for="biaya-topik">Biaya per Topik</label>
         <div class="input-group">
           <span class="input-group-addon p-2">Rp</span>
-          <input type="text" placeholder="Biaya" id="input-biaya-topik" class="form-control">
-          <input type="number" id="real-input-biaya-topik" name="biaya-topik" class="hidden">
+          <input type="text" placeholder="Biaya" id="input-biaya-topik" name="biaya-topik" class="form-control" value="<?php if(isset($post_data['biaya-topik'])) echo $post_data['biaya-topik']?>">
+          <input type="number" id="real-input-biaya-topik" name="biaya-topik" class="hidden" value="<?php if(isset($post_data['biaya-topik'])) echo $post_data['biaya-topik']?>">
         </div>
+        <span class="help-block text-danger"><?php if(isset($error_array['biaya-topik'])) echo $error_array['biaya-topik']?></span>
       </div>
       <div class="form-group hidden col-md-3" id="kapasitas_toggle">
         <label for="kapasitas">Kapasitas Peserta</label>
-        <input type="text" class="form-control" name="kapasitas" placeholder="Kapasitas">
+        <input type="text" class="form-control" name="kapasitas" placeholder="Kapasitas" value="<?php if(isset($post_data['kapasitas'])) echo $post_data['kapasitas']?>">
+        <span class="help-block text-danger"><?php if(isset($error_array['kapasitas'])) echo $error_array['kapasitas']?></span>
       </div>
       <div class="form-group col-md-12">
         <div class="form-check form-check-inline">
-          <input class="form-check-input" type="checkbox" name="peserta-lepas" id="inlineCheckbox1" value="2">
+          <input class="form-check-input" type="checkbox" name="peserta-lepas" id="inlineCheckbox1" value="2" <?php if(isset($post_data['peserta-lepas'])) echo 'checked'?>>
           <label class="form-check-label" for="inlineCheckbox1">Peserta Lepas</label>
         </div>
         <div class="form-check form-check-inline">
-          <input class="form-check-input" type="checkbox" name="evaluasi-mingguan" id="inlineCheckbox2" value="2">
+          <input class="form-check-input" type="checkbox" name="evaluasi-mingguan" id="inlineCheckbox2" value="2" <?php if(isset($post_data['evaluasi-mingguan'])) echo 'checked'?>>
           <label class="form-check-label" for="inlineCheckbox2">Evaluasi Mingguan</label>
         </div>
         <div class="form-check form-check-inline">
-          <input class="form-check-input" type="checkbox" name="sistem-kuota" id="inlineCheckbox3" value="1">
+          <input class="form-check-input" type="checkbox" name="sistem-kuota" id="inlineCheckbox3" value="1" <?php if(isset($post_data['sistem-kuota'])) echo 'checked'?>>
           <label class="form-check-label" for="inlineCheckbox3">Pembatasan Kuota Peserta</label>
        </div>
       </div>
@@ -215,6 +230,18 @@ $(document).ready(function(){
         $('#form').trigger("reset");
     });
 
+    if ($("#inlineCheckbox3").is(":checked")) {
+        $("#kapasitas_toggle").show();
+    } else {
+        $("#kapasitas_toggle").hide();
+    }
+
+    if ($("#inlineCheckbox1").is(":checked")) {
+        $("#biaya_toggle").show();
+    } else {
+        $("#biaya_toggle").hide();
+    }
+
     $("#inlineCheckbox3").click(function () {
         if ($(this).is(":checked")) {
             $("#kapasitas_toggle").show();
@@ -282,6 +309,50 @@ $(document).ready(function(){
                       $('#input-pdf').val(filename).keyup();
                     });
 
+                    var rules = JSON.parse('<?php echo $rules ?>');
+                    var form = $('#form');
+
+                    if($("#inlineCheckbox3").is(':checked')){
+            					rules = rules.concat(JSON.parse('<?php echo $kapasitas_rules ?>'));
+            				}
+                    if($("#inlineCheckbox1").is(':checked')){
+            					rules = rules.concat(JSON.parse('<?php echo $biaya_topik_rules ?>'));
+            				}
+                    console.log(rules);
+                    form.applyRules({
+                      formRules : rules,
+                      externalErrors : ''
+                    });
+
+
+                    $("#inlineCheckbox3").on('change',function(){
+            					var currentRules = JSON.parse('<?php echo $rules ?>');
+            					if($(this).is(':checked')){
+            						currentRules = currentRules.concat(JSON.parse('<?php echo $kapasitas_rules ?>'));
+            					}
+                      if($("#inlineCheckbox1").is(':checked')){
+            						currentRules = currentRules.concat(JSON.parse('<?php echo $biaya_topik_rules ?>'));
+            					}
+
+            					form.applyRules({
+            						formRules : currentRules,
+                      	externalErrors : ''
+            					});
+            				});
+
+                    $("#inlineCheckbox1").on('change',function(){
+            					var currentRules = JSON.parse('<?php echo $rules ?>');
+            					if($(this).is(':checked')){
+            						currentRules = currentRules.concat(JSON.parse('<?php echo $biaya_topik_rules ?>'));
+            					}
+                      if($("#inlineCheckbox3").is(':checked')){
+            						currentRules = currentRules.concat(JSON.parse('<?php echo $kapasitas_rules ?>'));
+            					}
+                      form.applyRules({
+            						formRules : currentRules,
+                      	externalErrors : ''
+            					});
+            				});
 });
 
 function sendTableArticles() {

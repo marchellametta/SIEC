@@ -17,9 +17,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
       </div>
     </div>
   <?php else: ?>
-    <button class="btn btn-sm bg-black text-white" type="button">
-      <i class="fa fa-sign-in mr-1"></i>Login
-    </button>
+    <a href="<?php echo base_url().'login'?>">
+      <button class="btn btn-sm bg-black text-white" type="button">
+        <i class="fa fa-sign-in mr-1"></i>Login
+      </button>
+    </a>
   <?php endif; ?>
     <div class="dropdown hidden" id="peserta">
     <button class="btn btn-sm dropdown-toggle bg-black text-white" type="button" id="menu" data-toggle="dropdown" data-disabled="true" aria-haspopup="true" aria-expanded="false">
