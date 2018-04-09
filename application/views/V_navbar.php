@@ -104,7 +104,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 </div>
 <script>
 $( document ).ready(function() {
-  var role = <?php echo (isset($this->session->userdata('current_roles')->role_name)? $this->session->userdata('current_roles')->role_name : "'none'" )?>;
+  var role = <?php echo "'".(isset($this->session->userdata('current_roles')->role_name)? $this->session->userdata('current_roles')->role_name : "none" )."'"?>;
     $('.'+role).show();
 });
 </script>
