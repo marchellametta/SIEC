@@ -242,7 +242,7 @@ class acl
       $id_ec = $this->ci->Vw_data_topik->get($id)->id_ec;
       $topik = $this->ci->Stored_procedure->get_topik_panitia($user_id,$id_ec);
       foreach ($topik as $row) {
-        if ($row->id_ec==$id)
+        if ($row->id_ec==$id_ec)
         {
            return true;
         }

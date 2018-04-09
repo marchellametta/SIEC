@@ -351,7 +351,7 @@ class C_Informasi extends CI_Controller{
        $this->load->model('T_narasumber');
        $this->load->model('T_narasumber_topik');
        $this->load->helper('config_rules');
-      
+
        $jenis_ec = $this->T_jenis_ec->all();
        $ec = $this->Vw_data_ec->get($id);
        $topik = $this->Vw_data_topik->getAllTopik($id);
@@ -400,12 +400,14 @@ class C_Informasi extends CI_Controller{
       $error_array= array_merge($error_array,$this->form_validation->error_array());
       }
 
+      $this->load->model('T_jenis_ec');
+      $this->load->model('Vw_data_ec');
+      $this->load->model('Vw_data_topik');
+      $this->load->model('T_narasumber');
+      $this->load->model('T_narasumber_topik');
+
       if($status == FALSE){
-        $this->load->model('T_jenis_ec');
-        $this->load->model('Vw_data_ec');
-        $this->load->model('Vw_data_topik');
-        $this->load->model('T_narasumber');
-        $this->load->model('T_narasumber_topik');
+
         $jenis_ec = $this->T_jenis_ec->all();
         $ec = $this->Vw_data_ec->get($id);
         $topik = $this->Vw_data_topik->getAllTopik($id);
@@ -523,8 +525,8 @@ class C_Informasi extends CI_Controller{
            $this->T_narasumber_topik->attach_narasumber_topik($id_narasumber, $id_topik);
          }else if($row->status==2){
            $this->T_jadwal->delete($row->id_topik);
-           $id_narasumber = $this->T_narasumber->getNarasumber($row->id_topik);
-           $this->T_narasumber_topik->dettach_narasumber_topik($id_narasumber);
+           $id_narasumber = $this->T_narasumber_topik->getNarasumber($row->id_topik)->id_narasumber;
+           $this->T_narasumber_topik->dettach_narasumber_topik($id_narasumber,$row->id_topik);
            $this->T_narasumber->delete($id_narasumber);
            $this->T_topik_ec->delete($row->id_topik);
          }

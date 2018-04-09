@@ -49,7 +49,7 @@ class C_Absensi extends CI_Controller{
       $data = $this->Stored_procedure->get_all_peserta_topik($id);
       $post_data = $this->input->post();
       foreach ($data as $row) {
-        $this->T_peserta_topik->edit($id,$row->id_peserta,[
+        $this->T_peserta_topik->edit($id,$row->id_user,[
           'status_hadir' => 0
         ]);
       }

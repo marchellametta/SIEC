@@ -109,6 +109,9 @@ class C_Pendaftaran extends CI_Controller{
     $this->load->model('Stored_procedure');
 
     $data = $this->Vw_data_ec->getActive();
+    $soon = $this->Vw_data_ec->getSoon();
+
+    $data = array_merge($data,$soon);
 
     if($this->input->method() == 'get'){
        $this->load->view('V_header');

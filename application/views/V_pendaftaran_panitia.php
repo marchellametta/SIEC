@@ -104,7 +104,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     </fieldset>
 
     <fieldset class="mt-4">
-    <legend>Kelas Extension Course yang Akan Diikuti</legend>
+    <legend>Kelas Extension Course yang Akan Dikelola</legend>
 
     <?php foreach ($data as $row): ?>
      <div class="form-group col-md-12">

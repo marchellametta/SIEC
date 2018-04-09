@@ -23,7 +23,7 @@ class T_narasumber_topik extends CI_Model{
     public function getNarasumber($id){
         /* No Error Handling yet! */
         $this->db->where('id_topik',$id);
-        return $this->db->get($this->table_name)->result();
+        return $this->db->get($this->table_name)->row();
     }
 
     public function edit($id_narasumber, $id_topik, $args){

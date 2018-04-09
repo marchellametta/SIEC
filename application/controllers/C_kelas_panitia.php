@@ -337,7 +337,40 @@ class C_Kelas_panitia extends CI_Controller{
       $mpdf->Output();
   }
 
+  public function assign(){
+    $this->load->view('V_header');
+    $this->load->view('V_navbar');
+    $this->load->view('V_assign_panitia');
+    $this->load->view('V_footer');
+  }
+
   public function pesertaTopik($id){
+    $id_user = $this->session->userdata('id_user');
+
+    // Get the user's ID and add it to the config array
+    $config = array('userID'=>$id_user);
+
+    // Load the ACL library and pas it the config array
+    $this->load->library('acl',$config);
+
+    // Get the perm key
+    // I'm using the URI to keep this pretty simple ( http://www.example.com/test/this ) would be 'test_this'
+    $acl_test = $this->uri->segment(1).'_';
+    $acl_test .= $this->uri->segment(2).'_';
+    $acl_test .= $this->uri->segment(3);
+
+    // var_dump($acl_test);
+    // die();
+
+    // $this->load->model('Vw_data_topik');
+    // $id_ec = $this->Vw_data_topik->get($id)->id_ec;
+    // var_dump($this->acl->hasPanitiaTopikIdPermission($id_user,$id));
+    //  var_dump($this->acl->hasPermission($acl_test));
+    //  die();
+    // If the user does not have permission either in 'user_perms' or 'role_perms' redirect to login, or restricted, etc
+    if ( !$this->acl->hasPermission($acl_test) || !$this->acl->hasPanitiaTopikIdPermission($id_user,$id)) {
+      redirect('');
+    }
     if($this->input->method() == 'get'){
       $this->load->model('Stored_procedure');
       $this->load->model('Vw_data_topik');
@@ -359,6 +392,23 @@ class C_Kelas_panitia extends CI_Controller{
   }
 
   public function pesertaEC($id){
+    $id_user = $this->session->userdata('id_user');
+
+    // Get the user's ID and add it to the config array
+    $config = array('userID'=>$id_user);
+
+    // Load the ACL library and pas it the config array
+    $this->load->library('acl',$config);
+
+    // Get the perm key
+    // I'm using the URI to keep this pretty simple ( http://www.example.com/test/this ) would be 'test_this'
+    $acl_test = $this->uri->segment(1).'_';
+    $acl_test .= $this->uri->segment(2);
+
+    // If the user does not have permission either in 'user_perms' or 'role_perms' redirect to login, or restricted, etc
+    if ( !$this->acl->hasPermission($acl_test) || !$this->acl->hasPanitiaECIdPermission($id_user,$id)  ) {
+      redirect('');
+    }
     if($this->input->method() == 'get'){
       $this->load->model('Stored_procedure');
       $this->load->model('Vw_data_ec');
