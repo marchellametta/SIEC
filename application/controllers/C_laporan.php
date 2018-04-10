@@ -33,14 +33,17 @@ class C_Laporan extends CI_Controller{
       $this->load->model('T_evaluasi_ecf');
        $this->load->model('Stored_procedure');
        $this->load->model('Vw_data_ec');
+       $this->load->model('T_evaluasi_tema');
        $this->load->model('Vw_data_topik');
 
        $ec = $this->Vw_data_ec->get($id);
        $status_evaluasi = $ec->status_evaluasi;
        $evaluasi_tema="";
+       $saran="";
        if($ec->jenis_ec=="Extension Course Filsafat"){
          $evaluasi_tema = $this->T_evaluasi_ecf->all($id);
        }else{
+         $saran = $this->T_evaluasi_tema->allsaran($id);
          $evaluasi_tema = $this->Stored_procedure->get_hasil_evaluasi_tema($id);
        }
 
@@ -74,7 +77,8 @@ class C_Laporan extends CI_Controller{
          'pekerjaan' => $pekerjaan,
          'jumlah_peserta' => $jumlah_peserta,
          'kehadiran' => $kehadiran,
-         'evaluasi_tema' => $evaluasi_tema
+         'evaluasi_tema' => $evaluasi_tema,
+         'saran' => $saran
        ]);
        $this->load->view('V_footer');
     } else if($this->input->method() == 'post'){
@@ -173,7 +177,7 @@ class C_Laporan extends CI_Controller{
           'size' => 20,
           'bold' => true
         ]);
-      }else{
+      }else if($this->input->post('jenis-laporan') == 'kehadiran'){
         $judul = 'Persentase Kehadiran Peserta';
         $laporan = new Excel($judul);
         $kehadiran = $this->Stored_procedure->get_persentase_kehadiran_peserta($id);
@@ -187,6 +191,66 @@ class C_Laporan extends CI_Controller{
         $laporan->setColumnWidth('A',4);
         $numOfRows = count($kehadiran);
         $laporan->setFullBorder('A4'. ':C' . ($numOfRows+4));
+        $waktu_cetak = date('d-m-Y, H:i');
+        $laporan->prependRowFromText("Waktu cetak: $waktu_cetak",[
+          'size' => 9,
+        ]);
+        $laporan->prependRowFromText($ec->jenis_ec.": ".$ec->tema_ec,[
+          'size' => 12,
+        ]);
+        $laporan->prependRowFromText($judul,[
+          'size' => 20,
+          'bold' => true
+        ]);
+      }else{
+        $judul = 'Hasil Evaluasi';
+        $laporan = new Excel($judul);
+        $evaluasi_tema="";
+        $rules=null;
+        $ec = $this->Vw_data_ec->get($id);
+        if($ec->jenis_ec=="Extension Course Filsafat"){
+          $evaluasi_tema = $this->T_evaluasi_ecf->all($id);
+          $rules = [
+            'soal1' => 'Soal 1',
+            'soal2' => 'Soal 2',
+            'soal3' => 'Soal 3'
+          ];
+          $laporan->buildFromMysqlRows($evaluasi_tema,$rules);
+          $laporan->autoResizeColumn('B','D');
+          $laporan->setColumnWidth('A',4);
+          $numOfRows = count($evaluasi_tema);
+          $laporan->setFullBorder('A4'. ':D' . ($numOfRows+4));
+        }else{
+          $this->load->model('T_evaluasi_tema');
+          $evaluasi_tema = $this->Stored_procedure->get_hasil_evaluasi_tema($id);
+          // var_dump($evaluasi_tema);
+          // die();
+          $saran = $this->T_evaluasi_tema->allsaran($id);
+          $rules_pg = [
+            'soal1' => 'Soal',
+            'nilai_1' => 'Nilai 1',
+            'nilai_2' => 'Nilai 2',
+            'nilai_3' => 'Nilai 3',
+            'nilai_4' => 'Nilai 4',
+            'nilai_5' => 'Nilai 5'
+          ];
+          $rules_essay = [
+            'saran' => 'Saran'
+          ];
+          $laporan->buildFromMysqlRows($evaluasi_tema,$rules_pg);
+          $laporan->appendRowFromText(' ');
+          $laporan->appendRowFromText(' ');
+          $laporan->buildFromMysqlRows($saran,$rules_essay);
+          $laporan->autoResizeColumn('B','G');
+          $laporan->setColumnWidth('A',4);
+          $numOfRows1 = count($evaluasi_tema);
+          $numOfRows2 = count($saran);
+          $laporan->setFullBorder('A4'. ':G' . ($numOfRows1+4));
+          $laporan->setFullBorder('A'.(7+$numOfRows1). ':B' . (7+$numOfRows1+$numOfRows2));
+        }
+
+
+
         $waktu_cetak = date('d-m-Y, H:i');
         $laporan->prependRowFromText("Waktu cetak: $waktu_cetak",[
           'size' => 9,

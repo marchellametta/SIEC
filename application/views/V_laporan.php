@@ -113,6 +113,22 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
     </tbody>
   </table>
+  <?php if($ec->jenis_ec!="Extension Course Filsafat"):?>
+  <table class="table table-hover table-striped table-bordered ml-3 mt-2">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">Saran</th>
+      </tr>
+    </thead>
+    <tbody>
+    <?php foreach ($saran as $row): ?>
+      <tr>
+        <td><?php echo $row->saran ?></td>
+      </tr>
+    <?php endforeach ?>
+    </tbody>
+  </table>
+<?php endif; ?>
 </div>
   <div class="text-right">
     <input type="submit" id="simpan" value="Unduh Laporan" class="btn btn-primary">

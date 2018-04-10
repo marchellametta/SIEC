@@ -63,10 +63,11 @@ class Excel{
         array_push($headerArray,$richText);
       }
     }
-    $this->rawData = (array_merge([$headerArray],$tmpData));
+    $this->rawData = (array_merge($this->rawData,[$headerArray],$tmpData));
   }
 
   public function setFullBorder($columnRange){
+    var_dump($columnRange);
     $this->sheet
       ->getStyle($columnRange)
       ->applyFromArray(Excel::FULL_BORDER_STYLE);
@@ -99,6 +100,7 @@ class Excel{
   public function appendRowFromArray($arr){
     $this->rawData = array_merge($this->rawData,$arr);
   }
+
 
   public function setColumnWidth($colID,$width){
     $this->sheet->getColumnDimension($colID)->setWidth($width);

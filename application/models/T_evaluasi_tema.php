@@ -17,6 +17,14 @@ class T_evaluasi_tema extends CI_Model{
         return $query->result();
     }
 
+    public function allsaran($id){
+        /* No Error Handling yet! */
+        $this->db->select('saran');
+        $this->db->where('id_ec',$id);
+        $query = $this->db->get($this->table_name);
+        return $query->result();
+    }
+
     public function get($id){
         /* No Error Handling yet! */
         $this->db->where('id_ec',$id);
