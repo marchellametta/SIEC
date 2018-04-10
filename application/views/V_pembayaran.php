@@ -21,7 +21,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <td><?php echo "Rp. ".number_format($row->tagihan).",00";?></td>
         <td class="text-center">
           <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="<?php echo $row->id_user?>" name= "bayar[]" <?php if($row->bayar=='false') echo "checked"?>>
+            <input class="form-check-input" type="checkbox" value="<?php echo $row->id_peserta?>" name= "bayar[]" <?php if($row->bayar=='false') echo "checked"?>>
           </div>
         </td>
       </tr>

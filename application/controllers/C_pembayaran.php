@@ -30,19 +30,18 @@ class C_Pembayaran extends CI_Controller{
       redirect('');
     }
     if($this->input->method() == 'get'){
+       $this->load->model('T_User');
        $this->load->model('Stored_procedure');
        $this->load->model('Vw_data_ec');
        $this->load->view('V_header');
        $this->load->view('V_navbar');
-       $data = $this->Stored_procedure->get_all_peserta_ec($id);
-       foreach ($data as $row) {
-         $tagihan = $this->Stored_procedure->get_tagihan_peserta_ec($id,$row->id_user);
-         $row->bayar = $tagihan[0]->bayar;
-         $row->tagihan = $tagihan[0]->tagihan;
+       $tagihan = $this->Stored_procedure->get_tagihan_peserta_tetap($id);
+       foreach ($tagihan as $row) {
+         $row->nama = $this->T_User->get($row->id_peserta)->nama;
        }
        $ec = $this->Vw_data_ec->get($id);
        $this->load->view('V_pembayaran',[
-         'data' => $data,
+         'data' => $tagihan,
          'ec' => $ec
        ]);
        $this->load->view('V_footer');
