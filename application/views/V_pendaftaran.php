@@ -3,6 +3,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 ?>
 <div class="mr-3 ml-3 mr-sm-3 ml-sm-3 mr-md-5 ml-md-5 mt-5 mb-5">
   <?php $this->load->view('V_template_breadcrumb', ['viewName' => 'V_pendaftaran']) ?>
+  <div class="alert alert-info alert-dismissable <?php if(isset($user)) echo 'hidden'?>">
+    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+    Jika Anda telah memiliki akun, silahkan <a href="<?php echo base_url().'login'?>">Login ke akun Anda</a>
+  </div>
   <?php if (isset($error_message)): ?>
       <div class="alert alert-danger alert-dismissable">
         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
@@ -14,59 +18,59 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <legend>Profil Umum</legend>
       <div class="form-group col-md-8 col-lg-6">
         <label for="nama">Nama Lengkap</label>
-        <input type="text" class="form-control" name="nama" placeholder="Nama Lengkap" value="<?php if(isset($post_data['nama'])) echo $post_data['nama'] ?>">
+        <input type="text" class="form-control" name="nama" placeholder="Nama Lengkap" value="<?php if(isset($post_data['nama'])) echo $post_data['nama']; if(isset($user)) echo $user->nama ?>" <?php if(isset($user)) echo 'disabled'?>>
         <span class="help-block text-danger"><?php if(isset($error_array['nama'])) echo $error_array['nama']?></span>
       </div>
       <div class="form-group col-md-8 col-lg-6">
         <label for="alamat">Alamat</label>
-        <textarea class="form-control" rows="5" name="alamat" placeholder="Alamat"><?php if(isset($post_data['alamat'])) echo $post_data['alamat'] ?></textarea>
+        <textarea class="form-control" rows="5" name="alamat" placeholder="Alamat" <?php if(isset($user)) echo 'disabled'?>><?php if(isset($post_data['alamat'])) echo $post_data['alamat'] ; if(isset($user)) echo $user->alamat?></textarea>
         <span class="help-block text-danger"><?php if(isset($error_array['alamat'])) echo $error_array['alamat']?></span>
       </div>
       <div class="form-row ml-2">
         <div class="form-group col-md-4 col-lg-3">
           <label for="pekerjaan">Pekerjaan</label>
-          <input type="text" class="form-control" name="pekerjaan" placeholder="Pekerjaan" value="<?php if(isset($post_data['pekerjaan'])) echo $post_data['pekerjaan'] ?>">
+          <input type="text" class="form-control" name="pekerjaan" placeholder="Pekerjaan" value="<?php if(isset($post_data['pekerjaan'])) echo $post_data['pekerjaan'] ; if(isset($user)) echo $user->pekerjaan?>" <?php if(isset($user)) echo 'disabled'?>>
           <span class="help-block text-danger"><?php if(isset($error_array['pekerjaan'])) echo $error_array['pekerjaan']?></span>
         </div>
         <div class="form-group col-md-4 col-lg-3">
           <label for="lembaga">Lembaga</label>
-          <input type="text" class="form-control" name="lembaga" placeholder="Lembaga" value="<?php if(isset($post_data['lembaga'])) echo $post_data['lembaga'] ?>">
+          <input type="text" class="form-control" name="lembaga" placeholder="Lembaga" value="<?php if(isset($post_data['lembaga'])) echo $post_data['lembaga'] ; if(isset($user)) echo $user->lembaga?>" <?php if(isset($user)) echo 'disabled'?>>
           <span class="help-block text-danger"><?php if(isset($error_array['lembaga'])) echo $error_array['lembaga']?></span>
         </div>
       </div>
       <div class="form-row ml-2">
         <div class="form-group col-md-4 col-lg-3">
           <label for="pendidikan">Pendidikan terakhir</label>
-          <select class="form-control" name="pendidikan">
-            <option value="1" <?php if(isset($post_data['pendidikan'])) if($post_data['pendidikan']==1) echo 'selected' ?>>SMA</option>
-            <option value="2" <?php if(isset($post_data['pendidikan'])) if($post_data['pendidikan']==2) echo 'selected' ?>>D3</option>
-            <option value="3" <?php if(isset($post_data['pendidikan'])) if($post_data['pendidikan']==3) echo 'selected' ?>>S1</option>
-            <option value="4" <?php if(isset($post_data['pendidikan'])) if($post_data['pendidikan']==4) echo 'selected' ?>>S2</option>
+          <select class="form-control" name="pendidikan" <?php if(isset($user)) echo 'disabled'?>>
+            <option value="1" <?php if(isset($post_data['pendidikan'])) if($post_data['pendidikan']==1) echo 'selected' ; if(isset($user)) if($user->pendidikan_terakhir==1) echo 'selected'?>>SMA</option>
+            <option value="2" <?php if(isset($post_data['pendidikan'])) if($post_data['pendidikan']==2) echo 'selected' ; if(isset($user)) if($user->pendidikan_terakhir==2) echo 'selected'?>>D3</option>
+            <option value="3" <?php if(isset($post_data['pendidikan'])) if($post_data['pendidikan']==3) echo 'selected' ; if(isset($user)) if($user->pendidikan_terakhir==3) echo 'selected'?>>S1</option>
+            <option value="4" <?php if(isset($post_data['pendidikan'])) if($post_data['pendidikan']==4) echo 'selected' ; if(isset($user)) if($user->pendidikan_terakhir==4) echo 'selected'?>>S2</option>
           </select>
           <span class="help-block text-danger"><?php if(isset($error_array['pendidikan'])) echo $error_array['pendidikan']?></span>
         </div>
         <div class="form-group col-md-4 col-lg-3">
           <label for="kota">Kota Asal</label>
-          <input type="text" class="form-control" name="kota" placeholder="Kota Asal" value="<?php if(isset($post_data['kota'])) echo $post_data['kota'] ?>">
+          <input type="text" class="form-control" name="kota" placeholder="Kota Asal" value="<?php if(isset($post_data['kota'])) echo $post_data['kota'] ; if(isset($user)) echo $user->kota?>" <?php if(isset($user)) echo 'disabled'?>>
           <span class="help-block text-danger"><?php if(isset($error_array['kota'])) echo $error_array['kota']?></span>
         </div>
       </div>
       <div class="form-row ml-2">
         <div class="form-group col-md-4 col-lg-3">
           <label for="agama">Agama</label>
-          <select class="form-control" name="agama">
-            <option value="1" <?php if(isset($post_data['agama'])) if($post_data['agama']==1) echo 'selected' ?>>Katolik</option>
-            <option value="2" <?php if(isset($post_data['agama'])) if($post_data['agama']==2) echo 'selected' ?>>Kristen</option>
-            <option value="3" <?php if(isset($post_data['agama'])) if($post_data['agama']==3) echo 'selected' ?>>Islam</option>
-            <option value="4" <?php if(isset($post_data['agama'])) if($post_data['agama']==4) echo 'selected' ?>>Buddha</option>
-            <option value="5" <?php if(isset($post_data['agama'])) if($post_data['agama']==5) echo 'selected' ?>>Hindu</option>
-            <option value="6" <?php if(isset($post_data['agama'])) if($post_data['agama']==6) echo 'selected' ?>>Lainnya</option>
+          <select class="form-control" name="agama" <?php if(isset($user)) echo 'disabled'?>>
+            <option value="1" <?php if(isset($post_data['agama'])) if($post_data['agama']==1) echo 'selected' ; if(isset($user)) if($user->agama==1) echo 'selected'?>>Katolik</option>
+            <option value="2" <?php if(isset($post_data['agama'])) if($post_data['agama']==2) echo 'selected' ; if(isset($user)) if($user->agama==2) echo 'selected'?>>Kristen</option>
+            <option value="3" <?php if(isset($post_data['agama'])) if($post_data['agama']==3) echo 'selected' ; if(isset($user)) if($user->agama==3) echo 'selected'?>>Islam</option>
+            <option value="4" <?php if(isset($post_data['agama'])) if($post_data['agama']==4) echo 'selected' ; if(isset($user)) if($user->agama==4) echo 'selected'?>>Buddha</option>
+            <option value="5" <?php if(isset($post_data['agama'])) if($post_data['agama']==5) echo 'selected' ; if(isset($user)) if($user->agama==5) echo 'selected'?>>Hindu</option>
+            <option value="6" <?php if(isset($post_data['agama'])) if($post_data['agama']==6) echo 'selected' ; if(isset($user)) if($user->agama==6) echo 'selected'?>>Lainnya</option>
           </select>
           <span class="help-block text-danger"><?php if(isset($error_array['agama'])) echo $error_array['agama']?></span>
         </div>
         <div class="form-group col-md-4 col-lg-3">
           <label for="nohp">Nomor HP</label>
-          <input type="text" class="form-control" name="nohp" placeholder="Nomor HP" value="<?php if(isset($post_data['nohp'])) echo $post_data['nohp'] ?>">
+          <input type="text" class="form-control" name="nohp" placeholder="Nomor HP" value="<?php if(isset($post_data['nohp'])) echo $post_data['nohp'] ; if(isset($user)) echo $user->no_hp ?>" <?php if(isset($user)) echo 'disabled'?>>
           <span class="help-block text-danger"><?php if(isset($error_array['nohp'])) echo $error_array['nohp']?></span>
         </div>
       </div>
@@ -85,15 +89,22 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <legend>Informasi Akun</legend>
      <div class="form-group col-md-6">
        <label for="email">Email</label>
-       <input type="email" class="form-control" name="email" placeholder="Email">
+       <input type="email" class="form-control" name="email" placeholder="Email" value="<?php if(isset($post_data['email'])) echo $post_data['email'] ; if(isset($user)) echo $user->email?>" <?php if(isset($user)) echo 'disabled'?>>
+       <span class="help-block text-danger"><?php if(isset($error_array['email'])) echo $error_array['email']?></span>
      </div>
-     <div class="form-group col-md-6">
+     <div class="form-group col-md-6 <?php if(isset($user)) echo 'hidden'?>">
        <label for="password">Password</label>
        <input type="password" class="form-control" name="password" placeholder="Password">
+       <span class="help-block text-danger"><?php if(isset($error_array['password'])) echo $error_array['password']?></span>
      </div>
-     <div class="form-group col-md-6">
+     <div class="form-group col-md-6 <?php if(isset($user)) echo 'hidden'?>">
        <label for="retypePassword">Ketik Ulang Password</label>
        <input type="password" class="form-control" name="password_retype" placeholder="Password">
+       <span class="help-block text-danger"><?php if(isset($error_array['password_retype'])) echo $error_array['password_retype']?></span>
+     </div>
+     <div class="form-check form-check-inline ml-3 <?php if(isset($user)) echo 'hidden'?>">
+       <input class="form-check-input" type="checkbox" name="buat-akun" id="buat" value="1" <?php if(isset($post_data['buat-akun'])) echo 'checked'?>>
+       <label class="form-check-label" for="buat-akun">Buat Akun</label>
      </div>
      <?php if (isset($error)): ?>
           <div class="alert alert-danger alert-dismissable">
@@ -207,9 +218,25 @@ $("input[type='checkbox'].justone").change(function(){
 });
 
 var rules = JSON.parse('<?php echo $rules ?>');
+if($("#buat").is(':checked')){
+  rules = rules.concat(JSON.parse('<?php echo $akun_rules ?>'));
+}
 $('#form').applyRules({
   formRules : rules,
   externalErrors : ''
+});
+
+$("#buat").on('change',function(){
+  var currentRules = JSON.parse('<?php echo $rules ?>');
+  if($(this).is(':checked')){
+    currentRules = currentRules.concat(JSON.parse('<?php echo $akun_rules ?>'));
+  }
+  console.log(JSON.parse('<?php echo $akun_rules ?>'));
+  console.log(currentRules);
+  $('#form').applyRules({
+    formRules : currentRules,
+    externalErrors : ''
+  });
 });
 
 function recalculate(){

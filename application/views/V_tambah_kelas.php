@@ -33,7 +33,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
        </div>
        <div class="form-group col-md-3">
          <label for="tahun">Tahun Pelaksanaan</label>
-         <input type="number" class="form-control" name="tahun" placeholder="Tahun" value="<?php if(isset($post_data['tahun'])) echo $post_data['tahun']?>">
+         <div class="input-group date" id="tahun" data-target-input="nearest">
+           <input type="text" id="tanggal-text" class="form-control datetimepicker-input" value="<?php if(isset($post_data['tahun'])) echo $post_data['tahun']?>" data-target="#tahun"/>
+             <div class="input-group-append" data-target="#tahun" data-toggle="datetimepicker">
+               <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+             </div>
+         </div>
          <span class="help-block text-danger"><?php if(isset($error_array['tahun'])) echo $error_array['tahun']?></span>
        </div>
      </div>
@@ -267,6 +272,10 @@ $(document).ready(function(){
 
     $('#mulai').datetimepicker({
       format: 'LT'
+    });
+
+    $('#tahun').datetimepicker({
+      format: 'YYYY'
     });
 
     $('#simpan').click(function() {

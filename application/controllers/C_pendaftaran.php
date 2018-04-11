@@ -89,12 +89,20 @@ class C_Pendaftaran extends CI_Controller{
         $selected = $this->input->get()['c'];
       }
 
+
+      $this->load->model('T_user');
+      $user = null;
+      if($this->session->userdata('id_user')){
+        $user = $this->T_user->get($this->session->userdata('id_user'));
+      }
        $this->load->view('V_header');
        $this->load->view('V_navbar');
        $this->load->view('V_pendaftaran',[
          'data' => $complete,
          'selected' => $selected,
-         'rules' => json_encode(get_rules('form-pendaftaran-peserta-jquery'))
+         'user'=> $user,
+         'rules' => json_encode(get_rules('form-pendaftaran-peserta-jquery')),
+         'akun_rules' => json_encode(get_rules('validasi-akun'))
        ]);
        $this->load->view('V_footer');
     } else if($this->input->method() == 'post'){
@@ -176,9 +184,29 @@ class C_Pendaftaran extends CI_Controller{
     if($this->input->method() == 'get'){
     } else if($this->input->method() == 'post'){
       $post_data = $this->input->post();
-      // var_dump($post_data);
-      // die();
-      if ($this->form_validation->run('form-pendaftaran-peserta') == FALSE){
+      $this->load->helper('config_rules');
+
+      $status = TRUE;
+      if(!$this->session->userdata('id_user')){
+        $this->form_validation->set_data($post_data);
+        $this->form_validation->set_rules(get_rules('form-ec'));
+      	$status = $this->form_validation->run();
+        $error_array = $this->form_validation->error_array();
+
+        if(isset($post_data['buat-akun'])){
+          //echo "a";
+          //die();
+          $this->form_validation->set_data($post_data);
+          $this->form_validation->set_rules(get_rules('validasi-akun'));
+          $status2 = $this->form_validation->run('validasi-akun');
+          $status = ($status && $status2);
+          $error_array= array_merge($error_array,$this->form_validation->error_array());
+        }
+      }
+
+      if ($status == FALSE){
+        //var_dump($this->form_validation->error_array());
+        //die();
         $this->index($post_data,$this->form_validation->error_array());
       }else{
          $hashed_pw = password_hash($post_data['password'], PASSWORD_DEFAULT);
@@ -191,19 +219,6 @@ class C_Pendaftaran extends CI_Controller{
          $this->load->model('Vw_data_topik');
           $this->load->helper('upload_file_helper');
 
-          if($post_data['password']!==$post_data['password_retype'])
-          {
-            $selected=0;
-            $data = $this->Vw_data_ec->getActive();
-            $this->load->view('V_header');
-            $this->load->view('V_navbar');
-            $this->load->view('V_pendaftaran',[
-              'selected' => $selected,
-              'data' => $data,
-              'error' => 'Password tidak sama'
-            ]);
-            $this->load->view('V_footer');
-          }else{
             $res="";
             if(!empty($_FILES['gambar-file']['name'])){
             $res = upload_file($this,[
@@ -221,40 +236,66 @@ class C_Pendaftaran extends CI_Controller{
             }
 
             $this->db->trans_begin();
-           $this->T_user->insert([
-             'nama' => $post_data['nama'],
-             'alamat' => $post_data['alamat'],
-             'pekerjaan' => $post_data['pekerjaan'],
-             'lembaga' => $post_data['lembaga'],
-             'pendidikan_terakhir' => intval($post_data['pendidikan']),
-             'kota' => $post_data['kota'],
-             'no_hp' => $post_data['nohp'],
-             'email' => $post_data['email'],
-             'password' => $hashed_pw,
-             'agama' => $post_data['agama'],
-             'foto' => $post_data['gambar']
-           ]);
-           $id_peserta = $this->db->insert_id();
+            $id_peserta = null;
+            if(!$this->session->userdata('id_user')){
+              if(isset($_POST['buat-akun'])){
+                $this->T_user->insert([
+                  'nama' => $post_data['nama'],
+                  'alamat' => $post_data['alamat'],
+                  'pekerjaan' => $post_data['pekerjaan'],
+                  'lembaga' => $post_data['lembaga'],
+                  'pendidikan_terakhir' => intval($post_data['pendidikan']),
+                  'kota' => $post_data['kota'],
+                  'no_hp' => $post_data['nohp'],
+                  'email' => $post_data['email'],
+                  'password' => $hashed_pw,
+                  'agama' => $post_data['agama'],
+                  'foto' => $post_data['gambar']
+                ]);
+              }else{
+                $this->T_user->insert([
+                  'nama' => $post_data['nama'],
+                  'alamat' => $post_data['alamat'],
+                  'pekerjaan' => $post_data['pekerjaan'],
+                  'lembaga' => $post_data['lembaga'],
+                  'pendidikan_terakhir' => intval($post_data['pendidikan']),
+                  'kota' => $post_data['kota'],
+                  'no_hp' => $post_data['nohp'],
+                  'agama' => $post_data['agama'],
+                  'foto' => $post_data['gambar']
+                ]);
+              }
+              $id_peserta = $this->db->insert_id();
+            }else{
+              $id_peserta = $this->session->userdata('id_user');
+            }
+
            if(isset($_POST['kelas'])){
              foreach ($post_data['kelas'] as $row) {
                $ec = $this->Vw_data_ec->get($row);
+               $topik = $this->Vw_data_topik->getAllTopik($row);
                $this->T_pembayaran_peserta_tetap->insert([
                  'id_peserta' => $id_peserta,
                  'id_ec' => $row,
                  'tagihan' => $ec->biaya
                ]);
+               foreach ($topik as $row) {
+                 $this->T_peserta_topik->attach_peserta_topik($id_peserta,$row->id_topik);
+               }
              }
            }
-           foreach ($post_data['topik'] as $row) {
-             $this->T_peserta_topik->attach_peserta_topik($id_peserta,$row);
-             $id_ec = $this->Vw_data_topik->get($row)->id_ec;
-             if(array_search($id_ec,$post_data['kelas'])===false){
-               $this->T_pembayaran_peserta_lepas->insert([
-                 'id_peserta' => $id_peserta,
-                 'id_ec' => $id_ec,
-                 'id_topik' => $id_topik,
-                 'tagihan' => $ec->biaya
-               ]);
+           if(isset($_POST['topik'])){
+             foreach ($post_data['topik'] as $row) {
+               $id_ec = $this->Vw_data_topik->get($row)->id_ec;
+               if(array_search($id_ec,$post_data['kelas'])===false){
+                 $this->T_pembayaran_peserta_lepas->insert([
+                   'id_peserta' => $id_peserta,
+                   'id_ec' => $id_ec,
+                   'id_topik' => $id_topik,
+                   'tagihan' => $ec->biaya
+                 ]);
+                 $this->T_peserta_topik->attach_peserta_topik($id_peserta,$row);
+               }
              }
            }
            $this->T_user_roles->insert([
@@ -265,9 +306,8 @@ class C_Pendaftaran extends CI_Controller{
              $this->db->trans_rollback();
            }else{
              $this->db->trans_commit();
-             redirect('', 'refresh');
+             //redirect('', 'refresh');
            }
-          }
 
       }
     }

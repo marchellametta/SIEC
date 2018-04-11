@@ -278,6 +278,30 @@ $config = [
             'required' => 'Kapasitas peserta harus diisi'
           ]
         ]
-      ]
+      ],
+      'validasi-akun' => [
+         [
+           'field' => 'email',
+           'rules' => 'required',
+           'errors' => [
+             'required' => 'Email harus diisi'
+           ]
+         ],
+         [
+           'field' => 'password',
+           'rules' => 'required',
+           'errors' => [
+             'required' => 'Password harus diisi'
+           ]
+         ],
+         [
+           'field' => 'password_retype',
+           'rules' => 'required|matches[password]',
+           'errors' => [
+             'required' => 'Ketik ulang password Anda',
+             'matches' => 'Password tidak sama'
+           ]
+         ]
+       ]
 
 ];
