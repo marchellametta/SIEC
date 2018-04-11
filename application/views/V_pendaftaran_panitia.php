@@ -10,7 +10,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
       </div>
   <?php endif ?>
   <form method="post" id="form" action="<?php echo base_url('pendaftaran/daftar-panitia') ?>" enctype="multipart/form-data">
-    <fieldset>
+    <div class="form-check form-check-inline ml-3 mb-2 <?php if(isset($user)) echo 'hidden'?>">
+      <input class="form-check-input" type="checkbox" name="sudah-ada" id="ada" value="1" <?php if(isset($post_data['sudah-ada'])) echo 'checked'?>>
+      <label class="form-check-label" for="buat-akun">Panitia sudah terdaftar</label>
+    </div>
+    <fieldset class="baru">
     <legend>Profil Umum</legend>
       <div class="form-group col-md-8 col-lg-6">
         <label for="nama">Nama Lengkap</label>
@@ -81,7 +85,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
       </div>
     </fieldset>
 
-    <fieldset class="mt-4">
+    <fieldset class="mt-4 baru">
     <legend>Informasi Akun</legend>
      <div class="form-group col-md-6">
        <label for="email">Email</label>
@@ -94,6 +98,21 @@ defined('BASEPATH') OR exit('No direct script access allowed');
      <div class="form-group col-md-6">
        <label for="retypePassword">Ketik Ulang Password</label>
        <input type="password" class="form-control" name="password_retype" placeholder="Password">
+     </div>
+     <?php if (isset($error)): ?>
+          <div class="alert alert-danger alert-dismissable">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            <?php echo $error; ?>
+          </div>
+      <?php endif ?>
+    </fieldset>
+
+    <fieldset class="ada">
+    <legend>Pilih Panitia</legend>
+     <div class="form-group col-md-6">
+       <label for="nama-panitia">Panitia</label>
+       <input id="input-nama-panitia" type="text" class="form-control" name="nama-panitia" placeholder="Nama Panitia">
+       <input id="input-id-panitia" class="hidden" name="id-panitia">
      </div>
      <?php if (isset($error)): ?>
           <div class="alert alert-danger alert-dismissable">
@@ -148,6 +167,23 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <script>
 
 $( document ).ready(function() {
+  if ($("#ada").is(":checked")) {
+    $(".ada").show();
+    $(".baru").hide();
+  } else {
+    $(".baru").show();
+    $(".ada").hide();
+  }
+
+  $("#ada").change(function () {
+      if ($(this).is(":checked")) {
+        $(".ada").show();
+        $(".baru").hide();
+      } else {
+        $(".baru").show();
+        $(".ada").hide();
+      }
+  });
   $('#input-gambar').add('#input-gambar-icon').on('click', function(event) {
             event.preventDefault();
             $('#input-gambar-file').click();
@@ -166,6 +202,48 @@ $( document ).ready(function() {
           });
 
 });
+
+$(function () {
+  var baseUrl = '<?php echo base_url() ?>';
+
+  var inputPanitia= $('#input-nama-panitia');
+  var realInputPanitia = $('#input-id-panitia');
+
+  inputPanitia.autocomplete({
+    source : function(req,res){
+      var postData = {
+        nama : inputPanitia.val()
+      };
+      var url = baseUrl + 'panitia/search';
+      $.get(url,postData).then(function(suggestions){
+          var tmp = suggestions.map(function(item){
+            return {
+              label : item.nama,
+              value : item.id_user
+            };
+          });
+          res(tmp);
+        });
+      },
+      select : function(e,ui){
+         e.preventDefault();
+         e.target.value = ui.item.label;
+         realInputPanitia.val(ui.item.value).keyup();
+       },
+       focus : function(e,ui){
+          e.preventDefault();
+          e.target.value = ui.item.label;
+          realInputPanitia.val(ui.item.value).keyup();
+        },
+       change : function(e, ui) {
+         e.preventDefault();
+         if (ui.item == null) {
+           e.target.value = '';
+           realInputPanitia.val('').keyup();
+         }
+       }
+  });
+ });
 
 
 

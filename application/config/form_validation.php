@@ -215,6 +215,28 @@ $config = [
        'errors'=> [
          'required' => 'Harus ada kelas yang dipilih'
        ]
+     ],
+     [
+       'field' => 'email',
+       'rules' => 'required',
+       'errors' => [
+         'required' => 'Email harus diisi'
+       ]
+     ],
+     [
+       'field' => 'password',
+       'rules' => 'required',
+       'errors' => [
+         'required' => 'Password harus diisi'
+       ]
+     ],
+     [
+       'field' => 'password_retype',
+       'rules' => 'required|matches[password]',
+       'errors' => [
+         'required' => 'Ketik ulang password Anda',
+         'matches' => 'Password tidak sama'
+       ]
      ]
    ],
    'form-ec' => [
@@ -279,6 +301,24 @@ $config = [
           ]
         ]
       ],
+      'validasi-kelas' => [
+         [
+           'field' => 'kelas[]',
+           'rules' => 'required',
+           'errors' => [
+             'required' => 'Harus ada kelas yang dipilih'
+           ]
+         ]
+       ],
+       'validasi-topik' => [
+          [
+            'field' => 'topik[]',
+            'rules' => 'required',
+            'errors' => [
+              'required' => 'Harus ada kelas yang dipilih'
+            ]
+          ]
+        ],
       'validasi-akun' => [
          [
            'field' => 'email',

@@ -19,7 +19,7 @@ class C_Search_api extends CI_Controller{
     return $this->output
       ->set_content_type('application/json')
       ->set_status_header(200)
-      ->set_output(json_encode($this->Stored_procedure->search_panitia_ec($id_ec,$nama)));
+      ->set_output(json_encode($this->Stored_procedure->search_panitia_ec($nama)));
   }
 }
 ?>

@@ -8,6 +8,7 @@ class C_Pendaftaran extends CI_Controller{
     $this->load->model('Vw_data_ec');
     $this->load->model('Vw_data_topik');
     $this->load->model('Stored_procedure');
+    $this->load->model('T_user');
     $this->load->helper('config_rules');
 
     $data = $this->Vw_data_ec->getActive();
@@ -90,7 +91,6 @@ class C_Pendaftaran extends CI_Controller{
       }
 
 
-      $this->load->model('T_user');
       $user = null;
       if($this->session->userdata('id_user')){
         $user = $this->T_user->get($this->session->userdata('id_user'));
@@ -110,11 +110,16 @@ class C_Pendaftaran extends CI_Controller{
       if($error_array){
         $error_message="Terjadi kesalahan pengisian data";
       }
+      $user = null;
+      if($this->session->userdata('id_user')){
+        $user = $this->T_user->get($this->session->userdata('id_user'));
+      }
       $this->load->view('V_header');
       $this->load->view('V_navbar');
       $this->load->view('V_pendaftaran',[
         'data' => $complete,
         'rules' => json_encode(get_rules('form-pendaftaran-peserta-jquery')),
+        'user'=> $user,
         'post_data' => $post_data,
         'error_array' => $error_array,
         'error_message' => $error_message
@@ -202,6 +207,10 @@ class C_Pendaftaran extends CI_Controller{
           $status = ($status && $status2);
           $error_array= array_merge($error_array,$this->form_validation->error_array());
         }
+      }else{
+        $this->form_validation->set_data($post_data);
+        $this->form_validation->set_rules(get_rules('validasi-topik'));
+        $status = $this->form_validation->run();
       }
 
       if ($status == FALSE){
@@ -334,75 +343,66 @@ class C_Pendaftaran extends CI_Controller{
     }
     if($this->input->method() == 'get'){
     } else if($this->input->method() == 'post'){
+      $this->load->model('T_user');
+      $this->load->model('T_panitia_ec');
       $post_data = $this->input->post();
-      if ($this->form_validation->run('form-pendaftaran-panitia') == FALSE){
-        $this->panitia($post_data,$this->form_validation->error_array());
+      $status = TRUE;
+      if(!isset($_POST['sudah-ada'])){
+        $status = $this->form_validation->run('form-pendaftaran-panitia');
       }else{
-         $hashed_pw = password_hash($post_data['password'], PASSWORD_DEFAULT);
-         $this->load->model('T_user');
-         $this->load->model('T_user_roles');
-          $this->load->model('T_panitia_ec');
-          $this->load->helper('upload_file_helper');
-
-
-          if($post_data['password']!==$post_data['password_retype'])
-          {
-            $selected=0;
-            $this->load->model('Vw_data_ec');
-            $data = $this->Vw_data_ec->getActive();
-            $this->load->view('V_header');
-            $this->load->view('V_navbar');
-            $this->load->view('V_pendaftaran',[
-              'selected' => $selected,
-              'data' => $data,
-              'error' => 'Password tidak sama'
-            ]);
-            $this->load->view('V_footer');
-          }else{
-            $res="";
-            if(!empty($_FILES['gambar-file']['name'])){
-            $res = upload_file($this,[
-              'field_name' => 'gambar-file',
-              'upload_path' => 'images/foto',
-              'file_name' => $post_data['gambar'],
-              'max_size' => 8192
-            ]);
-            }
-            if(isset($res->error_code)){
-              echo $res->errors;
-              die();
-            }else if(!isset($res->error_code)){
-              $post_data['gambar'] = $res;
-            }
+        $status = $this->form_validation->run('validasi-kelas');
+      }
+      if ($status == FALSE){
+          $this->panitia($post_data,$this->form_validation->error_array());
+        }else{
+          $res="";
+          if(!empty($_FILES['gambar-file']['name'])){
+          $res = upload_file($this,[
+            'field_name' => 'gambar-file',
+            'upload_path' => 'images/foto',
+            'file_name' => $post_data['gambar'],
+            'max_size' => 8192
+          ]);
+          }
+          if(isset($res->error_code)){
+            echo $res->errors;
+            die();
+          }else if(!isset($res->error_code)){
+            $post_data['gambar'] = $res;
+          }
           $this->db->trans_begin();
-         $this->T_user->insert([
-           'nama' => $post_data['nama'],
-           'alamat' => $post_data['alamat'],
-           'pekerjaan' => $post_data['pekerjaan'],
-           'lembaga' => $post_data['lembaga'],
-           'pendidikan_terakhir' => intval($post_data['pendidikan']),
-           'kota' => $post_data['kota'],
-           'no_hp' => $post_data['nohp'],
-           'email' => $post_data['email'],
-           'password' => $hashed_pw,
-           'agama' => $post_data['agama'],
-           'foto' => $post_data['gambar']
-         ]);
-         $id_panitia = $this->db->insert_id();
-         foreach ($post_data['kelas'] as $row) {
-           $this->T_panitia_ec->attach_panitia_ec($id_panitia,$row);
-         }
-         $this->T_user_roles->insert([
-           'user_id' => $id_panitia,
-           'role_id' => 1
-         ]);
-         if ($this->db->trans_status() === FALSE){
-           $this->db->trans_rollback();
-         }else{
-           $this->db->trans_commit();
-           //redirect('', 'refresh');
-         }
-       }
+          $id_panitia = null;
+          if(!isset($_POST['sudah-ada'])){
+            $this->T_user->insert([
+              'nama' => $post_data['nama'],
+              'alamat' => $post_data['alamat'],
+              'pekerjaan' => $post_data['pekerjaan'],
+              'lembaga' => $post_data['lembaga'],
+              'pendidikan_terakhir' => intval($post_data['pendidikan']),
+              'kota' => $post_data['kota'],
+              'no_hp' => $post_data['nohp'],
+              'email' => $post_data['email'],
+              'password' => $hashed_pw,
+              'agama' => $post_data['agama'],
+              'foto' => $post_data['gambar']
+            ]);
+            $id_panitia = $this->db->insert_id();
+          }else{
+            $id_panitia = $post_data['id-panitia'];
+          }
+          $this->T_user_roles->insert([
+            'user_id' => $id_panitia,
+            'role_id' => 1
+          ]);
+        foreach ($post_data['kelas'] as $row) {
+          $this->T_panitia_ec->attach_panitia_ec($id_panitia,$row);
+        }
+        if ($this->db->trans_status() === FALSE){
+          $this->db->trans_rollback();
+        }else{
+          $this->db->trans_commit();
+          //redirect('', 'refresh');
+        }
       }
     }
   }
