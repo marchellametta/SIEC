@@ -141,9 +141,11 @@ class C_Pendaftaran extends CI_Controller{
   }
 
   public function daftar(){
-    $post_data = $this->input->post();
     if($this->input->method() == 'get'){
     } else if($this->input->method() == 'post'){
+      $post_data = $this->input->post();
+      // var_dump($post_data);
+      // die();
       if ($this->form_validation->run('form-pendaftaran-peserta') == FALSE){
         $this->index($post_data,$this->form_validation->error_array());
       }else{
@@ -151,12 +153,15 @@ class C_Pendaftaran extends CI_Controller{
          $this->load->model('T_user');
          $this->load->model('T_user_roles');
          $this->load->model('T_peserta_topik');
+         $this->load->model('T_pembayaran_peserta_tetap');
+         $this->load->model('T_pembayaran_peserta_lepas');
+         $this->load->model('Vw_data_ec');
+         $this->load->model('Vw_data_topik');
           $this->load->helper('upload_file_helper');
 
           if($post_data['password']!==$post_data['password_retype'])
           {
             $selected=0;
-            $this->load->model('Vw_data_ec');
             $data = $this->Vw_data_ec->getActive();
             $this->load->view('V_header');
             $this->load->view('V_navbar');
@@ -198,8 +203,27 @@ class C_Pendaftaran extends CI_Controller{
              'foto' => $post_data['gambar']
            ]);
            $id_peserta = $this->db->insert_id();
+           if(isset($_POST['kelas'])){
+             foreach ($post_data['kelas'] as $row) {
+               $ec = $this->Vw_data_ec->get($row);
+               $this->T_pembayaran_peserta_tetap->insert([
+                 'id_peserta' => $id_peserta,
+                 'id_ec' => $row,
+                 'tagihan' => $ec->biaya
+               ]);
+             }
+           }
            foreach ($post_data['topik'] as $row) {
              $this->T_peserta_topik->attach_peserta_topik($id_peserta,$row);
+             $id_ec = $this->Vw_data_topik->get($row)->id_ec;
+             if(array_search($id_ec,$post_data['kelas'])===false){
+               $this->T_pembayaran_peserta_lepas->insert([
+                 'id_peserta' => $id_peserta,
+                 'id_ec' => $id_ec,
+                 'id_topik' => $id_topik,
+                 'tagihan' => $ec->biaya
+               ]);
+             }
            }
            $this->T_user_roles->insert([
              'user_id' => $id_peserta,

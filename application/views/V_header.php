@@ -20,7 +20,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.0-alpha14/css/tempusdominus-bootstrap-4.min.css" />
   <link href="https://cdn.jsdelivr.net/npm/gijgo@1.8.1/combined/css/gijgo.min.css" rel="stylesheet" type="text/css" />
   <link rel="stylesheet" type="text/css" href="<?php echo base_url() ?>assets/jquery/jquery_ui/jquery-ui.min.css">
-  <script type="text/javascript" src="<?php echo base_url() ?>assets/utilities/form-validator.js"></script>  
+  <script type="text/javascript" src="<?php echo base_url() ?>assets/utilities/form-validator.js"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
 body{
@@ -101,6 +101,10 @@ fieldset
   font-family: "BebasNeue Regular";
   letter-spacing: 1px;
   font-size: 22px;
+}
+
+.nav-tabs .nav-link{
+  color:#FFFFFF;
 }
 
 h5{

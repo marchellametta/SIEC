@@ -30,47 +30,115 @@ class C_Pembayaran extends CI_Controller{
       redirect('');
     }
     if($this->input->method() == 'get'){
-       $this->load->model('T_User');
-       $this->load->model('Stored_procedure');
-       $this->load->model('Vw_data_ec');
+      $this->load->model('Vw_data_ec');
+      $this->load->model('Vw_data_pembayaran_peserta_tetap');
+      $this->load->model('Vw_data_pembayaran_peserta_lepas');
        $this->load->view('V_header');
        $this->load->view('V_navbar');
-       $tagihan = $this->Stored_procedure->get_tagihan_peserta_tetap($id);
-       foreach ($tagihan as $row) {
-         $row->nama = $this->T_User->get($row->id_peserta)->nama;
-       }
        $ec = $this->Vw_data_ec->get($id);
+       $tagihan_tetap = $this->Vw_data_pembayaran_peserta_tetap->getTagihanAll($id);
+       $tagihan_lepas = $this->Vw_data_pembayaran_peserta_lepas->getTagihanAll($id);
        $this->load->view('V_pembayaran',[
-         'data' => $tagihan,
+         'tetap' => $tagihan_tetap,
+         'lepas' => $tagihan_lepas,
          'ec' => $ec
        ]);
        $this->load->view('V_footer');
     } else if($this->input->method() == 'post'){
-      $this->load->model('Stored_procedure');
-      $this->load->model('T_peserta_topik');
-      $post_data = $this->input->post();
-      $peserta = $this->Stored_procedure->get_all_peserta_ec($id);
+    }
+  }
 
-      foreach ($peserta as $row) {
-        $topik = $this->Stored_procedure->get_topik_peserta($row->id_user,$id);
-        foreach ($topik as $temp) {
-          $this->T_peserta_topik->editBayar($temp->id_topik, $row->id_user,[
-            'status_bayar' => 0
-          ]);
-        }
-      }
-      if(isset($_POST['bayar'])){
-        foreach ($post_data['bayar'] as $row) {
-          $topik = $this->Stored_procedure->get_topik_peserta($row,$id);
-          foreach ($topik as $temp) {
-            $this->T_peserta_topik->editBayar($temp->id_topik, $row,[
-              'status_bayar' => 1
+  public function pembayaranTetap($id){
+    if($this->input->method() == 'post'){
+      $this->load->model('Stored_procedure');
+      $this->load->model('Vw_data_ec');
+      $this->load->model('T_pembayaran_peserta_tetap');
+      $post_data = $this->input->post();
+
+
+      $ec = $this->Vw_data_ec->get($id);
+
+      $this->db->trans_begin();
+
+
+      //$peserta = $this->T_pembayaran_peserta_tetap->getTagihanAll($id);
+      //foreach ($peserta as $row) {
+        $this->T_pembayaran_peserta_tetap->edit($row->id_peserta, $id,[
+          'status_lunas' => 0
+        ]);
+      //}
+
+      if(isset($_POST['telah-bayar'])){
+        foreach($post_data['telah-bayar'] as $key=>$value){
+          if($post_data['telah-bayar']!=NULL){
+            $this->T_pembayaran_peserta_tetap->edit($key, $id, [
+              'telah_bayar' => $value
+            ]);
+          }
+          if($value == $ec->biaya){
+            $this->T_pembayaran_peserta_tetap->edit($key, $id, [
+              'status_lunas' => 1
+            ]);
+          }else{
+            $this->T_pembayaran_peserta_tetap->edit($key, $id, [
+              'status_lunas' => 0
             ]);
           }
         }
       }
-      redirect('kelas/aktif', 'refresh');
 
+      if(isset($_POST['bayar'])){
+        foreach ($post_data['bayar'] as $row) {
+          $this->T_pembayaran_peserta_tetap->edit($row, $id, [
+            'telah_bayar' => $ec->biaya,
+            'status_lunas' => 1
+          ]);
+        }
+      }
+
+      if ($this->db->trans_status() === FALSE){
+        $this->db->trans_rollback();
+      }else{
+        $this->db->trans_commit();
+        redirect('kelas/aktif', 'refresh');
+      }
+    }
+  }
+
+  public function pembayaranLepas($id){
+    if($this->input->method() == 'post'){
+      $this->load->model('Stored_procedure');
+      $this->load->model('Vw_data_ec');
+      $this->load->model('T_pembayaran_peserta_lepas');
+      $post_data = $this->input->post();
+
+
+      $this->db->trans_begin();
+
+
+      //$peserta = $this->T_pembayaran_peserta_lepas->getTagihanAll($id);
+      //foreach ($peserta as $row) {
+        $this->T_pembayaran_peserta_lepas->editEC($id,[
+          'status_lunas' => 0
+        ]);
+      //}
+
+      if(isset($_POST['bayar'])){
+        foreach ($post_data['bayar'] as $key=>$value) {
+          foreach ($value as $k => $v) {
+            $this->T_pembayaran_peserta_lepas->edit($k, $key, [
+              'status_lunas' => 1
+            ]);
+          }
+        }
+      }
+
+      if ($this->db->trans_status() === FALSE){
+        $this->db->trans_rollback();
+      }else{
+        $this->db->trans_commit();
+        //redirect('kelas/aktif', 'refresh');
+      }
     }
   }
 }

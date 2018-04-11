@@ -28,13 +28,28 @@ class C_Kelas_user extends CI_Controller{
       redirect('');
     }
     if($this->input->method() == 'get'){
+      $this->load->model('T_pembayaran_peserta_lepas');
+      $this->load->model('T_pembayaran_peserta_tetap');
       $this->load->model('Stored_procedure');
       $data = $this->Stored_procedure->get_ec_peserta($id_user);
       foreach ($data as $row) {
-        $tagihan = $this->Stored_procedure->get_tagihan_peserta_ec($row->id_ec,$this->session->userdata('id_user'));
-        $row->tagihan = $tagihan[0]->tagihan;
-        $row->bayar = $tagihan[0]->bayar;
+        $tagihan = $this->T_pembayaran_peserta_tetap->get($this->session->userdata('id_user'),$row->id_ec);
+        if($tagihan===NULL){
+          $tagihan = $this->T_pembayaran_peserta_lepas->get($this->session->userdata('id_user'),$row->id_ec);
+          $temp = 0;
+          foreach ($tagihan as $tagihan_row) {
+            if($tagihan_row->status_lunas!=1){
+              $temp = $temp + $tagihan_row->tagihan;
+            }
+          }
+          $row->tagihan = $temp;
+          $row->bayar = 'true';
+        }else{
+          $row->tagihan = $tagihan->tagihan - $tagihan->telah_bayar;
+          $row->bayar = ($tagihan->status_lunas==1? 'false': '1 ');
+        }
       }
+
       $this->load->view('V_header');
       $this->load->view('V_navbar');
       $this->load->view('V_kelas_user',[
