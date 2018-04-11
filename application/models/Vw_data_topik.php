@@ -41,5 +41,12 @@ class Vw_data_topik extends CI_Model{
         return $this->db->get($this->table_name)->result();
     }
 
+    public function getAllInactiveTopik($id_ec){
+        /* No Error Handling yet! */
+        $this->db->where('id_ec',$id_ec);
+        $this->db->where('tanggal <=',date("Y-m-d"));
+        return $this->db->get($this->table_name)->result();
+    }
+
 
 }

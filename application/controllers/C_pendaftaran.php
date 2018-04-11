@@ -20,16 +20,37 @@ class C_Pendaftaran extends CI_Controller{
       if($row->kapasitas_peserta!=0 && $row->status_peserta==1){
         $topik_arr=="";
         $jumlah_peserta = $this->Stored_procedure->get_jumlah_peserta_ec($row->id_ec);
+        $topik_aktif = $this->Vw_data_topik->getAllActiveTopik($row->id_ec);
+        $topik_inaktif = $this->Vw_data_topik->getAllInactiveTopik($row->id_ec);
+        $topik_arr = array();
         if($row->kapasitas_peserta>$jumlah_peserta->jumlah_peserta){
-          $topik_arr = $this->Vw_data_topik->getAllActiveTopik($row->id_ec);
+          foreach ($topik_inaktif as $temp) {
+            $temp->aktif='false';
+            array_push($topik_arr,$temp);
+          }
+          foreach ($topik_aktif as $temp) {
+            $temp->aktif='true';
+            array_push($topik_arr,$temp);
+          }
+
         }
-        if(!empty($topik_arr)){
+        if(!empty($topik_aktif)){
           $row->topik_arr = $topik_arr;
           array_push($complete,$row);
         }
-
       }else if($row->kapasitas_peserta!=0 && $row->status_peserta==2){
-         $all_topik = $this->Vw_data_topik->getAllActiveTopik($row->id_ec);
+        $topik_aktif = $this->Vw_data_topik->getAllActiveTopik($row->id_ec);
+        $topik_inaktif = $this->Vw_data_topik->getAllInactiveTopik($row->id_ec);
+        $all_topik = array();
+        foreach ($topik_inaktif as $temp) {
+          $temp->aktif='false';
+          array_push($all_topik,$temp);
+        }
+        foreach ($topik_aktif as $temp) {
+          $temp->aktif='true';
+          array_push($all_topik,$temp);
+        }
+
          $topik_arr = array();
          foreach ($all_topik as $topik) {
            $jumlah_peserta = $this->Stored_procedure->get_jumlah_peserta_topik($topik->id_topik);
@@ -38,13 +59,24 @@ class C_Pendaftaran extends CI_Controller{
              array_push($topik_arr,$topik);
            }
          }
-         if(!empty($topik_arr)){
+         if(!empty($topik_aktif)){
            $row->topik_arr = $topik_arr;
            array_push($complete,$row);
          }
 
       }else{
-        $topik_arr = $this->Vw_data_topik->getAllActiveTopik($row->id_ec);
+        $topik_aktif = $this->Vw_data_topik->getAllActiveTopik($row->id_ec);
+        $topik_inaktif = $this->Vw_data_topik->getAllInactiveTopik($row->id_ec);
+        $topik_arr = array();
+        foreach ($topik_inaktif as $temp) {
+          $temp->aktif='false';
+          array_push($topik_arr,$temp);
+        }
+        foreach ($topik_aktif as $temp) {
+          $temp->aktif='true';
+          array_push($topik_arr,$temp);
+        }
+
         if(!empty($topik_arr)){
           $row->topik_arr = $topik_arr;
           array_push($complete,$row);

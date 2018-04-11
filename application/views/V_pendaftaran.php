@@ -122,7 +122,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
           </b></a>
          <?php foreach ($row->topik_arr as $temp): ?>
            <div class="col-md-12">
-             <input class="form-check-input justone" type="checkbox" value="<?php echo $temp->id_topik ?>" data-checked="#<?php echo "collapse". $row->id_ec ?>" data-biaya="<?php echo $row->biaya ?>" data-biaya-topik="<?php echo $row->biaya_per_topik ?>" name="topik[]" <?php if(isset($selected)) if($selected===$row->id_ec) echo "checked"?> <?php if(isset($post_data['topik'])) if(array_search($temp->id_topik,$post_data['topik'])!==false) echo "checked"?>>
+             <input class="form-check-input justone" type="checkbox" value="<?php echo $temp->id_topik ?>" data-checked="#<?php echo "collapse". $row->id_ec ?>" data-biaya="<?php echo $row->biaya ?>" data-biaya-topik="<?php echo $row->biaya_per_topik ?>" name="topik[]" <?php if(isset($selected)) if($selected===$row->id_ec) echo "checked"?> <?php if(isset($post_data['topik'])) if(array_search($temp->id_topik,$post_data['topik'])!==false) echo "checked"?> <?php if($temp->aktif == 'false') echo 'disabled'?>>
              <label class="form-check-label" for="defaultCheck1">
                <?php echo $temp->nama_topik ?>
              </label>
@@ -173,11 +173,9 @@ $('.selectall').click(function() {
    if ($(this).is(':checked')) {
        $($(this).data("checked")+' input:checkbox').prop('checked', true);
        recalculate();
-       $('#error').html("");
    } else {
        $($(this).data("checked")+' input:checkbox').prop('checked', false);
        recalculate();
-       $('#error').html("Harus ada kelas yang dipilih");
 
    }
 });
