@@ -177,6 +177,8 @@ class C_Informasi extends CI_Controller{
        $this->load->view('V_footer');
     } else if($this->input->method() == 'post'){
       $post_data = $this->input->post();
+      var_dump($post_data);
+      die();
       $this->load->helper('config_rules');
 
 

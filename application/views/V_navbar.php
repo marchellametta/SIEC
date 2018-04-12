@@ -24,42 +24,42 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     </a>
   <?php endif; ?>
     <div class="dropdown hidden peserta">
-    <button class="btn btn-sm dropdown-toggle bg-black text-white" type="button" id="menu" data-toggle="dropdown" data-disabled="true" aria-haspopup="true" aria-expanded="false">
-      Selamat Datang, <b><?php echo $this->session->userdata('nama') ?></b>
-    </button>
-    <div class="dropdown-menu bg-black" aria-labelledby="menu">
-      <a href="<?php echo base_url()."kelas-saya"?>"><small class="dropdown-item text-white"><i class="fa fa-list-alt text-white mr-1"></i>Kelas Saya</small></a>
-      <div class="dropdown-divider"></div>
-      <a href="<?php echo base_url()."profil/".$this->session->userdata('id_user')?>"><small class="dropdown-item text-white"><i class="fa fa-user text-white mr-1"></i>Profil Saya</small></a>
-      <div class="dropdown-divider"></div>
-      <a href="<?php echo base_url()."logout"?>"><small class="dropdown-item text-white"><i class="fa fa-sign-out mr-1"></i>Log Out</small></a>
-    </div>
+      <button class="btn btn-sm dropdown-toggle bg-black text-white" type="button" id="menu" data-toggle="dropdown" data-disabled="true" aria-haspopup="true" aria-expanded="false">
+        Selamat Datang, <b><?php echo $this->session->userdata('nama') ?></b>
+      </button>
+      <div class="dropdown-menu bg-black" aria-labelledby="menu">
+        <a href="<?php echo base_url()."kelas-saya"?>"><small class="dropdown-item text-white"><i class="fa fa-list-alt text-white mr-1"></i>Kelas Saya</small></a>
+        <div class="dropdown-divider"></div>
+        <a href="<?php echo base_url()."profil/".$this->session->userdata('id_user')?>"><small class="dropdown-item text-white"><i class="fa fa-user text-white mr-1"></i>Profil Saya</small></a>
+        <div class="dropdown-divider"></div>
+        <a href="<?php echo base_url()."logout"?>"><small class="dropdown-item text-white"><i class="fa fa-sign-out mr-1"></i>Log Out</small></a>
+      </div>
     </div>
     <div class="dropdown hidden panitia">
-    <button class="btn btn-sm dropdown-toggle bg-black text-white" type="button" id="menu" data-toggle="dropdown" data-disabled="true" aria-haspopup="true" aria-expanded="false">
-      Selamat Datang, <b><?php echo $this->session->userdata('nama') ?></b>
-    </button>
-    <div class="dropdown-menu bg-black" aria-labelledby="menu">
-      <a href="<?php echo base_url()."kelas/aktif"?>"><small class="dropdown-item text-white"><i class="fa fa-list-alt text-white mr-1"></i>Daftar Kelas</small></a>
-      <div class="dropdown-divider"></div>
-      <a href="<?php echo base_url()."profil/".$this->session->userdata('id_user')?>"><small class="dropdown-item text-white"><i class="fa fa-user text-white mr-1"></i>Profil Saya</small></a>
-      <div class="dropdown-divider"></div>
-      <a href="<?php echo base_url()."logout"?>"><small class="dropdown-item text-white" href="<?php echo base_url()."logout"?>"><i class="fa fa-sign-out mr-1"></i>Log Out</small></a>
-    </div>
+      <button class="btn btn-sm dropdown-toggle bg-black text-white" type="button" id="menu" data-toggle="dropdown" data-disabled="true" aria-haspopup="true" aria-expanded="false">
+        Selamat Datang, <b><?php echo $this->session->userdata('nama') ?></b>
+      </button>
+      <div class="dropdown-menu bg-black" aria-labelledby="menu">
+        <a href="<?php echo base_url()."kelas/aktif"?>"><small class="dropdown-item text-white"><i class="fa fa-list-alt text-white mr-1"></i>Daftar Kelas</small></a>
+        <div class="dropdown-divider"></div>
+        <a href="<?php echo base_url()."profil/".$this->session->userdata('id_user')?>"><small class="dropdown-item text-white"><i class="fa fa-user text-white mr-1"></i>Profil Saya</small></a>
+        <div class="dropdown-divider"></div>
+        <a href="<?php echo base_url()."logout"?>"><small class="dropdown-item text-white" href="<?php echo base_url()."logout"?>"><i class="fa fa-sign-out mr-1"></i>Log Out</small></a>
+      </div>
     </div>
     <div class="dropdown hidden admin">
-    <button class="btn btn-sm dropdown-toggle bg-black text-white" type="button" id="menu" data-toggle="dropdown" data-disabled="true" aria-haspopup="true" aria-expanded="false">
-      Selamat Datang, <b><?php echo $this->session->userdata('nama') ?></b>
-    </button>
-    <div class="dropdown-menu bg-black" aria-labelledby="menu">
-      <a href="<?php echo base_url()."kelola-beranda"?>"><small class="dropdown-item text-white"><i class="fa fa-list-alt text-white mr-1"></i>Kelola Beranda</small></a>
-      <div class="dropdown-divider"></div>
-      <a href="<?php echo base_url()."acl"?>"><small class="dropdown-item text-white"><i class="fa fa-user text-white mr-1"></i>Pengaturan Pengguna</small></a>
-      <div class="dropdown-divider"></div>
-      <a href="<?php echo base_url()."pendaftaran/panitia"?>"><small class="dropdown-item text-white"><i class="fa fa-user text-white mr-1"></i>Pendaftaran Panitia</small></a>
-      <div class="dropdown-divider"></div>
-      <a href="<?php echo base_url()."logout"?>"><small class="dropdown-item text-white" href="<?php echo base_url()."logout"?>"><i class="fa fa-sign-out mr-1"></i>Log Out</small></a>
-    </div>
+      <button class="btn btn-sm dropdown-toggle bg-black text-white" type="button" id="menu" data-toggle="dropdown" data-disabled="true" aria-haspopup="true" aria-expanded="false">
+        Selamat Datang, <b><?php echo $this->session->userdata('nama') ?></b>
+      </button>
+      <div class="dropdown-menu bg-black" aria-labelledby="menu">
+        <a href="<?php echo base_url()."kelola-beranda"?>"><small class="dropdown-item text-white"><i class="fa fa-list-alt text-white mr-1"></i>Kelola Beranda</small></a>
+        <div class="dropdown-divider"></div>
+        <a href="<?php echo base_url()."acl"?>"><small class="dropdown-item text-white"><i class="fa fa-user text-white mr-1"></i>Pengaturan Pengguna</small></a>
+        <div class="dropdown-divider"></div>
+        <a href="<?php echo base_url()."pendaftaran/panitia"?>"><small class="dropdown-item text-white"><i class="fa fa-user text-white mr-1"></i>Pendaftaran Panitia</small></a>
+        <div class="dropdown-divider"></div>
+        <a href="<?php echo base_url()."logout"?>"><small class="dropdown-item text-white" href="<?php echo base_url()."logout"?>"><i class="fa fa-sign-out mr-1"></i>Log Out</small></a>
+      </div>
     </div>
   </div>
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -73,17 +73,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
           <a class="<?php if($this->uri->segment(1)==''){echo 'active';}?> nav-link" href="<?php echo base_url(); ?>">BERANDA</a>
         </li>
         <li class="nav-item dropdown">
-         <a class="<?php if($this->uri->segment(1)=='informasi' ){echo 'active';}?> nav-link dropdown-toggle" href="#" id="informasiDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-           INFORMASI
-         </a>
-         <div class="dropdown-menu bg-dark" aria-labelledby="informasiDropdown">
-           <a class="dropdown-item text-white" href="<?php echo base_url();?>informasi/aktif">Kelas yang Sedang Berjalan</a>
-           <div class="dropdown-divider"></div>
-           <a class="dropdown-item text-white" href="<?php echo base_url(); ?>informasi/riwayat">Riwayat Kelas</a>
-           <div class="dropdown-divider"></div>
-           <a class="dropdown-item text-white" href="<?php echo base_url(); ?>informasi/mendatang">Kelas Mendatang</a>
+           <a class="<?php if($this->uri->segment(1)=='informasi' ){echo 'active';}?> nav-link dropdown-toggle" href="#" id="informasiDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+             INFORMASI
+           </a>
+           <div class="dropdown-menu bg-dark" aria-labelledby="informasiDropdown">
+             <a class="dropdown-item text-white border-bottom" href="<?php echo base_url();?>informasi/aktif">Kelas yang Sedang Berjalan</a>
+             <a class="dropdown-item text-white border-bottom" href="<?php echo base_url(); ?>informasi/riwayat">Riwayat Kelas</a>
+             <a class="dropdown-item text-white" href="<?php echo base_url(); ?>informasi/mendatang">Kelas Mendatang</a>
          </div>
-       </li>
+        </li>
         <li class="nav-item">
           <a class="<?php if($this->uri->segment(1)=='pendaftaran'){echo 'active';}?> nav-link" href="<?php echo base_url(); ?>pendaftaran">PENDAFTARAN</a>
         </li>
@@ -92,15 +90,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
            TENTANG KAMI
          </a>
          <div class="dropdown-menu bg-dark w-100" aria-labelledby="tentangKamiDropdown">
-           <a class="dropdown-item text-white" href="<?php echo base_url();?>visimisi">Visi&Misi</a>
-           <div class="dropdown-divider"></div>
+           <a class="dropdown-item text-white border-bottom" href="<?php echo base_url();?>visimisi">Visi&Misi</a>
            <a class="dropdown-item text-white" href="<?php echo base_url(); ?>lokasi">Lokasi</a>
          </div>
        </li>
       </ul>
     </div>
   </nav>
-
 </div>
 <script>
 $( document ).ready(function() {
