@@ -90,6 +90,7 @@ $route['pendaftaran/panitia/assign'] = 'C_kelas_panitia/assign';
 $route['pendaftaran/daftar'] = 'C_pendaftaran/daftar';
 $route['pendaftaran/daftar-panitia'] = 'C_pendaftaran/daftarPanitia';
 $route['informasi/detail/(:num)'] = 'C_informasi/detailEC/$1';
+$route['upload-modul/(:num)'] = 'C_informasi/uploadModul/$1';
 $route['kelas/absensi/(:num)'] = 'C_absensi/index/$1';
 $route['kelas/absensi/daftar-topik/(:num)'] = 'C_absensi/getTopik/$1';
 $route['kelas/pembayaran/(:num)'] = 'C_pembayaran/index/$1';

@@ -25,6 +25,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
       <div class="card-body">
         <h4 class="card-title"><?php echo $row->nama_topik;?></h4>
         <p class="card-text"><?php echo '<b>Narasumber</b>  :  '. $row->nama;?></p>
+        <a class="hidden panitia" href="<?php echo base_url().'upload-modul/'.$row->id_topik?>"><button class="btn btn-primary shadow"><i class="fa fa-upload pr-1"></i>Upload Modul</button></a>
       </div>
     </div>
     <?php endforeach ?>

@@ -177,13 +177,13 @@ class C_Informasi extends CI_Controller{
        $this->load->view('V_footer');
     } else if($this->input->method() == 'post'){
       $post_data = $this->input->post();
-       var_dump($post_data);
-      // $topik = json_decode($post_data['topik']);
+      var_dump($post_data);
+      $topik = json_decode($post_data['topik']);
       // var_dump($topik);
-      // foreach ($topik[0]->narasumber as $row) {
-      //   var_dump($row);
+      // foreach ($topik as $row) {
+      //   var_dump($row->file);
       // }
-      var_dump($_FILES);
+      // var_dump($_FILES);
       die();
       $this->load->helper('config_rules');
 
@@ -574,5 +574,41 @@ class C_Informasi extends CI_Controller{
 
     }
   }
+
+  public function uploadModul($id){
+    if($this->input->method() == 'get'){
+      $this->load->model('Vw_data_ec');
+       $this->load->model('Vw_data_topik');
+       $topik = $this->Vw_data_topik->get($id);
+       $ec = $this->Vw_data_ec->get($topik->id_ec);
+       $this->load->view('V_header');
+       $this->load->view('V_navbar');
+       $this->load->view('V_upload_modul',[
+         'topik'=> $topik,
+         'ec' => $ec
+       ]);
+       $this->load->view('V_footer');
+    } else if($this->input->method() == 'post'){
+       // var_dump($this->input->post());
+       // var_dump($_FILES);
+       // die();
+       $this->load->helper('upload_file_helper');
+       $post_data = $this->input->post();
+
+       $i = 0;
+       if(!empty($_FILES['gambar-file']['name'])){
+         foreach ($_FILES['gambar-file'] as $row) {
+           var_dump($row);
+           // $res = upload_file($this,[
+           //   'field_name' => 'gambar-file',
+           //   'upload_path' => 'images/banner',
+           //   'file_name' => $post_data['gambar'][$i],
+           //   'max_size' => 8192
+           // ]);
+           $i=$i+1;
+         }
+       }
+     }
+   }
 }
 ?>

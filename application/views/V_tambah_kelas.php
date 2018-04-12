@@ -202,16 +202,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
               <label for="lokasi">Lokasi</label>
               <input type="text" class="form-control" id="lokasi" placeholder="Lokasi">
             </div>
-            <div class="form-group col-md-12" id="modul_block">
-              <div id="modul1">
-                <label for="input-pdf" class="control-label">Modul</label>
-                <div class="input-group">
-                  <span class="input-group-addon border input-pdf-icon"><i class="fa fa-upload p-2"></i></span>
-                  <input type="file" accept=".pdf" name="pdf-file[]" class="hidden input-pdf-file" multiple="">
-                  <input type="text" placeholder="Pilih PDF" name="pdf[]" class="form-control cursor input-pdf" readonly>
-                </div>
-              </div>
-            </div>
           </div>
         </div>
 
@@ -228,7 +218,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 $(document).ready(function(){
   var i = 1;
-  var j = 1;
   $('[data-toggle="tooltip"]').tooltip();
   $("#tambah-narasumber").click(function(){
     i = i+1;
@@ -261,6 +250,7 @@ $(document).ready(function(){
        var lokasi = $('#lokasi').val();
        var button = '<button type="button" class="btn btn-danger btn-sm hapus"><i class="fa fa-close mr-1"></i>Hapus</button>';
        var status = '<span>'+1+'</span>';
+       var file = '<span>'+$('#input-pdf-file').prop('files')+'</span>';
 
        $('.narasumber').each(function() {
          narasumber = narasumber+ $(this).val()+', ';
@@ -273,18 +263,6 @@ $(document).ready(function(){
 
         $("tbody").append("<tr>"+"<td>"+"<ul>"+"<li><b>Tanggal: </b><span>"+tanggal+"</li>"+"<li><b>Waktu: </b><span>"+jammulai+" - "+jamselesai+"</li>"+"<li><b>Lokasi: </b><span>"+lokasi+"</li>"+"<li><b>Nama topik: </b><span>"+topik+"</li>"+'<li class="split"><b>Narasumber:</b><br><span>'+narasumber+"</li>"+"<li class="+'hidden'+">"+status+"</li>"+"</ul>"+"</td>"+"<td>"+button+'</td>'+"</tr>");
         $('#form').trigger("reset");
-        //$('#modul'+j).hide();
-        j = j+1;
-
-        $('#modul_block').append('<div id="modul'+j+'">'+
-          '<label for="input-pdf" class="control-label">Modul</label>'+
-          '<div class="input-group">'+
-            '<span class="input-group-addon border input-pdf-icon"><i class="fa fa-upload p-2"></i></span>'+
-            '<input type="file" accept=".pdf" name="pdf-file[]" class="hidden input-pdf-file" multiple="">'+
-            '<input type="text" placeholder="Pilih PDF" name="pdf[]" class="form-control cursor input-pdf" readonly>'+
-          '</div>'+
-        '</div>');
-
         $("#nara").html('<div><div class="form-group col-md-12">'+
           '<label for="narasumber">Narasumber</label>'+
           '<input type="text" class="form-control narasumber" id="narasumber1" data-urutan="1" placeholder="Narasumber">'+
@@ -378,15 +356,14 @@ $(document).ready(function(){
               $('#input-gambar').val(filename).keyup();
             });
 
-            $('.input-pdf').add('.input-pdf-icon').on('click', function(event) {
+            $('#input-pdf').add('#input-pdf-icon').on('click', function(event) {
                       event.preventDefault();
-                      alert("hai");
-                      $('.input-pdf-file').click();
+                      $('#input-pdf-file').click();
                     });
 
-                    $('.input-pdf-file').on('change', function() {
+                    $('#input-pdf-file').on('change', function() {
                       var filename = $(this).val().split(/(\\|\/)/g).pop();
-                      $('.input-pdf').val(filename).keyup();
+                      $('#input-pdf').val(filename).keyup();
                     });
 
                     var rules = JSON.parse('<?php echo $rules ?>');
