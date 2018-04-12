@@ -177,7 +177,13 @@ class C_Informasi extends CI_Controller{
        $this->load->view('V_footer');
     } else if($this->input->method() == 'post'){
       $post_data = $this->input->post();
-      var_dump($post_data);
+       var_dump($post_data);
+      // $topik = json_decode($post_data['topik']);
+      // var_dump($topik);
+      // foreach ($topik[0]->narasumber as $row) {
+      //   var_dump($row);
+      // }
+      var_dump($_FILES);
       die();
       $this->load->helper('config_rules');
 
@@ -305,17 +311,20 @@ class C_Informasi extends CI_Controller{
              'jam_selesai' => $jam[1],
            ]);
 
-           $this->T_narasumber->insert([
-             'profesi' => $row->profesi,
-             'jabatan' => $row->jabatan,
-             'lembaga' => $row->lembaga,
-             'nama' => $row->narasumber
-           ]);
+           foreach ($row->narasumber as $tmp) {
+             $data = explode(",",$tmp);
+             var_dump($data);
+             die();
+             $this->T_narasumber->insert([
+               'profesi' => $data[1],
+               'jabatan' => $data[3],
+               'lembaga' => $data[2],
+               'nama' => $data[0]
+             ]);
+             $id_narasumber = $this->db->insert_id();
 
-           $id_narasumber = $this->db->insert_id();
-
-           $this->T_narasumber_topik->attach_narasumber_topik($id_narasumber, $id_topik);
-
+             $this->T_narasumber_topik->attach_narasumber_topik($id_narasumber, $id_topik);
+           }
          }
        }
        if ($this->db->trans_status() === FALSE){

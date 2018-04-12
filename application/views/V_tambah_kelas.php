@@ -8,7 +8,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <?php echo $error_message ;?>
       </div>
   <?php endif ?>
-  <form method="post" id="form" action="<?php echo base_url('tambahkelas') ?>" enctype="multipart/form-data">
+  <form method="post" id="form-umum" action="<?php echo base_url('tambahkelas') ?>" enctype="multipart/form-data">
     <input type="hidden" id="str" name="topik" value="" />
     <fieldset>
     <legend>Data Umum</legend>
@@ -34,7 +34,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
        <div class="form-group col-md-3">
          <label for="tahun">Tahun Pelaksanaan</label>
          <div class="input-group date" id="tahun" data-target-input="nearest">
-           <input type="text" id="tahun-text" class="form-control datetimepicker-input" value="<?php if(isset($post_data['tahun'])) echo $post_data['tahun']?>" data-target="#tahun"/>
+           <input type="text" id="tahun-text" name="tahun" class="form-control datetimepicker-input" value="<?php if(isset($post_data['tahun'])) echo $post_data['tahun']?>" data-target="#tahun"/>
              <div class="input-group-append" data-target="#tahun" data-toggle="datetimepicker">
                <div class="input-group-text"><i class="fa fa-calendar"></i></div>
              </div>
@@ -54,14 +54,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             <span id="input-gambar-icon" class="input-group-addon border"><i class="fa fa-upload p-2"></i></span>
             <input type="file" accept="image/*" name="gambar-file" id="input-gambar-file" class="hidden">
             <input type="text" placeholder="Pilih Gambar" id="input-gambar" name="gambar" class="form-control cursor" readonly>
-          </div>
-        </div>
-        <div class="form-group col-md-3">
-          <label for="input-pdf" class="control-label">Modul</label>
-          <div class="input-group">
-            <span id="input-pdf-icon" class="input-group-addon border"><i class="fa fa-upload p-2"></i></span>
-            <input type="file" accept=".pdf" name="pdf-file" id="input-pdf-file" class="hidden">
-            <input type="text" placeholder="Pilih PDF" id="input-pdf" name="pdf" class="form-control cursor" readonly>
           </div>
         </div>
       </div>
@@ -149,23 +141,23 @@ defined('BASEPATH') OR exit('No direct script access allowed');
               <input type="text" class="form-control" id="topik" placeholder="Topik">
             </div>
             <div class= "row">
-              <div class="col-md-10">
-                <div id="nara">
+              <div class="col-md-10"  id="nara">
+                <div>
                   <div class="form-group col-md-12">
                     <label for="narasumber">Narasumber</label>
-                    <input type="text" class="form-control" id="narasumber[]" placeholder="Narasumber">
+                    <input type="text" class="form-control narasumber" id="narasumber1" data-urutan="1" placeholder="Narasumber">
                   </div>
                   <div class="form-group col-md-12">
                     <label for="profesi">Profesi</label>
-                    <input type="text" class="form-control" id="profesi[]" placeholder="Profesi">
+                    <input type="text" class="form-control profesi" id="profesi1" data-urutan="1" placeholder="Profesi">
                   </div>
                   <div class="form-group col-md-12">
                     <label for="lembaga">Lembaga</label>
-                    <input type="text" class="form-control" id="lembaga[]" placeholder="Lembaga">
+                    <input type="text" class="form-control lembaga" id="lembaga1" data-urutan="1" placeholder="Lembaga">
                   </div>
                   <div class="form-group col-md-12">
                     <label for="jabatan">Jabatan</label>
-                    <input type="text" class="form-control" id="jabatan[]" placeholder="Jabatan">
+                    <input type="text" class="form-control jabatan" id="jabatan1" data-urutan="1" placeholder="Jabatan">
                   </div>
                 </div>
               </div>
@@ -210,6 +202,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
               <label for="lokasi">Lokasi</label>
               <input type="text" class="form-control" id="lokasi" placeholder="Lokasi">
             </div>
+            <div class="form-group col-md-12" id="modul_block">
+              <div id="modul1">
+                <label for="input-pdf" class="control-label">Modul</label>
+                <div class="input-group">
+                  <span class="input-group-addon border input-pdf-icon"><i class="fa fa-upload p-2"></i></span>
+                  <input type="file" accept=".pdf" name="pdf-file[]" class="hidden input-pdf-file" multiple="">
+                  <input type="text" placeholder="Pilih PDF" name="pdf[]" class="form-control cursor input-pdf" readonly>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -225,41 +227,82 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <script>
 
 $(document).ready(function(){
+  var i = 1;
+  var j = 1;
   $('[data-toggle="tooltip"]').tooltip();
   $("#tambah-narasumber").click(function(){
+    i = i+1;
     $("#nara").append('<div class="form-group col-md-12">'+
       '<label for="narasumber">Narasumber</label>'+
-      '<input type="text" class="form-control" id="narasumber[]" placeholder="Narasumber">'+
+      '<input type="text" class="form-control narasumber" id="narasumber'+i+'" data-urutan="'+i+'" placeholder="Narasumber">'+
     '</div>'+
     '<div class="form-group col-md-12">'+
       '<label for="profesi">Profesi</label>'+
-      '<input type="text" class="form-control" id="profesi[]" placeholder="Profesi">'+
+      '<input type="text" class="form-control profesi" id="profesi'+i+'" data-urutan="'+i+'" placeholder="Profesi">'+
     '</div>'+
     '<div class="form-group col-md-12">'+
       '<label for="lembaga">Lembaga</label>'+
-      '<input type="text" class="form-control" id="lembaga[]" placeholder="Lembaga">'+
+      '<input type="text" class="form-control lembaga" id="lembaga'+i+'" data-urutan="'+i+'" placeholder="Lembaga">'+
     '</div>'+
     '<div class="form-group col-md-12">'+
       '<label for="jabatan">Jabatan</label>'+
-      '<input type="text" class="form-control" id="jabatan[]" placeholder="Jabatan">'+
+      '<input type="text" class="form-control jabatan" id="jabatan'+i+'" data-urutan="'+i+'" placeholder="Jabatan">'+
     '</div>');
   });
     $("#tambah-topik-submit").click(function(){
        var topik = $('#topik').val();
-       var narasumber = $('#narasumber').val();
-       var profesi = $('#profesi').val();
-       var lembaga = $('#lembaga').val();
-       var jabatan = $('#jabatan').val();
+       var narasumber = '';
+       var profesi = '';
+       var lembaga = '';
+       var jabatan = '';
        var tanggal = $('#tanggal-text').val();
        var jammulai = $('#jammulai').val();
        var jamselesai = $('#jamselesai').val();
        var lokasi = $('#lokasi').val();
        var button = '<button type="button" class="btn btn-danger btn-sm hapus"><i class="fa fa-close mr-1"></i>Hapus</button>';
-       var status = 1;
+       var status = '<span>'+1+'</span>';
+
+       $('.narasumber').each(function() {
+         narasumber = narasumber+ $(this).val()+', ';
+         narasumber = narasumber+ $(this).parent().siblings().children('.profesi').val()+', ';
+         narasumber = narasumber+ $(this).parent().siblings().children('.lembaga').val()+', ';
+         narasumber = narasumber+ $(this).parent().siblings().children('.jabatan').val();
+         narasumber = narasumber+ '<br>';
+       });
 
 
-        $("tbody").append("<tr>"+"<td>"+"<ul>"+"<li>"+tanggal+"</li>"+"<li>"+jammulai+" - "+jamselesai+"</li>"+"<li>"+lokasi+"</li>"+"<li>"+topik+"</li>"+"<li>"+narasumber+"</li>"+"<li>"+profesi+"</li>"+"<li>"+lembaga+"</li>"+"<li>"+jabatan+"</li>"+"<li class="+'hidden'+">"+status+"</li>"+"</ul>"+"</td>"+"<td>"+button+'</td>'+"</tr>");
+        $("tbody").append("<tr>"+"<td>"+"<ul>"+"<li><b>Tanggal: </b><span>"+tanggal+"</li>"+"<li><b>Waktu: </b><span>"+jammulai+" - "+jamselesai+"</li>"+"<li><b>Lokasi: </b><span>"+lokasi+"</li>"+"<li><b>Nama topik: </b><span>"+topik+"</li>"+'<li class="split"><b>Narasumber:</b><br><span>'+narasumber+"</li>"+"<li class="+'hidden'+">"+status+"</li>"+"</ul>"+"</td>"+"<td>"+button+'</td>'+"</tr>");
         $('#form').trigger("reset");
+        //$('#modul'+j).hide();
+        j = j+1;
+
+        $('#modul_block').append('<div id="modul'+j+'">'+
+          '<label for="input-pdf" class="control-label">Modul</label>'+
+          '<div class="input-group">'+
+            '<span class="input-group-addon border input-pdf-icon"><i class="fa fa-upload p-2"></i></span>'+
+            '<input type="file" accept=".pdf" name="pdf-file[]" class="hidden input-pdf-file" multiple="">'+
+            '<input type="text" placeholder="Pilih PDF" name="pdf[]" class="form-control cursor input-pdf" readonly>'+
+          '</div>'+
+        '</div>');
+
+        $("#nara").html('<div><div class="form-group col-md-12">'+
+          '<label for="narasumber">Narasumber</label>'+
+          '<input type="text" class="form-control narasumber" id="narasumber1" data-urutan="1" placeholder="Narasumber">'+
+        '</div>'+
+        '<div class="form-group col-md-12">'+
+          '<label for="profesi">Profesi</label>'+
+          '<input type="text" class="form-control profesi" id="profesi1" data-urutan="1" placeholder="Profesi">'+
+        '</div>'+
+        '<div class="form-group col-md-12">'+
+          '<label for="lembaga">Lembaga</label>'+
+          '<input type="text" class="form-control lembaga" id="lembaga1" data-urutan="1" placeholder="Lembaga">'+
+        '</div>'+
+        '<div class="form-group col-md-12">'+
+          '<label for="jabatan">Jabatan</label>'+
+          '<input type="text" class="form-control jabatan" id="jabatan1" data-urutan="1" placeholder="Jabatan">'+
+        '</div></div>');
+        i=1;
+
     });
 
     if ($("#inlineCheckbox3").is(":checked")) {
@@ -335,18 +378,19 @@ $(document).ready(function(){
               $('#input-gambar').val(filename).keyup();
             });
 
-            $('#input-pdf').add('#input-pdf-icon').on('click', function(event) {
+            $('.input-pdf').add('.input-pdf-icon').on('click', function(event) {
                       event.preventDefault();
-                      $('#input-pdf-file').click();
+                      alert("hai");
+                      $('.input-pdf-file').click();
                     });
 
-                    $('#input-pdf-file').on('change', function() {
+                    $('.input-pdf-file').on('change', function() {
                       var filename = $(this).val().split(/(\\|\/)/g).pop();
-                      $('#input-pdf').val(filename).keyup();
+                      $('.input-pdf').val(filename).keyup();
                     });
 
                     var rules = JSON.parse('<?php echo $rules ?>');
-                    var form = $('#form');
+                    var form = $('#form-umum');
 
                     if($("#inlineCheckbox3").is(':checked')){
             					rules = rules.concat(JSON.parse('<?php echo $kapasitas_rules ?>'));
@@ -398,17 +442,21 @@ function sendTableArticles() {
         'lokasi',
         'topik',
         'narasumber',
-        'profesi',
-        'lembaga',
-        'jabatan',
         'status'
     ];
 
     var tableObject = $('#topik_tabel tbody tr td ul').map(function (i) {
         var row = {};
         $(this).find('li').each(function (i) {
+          if($(this).hasClass("split")){
+            var data = $(this).children('span').html().split('<br>');
             var rowName = columns[i];
-            row[rowName] = $(this).text();
+            row[rowName] = data;
+          }else{
+            var rowName = columns[i];
+            row[rowName] = $(this).children('span').text();
+          }
+
         });
 
         return row;
