@@ -177,14 +177,14 @@ class C_Informasi extends CI_Controller{
        $this->load->view('V_footer');
     } else if($this->input->method() == 'post'){
       $post_data = $this->input->post();
-      var_dump($post_data);
-      $topik = json_decode($post_data['topik']);
+      // var_dump($post_data);
+      // $topik = json_decode($post_data['topik']);
       // var_dump($topik);
       // foreach ($topik as $row) {
       //   var_dump($row->file);
       // }
       // var_dump($_FILES);
-      die();
+      // die();
       $this->load->helper('config_rules');
 
 
@@ -313,17 +313,18 @@ class C_Informasi extends CI_Controller{
 
            foreach ($row->narasumber as $tmp) {
              $data = explode(",",$tmp);
-             var_dump($data);
-             die();
-             $this->T_narasumber->insert([
-               'profesi' => $data[1],
-               'jabatan' => $data[3],
-               'lembaga' => $data[2],
-               'nama' => $data[0]
-             ]);
-             $id_narasumber = $this->db->insert_id();
+             if(count($data)>=4){
+               $this->T_narasumber->insert([
+                 'profesi' => $data[1],
+                 'jabatan' => $data[3],
+                 'lembaga' => $data[2],
+                 'nama' => $data[0]
+               ]);
+               $id_narasumber = $this->db->insert_id();
 
-             $this->T_narasumber_topik->attach_narasumber_topik($id_narasumber, $id_topik);
+               $this->T_narasumber_topik->attach_narasumber_topik($id_narasumber, $id_topik);
+             }
+
            }
          }
        }
@@ -502,8 +503,7 @@ class C_Informasi extends CI_Controller{
          'tahun_pelaksanaan' => $post_data['tahun'],
          'deskripsi' => $post_data['deskripsi'],
          'biaya_per_topik' => (isset($post_data['biaya-topik'])) ? $post_data['biaya-topik'] : 0,
-         'kapasitas_peserta' => (isset($post_data['kapasitas'])) ? $post_data['kapasitas'] : 0,
-         'modul_pdf' => $post_data['pdf']
+         'kapasitas_peserta' => (isset($post_data['kapasitas'])) ? $post_data['kapasitas'] : 0
        ]);
        foreach ($topik as $row) {
          if($row->status==1){
@@ -589,24 +589,45 @@ class C_Informasi extends CI_Controller{
        ]);
        $this->load->view('V_footer');
     } else if($this->input->method() == 'post'){
-       // var_dump($this->input->post());
-       // var_dump($_FILES);
-       // die();
+      $this->load->model('T_modul');
+      $this->load->model('T_modul_topik');
        $this->load->helper('upload_file_helper');
        $post_data = $this->input->post();
 
-       $i = 0;
-       if(!empty($_FILES['gambar-file']['name'])){
-         foreach ($_FILES['gambar-file'] as $row) {
-           var_dump($row);
-           // $res = upload_file($this,[
-           //   'field_name' => 'gambar-file',
-           //   'upload_path' => 'images/banner',
-           //   'file_name' => $post_data['gambar'][$i],
-           //   'max_size' => 8192
-           // ]);
-           $i=$i+1;
+
+       $i = 1;
+       $length = count($post_data['pdf']);
+
+
+       while($i <= $length) {
+         $res = "";
+         if(!empty($_FILES['pdf-'.$i.'-file']['name'])){
+           $res = upload_file($this,[
+             'field_name' => 'pdf-'.$i.'-file',
+             'upload_path' => 'Modul',
+             'file_name' => $post_data['pdf'][$i-1],
+             'max_size' => 8192
+           ]);
          }
+         if(isset($res->error_code)){
+           echo '1'. $res->errors;
+           die();
+         }else if(!isset($res->error_code)){
+           $post_data['pdf'][$i-1] = $res;
+           $this->db->trans_begin();
+           $this->T_modul->insert([
+             'link_modul' => $res
+           ]);
+           $id_modul = $this->db->insert_id();
+           $this->T_modul_topik->attach_modul_topik($id_modul,$id);
+           if ($this->db->trans_status() === FALSE){
+             $this->db->trans_rollback();
+           }else{
+             $this->db->trans_commit();
+             //redirect('', 'refresh');
+           }
+         }
+         $i++;
        }
      }
    }

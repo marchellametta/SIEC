@@ -10,23 +10,23 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <legend>Upload Modul</legend>
         <div id="modul_block">
           <div class="form-group col-md-8">
-            <label for="input-gambar-1" class="control-label">Modul 1</label>
+            <label for="input-pdf-1" class="control-label">Modul 1</label>
             <div class="input-group">
-              <span id="input-gambar-1-icon" class="input-group-addon border input-gambar-icon"><i class="fa fa-upload p-2"></i></span>
-              <input type="file" accept="image/*" name="gambar-file[]" id="input-gambar-1-file" class="input-gambar-file hidden">
-              <input type="text" placeholder="Pilih Gambar" id="input-gambar-1" name="gambar[]" class="input-gambar form-control cursor" readonly>
+              <span id="input-pdf-1-icon" class="input-group-addon border input-pdf-icon"><i class="fa fa-upload p-2"></i></span>
+              <input type="file" accept=".pdf" name="pdf-1-file" id="input-pdf-1-file" class="input-pdf-file hidden">
+              <input type="text" placeholder="Pilih pdf" id="input-pdf-1" name="pdf[]" class="input-pdf form-control cursor" readonly>
             </div>
           </div>
           <div class="form-group col-md-8">
-            <label for="input-gambar-2" class="control-label">Modul 2</label>
+            <label for="input-pdf-2" class="control-label">Modul 2</label>
             <div class="input-group">
-              <span id="input-gambar-2-icon" class="input-group-addon border input-gambar-icon"><i class="fa fa-upload p-2"></i></span>
-              <input type="file" accept="image/*" name="gambar-file[]" id="input-gambar-2-file" class="input-gambar-file hidden">
-              <input type="text" placeholder="Pilih Gambar" id="input-gambar-2" name="gambar[]" class="input-gambar form-control cursor" readonly>
+              <span id="input-pdf-2-icon" class="input-group-addon border input-pdf-icon"><i class="fa fa-upload p-2"></i></span>
+              <input type="file" accept=".pdf" name="pdf-2-file" id="input-pdf-2-file" class="input-pdf-file hidden">
+              <input type="text" placeholder="Pilih pdf" id="input-pdf-2" name="pdf[]" class="input-pdf form-control cursor" readonly>
             </div>
           </div>
         </div>
-        <a id="tambah" href=""><i class="fa fa-plus p-1"></i>Tambah</a>
+        <a id="tambah" href="#"><i class="fa fa-plus p-1"></i>Tambah</a>
       </fieldset>
       <input type="submit" id="simpan" value="Simpan" class="btn btn-success mt-3">
     </form>
@@ -35,38 +35,49 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 <script>
 $(function () {
-    var i = 1;
+    var i = 2;
 
-    $('.input-gambar').add('.input-gambar-icon').on('click', function(event) {
+    $('#modul_block').on('click', '.input-pdf , .input-pdf-icon', function(event){
       event.preventDefault();
-      $(this).siblings('.input-gambar-file').click();
+      $(this).siblings('.input-pdf-file').click();
     });
 
-    $('.input-gambar-file').on('change', function() {
+    $('#modul_block').on('change', '.input-pdf-file', function(event){
       var filename = $(this).val().split(/(\\|\/)/g).pop();
-      $(this).siblings('.input-gambar').val(filename).keyup();
+      $(this).siblings('.input-pdf').val(filename).keyup();
     });
+
+    // $('.input-pdf').add('.input-pdf-icon').on('click', function(event) {
+    //   event.preventDefault();
+    //   alert('hai');
+    //   $(this).siblings('.input-pdf-file').click();
+    // });
+    //
+    // $('.input-pdf-file').on('change', function() {
+    //   var filename = $(this).val().split(/(\\|\/)/g).pop();
+    //   $(this).siblings('.input-pdf').val(filename).keyup();
+    // });
 
     $('#tambah').on('click', function() {
       i = i+1;
       $('#modul_block').append('<div class="form-group col-md-8">'+
-        '<label for="input-gambar-'+i+'" class="control-label">Modul '+i+'</label>'+
+        '<label for="input-pdf-'+i+'" class="control-label">Modul '+i+'</label>'+
         '<div class="input-group">'+
-          '<span id="input-gambar-'+i+'-icon" class="input-group-addon border input-gambar-icon"><i class="fa fa-upload p-2"></i></span>'+
-          '<input type="file" accept="image/*" name="gambar-1-file" id="input-gambar-1-file" class="input-gambar-file hidden">'+
-          '<input type="text" placeholder="Pilih Gambar" id="input-gambar-1" name="gambar-1" class="input-gambar form-control cursor" readonly>'+
+          '<span id="input-pdf-'+i+'-icon" class="input-group-addon border input-pdf-icon"><i class="fa fa-upload p-2"></i></span>'+
+          '<input type="file" accept=".pdf" name="pdf-'+i+'-file" id="input-pdf-'+i+'-file" class="input-pdf-file hidden">'+
+          '<input type="text" placeholder="Pilih pdf" id="input-pdf-'+i+'" name="pdf[]" class="input-pdf form-control cursor" readonly>'+
         '</div>'+
       '</div>');
     });
 
-    // $('#input-gambar-2').add('#input-gambar-2-icon').on('click', function(event) {
+    // $('#input-pdf-2').add('#input-pdf-2-icon').on('click', function(event) {
     //   event.preventDefault();
-    //   $('#input-gambar-2-file').click();
+    //   $('#input-pdf-2-file').click();
     // });
     //
-    // $('#input-gambar-2-file').on('change', function() {
+    // $('#input-pdf-2-file').on('change', function() {
     //   var filename = $(this).val().split(/(\\|\/)/g).pop();
-    //   $('#input-gambar-2').val(filename).keyup();
+    //   $('#input-pdf-2').val(filename).keyup();
     // });
 
   });
