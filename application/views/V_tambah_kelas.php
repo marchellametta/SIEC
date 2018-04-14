@@ -104,7 +104,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <fieldset class="mt-4">
   <legend>Rangkaian Topik</legend>
      <div class="text-right">
-       <button type="button" id="tambah-topik-btn" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal"><i class="fa fa-plus"></i>Tambah Topik</button>
+       <button type="button" id="tambah-topik-btn" class="btn btn-primary" data-toggle="modal" data-target="#modal"><i class="fa fa-plus"></i>Tambah Topik</button>
      </div>
      <div class="table-responsive mt-3">
        <table id="topik_tabel" class="table table-hover table-striped table-bordered">
@@ -124,11 +124,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
       </div>
 </fieldset>
 </div>
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Tambah Topik</h5>
+        <h5 class="modal-title" id="modalLabel">Tambah Topik</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -248,7 +248,8 @@ $(document).ready(function(){
        var jammulai = $('#jammulai').val();
        var jamselesai = $('#jamselesai').val();
        var lokasi = $('#lokasi').val();
-       var button = '<button type="button" class="btn btn-danger btn-sm hapus"><i class="fa fa-close mr-1"></i>Hapus</button>';
+       var button = '<button type="button" class="btn btn-danger btn-sm hapus ml-2"><i class="fa fa-close mr-1"></i>Hapus</button>';
+       var buttonedit = '<button type="button" class="btn btn-success btn-sm edit"><i class="fa fa-edit mr-1"></i>Edit</button>';
        var status = '<span>'+1+'</span>';
        var file = '<span>'+$('#input-pdf-file').prop('files')+'</span>';
 
@@ -261,8 +262,11 @@ $(document).ready(function(){
        });
 
 
-        $("tbody").append("<tr>"+"<td>"+"<ul>"+"<li><b>Tanggal: </b><span>"+tanggal+"</li>"+"<li><b>Waktu: </b><span>"+jammulai+" - "+jamselesai+"</li>"+"<li><b>Lokasi: </b><span>"+lokasi+"</li>"+"<li><b>Nama topik: </b><span>"+topik+"</li>"+'<li class="split"><b>Narasumber:</b><br><span>'+narasumber+"</li>"+"<li class="+'hidden'+">"+status+"</li>"+"</ul>"+"</td>"+"<td>"+button+'</td>'+"</tr>");
-        $('#form').trigger("reset");
+        $("tbody").append("<tr>"+"<td>"+"<ul>"+"<li><b>Tanggal: </b><span class='t'>"+tanggal+"</li>"+"<li><b>Waktu: </b><span class='w'>"+jammulai+" - "+jamselesai+"</li>"+"<li><b>Lokasi: </b><span class='l'>"+lokasi+"</li>"+"<li><b>Nama topik: </b><span class='n'>"+topik+"</li>"+'<li class="split"><b>Narasumber:</b><br><span>'+narasumber+"</li>"+"<li class="+'hidden'+">"+status+"</li>"+"</ul>"+"</td>"+"<td>"+buttonedit+button+'</td>'+"</tr>");
+        //$('#form').trigger("reset");
+        $( "#form input" ).each(function() {
+           $(this).val('');
+        });
         $("#nara").html('<div><div class="form-group col-md-12">'+
           '<label for="narasumber">Narasumber</label>'+
           '<input type="text" class="form-control narasumber" id="narasumber1" data-urutan="1" placeholder="Narasumber">'+
@@ -332,6 +336,19 @@ $(document).ready(function(){
 
     $(document).on('click', '.hapus', function(){
       $(this).closest('tr').remove();
+    });
+
+    $(document).on('click', '.edit', function(){
+      //$(this).closest('tr').remove();
+      //alert($(this).parent().siblings('td').children().children('li').children('.aaa').text());
+      var jam = $(this).parent().siblings('td').children().children('li').children('.w').text();
+      var arr = jam.split(' - ');
+      $('#modal').modal('show');
+      $('#modal #tanggal-text').val($(this).parent().siblings('td').children().children('li').children('.t').text());
+      $('#modal #topik').val($(this).parent().siblings('td').children().children('li').children('.n').text());
+      $('#modal #lokasi').val($(this).parent().siblings('td').children().children('li').children('.l').text());
+      $('#modal #jammulai').val(arr[0]);
+      $('#modal #jamselesai').val(arr[1]);
     });
 
     $('#input-biaya').number(true, 2, ',', '.');
@@ -442,6 +459,4 @@ function sendTableArticles() {
     console.log(tableObject);
     $('#str').val(JSON.stringify(tableObject));
 }
-
-
 </script>
