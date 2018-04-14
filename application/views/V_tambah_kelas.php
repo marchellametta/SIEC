@@ -262,7 +262,7 @@ $(document).ready(function(){
        });
 
 
-        $("tbody").append("<tr>"+"<td>"+"<ul>"+"<li><b>Tanggal: </b><span class='t'>"+tanggal+"</li>"+"<li><b>Waktu: </b><span class='w'>"+jammulai+" - "+jamselesai+"</li>"+"<li><b>Lokasi: </b><span class='l'>"+lokasi+"</li>"+"<li><b>Nama topik: </b><span class='n'>"+topik+"</li>"+'<li class="split"><b>Narasumber:</b><br><span>'+narasumber+"</li>"+"<li class="+'hidden'+">"+status+"</li>"+"</ul>"+"</td>"+"<td>"+buttonedit+button+'</td>'+"</tr>");
+        $("tbody").append("<tr>"+"<td>"+"<ul>"+"<li><b>Tanggal: </b><span class='t'>"+tanggal+"</li>"+"<li><b>Waktu: </b><span class='w'>"+jammulai+" - "+jamselesai+"</li>"+"<li><b>Lokasi: </b><span class='l'>"+lokasi+"</li>"+"<li><b>Nama topik: </b><span class='n'>"+topik+"</li>"+'<li class="split"><b>Narasumber:</b><br><span class="nr">'+narasumber+"</li>"+"<li class="+'hidden'+">"+status+"</li>"+"</ul>"+"</td>"+"<td>"+buttonedit+button+'</td>'+"</tr>");
         //$('#form').trigger("reset");
         $( "#form input" ).each(function() {
            $(this).val('');
@@ -342,7 +342,42 @@ $(document).ready(function(){
       //$(this).closest('tr').remove();
       //alert($(this).parent().siblings('td').children().children('li').children('.aaa').text());
       var jam = $(this).parent().siblings('td').children().children('li').children('.w').text();
-      var arr = jam.split(' - ');
+      var nara = $(this).parent().siblings('td').children().children('li').children('.nr').html();
+      alert(nara);
+      var jam_arr = jam.split(' - ');
+      var narasumber_arr = nara.split('<br>');
+      var length = narasumber_arr.length-1;
+      var i = 2;
+      if(length>1){
+        while(i<=length){
+          $("#nara").append('<div class="form-group col-md-12">'+
+            '<label for="narasumber">Narasumber</label>'+
+            '<input type="text" class="form-control narasumber" id="narasumber'+i+'" data-urutan="'+i+'" placeholder="Narasumber">'+
+          '</div>'+
+          '<div class="form-group col-md-12">'+
+            '<label for="profesi">Profesi</label>'+
+            '<input type="text" class="form-control profesi" id="profesi'+i+'" data-urutan="'+i+'" placeholder="Profesi">'+
+          '</div>'+
+          '<div class="form-group col-md-12">'+
+            '<label for="lembaga">Lembaga</label>'+
+            '<input type="text" class="form-control lembaga" id="lembaga'+i+'" data-urutan="'+i+'" placeholder="Lembaga">'+
+          '</div>'+
+          '<div class="form-group col-md-12">'+
+            '<label for="jabatan">Jabatan</label>'+
+            '<input type="text" class="form-control jabatan" id="jabatan'+i+'" data-urutan="'+i+'" placeholder="Jabatan">'+
+          '</div>');
+          i = i+1;
+        }
+      }
+      for(var j=0; j<=length;j++){
+        console.log(narasumber_arr);
+        var narasumber = narasumber_arr[0].split(',');
+        $('#modal #narasumber'+(j+1)).val(narasumber[0]);
+        $('#modal #profesi'+(j+1)).val(narasumber[1]);
+        $('#modal #lembaga'+(j+1)).val(narasumber[2]);
+        $('#modal #jabatan'+(j+1)).val(narasumber[3]);
+      }
+
       $('#modal').modal('show');
       $('#modal #tanggal-text').val($(this).parent().siblings('td').children().children('li').children('.t').text());
       $('#modal #topik').val($(this).parent().siblings('td').children().children('li').children('.n').text());
