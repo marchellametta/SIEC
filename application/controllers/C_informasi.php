@@ -177,14 +177,14 @@ class C_Informasi extends CI_Controller{
        $this->load->view('V_footer');
     } else if($this->input->method() == 'post'){
       $post_data = $this->input->post();
-      // var_dump($post_data);
+      var_dump($post_data);
       // $topik = json_decode($post_data['topik']);
       // var_dump($topik);
       // foreach ($topik as $row) {
       //   var_dump($row->file);
       // }
       // var_dump($_FILES);
-      // die();
+      die();
       $this->load->helper('config_rules');
 
 
@@ -294,7 +294,7 @@ class C_Informasi extends CI_Controller{
        ]);
        $id_ec = $this->db->insert_id();
        foreach ($topik as $row) {
-         if($row->status==1){
+         if($row->status==1 || $row->status==2){
            $this->T_topik_ec->insert([
              'id_ec' => $id_ec,
              'nama_topik' => $row->topik
@@ -324,7 +324,6 @@ class C_Informasi extends CI_Controller{
 
                $this->T_narasumber_topik->attach_narasumber_topik($id_narasumber, $id_topik);
              }
-
            }
          }
        }
@@ -509,8 +508,7 @@ class C_Informasi extends CI_Controller{
          if($row->status==1){
            $this->T_topik_ec->insert([
              'id_ec' => $id,
-             'nama_topik' => $row->topik,
-             'nama' => $row->narasumber
+             'nama_topik' => $row->topik
            ]);
 
            $jam = explode(" - ",$row->jam);
@@ -524,22 +522,54 @@ class C_Informasi extends CI_Controller{
              'jam_selesai' => $jam[1],
            ]);
 
-           $this->T_narasumber->insert([
-             'profesi' => $row->profesi,
-             'jabatan' => $row->jabatan,
-             'lembaga' => $row->lembaga,
-             'nama' => $row->narasumber
-           ]);
-
-           $id_narasumber = $this->db->insert_id();
-
-           $this->T_narasumber_topik->attach_narasumber_topik($id_narasumber, $id_topik);
-         }else if($row->status==2){
+           foreach ($row->narasumber as $tmp) {
+             $data = explode(",",$tmp);
+             if(count($data)>=4){
+               $this->T_narasumber->insert([
+                 'profesi' => $data[1],
+                 'jabatan' => $data[3],
+                 'lembaga' => $data[2],
+                 'nama' => $data[0]
+               ]);
+             }
+           }
+         }else if($row->status==4){
            $this->T_jadwal->delete($row->id_topik);
            $id_narasumber = $this->T_narasumber_topik->getNarasumber($row->id_topik)->id_narasumber;
            $this->T_narasumber_topik->dettach_narasumber_topik($id_narasumber,$row->id_topik);
            $this->T_narasumber->delete($id_narasumber);
            $this->T_topik_ec->delete($row->id_topik);
+         }else if($row->status==2){
+           $id_jadwal = $this->T_jadwal->getByIdTopik($row->id_topik);
+           $id_narasumber = $this->T_jadwal->getNarasumber($row->id_topik);
+           $this->T_topik_ec->edit($row->id_topik, [
+             'id_ec' => $id,
+             'nama_topik' => $row->topik
+           ]);
+
+           $jam = explode(" - ",$row->jam);
+
+           $this->T_jadwal->edit($id_jadwal,[
+             'tanggal' => date($this->config->item('db_date_format'),strtotime($row->tanggal)),
+             'lokasi' => $row->lokasi,
+             'jam_mulai' => $jam[0],
+             'jam_selesai' => $jam[1],
+           ]);
+
+           foreach ($row->narasumber as $tmp) {
+             $data = explode(",",$tmp);
+             if(count($data)>=4){
+               $this->T_narasumber->insert([
+                 'profesi' => $data[1],
+                 'jabatan' => $data[3],
+                 'lembaga' => $data[2],
+                 'nama' => $data[0]
+               ]);
+               $id_narasumber = $this->db->insert_id();
+
+               $this->T_narasumber_topik->attach_narasumber_topik($id_narasumber, $id_topik);
+             }
+           }
          }
        }
        if ($this->db->trans_status() === FALSE){

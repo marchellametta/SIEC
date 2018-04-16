@@ -106,33 +106,63 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <fieldset class="mt-4">
   <legend>Rangkaian Topik</legend>
      <div class="text-right">
-       <button type="button" id="tambah-topik-btn" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal"><i class="fa fa-plus"></i>Tambah Topik</button>
+       <button type="button" id="tambah-topik-btn" class="btn btn-primary" data-toggle="modal" data-target="#modal"><i class="fa fa-plus"></i>Tambah Topik</button>
      </div>
      <div class="table-responsive mt-3">
        <table id="topik_tabel" class="table table-hover table-striped table-bordered">
          <thead class="thead-dark">
            <tr>
-             <th class="hidden">Id</th>
-           <th class="w-15">Tanggal</th>
-           <th class="w-20">Jam</th>
-           <th class="w-10">Lokasi</th>
-           <th class="w-25">Topik</th>
-           <th class="w-20">Narasumber</th>
-           <th class="w-10">Aksi</th>
-           <th class="hidden">Status</th>
+             <th class="w-15">Rangkaian Topik</th>
+             <th class="w-10">Aksi</th>
            </tr>
           </thead>
           <tbody id="table-body-glr">
             <?php foreach ($topik as $row): ?>
               <tr>
-                <td class="hidden"><?php echo $row->id_topik ?></td>
-                <td><?php echo $row->tanggal ?></td>
-                <td><?php echo $row->jam_mulai.' - '. $row->jam_selesai ?></td>
-                <td><?php echo $row->lokasi ?></td>
-                <td><?php echo $row->nama_topik ?></td>
-                <td><?php echo $row->nama ?></td>
-                <td><button type="button" class="btn btn-danger btn-sm hapus"><i class="fa fa-close mr-1"></i>Hapus</button></td>
-                <td class="hidden status"><?php echo $row->status ?></td>
+                <td>
+                  <ul>
+                    <li class="hidden">
+                      <span><?php echo $row->id_topik; ?></span>
+                    </li>
+                    <li>
+                      <b>
+                        Tanggal:
+                      </b>
+                      <span class="t"><?php echo $row->tanggal; ?></span>
+                    </li>
+                    <li>
+                      <b>
+                        Waktu:
+                      </b>
+                      <span class="w"><?php echo $row->jam_mulai ." - ". $row->jam_selesai; ?></span>
+                    </li>
+                    <li>
+                      <b>
+                        Lokasi:
+                      </b>
+                      <span class="l"><?php echo $row->lokasi; ?></span>
+                    </li>
+                    <li>
+                      <b>
+                        Nama topik:
+                      </b>
+                      <span class="n"><?php echo $row->nama_topik; ?></span>
+                    </li>
+                    <li>
+                      <b>
+                        Narasumber:
+                      </b>
+                      <span class="nr"><?php echo $row->nama.", ".$row->profesi.", ".$row->lembaga.", ".$row->jabatan; ?></span>
+                    </li>
+                    <li class="hidden">
+                      <span><?php echo $row->status ?></span>
+                    </li>
+                  </ul>
+                </td>
+                <td>
+                  <button type="button" class="btn btn-danger btn-sm hapus ml-2"><i class="fa fa-close mr-1"></i>Hapus</button>
+                  <button type="button" class="btn btn-success btn-sm edit"><i class="fa fa-edit mr-1"></i>Edit</button>
+                </td>
               </tr>
             <?php endforeach;?>
           </tbody>
@@ -144,63 +174,92 @@ defined('BASEPATH') OR exit('No direct script access allowed');
       </div>
 </fieldset>
 </div>
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
+<div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Tambah Topik</h5>
+        <h5 class="modal-title" id="modalLabel">Tambah Topik</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body" id="form">
-         <div class="form-group col-md-12">
-           <label for="topik">Topik</label>
-           <input type="text" class="form-control" id="topik" placeholder="Topik">
-         </div>
-         <div class="form-group col-md-12">
-           <label for="narasumber">Narasumber</label>
-           <input type="text" class="form-control" id="narasumber" placeholder="Narasumber">
-         </div>
-         <div class="form-group col-md-12">
-           <label for="tanggal">Tanggal</label>
-           <div class="input-group date" id="tanggal" data-target-input="nearest">
-             <input type="text" id="tanggal-text" class="form-control datetimepicker-input" data-target="#tanggal"/>
-               <div class="input-group-append" data-target="#tanggal" data-toggle="datetimepicker">
-                 <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-               </div>
-           </div>
-         </div>
-         <div class="form-group col-md-12">
-           <label for="jam-mulai">Jam</label>
-           <div class="row">
-             <div class="col-md-5">
-               <div class="input-group date" id="mulai" data-target-input="nearest">
-                  <input type="text" id="jammulai" class="form-control datetimepicker-input" data-target="#mulai"/>
-                    <div class="input-group-append" data-target="#mulai" data-toggle="datetimepicker">
-                      <div class="input-group-text"><i class="fa fa-clock-o"></i></div>
-                    </div>
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group col-md-12">
+              <label for="topik">Topik</label>
+              <input type="text" class="form-control" id="topik" placeholder="Topik">
+            </div>
+            <div class= "row">
+              <div class="col-md-10"  id="nara">
+                <div>
+                  <div class="form-group col-md-12">
+                    <label for="narasumber">Narasumber</label>
+                    <input type="text" class="form-control narasumber" id="narasumber1" data-urutan="1" placeholder="Narasumber">
+                  </div>
+                  <div class="form-group col-md-12">
+                    <label for="profesi">Profesi</label>
+                    <input type="text" class="form-control profesi" id="profesi1" data-urutan="1" placeholder="Profesi">
+                  </div>
+                  <div class="form-group col-md-12">
+                    <label for="lembaga">Lembaga</label>
+                    <input type="text" class="form-control lembaga" id="lembaga1" data-urutan="1" placeholder="Lembaga">
+                  </div>
+                  <div class="form-group col-md-12">
+                    <label for="jabatan">Jabatan</label>
+                    <input type="text" class="form-control jabatan" id="jabatan1" data-urutan="1" placeholder="Jabatan">
+                  </div>
                 </div>
-             </div>
-             <a>-</a>
-             <div class="col-md-5">
-               <div class="input-group date" id="selesai" data-target-input="nearest">
-                  <input type="text" id="jamselesai" class="form-control datetimepicker-input" data-target="#selesai"/>
-                    <div class="input-group-append" data-target="#selesai" data-toggle="datetimepicker">
-                      <div class="input-group-text"><i class="fa fa-clock-o"></i></div>
-                    </div>
+              </div>
+              <div class="col-md-2">
+                <a id="tambah-narasumber" class="button btn-secondary rounded text-white pl-2 pr-2" data-toggle="tooltip" title="Tambah narasumber"><i class="fa fa-plus"></i></a>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group col-md-12">
+              <label for="tanggal">Tanggal</label>
+              <div class="input-group date" id="tanggal" data-target-input="nearest">
+                 <input type="text" id="tanggal-text" class="form-control datetimepicker-input" data-target="#tanggal"/>
+                   <div class="input-group-append" data-target="#tanggal" data-toggle="datetimepicker">
+                     <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                   </div>
+              </div>
+            </div>
+            <div class="form-group col-md-12">
+              <label for="jam-mulai">Jam</label>
+              <div class="row">
+                <div class="col-md-5">
+                  <div class="input-group date" id="mulai" data-target-input="nearest">
+                     <input type="text" id="jammulai" class="form-control datetimepicker-input" data-target="#mulai"/>
+                       <div class="input-group-append" data-target="#mulai" data-toggle="datetimepicker">
+                         <div class="input-group-text"><i class="fa fa-clock-o"></i></div>
+                       </div>
+                   </div>
                 </div>
-             </div>
-           </div>
-         </div>
-         <div class="form-group col-md-12">
-           <label for="lokasi">Lokasi</label>
-           <input type="text" class="form-control" id="lokasi" placeholder="Lokasi">
-         </div>
+                <a>-</a>
+                <div class="col-md-5">
+                  <div class="input-group date" id="selesai" data-target-input="nearest">
+                     <input type="text" id="jamselesai" class="form-control datetimepicker-input" data-target="#selesai"/>
+                       <div class="input-group-append" data-target="#selesai" data-toggle="datetimepicker">
+                         <div class="input-group-text"><i class="fa fa-clock-o"></i></div>
+                       </div>
+                   </div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group col-md-12">
+              <label for="lokasi">Lokasi</label>
+              <input type="text" class="form-control" id="lokasi" placeholder="Lokasi">
+            </div>
+          </div>
+        </div>
+
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button id="tambah-topik-submit" type="button" class="btn btn-primary" data-dismiss="modal">Save changes</button>
+        <button id="tambah-topik-submit" type="button" class="btn btn-success" data-dismiss="modal">Tambah</button>
+        <button id="edit-topik-submit" type="button" class="btn btn-success" data-dismiss="modal">Simpan</button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
       </div>
     </div>
   </div>
@@ -210,18 +269,52 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 $(document).ready(function(){
   $("#tambah-topik-submit").click(function(){
-     var topik = $('#topik').val();
-     var narasumber = $('#narasumber').val();
-     var tanggal = $('#tanggal-text').val();
-     var jammulai = $('#jammulai').val();
-     var jamselesai = $('#jamselesai').val();
-     var lokasi = $('#lokasi').val();
-     var button = '<button type="button" class="btn btn-danger btn-sm hapus"><i class="fa fa-close mr-1"></i>Hapus</button>';
-     var status = 1;
+    var topik = $('#topik').val();
+    var tanggal = $('#tanggal-text').val();
+    var jammulai = $('#jammulai').val();
+    var jamselesai = $('#jamselesai').val();
+    var lokasi = $('#lokasi').val();
+    var button = '<button type="button" class="btn btn-danger btn-sm hapus ml-2"><i class="fa fa-close mr-1"></i>Hapus</button>';
+    var buttonedit = '<button type="button" class="btn btn-success btn-sm edit"><i class="fa fa-edit mr-1"></i>Edit</button>';
+    var status = '<span>'+1+'</span>';
+    var file = '<span>'+$('#input-pdf-file').prop('files')+'</span>';
+    var narasumber ='';
 
 
-      $("tbody").append("<tr>"+"<td class="+'hidden'+">"+''+"</td>"+"<td>"+tanggal+"</td>"+"<td>"+jammulai+" - "+jamselesai+"</td>"+"<td>"+lokasi+"</td>"+"<td>"+topik+"</td>"+"<td>"+narasumber+"</td>"+"<td>"+button+"</td>"+"<td class="+'hidden status'+">"+status+"</td>"+"</tr>");
-      $('#form').trigger("reset");
+    $('.narasumber').each(function() {
+      narasumber = narasumber+ $(this).val()+', ';
+      narasumber = narasumber+ $(this).parent().siblings().children('.profesi').val()+', ';
+      narasumber = narasumber+ $(this).parent().siblings().children('.lembaga').val()+', ';
+      narasumber = narasumber+ $(this).parent().siblings().children('.jabatan').val();
+      narasumber = narasumber+ '<br>';
+    });
+
+
+     $("tbody").append("<tr>"+"<td>"+"<ul>"+"<li><b>Tanggal: </b><span class='t'>"+tanggal+"</li>"+"<li><b>Waktu: </b><span class='w'>"+jammulai+" - "+jamselesai+"</li>"+"<li><b>Lokasi: </b><span class='l'>"+lokasi+"</li>"+"<li><b>Nama topik: </b><span class='n'>"+topik+"</li>"+'<li class="split"><b>Narasumber:</b><br><span class="nr">'+narasumber+"</li>"+"<li class="+'hidden'+">"+status+"</li>"+"</ul>"+"</td>"+"<td>"+buttonedit+button+'</td>'+"</tr>");
+  });
+
+  $("#modal").on("hidden.bs.modal", function () {
+    $( "#form input" ).each(function() {
+       $(this).val('');
+    });
+    $("#nara").html('<div><div class="form-group col-md-12">'+
+      '<label for="narasumber">Narasumber</label>'+
+      '<input type="text" class="form-control narasumber" id="narasumber1" data-urutan="1" placeholder="Narasumber">'+
+    '</div>'+
+    '<div class="form-group col-md-12">'+
+      '<label for="profesi">Profesi</label>'+
+      '<input type="text" class="form-control profesi" id="profesi1" data-urutan="1" placeholder="Profesi">'+
+    '</div>'+
+    '<div class="form-group col-md-12">'+
+      '<label for="lembaga">Lembaga</label>'+
+      '<input type="text" class="form-control lembaga" id="lembaga1" data-urutan="1" placeholder="Lembaga">'+
+    '</div>'+
+    '<div class="form-group col-md-12">'+
+      '<label for="jabatan">Jabatan</label>'+
+      '<input type="text" class="form-control jabatan" id="jabatan1" data-urutan="1" placeholder="Jabatan">'+
+    '</div></div>');
+    i=1;
+
   });
 
     if ($('#inlineCheckbox3').is(':checked')) {
@@ -269,11 +362,93 @@ $(document).ready(function(){
 
     $(document).on('click', '.hapus', function(){
       if($(this).closest('tr').find('.status').text()==3){
-        $(this).closest('tr').find('.status').text("2");
+        $(this).closest('tr').find('.status').text("4");
         $(this).closest('tr').hide();
       }else{
         $(this).closest('tr').remove();
       }
+    });
+
+    $(document).on('click', '#tambah-topik-btn', function(){
+      $('#edit-topik-submit').hide();
+      $('#tambah-topik-submit').show();
+    });
+
+    $(document).on('click', '.edit', function(){
+      //$(this).closest('tr').remove();
+      //alert($(this).parent().siblings('td').children().children('li').children('.aaa').text());
+      $('#edit-topik-submit').show();
+      $('#tambah-topik-submit').hide();
+      //$(this).closest('tr').remove();
+      var $this = $(this);
+      var jam = $(this).parent().siblings('td').children().children('li').children('.w').text();
+      var nara = $(this).parent().siblings('td').children().children('li').children('.nr').html();
+      alert(nara);
+      var jam_arr = jam.split(' - ');
+      var narasumber_arr = nara.split('<br>');
+      var length = narasumber_arr.length-1;
+      var i = 2;
+      if(length>1){
+        while(i<=length){
+          $("#nara").append('<div class="form-group col-md-12">'+
+            '<label for="narasumber">Narasumber</label>'+
+            '<input type="text" class="form-control narasumber" id="narasumber'+i+'" data-urutan="'+i+'" placeholder="Narasumber">'+
+          '</div>'+
+          '<div class="form-group col-md-12">'+
+            '<label for="profesi">Profesi</label>'+
+            '<input type="text" class="form-control profesi" id="profesi'+i+'" data-urutan="'+i+'" placeholder="Profesi">'+
+          '</div>'+
+          '<div class="form-group col-md-12">'+
+            '<label for="lembaga">Lembaga</label>'+
+            '<input type="text" class="form-control lembaga" id="lembaga'+i+'" data-urutan="'+i+'" placeholder="Lembaga">'+
+          '</div>'+
+          '<div class="form-group col-md-12">'+
+            '<label for="jabatan">Jabatan</label>'+
+            '<input type="text" class="form-control jabatan" id="jabatan'+i+'" data-urutan="'+i+'" placeholder="Jabatan">'+
+          '</div>');
+          i = i+1;
+        }
+      }
+      for(var j=0; j<=length;j++){
+        console.log(narasumber_arr);
+        var narasumber = narasumber_arr[j].split(',');
+        $('#modal #narasumber'+(j+1)).val(narasumber[0]);
+        if(narasumber[1]!=' ') $('#modal #profesi'+(j+1)).val(narasumber[1]);
+        if(narasumber[2]!=' ') $('#modal #lembaga'+(j+1)).val(narasumber[2]);
+        if(narasumber[3]!=' ') $('#modal #jabatan'+(j+1)).val(narasumber[3]);
+      }
+
+      $('#modal').modal('show');
+      $('#modal #tanggal-text').val($(this).parent().siblings('td').children().children('li').children('.t').text());
+      $('#modal #topik').val($(this).parent().siblings('td').children().children('li').children('.n').text());
+      $('#modal #lokasi').val($(this).parent().siblings('td').children().children('li').children('.l').text());
+      $('#modal #jammulai').val(jam_arr[0]);
+      $('#modal #jamselesai').val(jam_arr[1]);
+
+      $("#edit-topik-submit").unbind().click(function(){
+         var topik = $('#topik').val();
+         var tanggal = $('#tanggal-text').val();
+         var jammulai = $('#jammulai').val();
+         var jamselesai = $('#jamselesai').val();
+         var lokasi = $('#lokasi').val();
+         var button = '<button type="button" class="btn btn-danger btn-sm hapus ml-2"><i class="fa fa-close mr-1"></i>Hapus</button>';
+         var buttonedit = '<button type="button" class="btn btn-success btn-sm edit"><i class="fa fa-edit mr-1"></i>Edit</button>';
+         var status = '<span>'+2+'</span>';
+         var file = '<span>'+$('#input-pdf-file').prop('files')+'</span>';
+         var narasumber ='';
+
+         $('.narasumber').each(function() {
+           narasumber = narasumber+ $(this).val()+', ';
+           narasumber = narasumber+ $(this).parent().siblings().children('.profesi').val()+', ';
+           narasumber = narasumber+ $(this).parent().siblings().children('.lembaga').val()+', ';
+           narasumber = narasumber+ $(this).parent().siblings().children('.jabatan').val();
+           narasumber = narasumber+ '<br>';
+         });
+
+         $this.closest('tr').remove();
+         $("tbody").append("<tr>"+"<td>"+"<ul>"+"<li><b>Tanggal: </b><span class='t'>"+tanggal+"</li>"+"<li><b>Waktu: </b><span class='w'>"+jammulai+" - "+jamselesai+"</li>"+"<li><b>Lokasi: </b><span class='l'>"+lokasi+"</li>"+"<li><b>Nama topik: </b><span class='n'>"+topik+"</li>"+'<li class="split"><b>Narasumber:</b><br><span class="nr">'+narasumber+"</li>"+"<li class="+'hidden'+">"+status+"</li>"+"</ul>"+"</td>"+"<td>"+buttonedit+button+'</td>'+"</tr>");
+          //$('#form').trigger("reset");
+      });
     });
 
     $('#input-biaya').number(true, 2, ',', '.');

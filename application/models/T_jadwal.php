@@ -24,6 +24,12 @@ class T_jadwal extends CI_Model{
         return $this->db->get($this->table_name)->row();
     }
 
+    public function getByIdTopik($id){
+        /* No Error Handling yet! */
+        $this->db->where('id_topik',$id);
+        return $this->db->get($this->table_name)->row();
+    }
+
     public function insert($args)
    {
         /* No Error Handling yet! */
