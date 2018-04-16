@@ -177,14 +177,14 @@ class C_Informasi extends CI_Controller{
        $this->load->view('V_footer');
     } else if($this->input->method() == 'post'){
       $post_data = $this->input->post();
-      var_dump($post_data);
+      //var_dump($post_data);
       // $topik = json_decode($post_data['topik']);
       // var_dump($topik);
       // foreach ($topik as $row) {
       //   var_dump($row->file);
       // }
       // var_dump($_FILES);
-      die();
+      //die();
       $this->load->helper('config_rules');
 
 
@@ -368,7 +368,15 @@ class C_Informasi extends CI_Controller{
        $topik = $this->Vw_data_topik->getAllTopik($id);
        foreach ($topik as $row) {
          $row->status = 3;
+         $ids_narasumber= $this->T_narasumber_topik->getNarasumber($row->id_topik);
+         $narasumber = array();
+         foreach ($ids_narasumber as $temp) {
+           array_push($narasumber, $this->T_narasumber->get($temp->id_narasumber));
+         }
+         $row->narasumber = $narasumber;
        }
+
+
 
        $this->load->view('V_header');
        $this->load->view('V_navbar');
@@ -447,7 +455,6 @@ class C_Informasi extends CI_Controller{
         $this->load->helper('upload_file');
 
         $topik = json_decode($post_data['topik']);
-
         $res="";
         if(!empty($_FILES['gambar-file']['name'])){
         $res = upload_file($this,[
@@ -540,8 +547,8 @@ class C_Informasi extends CI_Controller{
            $this->T_narasumber->delete($id_narasumber);
            $this->T_topik_ec->delete($row->id_topik);
          }else if($row->status==2){
-           $id_jadwal = $this->T_jadwal->getByIdTopik($row->id_topik);
-           $id_narasumber = $this->T_jadwal->getNarasumber($row->id_topik);
+           $id_jadwal = $this->T_jadwal->getByIdTopik($row->id_topik)->id_jadwal;
+           //$id_narasumber = $this->T_narasumber_topik->getNarasumber($row->id_topik);
            $this->T_topik_ec->edit($row->id_topik, [
              'id_ec' => $id,
              'nama_topik' => $row->topik
@@ -556,18 +563,18 @@ class C_Informasi extends CI_Controller{
              'jam_selesai' => $jam[1],
            ]);
 
+           $ids = explode(" ",$row->ids);
+           $x = 0;
            foreach ($row->narasumber as $tmp) {
              $data = explode(",",$tmp);
              if(count($data)>=4){
-               $this->T_narasumber->insert([
+               $this->T_narasumber->edit($ids[$x],[
                  'profesi' => $data[1],
                  'jabatan' => $data[3],
                  'lembaga' => $data[2],
                  'nama' => $data[0]
                ]);
-               $id_narasumber = $this->db->insert_id();
-
-               $this->T_narasumber_topik->attach_narasumber_topik($id_narasumber, $id_topik);
+               $x++;
              }
            }
          }

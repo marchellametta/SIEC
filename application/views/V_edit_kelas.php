@@ -8,7 +8,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <?php echo $error_message ;?>
       </div>
   <?php endif ?>
-  <form method="post" id="form" action="<?php echo base_url().'editkelas/'.$ec->id_ec ?>" enctype="multipart/form-data">
+  <form method="post" id="form-umum" action="<?php echo base_url().'editkelas/'.$ec->id_ec ?>" enctype="multipart/form-data">
     <input type="hidden" id="str" name="topik" value="" />
     <fieldset>
     <legend>Data Umum</legend>
@@ -122,7 +122,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 <td>
                   <ul>
                     <li class="hidden">
-                      <span><?php echo $row->id_topik; ?></span>
+                      <span class="id"><?php echo $row->id_topik; ?></span>
                     </li>
                     <li>
                       <b>
@@ -148,20 +148,26 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                       </b>
                       <span class="n"><?php echo $row->nama_topik; ?></span>
                     </li>
-                    <li>
+                    <li class="split">
                       <b>
                         Narasumber:
                       </b>
-                      <span class="nr"><?php echo $row->nama.", ".$row->profesi.", ".$row->lembaga.", ".$row->jabatan; ?></span>
+                      <br>
+                      <span class="nr"><?php foreach ($row->narasumber as $temp): ?><?php echo $temp->nama.", ".$temp->profesi.", ".$temp->lembaga.", ".$temp->jabatan."<br>"; ?><?php endforeach; ?>
+                      </span>
                     </li>
                     <li class="hidden">
                       <span><?php echo $row->status ?></span>
                     </li>
+                    <li class="hidden">
+                      <span class="ids"><?php foreach ($row->narasumber as $temp): ?><?php echo  $temp->id_narasumber." "?><?php endforeach; ?>
+                      </span>
+                    </li>
                   </ul>
                 </td>
                 <td>
-                  <button type="button" class="btn btn-danger btn-sm hapus ml-2"><i class="fa fa-close mr-1"></i>Hapus</button>
                   <button type="button" class="btn btn-success btn-sm edit"><i class="fa fa-edit mr-1"></i>Edit</button>
+                  <button type="button" class="btn btn-danger btn-sm hapus ml-2"><i class="fa fa-close mr-1"></i>Hapus</button>
                 </td>
               </tr>
             <?php endforeach;?>
@@ -189,6 +195,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             <div class="form-group col-md-12">
               <label for="topik">Topik</label>
               <input type="text" class="form-control" id="topik" placeholder="Topik">
+            </div>
+            <div class="form-group col-md-12 hidden">
+              <input type="text" class="form-control" id="id_topik" placeholder="Topik">
+            </div>
+            <div class="form-group col-md-12 hidden">
+              <input type="text" class="form-control" id="id_narasumber" placeholder="Topik">
             </div>
             <div class= "row">
               <div class="col-md-10"  id="nara">
@@ -270,6 +282,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 $(document).ready(function(){
   $("#tambah-topik-submit").click(function(){
     var topik = $('#topik').val();
+    var id_topik = $('#id_topik').val();
+    var id_narasumber = $('#id_narasumber').val();
     var tanggal = $('#tanggal-text').val();
     var jammulai = $('#jammulai').val();
     var jamselesai = $('#jamselesai').val();
@@ -290,7 +304,7 @@ $(document).ready(function(){
     });
 
 
-     $("tbody").append("<tr>"+"<td>"+"<ul>"+"<li><b>Tanggal: </b><span class='t'>"+tanggal+"</li>"+"<li><b>Waktu: </b><span class='w'>"+jammulai+" - "+jamselesai+"</li>"+"<li><b>Lokasi: </b><span class='l'>"+lokasi+"</li>"+"<li><b>Nama topik: </b><span class='n'>"+topik+"</li>"+'<li class="split"><b>Narasumber:</b><br><span class="nr">'+narasumber+"</li>"+"<li class="+'hidden'+">"+status+"</li>"+"</ul>"+"</td>"+"<td>"+buttonedit+button+'</td>'+"</tr>");
+     $("tbody").append("<tr>"+"<td>"+"<ul>"+"<li class='hidden'><span class='id'>"+id_topik+"</li>"+"<li><b>Tanggal: </b><span class='t'>"+tanggal+"<li><b>Waktu: </b><span class='w'>"+jammulai+" - "+jamselesai+"</li>"+"<li><b>Lokasi: </b><span class='l'>"+lokasi+"</li>"+"<li><b>Nama topik: </b><span class='n'>"+topik+"</li>"+'<li class="split"><b>Narasumber:</b><br><span class="nr">'+narasumber+"</li>"+"<li class="+'hidden'+">"+status+"</li>"+"<li class="+'hidden'+"><span class='ids'>"+id_narasumber+"</span></li>"+"</ul>"+"</td>"+"<td>"+buttonedit+button+'</td>'+"</tr>");
   });
 
   $("#modal").on("hidden.bs.modal", function () {
@@ -372,6 +386,7 @@ $(document).ready(function(){
     $(document).on('click', '#tambah-topik-btn', function(){
       $('#edit-topik-submit').hide();
       $('#tambah-topik-submit').show();
+      sendTableArticles();
     });
 
     $(document).on('click', '.edit', function(){
@@ -383,7 +398,6 @@ $(document).ready(function(){
       var $this = $(this);
       var jam = $(this).parent().siblings('td').children().children('li').children('.w').text();
       var nara = $(this).parent().siblings('td').children().children('li').children('.nr').html();
-      alert(nara);
       var jam_arr = jam.split(' - ');
       var narasumber_arr = nara.split('<br>');
       var length = narasumber_arr.length-1;
@@ -410,12 +424,12 @@ $(document).ready(function(){
         }
       }
       for(var j=0; j<=length;j++){
-        console.log(narasumber_arr);
+        //console.log(narasumber_arr);
         var narasumber = narasumber_arr[j].split(',');
-        $('#modal #narasumber'+(j+1)).val(narasumber[0]);
-        if(narasumber[1]!=' ') $('#modal #profesi'+(j+1)).val(narasumber[1]);
-        if(narasumber[2]!=' ') $('#modal #lembaga'+(j+1)).val(narasumber[2]);
-        if(narasumber[3]!=' ') $('#modal #jabatan'+(j+1)).val(narasumber[3]);
+        $('#modal #narasumber'+(j+1)).val($.trim(narasumber[0]));
+        if(narasumber[1]!=' ') $('#modal #profesi'+(j+1)).val($.trim(narasumber[1]));
+        if(narasumber[2]!=' ') $('#modal #lembaga'+(j+1)).val($.trim(narasumber[2]));
+        if(narasumber[3]!=' ') $('#modal #jabatan'+(j+1)).val($.trim(narasumber[3]));
       }
 
       $('#modal').modal('show');
@@ -424,9 +438,15 @@ $(document).ready(function(){
       $('#modal #lokasi').val($(this).parent().siblings('td').children().children('li').children('.l').text());
       $('#modal #jammulai').val(jam_arr[0]);
       $('#modal #jamselesai').val(jam_arr[1]);
+      //alert($(this).parent().siblings('td').children().children('li').children('.id').text());
+      $('#modal #id_topik').val($.trim($(this).parent().siblings('td').children().children('li').children('.id').text()));
+      $('#modal #id_narasumber').val($.trim($(this).parent().siblings('td').children().children('li').children('.ids').text()));
 
       $("#edit-topik-submit").unbind().click(function(){
          var topik = $('#topik').val();
+         var id_topik = $('#id_topik').val();
+         var id_narasumber = $('#id_narasumber').val();
+         alert(id_narasumber);
          var tanggal = $('#tanggal-text').val();
          var jammulai = $('#jammulai').val();
          var jamselesai = $('#jamselesai').val();
@@ -446,8 +466,8 @@ $(document).ready(function(){
          });
 
          $this.closest('tr').remove();
-         $("tbody").append("<tr>"+"<td>"+"<ul>"+"<li><b>Tanggal: </b><span class='t'>"+tanggal+"</li>"+"<li><b>Waktu: </b><span class='w'>"+jammulai+" - "+jamselesai+"</li>"+"<li><b>Lokasi: </b><span class='l'>"+lokasi+"</li>"+"<li><b>Nama topik: </b><span class='n'>"+topik+"</li>"+'<li class="split"><b>Narasumber:</b><br><span class="nr">'+narasumber+"</li>"+"<li class="+'hidden'+">"+status+"</li>"+"</ul>"+"</td>"+"<td>"+buttonedit+button+'</td>'+"</tr>");
-          //$('#form').trigger("reset");
+        $("tbody").append("<tr>"+"<td>"+"<ul>"+"<li class='hidden'><span class='id'>"+id_topik+"</li>"+"<li><b>Tanggal: </b><span class='t'>"+tanggal+"<li><b>Waktu: </b><span class='w'>"+jammulai+" - "+jamselesai+"</li>"+"<li><b>Lokasi: </b><span class='l'>"+lokasi+"</li>"+"<li><b>Nama topik: </b><span class='n'>"+topik+"</li>"+'<li class="split"><b>Narasumber:</b><br><span class="nr">'+narasumber+"</li>"+"<li class="+'hidden'+">"+status+"</li>"+"<li class="+'hidden'+"><span class='ids'>"+id_narasumber+"</span></li>"+"</ul>"+"</td>"+"<td>"+buttonedit+button+'</td>'+"</tr>");
+        //$('#form').trigger("reset");
       });
     });
 
@@ -484,7 +504,7 @@ $(document).ready(function(){
                     });
 
                     var rules = JSON.parse('<?php echo $rules ?>');
-                    var form = $('#form');
+                    var form = $('#form-umum');
 
                     if($("#inlineCheckbox3").is(':checked')){
             					rules = rules.concat(JSON.parse('<?php echo $kapasitas_rules ?>'));
@@ -529,7 +549,6 @@ $(document).ready(function(){
             				});
 
 });
-
 function sendTableArticles() {
     var columns = [
         'id_topik',
@@ -538,15 +557,23 @@ function sendTableArticles() {
         'lokasi',
         'topik',
         'narasumber',
-        'aksi',
-        'status'
+        'status',
+        'ids'
     ];
 
-    var tableObject = $('#topik_tabel tbody tr').map(function (i) {
+    var tableObject = $('#topik_tabel tbody tr td ul').map(function (i) {
         var row = {};
-        $(this).find('td').each(function (i) {
+        $(this).find('li').each(function (i) {
+          if($(this).hasClass("split")){
+            var data = $(this).children('span').html().split('<br>');
+            console.log(data);
             var rowName = columns[i];
-            row[rowName] = $(this).text();
+            row[rowName] = data;
+          }else{
+            var rowName = columns[i];
+            row[rowName] = $(this).children('span').text();
+          }
+
         });
 
         return row;
