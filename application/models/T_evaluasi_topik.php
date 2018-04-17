@@ -23,6 +23,15 @@ class T_evaluasi_topik extends CI_Model{
         return $this->db->get($this->table_name)->row();
     }
 
+    public function allsaran($id){
+        /* No Error Handling yet! */
+        $this->db->select('saran');
+        $this->db->where('id_topik',$id);
+        $this->db->where('saran !=','');
+        $query = $this->db->get($this->table_name);
+        return $query->result();
+    }
+
     public function insert($args)
    {
         /* No Error Handling yet! */

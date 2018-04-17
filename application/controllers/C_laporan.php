@@ -34,21 +34,31 @@ class C_Laporan extends CI_Controller{
        $this->load->model('Stored_procedure');
        $this->load->model('Vw_data_ec');
        $this->load->model('T_evaluasi_tema');
+       $this->load->model('T_evaluasi_topik');
        $this->load->model('Vw_data_topik');
 
        $ec = $this->Vw_data_ec->get($id);
        $status_evaluasi = $ec->status_evaluasi;
-       $evaluasi_tema="";
-       $saran="";
+       $evaluasi_tema=array();
+       $evaluasi_topik=array();
+       $saran_tema=array();
+       $saran_topik=array();
+       $topik_arr = $this->Vw_data_topik->getAllTopik($ec->id_ec);
+
        if($ec->jenis_ec=="Extension Course Filsafat"){
          $evaluasi_tema = $this->T_evaluasi_ecf->all($id);
        }else{
-         $saran = $this->T_evaluasi_tema->allsaran($id);
+         $saran_tema = $this->T_evaluasi_tema->allsaran($id);
          $evaluasi_tema = $this->Stored_procedure->get_hasil_evaluasi_tema($id);
+         foreach ($topik_arr as $row) {
+           $saran_topik_temp = $this->T_evaluasi_topik->allsaran($row->id_topik);
+           $evaluasi_topik_temp = $this->Stored_procedure->get_hasil_evaluasi_topik($row->id_topik);
+           $saran_topik[$row->id_topik] = $saran_topik_temp;
+           $evaluasi_topik[$row->id_topik] = $evaluasi_topik_temp;
+         }
        }
 
 
-       $topik_arr = $this->Vw_data_topik->getAllTopik($ec->id_ec);
        $counter = 1;
        foreach ($topik_arr as $row) {
          $row->jumlah_peserta = $this->Stored_procedure->get_jumlah_peserta_topik($row->id_topik)->jumlah_peserta;
@@ -78,7 +88,9 @@ class C_Laporan extends CI_Controller{
          'jumlah_peserta' => $jumlah_peserta,
          'kehadiran' => $kehadiran,
          'evaluasi_tema' => $evaluasi_tema,
-         'saran' => $saran
+         'evaluasi_topik' => $evaluasi_topik,
+         'saran_tema' => $saran_tema,
+         'saran_topik' => $saran_topik
        ]);
        $this->load->view('V_footer');
     } else if($this->input->method() == 'post'){
@@ -113,6 +125,8 @@ class C_Laporan extends CI_Controller{
     $this->load->model('Vw_data_topik');
     $this->load->helper('excel_helper');
     $ec = $this->Vw_data_ec->get($id);
+    // var_dump($this->input->post());
+    // die();
 
 
     if($this->input->method() == 'post'){
@@ -202,8 +216,8 @@ class C_Laporan extends CI_Controller{
           'size' => 20,
           'bold' => true
         ]);
-      }else{
-        $judul = 'Hasil Evaluasi';
+      }else if($this->input->post('jenis-laporan') == 'evaluasi-tema'){
+        $judul = 'Hasil Evaluasi Tema';
         $laporan = new Excel($judul);
         $evaluasi_tema="";
         $rules=null;
@@ -247,6 +261,113 @@ class C_Laporan extends CI_Controller{
           $numOfRows2 = count($saran);
           $laporan->setFullBorder('A4'. ':G' . ($numOfRows1+4));
           $laporan->setFullBorder('A'.(7+$numOfRows1). ':B' . (7+$numOfRows1+$numOfRows2));
+        }
+
+
+
+        $waktu_cetak = date('d-m-Y, H:i');
+        $laporan->prependRowFromText("Waktu cetak: $waktu_cetak",[
+          'size' => 9,
+        ]);
+        $laporan->prependRowFromText($ec->jenis_ec.": ".$ec->tema_ec,[
+          'size' => 12,
+        ]);
+        $laporan->prependRowFromText($judul,[
+          'size' => 20,
+          'bold' => true
+        ]);
+      }else{
+        $judul = 'Hasil Evaluasi Topik';
+        $laporan = new Excel($judul);
+        $evaluasi_topik="";
+        $rules=null;
+        $ec = $this->Vw_data_ec->get($id);
+        if($ec->jenis_ec=="Extension Course Filsafat"){
+          $evaluasi_topik = $this->T_evaluasi_ecf->all($id);
+          $rules = [
+            'soal1' => 'Soal 1',
+            'soal2' => 'Soal 2',
+            'soal3' => 'Soal 3'
+          ];
+          $laporan->buildFromMysqlRows($evaluasi_tema,$rules);
+          $laporan->autoResizeColumn('B','D');
+          $laporan->setColumnWidth('A',4);
+          $numOfRows = count($evaluasi_tema);
+          $laporan->setFullBorder('A4'. ':D' . ($numOfRows+4));
+        }else{
+          $this->load->model('T_evaluasi_topik');
+          if($this->input->post('id-topik')!=""){
+            $evaluasi_topik = $this->Stored_procedure->get_hasil_evaluasi_topik($this->input->post('id-topik'));
+            $topik = $this->Vw_data_topik->get($this->input->post('id-topik'));
+            // var_dump($evaluasi_tema);
+            // die();
+            $saran = $this->T_evaluasi_topik->allsaran($this->input->post('id-topik'));
+            $rules_pg = [
+              'soal1' => 'Soal',
+              'nilai_1' => 'Nilai 1',
+              'nilai_2' => 'Nilai 2',
+              'nilai_3' => 'Nilai 3',
+              'nilai_4' => 'Nilai 4',
+              'nilai_5' => 'Nilai 5'
+            ];
+            $rules_essay = [
+              'saran' => 'Saran'
+            ];
+            $laporan->appendRowFromText(' ');
+            $laporan->appendRowFromText('Evaluasi Topik '.$topik->nama_topik,[
+              'size' => 12,
+            ]);
+            $laporan->buildFromMysqlRows($evaluasi_topik,$rules_pg);
+            $laporan->appendRowFromText(' ');
+            $laporan->appendRowFromText(' ');
+            $laporan->buildFromMysqlRows($saran,$rules_essay);
+            $laporan->autoResizeColumn('B','G');
+            $laporan->setColumnWidth('A',4);
+            $numOfRows1 = count($evaluasi_topik);
+            $numOfRows2 = count($saran);
+            $laporan->setFullBorder('A6'. ':G' . ($numOfRows1+6));
+            $laporan->setFullBorder('A'.(9+$numOfRows1). ':B' . (9+$numOfRows1+$numOfRows2));
+          }else{
+            //KALO GA ADA ID TOPIK??
+            $topik_arr = $this->Vw_data_topik->getAllTopik($ec->id_ec);
+            $start = 6;
+            foreach ($topik_arr as $row) {
+              $evaluasi_topik = $this->Stored_procedure->get_hasil_evaluasi_topik($row->id_topik);
+              // var_dump($evaluasi_tema);
+              // die();
+              $saran = $this->T_evaluasi_topik->allsaran($row->id_topik);
+              $rules_pg = [
+                'soal1' => 'Soal',
+                'nilai_1' => 'Nilai 1',
+                'nilai_2' => 'Nilai 2',
+                'nilai_3' => 'Nilai 3',
+                'nilai_4' => 'Nilai 4',
+                'nilai_5' => 'Nilai 5'
+              ];
+              $rules_essay = [
+                'saran' => 'Saran'
+              ];
+              $laporan->appendRowFromText(' ');
+              $laporan->appendRowFromText('Evaluasi Topik '.$row->nama_topik,[
+                'size' => 12,
+              ]);
+              $laporan->buildFromMysqlRows($evaluasi_topik,$rules_pg);
+              $laporan->appendRowFromText(' ');
+              $laporan->appendRowFromText(' ');
+              $laporan->buildFromMysqlRows($saran,$rules_essay);
+              //$laporan->appendRowFromText(' ');
+              //$laporan->appendRowFromText(' ');
+              $laporan->autoResizeColumn('B','G');
+              $laporan->setColumnWidth('A',4);
+              $numOfRows1 = count($evaluasi_topik);
+              $numOfRows2 = count($saran);
+              $laporan->setFullBorder('A'.$start. ':G' . ($numOfRows1+$start));
+              $laporan->setFullBorder('A'.($start+3+$numOfRows1). ':B' . ($start+3+$numOfRows1+$numOfRows2));
+              $start = $start + $numOfRows1+$numOfRows2+6;
+            }
+
+          }
+
         }
 
 

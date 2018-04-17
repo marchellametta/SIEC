@@ -90,7 +90,7 @@ class Excel{
   }
 
   public function appendRowFromText($text){
-    $this->rawData = array_merge($this->rawData,[$this->createText($text,$prop)]);
+    $this->rawData = array_merge($this->rawData,[$this->createText($text,null)]);
   }
 
   public function prependRowFromArray($arr){

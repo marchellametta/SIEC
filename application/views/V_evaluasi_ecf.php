@@ -11,7 +11,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
       <textarea class="form-control" rows="5" name="komentar-ecf"></textarea>
     </div>
     <div class="form-group col-12">
-      <label for="komentar-tema">Komentar tentang tema .<?php echo $ec->tema_ec?></label>
+      <label for="komentar-tema">Komentar tentang tema <?php echo $ec->tema_ec?></label>
       <textarea class="form-control" rows="5" name="komentar-tema"></textarea>
     </div>
     <div class="form-group col-12">

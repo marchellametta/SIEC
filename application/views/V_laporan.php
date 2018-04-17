@@ -9,7 +9,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <option value="jumlah_kehadiran">Laporan Jumlah Kehadiran Peserta</option>
         <option value="pekerjaan">Laporan Statistik Pekerjaan Peserta</option>
         <option value="kehadiran">Laporan Persentase Kehadiran Peserta</option>
-        <option value="evaluasi">Hasil Evaluasi</option>
+        <option value="evaluasi-tema">Hasil Evaluasi Tema</option>
+        <option value="evaluasi-topik">Hasil Evaluasi Topik</option>
       </select>
     </div>
     <table class="table table-hover table-striped table-bordered ml-3 content" id="jumlah_kehadiran">
@@ -68,7 +69,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <?php endforeach ?>
     </tbody>
   </table>
-  <div id="evaluasi" class="content hidden">
+  <div id="evaluasi-tema" class="content hidden">
   <table class="table table-hover table-striped table-bordered ml-3">
     <thead class="thead-dark">
       <?php if($ec->jenis_ec=="Extension Course Filsafat"):?>
@@ -121,7 +122,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
       </tr>
     </thead>
     <tbody>
-    <?php foreach ($saran as $row): ?>
+    <?php foreach ($saran_tema as $row): ?>
       <tr>
         <td><?php echo $row->saran ?></td>
       </tr>
@@ -129,6 +130,81 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     </tbody>
   </table>
 <?php endif; ?>
+</div>
+<div id="evaluasi-topik" class="content hidden">
+  <div class="form-group col-md-3">
+    <select class="form-control" name="id-topik" id="id_topik">
+      <option selected value>Semua Topik</option>
+      <?php foreach ($topik_arr as $temp): ?>
+        <option value="<?php echo $temp->id_topik?>"><?php echo $temp->nama_topik ?></option>
+      <?php endforeach; ?>
+    </select>
+  </div>
+  <?php if(!empty($evaluasi_topik)): ?>
+    <?php foreach ($topik_arr as $row): ?>
+      <table class="topik table table-hover table-striped table-bordered ml-3" id="hasil<?php echo $row->id_topik ?>">
+        <thead class="thead-dark">
+          <?php if($ec->jenis_ec=="Extension Course Filsafat"):?>
+            <tr>
+              <th scope="col">Soal1</th>
+              <th scope="col">Soal2</th>
+              <th scope="col">Soal3</th>
+            </tr>
+          <?php else: ?>
+          <tr>
+            <th scope="col">Soal</th>
+            <th scope="col">Nilai 5</th>
+            <th scope="col">Nilai 4</th>
+            <th scope="col">Nilai 3</th>
+            <th scope="col">Nilai 2</th>
+            <th scope="col">Nilai 1</th>
+          </tr>
+        <?php endif ?>
+
+        </thead>
+        <tbody>
+          <?php if($ec->jenis_ec=="Extension Course Filsafat"):?>
+            <?php foreach ($evaluasi_topik[$row->id_topik] as $temp): ?>
+            <tr>
+              <td><?php echo $temp->soal1 ?></td>
+              <td><?php echo $temp->soal2 ?></td>
+              <td><?php echo $temp->soal3 ?></td>
+            </tr>
+            <?php endforeach ?>
+          <?php else: ?>
+            <?php foreach ($evaluasi_topik[$row->id_topik] as $temp): ?>
+            <tr>
+              <td><?php echo $temp->soal1 ?></td>
+              <td><?php echo $temp->nilai_5 ?></td>
+              <td><?php echo $temp->nilai_4 ?></td>
+              <td><?php echo $temp->nilai_3 ?></td>
+              <td><?php echo $temp->nilai_2 ?></td>
+              <td><?php echo $temp->nilai_1 ?></td>
+            </tr>
+          <?php endforeach ?>
+        <?php endif ?>
+
+        </tbody>
+      </table>
+      <?php if($ec->jenis_ec!="Extension Course Filsafat"):?>
+      <table class="topik table table-hover table-striped table-bordered ml-3 mt-2" id="saran<?php echo $row->id_topik ?>">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col">Saran</th>
+          </tr>
+        </thead>
+        <tbody>
+        <?php foreach ($saran_topik[$row->id_topik] as $temp): ?>
+          <tr>
+            <td><?php echo $temp->saran ?></td>
+          </tr>
+        <?php endforeach ?>
+        </tbody>
+      </table>
+      <?php endif; ?>
+    <?php endforeach; ?>
+  <?php endif; ?>
+
 </div>
   <div class="text-right">
     <input type="submit" id="simpan" value="Unduh Laporan" class="btn btn-primary">
@@ -149,4 +225,19 @@ $('#jenis-laporan').change(function() {
         $('.content').hide();
         $('#'+x).show();
     });
+
+$('#id_topik').change(function() {
+    var x = $(this).val();
+    alert(x);
+    if(x==""){
+      $('.topik').show();
+    }else{
+      // and update the hidden input's value
+      $('.topik').hide();
+      //alert('#'+x);
+      $('#hasil'+x).show();
+      $('#saran'+x).show();
+    }
+
+});
 </script>

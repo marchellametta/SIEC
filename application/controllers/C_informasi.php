@@ -597,8 +597,18 @@ class C_Informasi extends CI_Controller{
     if($this->input->method() == 'get'){
       $this->load->model('Vw_data_ec');
       $this->load->model('Vw_data_topik');
+      $this->load->model('T_narasumber_topik');
+      $this->load->model('T_narasumber');
       $data = $this->Vw_data_ec->get($id);
       $topik_arr = $this->Vw_data_topik->getAllTopik($id);
+      foreach ($topik_arr as $row) {
+        $ids_narasumber= $this->T_narasumber_topik->getNarasumber($row->id_topik);
+        $narasumber = array();
+        foreach ($ids_narasumber as $temp) {
+          array_push($narasumber, $this->T_narasumber->get($temp->id_narasumber));
+        }
+        $row->narasumber = $narasumber;
+      }
        $this->load->view('V_header');
        $this->load->view('V_navbar');
        $this->load->view('V_detail',[
