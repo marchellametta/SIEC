@@ -204,10 +204,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             </div>
             <div class= "row">
               <div class="col-md-10"  id="nara">
-                <div>
-                  <div class="form-group col-md-12">
-                    <label for="narasumber">Narasumber</label>
-                    <input type="text" class="form-control narasumber" id="narasumber1" data-urutan="1" placeholder="Narasumber">
+                <div class="block_nara">
+                  <div class="row ml-1">
+                    <div class="form-group col-md-10">
+                      <label for="narasumber">Narasumber</label>
+                      <input type="text" class="form-control narasumber" id="narasumber1" data-urutan="1" placeholder="Narasumber">
+                    </div>
+                    <div class="col-md-2 pr-0">
+                      <a class=" hapus-narasumber button btn-danger rounded text-white pl-1 pr-1" data-toggle="tooltip" title="Hapus narasumber"><i class="fa fa-times"></i></a>
+                    </div>
                   </div>
                   <div class="form-group col-md-12">
                     <label for="profesi">Profesi</label>
@@ -280,6 +285,30 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <script>
 
 $(document).ready(function(){
+  var i = 1;
+  $('[data-toggle="tooltip"]').tooltip();
+  $("#tambah-narasumber").click(function(){
+    i = i+1;
+    $("#nara").append('<div class="block_nara"><div class="row ml-1"><div class="form-group col-md-10">'+
+      '<label for="narasumber">Narasumber</label>'+
+      '<input type="text" class="form-control narasumber" id="narasumber1" data-urutan="1" placeholder="Narasumber">'+
+    '</div>'+
+    '<div class="col-md-2 pr-0">'+
+      '<a class=" hapus-narasumber button btn-danger rounded text-white pl-1 pr-1" data-toggle="tooltip" title="Hapus narasumber"><i class="fa fa-times"></i></a>'+
+    '</div>'+'</div>'+
+    '<div class="form-group col-md-12">'+
+      '<label for="profesi">Profesi</label>'+
+      '<input type="text" class="form-control profesi" id="profesi'+i+'" data-urutan="'+i+'" placeholder="Profesi">'+
+    '</div>'+
+    '<div class="form-group col-md-12">'+
+      '<label for="lembaga">Lembaga</label>'+
+      '<input type="text" class="form-control lembaga" id="lembaga'+i+'" data-urutan="'+i+'" placeholder="Lembaga">'+
+    '</div>'+
+    '<div class="form-group col-md-12">'+
+      '<label for="jabatan">Jabatan</label>'+
+      '<input type="text" class="form-control jabatan" id="jabatan'+i+'" data-urutan="'+i+'" placeholder="Jabatan">'+
+    '</div></div>');
+  });
   $("#tambah-topik-submit").click(function(){
     var topik = $('#topik').val();
     var id_topik = $('#id_topik').val();
@@ -311,21 +340,24 @@ $(document).ready(function(){
     $( "#form input" ).each(function() {
        $(this).val('');
     });
-    $("#nara").html('<div><div class="form-group col-md-12">'+
+    $("#nara").html('<div class="block_nara"><div class="row ml-1"><div class="form-group col-md-10">'+
       '<label for="narasumber">Narasumber</label>'+
       '<input type="text" class="form-control narasumber" id="narasumber1" data-urutan="1" placeholder="Narasumber">'+
     '</div>'+
+    '<div class="col-md-2 pr-0">'+
+      '<a class=" hapus-narasumber button btn-danger rounded text-white pl-1 pr-1" data-toggle="tooltip" title="Hapus narasumber"><i class="fa fa-times"></i></a>'+
+    '</div>'+'</div>'+
     '<div class="form-group col-md-12">'+
       '<label for="profesi">Profesi</label>'+
-      '<input type="text" class="form-control profesi" id="profesi1" data-urutan="1" placeholder="Profesi">'+
+      '<input type="text" class="form-control profesi" id="profesi'+i+'" data-urutan="'+i+'" placeholder="Profesi">'+
     '</div>'+
     '<div class="form-group col-md-12">'+
       '<label for="lembaga">Lembaga</label>'+
-      '<input type="text" class="form-control lembaga" id="lembaga1" data-urutan="1" placeholder="Lembaga">'+
+      '<input type="text" class="form-control lembaga" id="lembaga'+i+'" data-urutan="'+i+'" placeholder="Lembaga">'+
     '</div>'+
     '<div class="form-group col-md-12">'+
       '<label for="jabatan">Jabatan</label>'+
-      '<input type="text" class="form-control jabatan" id="jabatan1" data-urutan="1" placeholder="Jabatan">'+
+      '<input type="text" class="form-control jabatan" id="jabatan'+i+'" data-urutan="'+i+'" placeholder="Jabatan">'+
     '</div></div>');
     i=1;
 
@@ -389,6 +421,11 @@ $(document).ready(function(){
       sendTableArticles();
     });
 
+    $(document).on('click', '.hapus-narasumber', function(){
+      alert("hai");
+      $(this).closest('.block_nara').hide();
+    });
+
     $(document).on('click', '.edit', function(){
       //$(this).closest('tr').remove();
       //alert($(this).parent().siblings('td').children().children('li').children('.aaa').text());
@@ -404,10 +441,13 @@ $(document).ready(function(){
       var i = 2;
       if(length>1){
         while(i<=length){
-          $("#nara").append('<div class="form-group col-md-12">'+
+          $("#nara").append('<div class="block_nara"><div class="row ml-1"><div class="form-group col-md-10">'+
             '<label for="narasumber">Narasumber</label>'+
-            '<input type="text" class="form-control narasumber" id="narasumber'+i+'" data-urutan="'+i+'" placeholder="Narasumber">'+
+            '<input type="text" class="form-control narasumber" id="narasumber'+i+'" data-urutan="1" placeholder="Narasumber">'+
           '</div>'+
+          '<div class="col-md-2 pr-0">'+
+            '<a class=" hapus-narasumber button btn-danger rounded text-white pl-1 pr-1" data-toggle="tooltip" title="Hapus narasumber"><i class="fa fa-times"></i></a>'+
+          '</div>'+'</div>'+
           '<div class="form-group col-md-12">'+
             '<label for="profesi">Profesi</label>'+
             '<input type="text" class="form-control profesi" id="profesi'+i+'" data-urutan="'+i+'" placeholder="Profesi">'+
@@ -419,7 +459,7 @@ $(document).ready(function(){
           '<div class="form-group col-md-12">'+
             '<label for="jabatan">Jabatan</label>'+
             '<input type="text" class="form-control jabatan" id="jabatan'+i+'" data-urutan="'+i+'" placeholder="Jabatan">'+
-          '</div>');
+          '</div></div>');
           i = i+1;
         }
       }

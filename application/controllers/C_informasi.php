@@ -177,14 +177,14 @@ class C_Informasi extends CI_Controller{
        $this->load->view('V_footer');
     } else if($this->input->method() == 'post'){
       $post_data = $this->input->post();
-      //var_dump($post_data);
+      var_dump($post_data);
       // $topik = json_decode($post_data['topik']);
       // var_dump($topik);
       // foreach ($topik as $row) {
       //   var_dump($row->file);
       // }
       // var_dump($_FILES);
-      //die();
+      die();
       $this->load->helper('config_rules');
 
 
@@ -284,6 +284,7 @@ class C_Informasi extends CI_Controller{
          'status_evaluasi' => $status_evaluasi,
          'status_peserta' => $status_peserta,
          'biaya' => $post_data['biaya'],
+         'biaya-pelajar' => $post_data['biaya-pelajar'],
          'gambar' => $post_data['gambar'],
          'semester_pelaksanaan' => $post_data['semester'],
          'tahun_pelaksanaan' => $post_data['tahun'],

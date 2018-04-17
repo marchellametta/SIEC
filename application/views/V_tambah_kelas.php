@@ -62,14 +62,25 @@ defined('BASEPATH') OR exit('No direct script access allowed');
          <textarea class="form-control" rows="5" name="deskripsi"><?php if(isset($post_data['deskripsi'])) echo $post_data['deskripsi']?></textarea>
          <span class="help-block text-danger"><?php if(isset($error_array['deskripsi'])) echo $error_array['deskripsi']?></span>
       </div>
-      <div class="form-group col-md-3">
-        <label for="biaya">Biaya</label>
-        <div class="input-group">
-          <span class="input-group-addon p-2">Rp</span>
-          <input type="text" placeholder="Biaya" name="biaya" id="input-biaya" class="form-control" value="<?php if(isset($post_data['biaya'])) echo $post_data['biaya']?>">
-          <input type="number" id="real-input-biaya" name="biaya" class="hidden">
+      <div class="row ml-1">
+        <div class="form-group col-md-3">
+          <label for="biaya">Biaya</label>
+          <div class="input-group">
+            <span class="input-group-addon p-2">Rp</span>
+            <input type="text" placeholder="Biaya" name="biaya" id="input-biaya" class="form-control" value="<?php if(isset($post_data['biaya'])) echo $post_data['biaya']?>">
+            <input type="number" id="real-input-biaya" name="biaya" class="hidden">
+          </div>
+          <span class="help-block text-danger"><?php if(isset($error_array['biaya'])) echo $error_array['biaya']?></span>
         </div>
-        <span class="help-block text-danger"><?php if(isset($error_array['biaya'])) echo $error_array['biaya']?></span>
+        <div class="form-group col-md-3">
+          <label for="biaya-pelajar">Biaya Pelajar/Mahasiswa</label>
+          <div class="input-group">
+            <span class="input-group-addon p-2">Rp</span>
+            <input type="text" placeholder="Biaya" name="biaya-pelajar" id="input-biaya-pelajar" class="form-control" value="<?php if(isset($post_data['biaya-pelajar'])) echo $post_data['biaya-pelajar']?>">
+            <input type="number" id="real-input-biaya-pelajar" name="biaya-pelajar" class="hidden">
+          </div>
+          <span class="help-block text-danger"><?php if(isset($error_array['biaya-pelajar'])) echo $error_array['biaya-pelajar']?></span>
+        </div>
       </div>
       <div class="form-group hidden col-md-3" id="biaya_toggle">
         <label for="biaya-topik">Biaya per Topik</label>
@@ -141,11 +152,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
               <input type="text" class="form-control" id="topik" placeholder="Topik">
             </div>
             <div class= "row">
-              <div class="col-md-10"  id="nara">
-                <div>
-                  <div class="form-group col-md-12">
-                    <label for="narasumber">Narasumber</label>
-                    <input type="text" class="form-control narasumber" id="narasumber1" data-urutan="1" placeholder="Narasumber">
+              <div class="col-md-10 pr-0"  id="nara">
+                <div class="block_nara">
+                  <div class="row ml-1">
+                    <div class="form-group col-md-10">
+                      <label for="narasumber">Narasumber</label>
+                      <input type="text" class="form-control narasumber" id="narasumber1" data-urutan="1" placeholder="Narasumber">
+                    </div>
+                    <div class="col-md-2 pr-0">
+                      <a class=" hapus-narasumber button btn-danger rounded text-white pl-1 pr-1" data-toggle="tooltip" title="Hapus narasumber"><i class="fa fa-times"></i></a>
+                    </div>
                   </div>
                   <div class="form-group col-md-12">
                     <label for="profesi">Profesi</label>
@@ -162,7 +178,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 </div>
               </div>
               <div class="col-md-2">
-                <a id="tambah-narasumber" class="button btn-secondary rounded text-white pl-2 pr-2" data-toggle="tooltip" title="Tambah narasumber"><i class="fa fa-plus"></i></a>
+                <a id="tambah-narasumber" class="button btn-secondary rounded text-white pl-1 pr-1" data-toggle="tooltip" title="Tambah narasumber"><i class="fa fa-plus"></i></a>
               </div>
             </div>
           </div>
@@ -222,10 +238,13 @@ $(document).ready(function(){
   $('[data-toggle="tooltip"]').tooltip();
   $("#tambah-narasumber").click(function(){
     i = i+1;
-    $("#nara").append('<div class="form-group col-md-12">'+
+    $("#nara").append('<div class="block_nara"><div class="row ml-1"><div class="form-group col-md-10">'+
       '<label for="narasumber">Narasumber</label>'+
-      '<input type="text" class="form-control narasumber" id="narasumber'+i+'" data-urutan="'+i+'" placeholder="Narasumber">'+
+      '<input type="text" class="form-control narasumber" id="narasumber1" data-urutan="1" placeholder="Narasumber">'+
     '</div>'+
+    '<div class="col-md-2 pr-0">'+
+      '<a class=" hapus-narasumber button btn-danger rounded text-white pl-1 pr-1" data-toggle="tooltip" title="Hapus narasumber"><i class="fa fa-times"></i></a>'+
+    '</div>'+'</div>'+
     '<div class="form-group col-md-12">'+
       '<label for="profesi">Profesi</label>'+
       '<input type="text" class="form-control profesi" id="profesi'+i+'" data-urutan="'+i+'" placeholder="Profesi">'+
@@ -237,7 +256,7 @@ $(document).ready(function(){
     '<div class="form-group col-md-12">'+
       '<label for="jabatan">Jabatan</label>'+
       '<input type="text" class="form-control jabatan" id="jabatan'+i+'" data-urutan="'+i+'" placeholder="Jabatan">'+
-    '</div>');
+    '</div></div>');
   });
     $("#tambah-topik-submit").click(function(){
        var topik = $('#topik').val();
@@ -271,10 +290,13 @@ $(document).ready(function(){
       $( "#form input" ).each(function() {
          $(this).val('');
       });
-      $("#nara").html('<div><div class="form-group col-md-12">'+
+      $("#nara").html('<div class="block_nara"><div class="row ml-1"><div class="form-group col-md-10">'+
         '<label for="narasumber">Narasumber</label>'+
         '<input type="text" class="form-control narasumber" id="narasumber1" data-urutan="1" placeholder="Narasumber">'+
       '</div>'+
+      '<div class="col-md-2 pr-0">'+
+        '<a class=" hapus-narasumber button btn-danger rounded text-white pl-1 pr-1" data-toggle="tooltip" title="Tambah narasumber"><i class="fa fa-times"></i></a>'+
+      '</div>'+'</div>'+
       '<div class="form-group col-md-12">'+
         '<label for="profesi">Profesi</label>'+
         '<input type="text" class="form-control profesi" id="profesi1" data-urutan="1" placeholder="Profesi">'+
@@ -345,6 +367,11 @@ $(document).ready(function(){
     $(document).on('click', '#tambah-topik-btn', function(){
       $('#edit-topik-submit').hide();
       $('#tambah-topik-submit').show();
+    });
+
+    $(document).on('click', '.hapus-narasumber', function(){
+      alert("hai");
+      $(this).closest('.block_nara').hide();
     });
 
     $(document).on('click', '.edit', function(){
@@ -428,6 +455,12 @@ $(document).ready(function(){
 
     $('#input-biaya').on('keyup',function(e){
       $('#real-input-biaya').val($('#input-biaya').val()).keyup();
+    });
+
+    $('#input-biaya-pelajar').number(true, 2, ',', '.');
+
+    $('#input-biaya-pelajar').on('keyup',function(e){
+      $('#real-input-biaya-pelajar').val($('#input-biaya-pelajar').val()).keyup();
     });
 
     $('#input-biaya-topik').number(true, 2, ',', '.');

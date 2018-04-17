@@ -281,6 +281,13 @@ $config = [
         'errors'=> [
           'required' => 'Biaya harus diisi',
         ]
+      ],
+      [
+        'field' => 'biaya-pelajar',
+        'rules' => 'required',
+        'errors'=> [
+          'required' => 'Biaya pelajar/mahasiswa harus diisi',
+        ]
       ]
     ],
     'validasi-biaya-topik' => [
