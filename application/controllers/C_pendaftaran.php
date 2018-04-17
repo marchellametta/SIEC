@@ -286,7 +286,8 @@ class C_Pendaftaran extends CI_Controller{
                $this->T_pembayaran_peserta_tetap->insert([
                  'id_peserta' => $id_peserta,
                  'id_ec' => $row,
-                 'tagihan' => $ec->biaya
+                 'tagihan' => $ec->biaya,
+                 'tagihan_pelajar' => $ec->biaya_pelajar,
                ]);
                foreach ($topik as $row) {
                  $this->T_peserta_topik->attach_peserta_topik($id_peserta,$row->id_topik);

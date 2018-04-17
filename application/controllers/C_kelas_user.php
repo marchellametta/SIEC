@@ -84,8 +84,18 @@ class C_Kelas_user extends CI_Controller{
     if($this->input->method() == 'get'){
       $this->load->model('Stored_procedure');
       $this->load->model('Vw_data_ec');
+      $this->load->model('T_narasumber_topik');
+      $this->load->model('T_narasumber');
       $data = $this->Vw_data_ec->get($id);
       $topik_arr = $this->Stored_procedure->get_topik_peserta($this->session->userdata('id_user'),$id);
+      foreach ($topik_arr as $row) {
+        $ids_narasumber= $this->T_narasumber_topik->getNarasumber($row->id_topik);
+        $narasumber = array();
+        foreach ($ids_narasumber as $temp) {
+          array_push($narasumber, $this->T_narasumber->get($temp->id_narasumber));
+        }
+        $row->narasumber = $narasumber;
+      }
        $this->load->view('V_header');
        $this->load->view('V_navbar');
        $this->load->view('V_list_evaluasi_kelas_user',[
@@ -122,11 +132,19 @@ class C_Kelas_user extends CI_Controller{
       $this->load->model('Stored_procedure');
       $this->load->model('Vw_data_ec');
       $this->load->model('Vw_data_modul');
+      $this->load->model('T_narasumber_topik');
+      $this->load->model('T_narasumber');
       $data = $this->Vw_data_ec->get($id);
       $topik_arr = $this->Stored_procedure->get_topik_peserta($this->session->userdata('id_user'),$id);
       foreach ($topik_arr as $row) {
         $modul = $this->Vw_data_modul->get($row->id_topik);
         $row->modul = $modul;
+        $ids_narasumber= $this->T_narasumber_topik->getNarasumber($row->id_topik);
+        $narasumber = array();
+        foreach ($ids_narasumber as $temp) {
+          array_push($narasumber, $this->T_narasumber->get($temp->id_narasumber));
+        }
+        $row->narasumber = $narasumber;
       }
        $this->load->view('V_header');
        $this->load->view('V_navbar');

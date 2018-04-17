@@ -6,8 +6,10 @@ class Vw_data_pembayaran_peserta_tetap extends CI_Model{
   public $nama;
   public $id_ec;
   public $tagihan;
+  public $tagihan_peserta;
   public $telah_bayar;
   public $status_lunas;
+  public $status_pelajar;
 
     private $table_name = 'data_pembayaran_peserta_tetap';
 

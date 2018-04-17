@@ -214,9 +214,11 @@ class acl
       $this->ci->load->model('Vw_data_topik');
       $this->ci->load->model('Stored_procedure');
       $id_ec = $this->ci->Vw_data_topik->get($id)->id_ec;
+      //var_dump($id_ec);
       $topik = $this->ci->Stored_procedure->get_topik_peserta($user_id,$id_ec);
+      //var_dump($topik);
       foreach ($topik as $row) {
-        if ($row->id_ec==$id)
+        if ($row->id_topik==$id)
         {
            return true;
         }

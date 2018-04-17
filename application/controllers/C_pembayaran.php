@@ -61,12 +61,21 @@ class C_Pembayaran extends CI_Controller{
       $this->db->trans_begin();
 
 
-      //$peserta = $this->T_pembayaran_peserta_tetap->getTagihanAll($id);
-      //foreach ($peserta as $row) {
+      $peserta = $this->T_pembayaran_peserta_tetap->getTagihanAll($id);
+      foreach ($peserta as $row) {
         $this->T_pembayaran_peserta_tetap->edit($row->id_peserta, $id,[
-          'status_lunas' => 0
+          'status_lunas' => 0,
+          'status_pelajar' => 0
         ]);
-      //}
+      }
+
+      if(isset($_POST['potongan'])){
+        foreach ($post_data['potongan'] as $row) {
+          $this->T_pembayaran_peserta_tetap->edit($row, $id, [
+            'status_pelajar' => 1,
+          ]);
+        }
+      }
 
       if(isset($_POST['telah-bayar'])){
         foreach($post_data['telah-bayar'] as $key=>$value){
@@ -75,32 +84,55 @@ class C_Pembayaran extends CI_Controller{
               'telah_bayar' => $value
             ]);
           }
-          if($value == $ec->biaya){
-            $this->T_pembayaran_peserta_tetap->edit($key, $id, [
-              'status_lunas' => 1
-            ]);
+          $status_pelajar = $this->T_pembayaran_peserta_tetap->get($key,$id)->status_pelajar;
+          if($status_pelajar==1){
+            if($value == $ec->biaya_pelajar){
+              $this->T_pembayaran_peserta_tetap->edit($key, $id, [
+                'status_lunas' => 1
+              ]);
+            }else{
+              $this->T_pembayaran_peserta_tetap->edit($key, $id, [
+                'status_lunas' => 0
+              ]);
+            }
           }else{
-            $this->T_pembayaran_peserta_tetap->edit($key, $id, [
-              'status_lunas' => 0
-            ]);
+            if($value == $ec->biaya){
+              $this->T_pembayaran_peserta_tetap->edit($key, $id, [
+                'status_lunas' => 1
+              ]);
+            }else{
+              $this->T_pembayaran_peserta_tetap->edit($key, $id, [
+                'status_lunas' => 0
+              ]);
+            }
           }
         }
       }
 
       if(isset($_POST['bayar'])){
         foreach ($post_data['bayar'] as $row) {
-          $this->T_pembayaran_peserta_tetap->edit($row, $id, [
-            'telah_bayar' => $ec->biaya,
-            'status_lunas' => 1
-          ]);
+          $status_pelajar = $this->T_pembayaran_peserta_tetap->get($row,$id)->status_pelajar;
+          if($status_pelajar==1){
+            $this->T_pembayaran_peserta_tetap->edit($row, $id, [
+              'telah_bayar' => $ec->biaya_pelajar,
+              'status_lunas' => 1
+            ]);
+          }else{
+            $this->T_pembayaran_peserta_tetap->edit($row, $id, [
+              'telah_bayar' => $ec->biaya,
+              'status_lunas' => 1
+            ]);
+          }
         }
       }
+
+
 
       if ($this->db->trans_status() === FALSE){
         $this->db->trans_rollback();
       }else{
         $this->db->trans_commit();
-        redirect('kelas/aktif', 'refresh');
+        //redirect('kelas/aktif', 'refresh');
       }
     }
   }

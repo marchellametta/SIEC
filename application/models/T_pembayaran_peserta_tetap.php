@@ -7,6 +7,7 @@ class T_pembayaran_peserta_tetap extends CI_Model{
     public $tagihan;
     public $telah_bayar;
     public $status_lunas;
+    public $status_pelajar;
 
     private $table_name = 'pembayaran_peserta_tetap';
 

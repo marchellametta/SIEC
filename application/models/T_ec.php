@@ -9,6 +9,7 @@ class T_ec extends CI_Model{
   public $status_evaluasi;
   public $status_peserta;
   public $biaya;
+  public $biaya_pelajar;
   public $gambar;
   public $deskripsi;
   public $id_jenis_ec;

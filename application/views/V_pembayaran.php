@@ -24,6 +24,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
           <th scope="col" class="text-center w-10">Total Biaya</th>
           <th scope="col" class="text-center w-10">Telah Bayar</th>
           <th scope="col" class="text-center w-5">Status Pembayaran</th>
+          <th scope="col" class="text-center w-5">Potongan Biaya</th>
           <th scope="col" class="text-center w-5">Aksi</th>
         </tr>
       </thead>
@@ -31,15 +32,21 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <?php foreach ($tetap as $row): ?>
         <tr>
           <td><?php echo $row->nama;?></td>
-          <td><?php echo "Rp. ".number_format($row->tagihan).",00";?></td>
+          <td><?php echo "Rp. ".number_format($row->tagihan).",00 / Rp. ".number_format($row->tagihan_pelajar).",00";?><small> (khusus pelajar/mahsiswa)</small></td>
           <td>
             <input type="text" class="form-control hidden" name="telah-bayar[<?php echo $row->id_user ?>]" placeholder="Jumlah Bayar">
             <a><?php echo "Rp. ".number_format($row->telah_bayar).",00"; ?></a>
           </td>
           <td class="text-center">
             <div class="form-check">
-              <input class="form-check-input" type="checkbox" value="<?php echo $row->id_user?>" name= "bayar[]" <?php if($row->status_lunas=='1') echo "checked"?>>
+              <input class="form-check-input lunas" type="checkbox" value="<?php echo $row->id_user?>" name= "bayar[]" <?php if($row->status_lunas=='1') echo "checked"?>>
               <label class="form-check-label">Lunas</label>
+            </div>
+          </td>
+          <td class="text-center">
+            <div class="form-check">
+              <input class="form-check-input pelajar" type="checkbox" value="<?php echo $row->id_user?>" name= "potongan[]" <?php if($row->status_pelajar=='1') echo "checked"?>>
+              <label class="form-check-label">Pelajar/Mahasiswa</label>
             </div>
           </td>
           <td class="text-center">
@@ -96,14 +103,14 @@ $(document).ready(function(){
    $('.bayar').click(function(){
      $(this).parent().siblings().children('input').show();
      $(this).parent().siblings().children('a').hide();
-     $(this).parent().siblings().children().children('.form-check-input').prop('checked',false);
+     $(this).parent().siblings().children().children('.lunas').prop('checked',false);
 
    })
 
    $('.lunas').click(function(){
      $(this).parent().siblings().children('input').hide();
      $(this).parent().siblings().children('a').show();
-     $(this).parent().siblings().children().children('.form-check-input').prop('checked',true);
+     $(this).parent().siblings().children().children('.lunas').prop('checked',true);
 
    })
 });

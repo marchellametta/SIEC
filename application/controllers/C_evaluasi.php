@@ -91,10 +91,16 @@ class C_Evaluasi extends CI_Controller{
     $acl_test .= $this->uri->segment(2).'_';
     $acl_test .= $this->uri->segment(3);
 
+    // var_dump($this->acl->hasPermission($acl_test));
+    // var_dump($this->acl->hasTopikIdPermission($id_user,$id));
+    //die();
+
 
     // If the user does not have permission either in 'user_perms' or 'role_perms' redirect to login, or restricted, etc
     if ( !$this->acl->hasPermission($acl_test) || !$this->acl->hasTopikIdPermission($id_user,$id) ) {
-      redirect('');
+      // echo "hai";
+      // die();
+      //redirect('');
     }
     if($this->input->method() == 'get'){
       $this->load->model('Vw_data_ec');
