@@ -370,8 +370,7 @@ $(document).ready(function(){
     });
 
     $(document).on('click', '.hapus-narasumber', function(){
-      alert("hai");
-      $(this).closest('.block_nara').hide();
+      $(this).closest('.block_nara').remove();
     });
 
     $(document).on('click', '.edit', function(){

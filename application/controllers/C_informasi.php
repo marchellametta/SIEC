@@ -392,6 +392,8 @@ class C_Informasi extends CI_Controller{
        $this->load->view('V_footer');
     } else if($this->input->method() == 'post'){
       $post_data = $this->input->post();
+      // var_dump($post_data);
+      // die();
       $this->load->helper('config_rules');
 
 
@@ -399,6 +401,8 @@ class C_Informasi extends CI_Controller{
       $this->form_validation->set_rules(get_rules('form-ec'));
     	$status = $this->form_validation->run();
       $error_array = $this->form_validation->error_array();
+      //var_dump($error_array);
+      //die();
 
       if(isset($post_data['peserta-lepas'])){
         //echo "a";
@@ -411,6 +415,8 @@ class C_Informasi extends CI_Controller{
         $error_array= array_merge($error_array,$this->form_validation->error_array());
       }
 
+      //var_dump($error_array);
+
       if(isset($post_data['sistem-kuota'])){
       //Memeriksa validasi pada data barang dengan menggunakan rules validasi-aset-susut
       $this->form_validation->set_data($post_data);
@@ -420,6 +426,8 @@ class C_Informasi extends CI_Controller{
       $error_array= array_merge($error_array,$this->form_validation->error_array());
       }
 
+      //var_dump($error_array);
+      //die();
       $this->load->model('T_jenis_ec');
       $this->load->model('Vw_data_ec');
       $this->load->model('Vw_data_topik');
@@ -534,11 +542,15 @@ class C_Informasi extends CI_Controller{
              $data = explode(",",$tmp);
              if(count($data)>=4){
                $this->T_narasumber->insert([
-                 'profesi' => $data[1],
-                 'jabatan' => $data[3],
-                 'lembaga' => $data[2],
-                 'nama' => $data[0]
+                 'profesi' => trim($data[1]),
+                 'jabatan' => trim($data[3]),
+                 'lembaga' => trim($data[2]),
+                 'nama' => trim($data[0])
                ]);
+
+               $id_narasumber = $this->db->insert_id();
+
+               $this->T_narasumber_topik->attach_narasumber_topik($id_narasumber, $id_topik);
              }
            }
          }else if($row->status==4){
@@ -564,18 +576,42 @@ class C_Informasi extends CI_Controller{
              'jam_selesai' => $jam[1],
            ]);
 
-           $ids = explode(" ",$row->ids);
-           $x = 0;
            foreach ($row->narasumber as $tmp) {
              $data = explode(",",$tmp);
+             //var_dump($data);
+
              if(count($data)>=4){
-               $this->T_narasumber->edit($ids[$x],[
-                 'profesi' => $data[1],
-                 'jabatan' => $data[3],
-                 'lembaga' => $data[2],
-                 'nama' => $data[0]
-               ]);
-               $x++;
+               $data[5] = substr($data[5],0,1);
+               $data[4] =substr($data[4],1,strlen($data[4])-23);
+               $data[3] =substr($data[3],4,strlen($data[3])-26);
+               $data[2] =substr($data[2],4,strlen($data[2])-8);
+               $data[1] =substr($data[1],4,strlen($data[1])-8);
+               $data[0] =substr($data[0],3,strlen($data[0])-7);
+             }
+             var_dump($data);
+             //die();
+              if(count($data)>=4 && trim($data[5])=="2"){
+               if(trim($data[4])!=""){
+                 $this->T_narasumber->edit(trim($data[4]),[
+                   'profesi' => trim($data[1]),
+                   'jabatan' => trim($data[3]),
+                   'lembaga' => trim($data[2]),
+                   'nama' => trim($data[0])
+                 ]);
+               }else{
+                 $this->T_narasumber->insert([
+                   'profesi' => trim($data[1]),
+                   'jabatan' => trim($data[3]),
+                   'lembaga' => trim($data[2]),
+                   'nama' => trim($data[0])
+                 ]);
+                 $id_narasumber = $this->db->insert_id();
+
+                 $this->T_narasumber_topik->attach_narasumber_topik($id_narasumber, $row->id_topik);
+               }
+              }else if(count($data)>=4 && trim($data[5])=="4"){
+                echo "masuk";
+                $this->T_narasumber_topik->dettach_narasumber_topik(trim($data[4]), $row->id_topik);
              }
            }
          }
