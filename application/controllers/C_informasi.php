@@ -256,22 +256,7 @@ class C_Informasi extends CI_Controller{
         }else if(!isset($res->error_code)){
           $post_data['gambar'] = $res;
         }
-        $res="";
-        if(!empty($_FILES['pdf-file']['name'])){
-        $res = upload_file($this,[
-          'field_name' => 'pdf-file',
-          'upload_path' => 'Modul',
-          'file_name' => $post_data['tema'],
-          'max_size' => 8192
-        ]);
-        }
 
-        if(isset($res->error_code)){
-          echo '2'.$res->errors;
-          die();
-        }else if(!isset($res->error_code)){
-          $post_data['pdf'] = $res;
-        }
 
         $status_evaluasi = (isset($post_data['evaluasi-mingguan'])) ? 2 : 1;
         $status_peserta = (isset($post_data['peserta-lepas'])) ? 2 : 1;
@@ -290,8 +275,7 @@ class C_Informasi extends CI_Controller{
          'tahun_pelaksanaan' => $post_data['tahun'],
          'deskripsi' => $post_data['deskripsi'],
          'biaya_per_topik' => (isset($post_data['biaya-topik'])) ? $post_data['biaya-topik'] : 0,
-         'kapasitas_peserta' => (isset($post_data['kapasitas'])) ? $post_data['kapasitas'] : 0,
-         'modul_pdf' => $post_data['pdf']
+         'kapasitas_peserta' => (isset($post_data['kapasitas'])) ? $post_data['kapasitas'] : 0
        ]);
        $id_ec = $this->db->insert_id();
        foreach ($topik as $row) {
@@ -481,23 +465,6 @@ class C_Informasi extends CI_Controller{
         }
 
 
-        $res="";
-        if(!empty($_FILES['pdf-file']['name'])){
-        $res = upload_file($this,[
-          'field_name' => 'pdf-file',
-          'upload_path' => 'Modul',
-          'file_name' => $post_data['tema'],
-          'max_size' => 8192
-        ]);
-        if(isset($res->error_code)){
-          echo '2'.$res->errors;
-          die();
-        }else if(!isset($res->error_code)){
-          $post_data['pdf'] = $res;
-        }
-        }
-
-
 
         $status_evaluasi = (isset($post_data['evaluasi-mingguan'])) ? 2 : 1;
         $status_peserta = (isset($post_data['peserta-lepas'])) ? 2 : 1;
@@ -681,6 +648,8 @@ class C_Informasi extends CI_Controller{
       $this->load->model('T_modul_topik');
        $this->load->helper('upload_file_helper');
        $post_data = $this->input->post();
+       // var_dump($post_data);
+       // die();
 
 
        $i = 1;
@@ -690,30 +659,63 @@ class C_Informasi extends CI_Controller{
        while($i <= $length) {
          $res = "";
          if(!empty($_FILES['pdf-'.$i.'-file']['name'])){
-           $res = upload_file($this,[
-             'field_name' => 'pdf-'.$i.'-file',
-             'upload_path' => 'Modul',
-             'file_name' => $post_data['pdf'][$i-1],
-             'max_size' => 8192
-           ]);
-         }
-         if(isset($res->error_code)){
-           echo '1'. $res->errors;
-           die();
-         }else if(!isset($res->error_code)){
-           $post_data['pdf'][$i-1] = $res;
-           $this->db->trans_begin();
-           $this->T_modul->insert([
-             'link_modul' => $res
-           ]);
-           $id_modul = $this->db->insert_id();
-           $this->T_modul_topik->attach_modul_topik($id_modul,$id);
-           if ($this->db->trans_status() === FALSE){
-             $this->db->trans_rollback();
-           }else{
-             $this->db->trans_commit();
-             //redirect('', 'refresh');
+           if($post_data['status_pdf'][$i-1]==1){
+             $res = upload_file($this,[
+               'field_name' => 'pdf-'.$i.'-file',
+               'upload_path' => 'Modul',
+               'file_name' => $post_data['pdf'][$i-1],
+               'max_size' => 8192
+             ]);
+             if(isset($res->error_code)){
+               echo '1'. $res->errors;
+               die();
+             }else if(!isset($res->error_code)){
+               $post_data['pdf'][$i-1] = $res;
+               $this->db->trans_begin();
+               $this->T_modul->insert([
+                 'link_modul' => $res
+               ]);
+               $id_modul = $this->db->insert_id();
+               $this->T_modul_topik->attach_modul_topik($id_modul,$id);
+               if ($this->db->trans_status() === FALSE){
+                 $this->db->trans_rollback();
+               }else{
+                 $this->db->trans_commit();
+                 //redirect('', 'refresh');
+               }
+             }
+           }else if($post_data['status_pdf'][$i-1]==2){
+             $this->T_modul_topik->dettach_modul_topik($post_data['id_pdf'][$i-1],$id);
+             $this->T_modul->delete($post_data['id_pdf'][$i-1]);
+
+             $res = upload_file($this,[
+               'field_name' => 'pdf-'.$i.'-file',
+               'upload_path' => 'Modul',
+               'file_name' => $post_data['pdf'][$i-1],
+               'max_size' => 8192
+             ]);
+             if(isset($res->error_code)){
+               echo '1'. $res->errors;
+               die();
+             }else if(!isset($res->error_code)){
+               $post_data['pdf'][$i-1] = $res;
+               $this->db->trans_begin();
+               $this->T_modul->insert([
+                 'link_modul' => $res
+               ]);
+               $id_modul = $this->db->insert_id();
+               $this->T_modul_topik->attach_modul_topik($id_modul,$id);
+               if ($this->db->trans_status() === FALSE){
+                 $this->db->trans_rollback();
+               }else{
+                 $this->db->trans_commit();
+                 //redirect('', 'refresh');
+               }
+             }
            }
+         }else if($post_data['status_pdf'][$i-1]==4){
+           $this->T_modul_topik->dettach_modul_topik($post_data['id_pdf'][$i-1],$id);
+           $this->T_modul->delete($post_data['id_pdf'][$i-1]);
          }
          $i++;
        }

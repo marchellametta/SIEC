@@ -13,12 +13,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
           <?php $i = 1; ?>
           <?php foreach ($modul as $row): ?>
             <div class="form-group col-md-8">
-              <label for="input-pdf-1" class="control-label">Modul <?php echo $i ?></label>
+              <label for="input-pdf-<?php echo $i ?>" class="input-pdf-icon control-label">Modul <?php echo $i ?></label>
               <div class="input-group">
-                <span id="input-pdf-1-icon" class="input-group-addon border input-pdf-icon"><i class="fa fa-upload p-2"></i></span>
+                <span id="input-pdf-<?php echo $i ?>-icon" class="input-group-addon border input-pdf-icon"><i class="fa fa-upload p-2"></i></span>
                 <input type="file" accept=".pdf" name="pdf-<?php echo $i ?>-file" id="input-pdf-<?php echo $i ?>-file" class="input-pdf-file hidden">
                 <input type="text" placeholder="Pilih pdf" id="input-pdf-<?php echo $i ?>" name="pdf[]" value="<?php echo $row->link_modul?>" class="input-pdf form-control cursor" readonly>
-                <input type="text" id="status-pdf-<?php echo $i ?>" name="pdf[]" value="<?php echo 3 ?>" class="status-pdf form-control hidden">
+                <input type="text" id="status-pdf-<?php echo $i ?>" name="status_pdf[]" value="<?php echo 3 ?>" class="status-pdf form-control hidden">
+                <input type="text" id="id-pdf-<?php echo $i ?>" name="id_pdf[]" value="<?php echo $row->id_modul ?>" class="form-control hidden">
+                <span class="hapus input-group-addon border"><i class="fa fa-times p-2"></i></span>
               </div>
             </div>
           <?php $i++ ?>
@@ -30,6 +32,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
               <span id="input-pdf-1-icon" class="input-group-addon border input-pdf-icon"><i class="fa fa-upload p-2"></i></span>
               <input type="file" accept=".pdf" name="pdf-1-file" id="input-pdf-1-file" class="input-pdf-file hidden">
               <input type="text" placeholder="Pilih pdf" id="input-pdf-1" name="pdf[]" class="input-pdf form-control cursor" readonly>
+              <input type="text" id="status-pdf-1" name="status_pdf[]" value="<?php echo 1 ?>" class="status-pdf form-control hidden">
             </div>
           </div>
           <div class="form-group col-md-8">
@@ -38,6 +41,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
               <span id="input-pdf-2-icon" class="input-group-addon border input-pdf-icon"><i class="fa fa-upload p-2"></i></span>
               <input type="file" accept=".pdf" name="pdf-2-file" id="input-pdf-2-file" class="input-pdf-file hidden">
               <input type="text" placeholder="Pilih pdf" id="input-pdf-2" name="pdf[]" class="input-pdf form-control cursor" readonly>
+              <input type="text" id="status-pdf-2" name="status_pdf[]" value="<?php echo 1 ?>" class="status-pdf form-control hidden">
             </div>
           </div>
         <?php endif; ?>
@@ -58,11 +62,18 @@ $(function () {
       $(this).siblings('.input-pdf-file').click();
     });
 
+    $('#modul_block').on('click', '.hapus', function(event){
+      $(this).siblings('.status-pdf').val(4);
+      $(this).parent().parent().hide();
+    });
+
     $('#modul_block').on('change', '.input-pdf-file', function(event){
       var filename = $(this).val().split(/(\\|\/)/g).pop();
       $(this).siblings('.input-pdf').val(filename).keyup();
-      $(this).siblings('.status-pdf').val(2).keyup();
+      $(this).siblings('.status-pdf').val(2);
     });
+
+
 
     // $('.input-pdf').add('.input-pdf-icon').on('click', function(event) {
     //   event.preventDefault();
