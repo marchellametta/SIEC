@@ -119,6 +119,7 @@ class C_Pendaftaran extends CI_Controller{
       $this->load->view('V_pendaftaran',[
         'data' => $complete,
         'rules' => json_encode(get_rules('form-pendaftaran-peserta-jquery')),
+        'akun_rules' => json_encode(get_rules('validasi-akun')),
         'user'=> $user,
         'post_data' => $post_data,
         'error_array' => $error_array,
@@ -189,12 +190,14 @@ class C_Pendaftaran extends CI_Controller{
     if($this->input->method() == 'get'){
     } else if($this->input->method() == 'post'){
       $post_data = $this->input->post();
+      var_dump($post_data);
+      die();
       $this->load->helper('config_rules');
 
       $status = TRUE;
       if(!$this->session->userdata('id_user')){
         $this->form_validation->set_data($post_data);
-        $this->form_validation->set_rules(get_rules('form-ec'));
+        $this->form_validation->set_rules(get_rules('form-pendaftaran-peserta'));
       	$status = $this->form_validation->run();
         $error_array = $this->form_validation->error_array();
 

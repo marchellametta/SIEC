@@ -62,21 +62,77 @@ $config = [
         'numeric'=> 'Nomor HP hanya boleh terdiri dari angka',
       ]
     ]
-    // [
-    //   'field' => 'topik[]',
-    //   'rules' => 'required',
-    //   'errors'=> [
-    //     'required' => 'Harus ada kelas yang dipilih'
-    //   ]
-    // ]
-    // [
-    //   'field' => 'kelas[]',
-    //   'rules' => 'required',
-    //   'errors'=> [
-    //     'required' => 'Harus ada kelas yang dipilih'
-    //   ]
-    // ]
   ],
+  'form-edit-profile' => [
+     [
+       'field' => 'nama',
+       'rules' => 'required|min_length[3]|max_length[50]',
+       'errors' => [
+         'required' => 'Nama lengkap harus diisi',
+         'min_length' => 'Panjang nama minimal 3 karakter',
+         'max_length' => 'Panjang nama maksimal 50 karakter'
+       ]
+     ],
+     [
+       'field' => 'alamat',
+       'rules' => 'required|min_length[3]|max_length[50]',
+       'errors'=> [
+         'required' => 'Alamat harus diisi',
+         'min_length' => 'Panjang alamat minimal 3 karakter',
+         'max_length' => 'Panjang alamat maksimal 50 karakter'
+       ]
+     ],
+     [
+       'field' => 'pekerjaan',
+       'rules' => 'required',
+       'errors'=> [
+         'required' => 'Pekerjaan harus diisi',
+       ]
+     ],
+     [
+       'field' => 'lembaga',
+       'rules' => 'required',
+       'errors'=> [
+         'required' => 'Lembaga dibutuhkan',
+       ]
+     ],
+     [
+       'field' => 'pendidikan',
+       'rules' => 'required',
+       'errors' => [
+         'required' => 'pendidikan harus diisi',
+       ]
+     ],
+     [
+       'field' => 'kota',
+       'rules' => 'required',
+       'errors'=> [
+         'required' => 'Kota Asal harus diisi',
+       ]
+     ],
+     [
+       'field' => 'agama',
+       'rules' => 'required',
+       'errors'=> [
+         'required' => 'Agama harus diisi',
+       ]
+     ],
+     [
+       'field' => 'nohp',
+       'rules' => 'required|numeric',
+       'errors'=> [
+         'required' => 'Nomor HP harus diisi',
+         'numeric'=> 'Nomor HP hanya boleh terdiri dari angka',
+       ]
+     ],
+     [
+       'field' => 'email',
+       'rules' => 'required',
+       'errors'=> [
+         'required' => 'Email harus diisi'
+       ]
+     ]
+   ],
   'form-pendaftaran-peserta' => [
      [
        'field' => 'nama',

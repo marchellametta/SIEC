@@ -182,7 +182,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
       </div>
       <div class="text-right">
         <input type="submit" id="simpan" value="Simpan" class="btn btn-success">
-        <a href="<?php echo base_url()."informasi" ?>"><button type="button" class="btn btn-danger">Batal</button></a>
+        <a href="<?php echo base_url()."informasi/aktif" ?>"><button type="button" class="btn btn-danger">Batal</button></a>
       </div>
 </fieldset>
 </div>

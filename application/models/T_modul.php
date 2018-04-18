@@ -2,7 +2,7 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class T_modul extends CI_Model{
-    public $id_banner;
+    public $id_modul;
     public $link_modul;
 
     private $table_name = 'modul';

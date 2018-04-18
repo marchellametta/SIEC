@@ -25,7 +25,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             <div class="input-group">
               <span id="input-gambar-icon" class="input-group-addon border"><i class="fa fa-upload p-2"></i></span>
               <input type="file" accept="image/*" name="gambar-file" id="input-gambar-file" class="hidden">
-              <input type="text" placeholder="Pilih Gambar" id="input-gambar" name="gambar" class="form-control cursor" readonly>
+              <input type="text" placeholder="Pilih Gambar" id="input-gambar" value="<?php if(isset($sertifikat->gambar)) echo $sertifikat->gambar?>" name="gambar" class="form-control cursor" readonly>
             </div>
           </div>
         </div>
@@ -115,7 +115,7 @@ $(function () {
              var tmp = suggestions.map(function(item){
                return {
                  label : item.nama,
-                 value : item.id_peserta
+                 value : item.id_user
                };
              });
              res(tmp);

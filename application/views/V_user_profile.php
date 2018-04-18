@@ -71,8 +71,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
               <?php echo "Buddha";?>
             <?php elseif($data->agama==5): ?>
               <?php echo "Hindu";?>
-            <?php elseif($data->agama==4): ?>
-              <?php echo "Lainnya";?>    
+            <?php elseif($data->agama==6): ?>
+              <?php echo "Lainnya";?>
             <?php endif; ?>
           </td>
         </tr>
@@ -91,19 +91,35 @@ defined('BASEPATH') OR exit('No direct script access allowed');
           <div class="form-group col-md-12">
             <label for="nama">Nama Lengkap</label>
             <input type="text" value="<?php echo $data->nama; ?>" class="form-control" name="nama" placeholder="Nama Lengkap">
+            <span class="help-block text-danger"><?php if(isset($error_array['nama'])) echo $error_array['nama']?></span>
           </div>
           <div class="form-group col-md-12">
             <label for="alamat">Alamat</label>
             <textarea class="form-control" rows="3" name="alamat" placeholder="Alamat"><?php echo $data->alamat; ?></textarea>
+            <span class="help-block text-danger"><?php if(isset($error_array['alamat'])) echo $error_array['alamat']?></span>
           </div>
           <div class="form-row ml-2">
-            <div class="form-group col-md-12">
+            <div class="form-group col-md-4">
               <label for="pekerjaan">Pekerjaan</label>
               <input type="text" value="<?php echo $data->pekerjaan; ?>" class="form-control" name="pekerjaan" placeholder="Pekerjaan">
+              <span class="help-block text-danger"><?php if(isset($error_array['pekerjaan'])) echo $error_array['pekerjaan']?></span>
             </div>
-            <div class="form-group col-md-12">
+            <div class="form-group col-md-4">
               <label for="lembaga">Lembaga</label>
               <input type="text" value="<?php echo $data->lembaga; ?>" class="form-control" name="lembaga" placeholder="Lembaga">
+              <span class="help-block text-danger"><?php if(isset($error_array['lembaga'])) echo $error_array['lembaga']?></span>
+            </div>
+            <div class="form-group col-md-4">
+              <label for="agama">Agama</label>
+              <select class="form-control" name="agama" <?php if(isset($user)) echo 'disabled'?>>
+                <option value="1" <?php if($data->agama==1) echo 'selected' ; if(isset($user)) if($user->agama==1) echo 'selected'?>>Katolik</option>
+                <option value="2" <?php if($data->agama==2) echo 'selected' ; if(isset($user)) if($user->agama==2) echo 'selected'?>>Kristen</option>
+                <option value="3" <?php if($data->agama==3) echo 'selected' ; if(isset($user)) if($user->agama==3) echo 'selected'?>>Islam</option>
+                <option value="4" <?php if($data->agama==4) echo 'selected' ; if(isset($user)) if($user->agama==4) echo 'selected'?>>Buddha</option>
+                <option value="5" <?php if($data->agama==5) echo 'selected' ; if(isset($user)) if($user->agama==5) echo 'selected'?>>Hindu</option>
+                <option value="6" <?php if($data->agama==6) echo 'selected' ; if(isset($user)) if($user->agama==6) echo 'selected'?>>Lainnya</option>
+              </select>
+              <span class="help-block text-danger"><?php if(isset($error_array['agama'])) echo $error_array['agama']?></span>
             </div>
           </div>
           <div class="form-row ml-2">
@@ -115,22 +131,26 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 <option value="3" <?php if($data->pendidikan_terakhir==3) echo 'selected'; ?>>S1</option>
                 <option value="4" <?php if($data->pendidikan_terakhir==4) echo 'selected'; ?>>S2</option>
               </select>
+              <span class="help-block text-danger"><?php if(isset($error_array['pendidikan'])) echo $error_array['pendidikan']?></span>
             </div>
             <div class="form-group col-md-8 col-lg-4">
               <label for="kota">Kota Asal</label>
               <input value="<?php echo $data->kota; ?>" type="text" class="form-control" name="kota" placeholder="Kota Asal">
+              <span class="help-block text-danger"><?php if(isset($error_array['kota'])) echo $error_array['kota']?></span>
             </div>
             <div class="form-group col-md-8 col-lg-4">
               <label for="nohp">Nomor HP</label>
               <input value="<?php echo $data->no_hp; ?>" type="text" class="form-control" name="nohp" placeholder="Nomor HP">
+              <span class="help-block text-danger"><?php if(isset($error_array['nohp'])) echo $error_array['nohp']?></span>
             </div>
             <div class="form-group col-md-6">
               <label for="email">Email Baru</label>
               <input type="email" value="<?php echo $data->email ?>" class="form-control" name="email" placeholder="Email">
+              <span class="help-block text-danger"><?php if(isset($error_array['email'])) echo $error_array['email']?></span>
             </div>
           </div>
-          <button type="button" id="btn-batal-profil-user" class="btn btn-danger pull-right hidden">Batal</button>
-          <input id="btn-simpan-profil-user" type="submit" value="Simpan" class="btn btn-success pull-right hidden mr-1">
+          <button type="button" id="btn-batal-profil-user" class="btn btn-danger pull-right">Batal</button>
+          <input id="btn-simpan-profil-user" type="submit" value="Simpan" class="btn btn-success pull-right mr-1">
       </form>
       <button type="button" id="btn-profil-user" class="btn btn-primary pull-right mt-5"><i class="fa fa-edit mr-1"></i>Ubah Profil</button>
       <button type="button" id="btn-password-user" class="btn btn-primary pull-right mr-1 mt-5"><i class="fa fa-edit mr-1"></i>Ubah Password</button>
@@ -158,8 +178,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
              <?php echo $error; ?>
            </div>
        <?php endif ?>
-      <button type="button" id="btn-batal-password-user" class="btn btn-danger pull-right hidden">Batal</button>
-      <input id="btn-simpan-password-user" type="submit" value="Simpan" class="btn btn-success pull-right hidden mr-1">
+      <button type="button" id="btn-batal-password-user" class="btn btn-danger pull-right">Batal</button>
+      <input id="btn-simpan-password-user" type="submit" value="Simpan" class="btn btn-success pull-right mr-1">
     </form>
   </fieldset>
     </div>
@@ -170,33 +190,39 @@ $(document).ready(function(){
     $("#btn-profil-user").click(function(){
         $("#form-profil-user").toggle();
         $("#table-profil-user").toggle();
-        $("#btn-profil-user").toggle();
-        $("#btn-password-user").toggle();
-        $("#btn-simpan-profil-user").toggle();
-        $("#btn-batal-profil-user").toggle();
+        //$("#btn-profil-user").toggle();
+        //$("#btn-password-user").toggle();
+        //$("#btn-simpan-profil-user").toggle();
+        //$("#btn-batal-profil-user").toggle();
+        var rules = JSON.parse('<?php echo $rules_profile ?>');
+        var form = $('#form-profil-user');
+        form.applyRules({
+          formRules : rules,
+          externalErrors : ''
+        });
     });
 
     $("#btn-batal-profil-user").click(function(){
         $("#form-profil-user").toggle();
         $("#table-profil-user").toggle();
-        $("#btn-profil-user").toggle();
-        $("#btn-password-user").toggle();
-        $("#btn-simpan-profil-user").toggle();
-        $("#btn-batal-profil-user").toggle();
+        //$("#btn-profil-user").toggle();
+        //$("#btn-password-user").toggle();
+        //$("#btn-simpan-profil-user").toggle();
+        //$("#btn-batal-profil-user").toggle();
     });
 
     $("#btn-password-user").click(function(){
         $("#form-akun-user").toggle();
         $("#table-akun-user").toggle();
-        $("#btn-batal-password-user").toggle();
-        $("#btn-simpan-password-user").toggle();
+        //$("#btn-batal-password-user").toggle();
+        //$("#btn-simpan-password-user").toggle();
     });
 
     $("#btn-batal-password-user").click(function(){
       $("#form-akun-user").toggle();
       $("#table-akun-user").toggle();
-      $("#btn-batal-password-user").toggle();
-      $("#btn-simpan-password-user").toggle();
+      //$("#btn-batal-password-user").toggle();
+      //$("#btn-simpan-password-user").toggle();
     });
 });
 

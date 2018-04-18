@@ -9,6 +9,21 @@ defined('BASEPATH') OR exit('No direct script access allowed');
       <fieldset class="mt-4">
         <legend>Upload Modul</legend>
         <div id="modul_block">
+        <?php if(!empty($modul)): ?>
+          <?php $i = 1; ?>
+          <?php foreach ($modul as $row): ?>
+            <div class="form-group col-md-8">
+              <label for="input-pdf-1" class="control-label">Modul <?php echo $i ?></label>
+              <div class="input-group">
+                <span id="input-pdf-1-icon" class="input-group-addon border input-pdf-icon"><i class="fa fa-upload p-2"></i></span>
+                <input type="file" accept=".pdf" name="pdf-<?php echo $i ?>-file" id="input-pdf-<?php echo $i ?>-file" class="input-pdf-file hidden">
+                <input type="text" placeholder="Pilih pdf" id="input-pdf-<?php echo $i ?>" name="pdf[]" value="<?php echo $row->link_modul?>" class="input-pdf form-control cursor" readonly>
+                <input type="text" id="status-pdf-<?php echo $i ?>" name="pdf[]" value="<?php echo 3 ?>" class="status-pdf form-control hidden">
+              </div>
+            </div>
+          <?php $i++ ?>
+          <?php endforeach; ?>
+        <?php else :?>
           <div class="form-group col-md-8">
             <label for="input-pdf-1" class="control-label">Modul 1</label>
             <div class="input-group">
@@ -25,6 +40,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
               <input type="text" placeholder="Pilih pdf" id="input-pdf-2" name="pdf[]" class="input-pdf form-control cursor" readonly>
             </div>
           </div>
+        <?php endif; ?>
         </div>
         <a id="tambah" href="#"><i class="fa fa-plus p-1"></i>Tambah</a>
       </fieldset>
@@ -45,6 +61,7 @@ $(function () {
     $('#modul_block').on('change', '.input-pdf-file', function(event){
       var filename = $(this).val().split(/(\\|\/)/g).pop();
       $(this).siblings('.input-pdf').val(filename).keyup();
+      $(this).siblings('.status-pdf').val(2).keyup();
     });
 
     // $('.input-pdf').add('.input-pdf-icon').on('click', function(event) {

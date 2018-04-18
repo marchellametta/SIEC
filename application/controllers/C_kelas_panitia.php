@@ -244,8 +244,11 @@ class C_Kelas_panitia extends CI_Controller{
     }else if($this->input->method() == 'post'){
       $this->load->helper('upload_file');
       $this->load->model('T_ec');
+      $this->load->model('T_Sertifikat');
+
       $post_data = $this->input->post();
-      $res="";
+      $sertifikat = $this->T_Sertifikat->get($id);
+      
       if(!empty($_FILES['gambar-file']['name'])){
       $res = upload_file($this,[
         'field_name' => 'gambar-file',
@@ -253,13 +256,16 @@ class C_Kelas_panitia extends CI_Controller{
         'file_name' => $this->T_ec->get($id)[0]->tema_ec."-".$post_data['gambar'],
         'max_size' => 8192
       ]);
-      }
       if(isset($res->error_code)){
         echo $res->errors;
         die();
       }else if(!isset($res->error_code)){
         $post_data['gambar'] = $res;
       }
+    }else{
+      $post_data['gambar'] = $sertifikat->gambar;
+    }
+
 
       if(!empty($_POST['id_peserta'])){
         $this->cetakSertifikatSatuan($id,$post_data);

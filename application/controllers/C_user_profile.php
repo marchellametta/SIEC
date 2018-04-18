@@ -33,10 +33,13 @@ class C_User_profile extends CI_Controller{
        $this->load->view('V_navbar');
 
        $this->load->model('T_user');
+       $this->load->helper('config_rules');
+
        $data = $this->T_user->get($id);
        $this->load->view('V_user_profile',[
          'data' => $data,
-         'show' => ''
+         'show' => '',
+         'rules_profile' => json_encode(get_rules('form-edit-profile'))
        ]);
        $this->load->view('V_footer');
     } else if($this->input->method() == 'post'){
@@ -64,23 +67,37 @@ class C_User_profile extends CI_Controller{
       redirect('');
     }
     if($this->input->method() == 'post'){
+       $this->load->helper('config_rules');
+
        $post_data = $this->input->post();
+       $this->form_validation->set_data($post_data);
+       $this->form_validation->set_rules(get_rules('form-edit-profile'));
+     	 $status = $this->form_validation->run();
+       $error_array = $this->form_validation->error_array();
 
-       $this->load->model('T_user');
-       $this->T_user->edit($id,[
-         'nama' => $post_data['nama'],
-         'alamat' => $post_data['alamat'],
-         'pekerjaan' => $post_data['pekerjaan'],
-         'lembaga' => $post_data['lembaga'],
-         'pendidikan_terakhir' => intval($post_data['pendidikan']),
-         'kota' => $post_data['kota'],
-         'no_hp' => $post_data['nohp'],
-         'email' => $post_data['email'],
-         'agama' => $post_data['agama']
+       // var_dump($error_array);
+       // die();
+       if($status==FALSE){
+         echo "salah";
+         die();
+       }else{
+         $this->load->model('T_user');
+         $this->T_user->edit($id,[
+           'nama' => $post_data['nama'],
+           'alamat' => $post_data['alamat'],
+           'pekerjaan' => $post_data['pekerjaan'],
+           'lembaga' => $post_data['lembaga'],
+           'pendidikan_terakhir' => intval($post_data['pendidikan']),
+           'kota' => $post_data['kota'],
+           'no_hp' => $post_data['nohp'],
+           'email' => $post_data['email'],
+           'agama' => $post_data['agama']
 
-       ]);
+         ]);
+       }
 
-       redirect('profil/'.$id, 'refresh');
+
+       //redirect('profil/'.$id, 'refresh');
     } else if($this->input->method() == 'get'){
 
 
@@ -111,6 +128,8 @@ class C_User_profile extends CI_Controller{
        $post_data = $this->input->post();
 
        $match = password_verify($post_data['password_lama'] ,$db_password);
+       //var_dump($match);
+       //die();
 
        if($post_data['password_baru']!==$post_data['password_retype']){
          $this->load->view('V_header');
@@ -130,11 +149,21 @@ class C_User_profile extends CI_Controller{
            $this->T_user->edit($id,[
              'password' => password_hash($post_data['password_baru'], PASSWORD_DEFAULT)
            ]);
+           redirect('profil/'.$id, 'refresh');
+
          }else{
-           echo "gagal";
-           die();
+           $this->load->view('V_header');
+           $this->load->view('V_navbar');
+
+           $this->load->model('T_user');
+           $data = $this->T_user->get($id);
+           $this->load->view('V_user_profile',[
+             'data' => $data,
+             'error' => 'Password lama salah',
+             'show' => 'password'
+           ]);
+           $this->load->view('V_footer');
          }
-         redirect('profil/'.$id, 'refresh');
        }
 
 

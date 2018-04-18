@@ -60,7 +60,7 @@ $breadcrumbRules = [
     'crumbs' => [
       1 => [
         'text' => 'Informasi',
-        'link' => $base_url.'informasi',
+        'link' => $base_url.'informasi/aktif',
       ],
       2 => [
         'text' => 'Detail',

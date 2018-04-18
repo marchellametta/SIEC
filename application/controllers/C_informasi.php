@@ -176,15 +176,15 @@ class C_Informasi extends CI_Controller{
        ]);
        $this->load->view('V_footer');
     } else if($this->input->method() == 'post'){
-      $post_data = $this->input->post();
-      var_dump($post_data);
+      //$post_data = $this->input->post();
+      //var_dump($post_data);
       // $topik = json_decode($post_data['topik']);
       // var_dump($topik);
       // foreach ($topik as $row) {
       //   var_dump($row->file);
       // }
       // var_dump($_FILES);
-      die();
+      //die();
       $this->load->helper('config_rules');
 
 
@@ -662,14 +662,18 @@ class C_Informasi extends CI_Controller{
   public function uploadModul($id){
     if($this->input->method() == 'get'){
       $this->load->model('Vw_data_ec');
+      $this->load->model('T_modul_topik');
+      $this->load->model('Vw_data_modul');
        $this->load->model('Vw_data_topik');
        $topik = $this->Vw_data_topik->get($id);
+       $modul = $this->Vw_data_modul->get($id);
        $ec = $this->Vw_data_ec->get($topik->id_ec);
        $this->load->view('V_header');
        $this->load->view('V_navbar');
        $this->load->view('V_upload_modul',[
          'topik'=> $topik,
-         'ec' => $ec
+         'ec' => $ec,
+         'modul' => $modul
        ]);
        $this->load->view('V_footer');
     } else if($this->input->method() == 'post'){

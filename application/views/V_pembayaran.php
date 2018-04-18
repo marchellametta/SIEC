@@ -34,7 +34,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
           <td><?php echo $row->nama;?></td>
           <td><?php echo "Rp. ".number_format($row->tagihan).",00 / Rp. ".number_format($row->tagihan_pelajar).",00";?><small> (khusus pelajar/mahsiswa)</small></td>
           <td>
-            <input type="text" class="form-control hidden" name="telah-bayar[<?php echo $row->id_user ?>]" placeholder="Jumlah Bayar">
+            <input type="text" placeholder="Biaya" class="form-control input-biaya hidden">
+            <input type="number" name="telah-bayar[<?php echo $row->id_user ?>]" class="hidden real-input-biaya">
             <a><?php echo "Rp. ".number_format($row->telah_bayar).",00"; ?></a>
           </td>
           <td class="text-center">
@@ -101,17 +102,23 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <script>
 $(document).ready(function(){
    $('.bayar').click(function(){
-     $(this).parent().siblings().children('input').show();
+     $(this).parent().siblings().children('.input-biaya').show();
      $(this).parent().siblings().children('a').hide();
      $(this).parent().siblings().children().children('.lunas').prop('checked',false);
 
    })
 
    $('.lunas').click(function(){
-     $(this).parent().siblings().children('input').hide();
+     $(this).parent().siblings().children('.input-biaya').hide();
      $(this).parent().siblings().children('a').show();
      $(this).parent().siblings().children().children('.lunas').prop('checked',true);
 
    })
+
+   $('.input-biaya').number(true, 2, ',', '.');
+
+   $('.input-biaya').on('keyup',function(e){
+     $(this).siblings('.real-input-biaya').val($(this).val()).keyup();
+   });
 });
 </script>

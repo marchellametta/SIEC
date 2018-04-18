@@ -33,7 +33,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <td><?php echo $row->lokasi;?></td>
         <td><?php echo $row->jam_mulai . " - " . $row->jam_selesai;?></td>
         <td><?php echo $row->nama_topik;?></td>
-        <td><?php echo $row->nama;?></td>
+        <td>
+          <?php foreach ($row->narasumber as $temp):?>
+            <?php echo $temp->nama;?></p>
+          <?php endforeach; ?>
+        </td>
       </tr>
     <?php endforeach ?>
     </tbody>
