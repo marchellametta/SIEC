@@ -96,23 +96,23 @@ defined('BASEPATH') OR exit('No direct script access allowed');
          <?php endif ?>
          <div class="form-group col-md-12">
             <label for="nama">Nama Lengkap</label>
-            <input type="text" value="<?php echo $data->nama; ?>" class="form-control" name="nama" placeholder="Nama Lengkap">
+            <input type="text" value="<?php echo (isset($post_data['nama']) ? $post_data['nama'] : $data->nama) ?>" class="form-control" name="nama" placeholder="Nama Lengkap">
             <span class="help-block text-danger"><?php if(isset($error_array['nama'])) echo $error_array['nama']?></span>
           </div>
           <div class="form-group col-md-12">
             <label for="alamat">Alamat</label>
-            <textarea class="form-control" rows="3" name="alamat" placeholder="Alamat"><?php echo $data->alamat; ?></textarea>
+            <textarea class="form-control" rows="3" name="alamat" placeholder="Alamat"><?php echo (isset($post_data['alamat']) ? $post_data['alamat'] : $data->alamat) ?></textarea>
             <span class="help-block text-danger"><?php if(isset($error_array['alamat'])) echo $error_array['alamat']?></span>
           </div>
           <div class="form-row ml-2">
             <div class="form-group col-md-4">
               <label for="pekerjaan">Pekerjaan</label>
-              <input type="text" value="<?php echo $data->pekerjaan; ?>" class="form-control" name="pekerjaan" placeholder="Pekerjaan">
+              <input type="text" value="<?php echo (isset($post_data['pekerjaan']) ? $post_data['pekerjaan'] : $data->pekerjaan) ?>" class="form-control" name="pekerjaan" placeholder="Pekerjaan">
               <span class="help-block text-danger"><?php if(isset($error_array['pekerjaan'])) echo $error_array['pekerjaan']?></span>
             </div>
             <div class="form-group col-md-4">
               <label for="lembaga">Lembaga</label>
-              <input type="text" value="<?php echo $data->lembaga; ?>" class="form-control" name="lembaga" placeholder="Lembaga">
+              <input type="text" value="<?php echo (isset($post_data['lembaga']) ? $post_data['lembaga'] : $data->lembaga) ?>" class="form-control" name="lembaga" placeholder="Lembaga">
               <span class="help-block text-danger"><?php if(isset($error_array['lembaga'])) echo $error_array['lembaga']?></span>
             </div>
             <div class="form-group col-md-4">
@@ -141,12 +141,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             </div>
             <div class="form-group col-md-8 col-lg-4">
               <label for="kota">Kota Asal</label>
-              <input value="<?php echo $data->kota; ?>" type="text" class="form-control" name="kota" placeholder="Kota Asal">
+              <input value="<?php echo (isset($post_data['kota']) ? $post_data['kota'] : $data->kota) ?>" type="text" class="form-control" name="kota" placeholder="Kota Asal">
               <span class="help-block text-danger"><?php if(isset($error_array['kota'])) echo $error_array['kota']?></span>
             </div>
             <div class="form-group col-md-8 col-lg-4">
               <label for="nohp">Nomor HP</label>
-              <input value="<?php echo $data->no_hp; ?>" type="text" class="form-control" name="nohp" placeholder="Nomor HP">
+              <input value="<?php echo (isset($post_data['nohp']) ? $post_data['nohp'] : $data->no_hp) ?>" type="text" class="form-control" name="nohp" placeholder="Nomor HP">
               <span class="help-block text-danger"><?php if(isset($error_array['nohp'])) echo $error_array['nohp']?></span>
             </div>
             <div class="form-group col-md-6">
