@@ -11,7 +11,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <div class="col-md-9 col-lg-9">
       <fieldset>
       <legend>Profil Umum</legend>
-      <table class="profil ml-3" id="table-profil-user">
+      <table class="<?php if($show=='profil') echo 'hidden' ?> profil ml-3" id="table-profil-user">
         <tr>
           <th class="w-25"></th>
           <th class="w-5"></th>
@@ -88,7 +88,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         </tr>
       </table>
       <form class="<?php if($show!=='profil') echo 'hidden' ?>" method="post" action="<?php echo base_url() . "profil/editProfil/". $data->id_user?>" id="form-profil-user">
-          <div class="form-group col-md-12">
+        <?php if (isset($error)): ?>
+             <div class="alert alert-danger alert-dismissable">
+               <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+               <?php echo $error; ?>
+             </div>
+         <?php endif ?>
+         <div class="form-group col-md-12">
             <label for="nama">Nama Lengkap</label>
             <input type="text" value="<?php echo $data->nama; ?>" class="form-control" name="nama" placeholder="Nama Lengkap">
             <span class="help-block text-danger"><?php if(isset($error_array['nama'])) echo $error_array['nama']?></span>
@@ -145,7 +151,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             </div>
             <div class="form-group col-md-6">
               <label for="email">Email Baru</label>
-              <input type="email" value="<?php echo $data->email ?>" class="form-control" name="email" placeholder="Email">
+              <input type="email" value="<?php echo (isset($post_data['email']) ? $post_data['email'] : $data->email) ?>" class="form-control" name="email" placeholder="Email">
               <span class="help-block text-danger"><?php if(isset($error_array['email'])) echo $error_array['email']?></span>
             </div>
           </div>
@@ -160,6 +166,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <form method="post" action="<?php echo base_url() . "profil/editPassword/". $data->id_user?>" class="<?php if($show!=='password') echo 'hidden' ?> mt-3" id="form-akun-user">
       <fieldset>
       <legend>Ubah Password</legend>
+      <?php if (isset($error)): ?>
+           <div class="alert alert-danger alert-dismissable">
+             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+             <?php echo $error; ?>
+           </div>
+       <?php endif ?>
       <div class="form-group col-md-6">
         <label for="password">Password Lama</label>
         <input type="password" class="form-control" name="password_lama" placeholder="Password">
@@ -172,12 +184,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <label for="retypePassword">Ketik Ulang Password Baru</label>
         <input type="password" class="form-control" name="password_retype" placeholder="Password">
       </div>
-      <?php if (isset($error)): ?>
-           <div class="alert alert-danger alert-dismissable">
-             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-             <?php echo $error; ?>
-           </div>
-       <?php endif ?>
+
       <button type="button" id="btn-batal-password-user" class="btn btn-danger pull-right">Batal</button>
       <input id="btn-simpan-password-user" type="submit" value="Simpan" class="btn btn-success pull-right mr-1">
     </form>

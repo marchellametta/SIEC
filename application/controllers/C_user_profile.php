@@ -76,10 +76,24 @@ class C_User_profile extends CI_Controller{
        $error_array = $this->form_validation->error_array();
 
        // var_dump($error_array);
+       // var_dump(isset($post_data['email']));
+       // var_dump($post_data['email']);
        // die();
        if($status==FALSE){
-         echo "salah";
-         die();
+         $this->load->view('V_header');
+         $this->load->view('V_navbar');
+
+         $this->load->model('T_user');
+         $data = $this->T_user->get($id);
+         $this->load->view('V_user_profile',[
+           'data' => $data,
+           'rules_profile' => json_encode(get_rules('form-edit-profile')),
+           'post_data' => $post_data,
+           'error_array' => $error_array,
+           'error' => 'Terjadi kesalahan pengisian data',
+           'show' => 'profil'
+         ]);
+         $this->load->view('V_footer');
        }else{
          $this->load->model('T_user');
          $this->T_user->edit($id,[
