@@ -414,13 +414,13 @@ $(document).ready(function(){
     });
 
     $(document).on('click', '.hapus', function(){
-      alert($(this).closest('tr').find('.status span').text());
+      //alert($(this).closest('tr').find('.status span').text());
       if(($(this).closest('tr').find('.status span').text()==3) || ($(this).closest('tr').find('.status span').text()==2&&$(this).closest('tr').find('.id_topik span').text()!='')){
-        alert("hai");
+        //alert("hai");
         $(this).closest('tr').find('.status span').text("4");
         $(this).closest('tr').hide();
       }else{
-        alert("nahloh");
+        //alert("nahloh");
         $(this).closest('tr').remove();
       }
     });
@@ -498,7 +498,7 @@ $(document).ready(function(){
       $('#modal #id_topik').val($.trim($(this).parent().siblings('td').children().children('li').children('.id').text()));
 
       $("#edit-topik-submit").unbind().click(function(){
-        alert("hai");
+        //alert("hai");
          var topik = $('#topik').val();
          var id_topik = $('#id_topik').val();
          var tanggal = $('#tanggal-text').val();
@@ -514,7 +514,7 @@ $(document).ready(function(){
          $('.narasumber').each(function() {
            //alert($(this).parent().parent().siblings().children('.id_narasumber').val());
            if($(this).is(":visible")){
-             alert($(this).val());
+             //alert($(this).val());
              narasumber = narasumber+ '<a>'+ $(this).val()+'</a>,<a> ';
              narasumber = narasumber+ $(this).parent().parent().siblings().children('.profesi').val()+'</a>,<a> ';
              narasumber = narasumber+ $(this).parent().parent().siblings().children('.lembaga').val()+'</a>,<a> ';

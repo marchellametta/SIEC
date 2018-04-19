@@ -67,7 +67,7 @@ class Excel{
   }
 
   public function setFullBorder($columnRange){
-    var_dump($columnRange);
+    //var_dump($columnRange);
     $this->sheet
       ->getStyle($columnRange)
       ->applyFromArray(Excel::FULL_BORDER_STYLE);

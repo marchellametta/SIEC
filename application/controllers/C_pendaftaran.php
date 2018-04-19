@@ -190,8 +190,8 @@ class C_Pendaftaran extends CI_Controller{
     if($this->input->method() == 'get'){
     } else if($this->input->method() == 'post'){
       $post_data = $this->input->post();
-      var_dump($post_data);
-      die();
+      //var_dump($post_data);
+      //die();
       $this->load->helper('config_rules');
 
       $status = TRUE;

@@ -228,7 +228,7 @@ $('#jenis-laporan').change(function() {
 
 $('#id_topik').change(function() {
     var x = $(this).val();
-    alert(x);
+    //alert(x);
     if(x==""){
       $('.topik').show();
     }else{

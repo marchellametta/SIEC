@@ -382,7 +382,7 @@ $(document).ready(function(){
       var $this = $(this);
       var jam = $(this).parent().siblings('td').children().children('li').children('.w').text();
       var nara = $(this).parent().siblings('td').children().children('li').children('.nr').html();
-      alert(nara);
+      // alert(nara);
       var jam_arr = jam.split(' - ');
       var narasumber_arr = nara.split('<br>');
       var length = narasumber_arr.length-1;
