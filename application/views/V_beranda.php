@@ -33,6 +33,21 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 </a>
 </div>
 
+<div class="text-left ml-3"><h5>Berita</h5></div>
+
+
+<?php foreach ($berita as $row): ?>
+  <div class="row mr-3 ml-3 pb-5 pt-4 border-bottom border-dark">
+    <div class="col-md-3 col-lg-6">
+      <img class="w-100" src="<?php echo base_url(). $row->gambar ?>">
+    </div>
+    <div class="col-md-6 col-lg-6 mt-4 mt-sm-0 mt-md-0 mt-lg-0">
+      <h5><?php echo $row->judul ?></h5>
+      <p class="text-justify"><?php echo $row->isi ?></p>
+    </div>
+  </div>
+<?php endforeach; ?>
+
 </body>
 </html>
 

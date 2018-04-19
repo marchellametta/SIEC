@@ -7,12 +7,15 @@ class C_Beranda extends CI_Controller{
   public function index(){
     if($this->input->method() == 'get'){
       $this->load->model('T_banner');
+      $this->load->model('T_berita');
 
       $banner = $this->T_banner->all();
+      $berita = $this->T_berita->all();
        $this->load->view('V_header');
        $this->load->view('V_navbar');
        $this->load->view('V_beranda',[
-         'banner' => $banner
+         'banner' => $banner,
+         'berita' => $berita
        ]);
        $this->load->view('V_footer');
     } else if($this->input->method() == 'post'){
