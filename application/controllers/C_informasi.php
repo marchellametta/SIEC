@@ -659,7 +659,7 @@ class C_Informasi extends CI_Controller{
        while($i <= $length) {
          $res = "";
          if(!empty($_FILES['pdf-'.$i.'-file']['name'])){
-           if($post_data['status_pdf'][$i-1]==1){
+           if($post_data['status_pdf'][$i-1]==1 || ($post_data['status_pdf'][$i-1]==2 && $post_data['id_pdf'][$i-1]==0)){
              $res = upload_file($this,[
                'field_name' => 'pdf-'.$i.'-file',
                'upload_path' => 'Modul',
@@ -684,7 +684,7 @@ class C_Informasi extends CI_Controller{
                  //redirect('', 'refresh');
                }
              }
-           }else if($post_data['status_pdf'][$i-1]==2){
+           }else if($post_data['status_pdf'][$i-1]==2&&$post_data['id_pdf'][$i-1]!=0){
              $this->T_modul_topik->dettach_modul_topik($post_data['id_pdf'][$i-1],$id);
              $this->T_modul->delete($post_data['id_pdf'][$i-1]);
 
@@ -713,7 +713,7 @@ class C_Informasi extends CI_Controller{
                }
              }
            }
-         }else if($post_data['status_pdf'][$i-1]==4){
+         }else if($post_data['status_pdf'][$i-1]==4&&$post_data['id_pdf'][$i-1]!=0){
            $this->T_modul_topik->dettach_modul_topik($post_data['id_pdf'][$i-1],$id);
            $this->T_modul->delete($post_data['id_pdf'][$i-1]);
          }
