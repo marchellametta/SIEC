@@ -273,9 +273,9 @@ $(document).ready(function(){
 
        $('.narasumber').each(function() {
          narasumber = narasumber+ $(this).val()+', ';
-         narasumber = narasumber+ $(this).parent().siblings().children('.profesi').val()+', ';
-         narasumber = narasumber+ $(this).parent().siblings().children('.lembaga').val()+', ';
-         narasumber = narasumber+ $(this).parent().siblings().children('.jabatan').val();
+         narasumber = narasumber+ $(this).parent().parent().siblings().children('.profesi').val()+', ';
+         narasumber = narasumber+ $(this).parent().parent().siblings().children('.lembaga').val()+', ';
+         narasumber = narasumber+ $(this).parent().parent().siblings().children('.jabatan').val();
          narasumber = narasumber+ '<br>';
        });
 
@@ -438,9 +438,9 @@ $(document).ready(function(){
 
          $('.narasumber').each(function() {
            narasumber = narasumber+ $(this).val()+', ';
-           narasumber = narasumber+ $(this).parent().siblings().children('.profesi').val()+', ';
-           narasumber = narasumber+ $(this).parent().siblings().children('.lembaga').val()+', ';
-           narasumber = narasumber+ $(this).parent().siblings().children('.jabatan').val();
+           narasumber = narasumber+ $(this).parent().parent().siblings().children('.profesi').val()+', ';
+           narasumber = narasumber+ $(this).parent().parent().siblings().children('.lembaga').val()+', ';
+           narasumber = narasumber+ $(this).parent().parent().siblings().children('.jabatan').val();
            narasumber = narasumber+ '<br>';
          });
 

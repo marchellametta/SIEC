@@ -47,4 +47,10 @@ class T_jadwal extends CI_Model{
       $this->db->delete($this->table_name);
       return $this->db->affected_rows() > 0;
     }
+
+    public function deleteByTopik($id){
+      $this->db->where('id_topik',$id);
+      $this->db->delete($this->table_name);
+      return $this->db->affected_rows() > 0;
+    }
 }

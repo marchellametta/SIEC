@@ -132,7 +132,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
               <tr>
                 <td>
                   <ul>
-                    <li class="hidden">
+                    <li class="hidden id_topik">
                       <span class="id"><?php echo $row->id_topik; ?></span>
                     </li>
                     <li>
@@ -167,7 +167,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                       <span class="nr"><?php foreach ($row->narasumber as $temp): ?><?php echo "<a>".$temp->nama."</a>,<a> ".$temp->profesi."</a>,<a> ".$temp->lembaga."</a>,<a> ".$temp->jabatan."</a><a class=hidden>, ".$temp->id_narasumber."</a><a class='hidden'>, 3</a></br>"; ?><?php endforeach; ?>
                       </span>
                     </li>
-                    <li class="hidden">
+                    <li class="hidden status">
                       <span><?php echo $row->status ?></span>
                     </li>
                 </td>
@@ -331,15 +331,15 @@ $(document).ready(function(){
     $('.narasumber').each(function() {
       if($(this).is(":visible")){
         narasumber = '<a>'+narasumber+ $(this).val()+'</a>,<a> ';
-        narasumber = narasumber+ $(this).parent().siblings().children('.profesi').val()+'</a>,<a> ';
-        narasumber = narasumber+ $(this).parent().siblings().children('.lembaga').val()+'</a>,<a> ';
-        narasumber = narasumber+ $(this).parent().siblings().children('.jabatan').val()+'</a><a class="hidden">, 0</a><a class="hidden">,1</a>';
+        narasumber = narasumber+ $(this).parent().parent().siblings().children('.profesi').val()+'</a>,<a> ';
+        narasumber = narasumber+ $(this).parent().parent().siblings().children('.lembaga').val()+'</a>,<a> ';
+        narasumber = narasumber+ $(this).parent().parent().siblings().children('.jabatan').val()+'</a><a class="hidden">, 0</a><a class="hidden">,1</a>';
         narasumber = narasumber+ '<br>';
       }
     });
 
 
-     $("tbody").append("<tr>"+"<td>"+"<ul>"+"<li class='hidden'><span class='id'>"+id_topik+"</li>"+"<li><b>Tanggal: </b><span class='t'>"+tanggal+"<li><b>Waktu: </b><span class='w'>"+jammulai+" - "+jamselesai+"</li>"+"<li><b>Lokasi: </b><span class='l'>"+lokasi+"</li>"+"<li><b>Nama topik: </b><span class='n'>"+topik+"</li>"+'<li class="split"><b>Narasumber:</b><br><span class="nr">'+narasumber+"</li>"+"<li class="+'hidden'+">"+status+"</li>"+"</ul>"+"</td>"+"<td>"+buttonedit+button+'</td>'+"</tr>");
+     $("tbody").append("<tr>"+"<td>"+"<ul>"+"<li class='hidden id_topik'><span class='id'>"+id_topik+"</li>"+"<li><b>Tanggal: </b><span class='t'>"+tanggal+"<li><b>Waktu: </b><span class='w'>"+jammulai+" - "+jamselesai+"</li>"+"<li><b>Lokasi: </b><span class='l'>"+lokasi+"</li>"+"<li><b>Nama topik: </b><span class='n'>"+topik+"</li>"+'<li class="split"><b>Narasumber:</b><br><span class="nr">'+narasumber+"</li>"+"<li class='hidden status'>"+status+"</li>"+"</ul>"+"</td>"+"<td>"+buttonedit+button+'</td>'+"</tr>");
   });
 
   $("#modal").on("hidden.bs.modal", function () {
@@ -414,10 +414,13 @@ $(document).ready(function(){
     });
 
     $(document).on('click', '.hapus', function(){
-      if($(this).closest('tr').find('.status').text()==3){
-        $(this).closest('tr').find('.status').text("4");
+      alert($(this).closest('tr').find('.status span').text());
+      if(($(this).closest('tr').find('.status span').text()==3) || ($(this).closest('tr').find('.status span').text()==2&&$(this).closest('tr').find('.id_topik span').text()!='')){
+        alert("hai");
+        $(this).closest('tr').find('.status span').text("4");
         $(this).closest('tr').hide();
       }else{
+        alert("nahloh");
         $(this).closest('tr').remove();
       }
     });
@@ -531,7 +534,7 @@ $(document).ready(function(){
          });
 
          $this.closest('tr').remove();
-        $("tbody").append("<tr>"+"<td>"+"<ul>"+"<li class='hidden'><span class='id'>"+id_topik+"</li>"+"<li><b>Tanggal: </b><span class='t'>"+tanggal+"<li><b>Waktu: </b><span class='w'>"+jammulai+" - "+jamselesai+"</li>"+"<li><b>Lokasi: </b><span class='l'>"+lokasi+"</li>"+"<li><b>Nama topik: </b><span class='n'>"+topik+"</li>"+'<li class="split"><b>Narasumber:</b><br><span class="nr">'+narasumber+"</li>"+"<li class="+'hidden'+">"+status+"</li>"+"</ul>"+"</td>"+"<td>"+buttonedit+button+'</td>'+"</tr>");
+        $("tbody").append("<tr>"+"<td>"+"<ul>"+"<li class='hidden id_topik'><span class='id'>"+id_topik+"</li>"+"<li><b>Tanggal: </b><span class='t'>"+tanggal+"<li><b>Waktu: </b><span class='w'>"+jammulai+" - "+jamselesai+"</li>"+"<li><b>Lokasi: </b><span class='l'>"+lokasi+"</li>"+"<li><b>Nama topik: </b><span class='n'>"+topik+"</li>"+'<li class="split"><b>Narasumber:</b><br><span class="nr">'+narasumber+"</li>"+"<li class='hidden status'>"+status+"</li>"+"</ul>"+"</td>"+"<td>"+buttonedit+button+'</td>'+"</tr>");
         //$('#form').trigger("reset");
       });
     });

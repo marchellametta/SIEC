@@ -176,7 +176,7 @@ class C_Informasi extends CI_Controller{
        ]);
        $this->load->view('V_footer');
     } else if($this->input->method() == 'post'){
-      //$post_data = $this->input->post();
+      $post_data = $this->input->post();
       //var_dump($post_data);
       // $topik = json_decode($post_data['topik']);
       // var_dump($topik);
@@ -269,7 +269,7 @@ class C_Informasi extends CI_Controller{
          'status_evaluasi' => $status_evaluasi,
          'status_peserta' => $status_peserta,
          'biaya' => $post_data['biaya'],
-         'biaya-pelajar' => $post_data['biaya-pelajar'],
+         'biaya_pelajar' => $post_data['biaya-pelajar'],
          'gambar' => $post_data['gambar'],
          'semester_pelaksanaan' => $post_data['semester'],
          'tahun_pelaksanaan' => $post_data['tahun'],
@@ -488,7 +488,7 @@ class C_Informasi extends CI_Controller{
          'kapasitas_peserta' => (isset($post_data['kapasitas'])) ? $post_data['kapasitas'] : 0
        ]);
        foreach ($topik as $row) {
-         if($row->status==1){
+         if($row->status==1 || ($row->status==2&&$row->id_topik=="")){
            $this->T_topik_ec->insert([
              'id_ec' => $id,
              'nama_topik' => $row->topik
@@ -508,6 +508,14 @@ class C_Informasi extends CI_Controller{
            foreach ($row->narasumber as $tmp) {
              $data = explode(",",$tmp);
              if(count($data)>=4){
+               $data[5] = substr($data[5],0,1);
+               $data[4] =substr($data[4],1,strlen($data[4])-23);
+               $data[3] =substr($data[3],4,strlen($data[3])-26);
+               $data[2] =substr($data[2],4,strlen($data[2])-8);
+               $data[1] =substr($data[1],4,strlen($data[1])-8);
+               $data[0] =substr($data[0],3,strlen($data[0])-7);
+             }
+             if(count($data)>=4){
                $this->T_narasumber->insert([
                  'profesi' => trim($data[1]),
                  'jabatan' => trim($data[3]),
@@ -521,12 +529,14 @@ class C_Informasi extends CI_Controller{
              }
            }
          }else if($row->status==4){
-           $this->T_jadwal->delete($row->id_topik);
-           $id_narasumber = $this->T_narasumber_topik->getNarasumber($row->id_topik)->id_narasumber;
-           $this->T_narasumber_topik->dettach_narasumber_topik($id_narasumber,$row->id_topik);
-           $this->T_narasumber->delete($id_narasumber);
+           $this->T_jadwal->deleteByTopik($row->id_topik);
+           $id_narasumber = $this->T_narasumber_topik->getNarasumber($row->id_topik);
+           foreach ($id_narasumber as $temp) {
+             $this->T_narasumber_topik->dettach_narasumber_topik($temp->id_narasumber,$row->id_topik);
+             $this->T_narasumber->delete($temp->id_narasumber);
+           }
            $this->T_topik_ec->delete($row->id_topik);
-         }else if($row->status==2){
+         }else if($row->status==2&&$row->id_topik!=""){
            $id_jadwal = $this->T_jadwal->getByIdTopik($row->id_topik)->id_jadwal;
            //$id_narasumber = $this->T_narasumber_topik->getNarasumber($row->id_topik);
            $this->T_topik_ec->edit($row->id_topik, [
@@ -555,7 +565,7 @@ class C_Informasi extends CI_Controller{
                $data[1] =substr($data[1],4,strlen($data[1])-8);
                $data[0] =substr($data[0],3,strlen($data[0])-7);
              }
-             var_dump($data);
+             //var_dump($data);
              //die();
               if(count($data)>=4 && trim($data[5])=="2"){
                if(trim($data[4])!=""){
