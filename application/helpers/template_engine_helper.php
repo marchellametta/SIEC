@@ -20,6 +20,7 @@ class TemplateEngine{
         $posisi_top .= 'cm;';
         $posisi_left .= 'cm;';
 
+
     // /// Siapkan dokumen html dan css
         $output .= '<html>';
         $output .= '<head>';
@@ -32,14 +33,14 @@ class TemplateEngine{
         $output .= 'height : 100%;';
         $output .= '}';
         $output .= '.nama {';
-        //$output .= 'padding-left: '.$nama_left;
+        $output .= 'padding-left: '.$nama_left;
         $output .= 'padding-top: '.$nama_top;
-        $output .= 'text-align: center';
+        //$output .= 'text-align: center';
         $output .= '}';
         $output .= '.posisi {';
-        //$output .= 'padding-left: '.$posisi_left;
+        $output .= 'padding-left: '.$posisi_left;
         $output .= 'padding-top: '.$posisi_top;
-        $output .= 'text-align: center';
+        //$output .= 'text-align: center';
         $output .= '}';
         $output .= '</style>';
         $output .= '</head>';

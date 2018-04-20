@@ -480,6 +480,7 @@ class C_Informasi extends CI_Controller{
          'status_evaluasi' => $status_evaluasi,
          'status_peserta' => $status_peserta,
          'biaya' => $post_data['biaya'],
+         'biaya_pelajar' => $post_data['biaya-pelajar'],
          'gambar' => $post_data['gambar'],
          'semester_pelaksanaan' => $post_data['semester'],
          'tahun_pelaksanaan' => $post_data['tahun'],

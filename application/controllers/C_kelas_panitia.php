@@ -248,7 +248,7 @@ class C_Kelas_panitia extends CI_Controller{
 
       $post_data = $this->input->post();
       $sertifikat = $this->T_Sertifikat->get($id);
-      
+
       if(!empty($_FILES['gambar-file']['name'])){
       $res = upload_file($this,[
         'field_name' => 'gambar-file',
@@ -307,16 +307,23 @@ class C_Kelas_panitia extends CI_Controller{
         }
 
         $peserta = $this->Stored_procedure->get_peserta_lulus($id,$post_data['batas_lulus']);
+        $length = count($peserta);
         $this->load->helper('template_engine');
         $en = new TemplateEngine($this,$id);
         $mpdf=new mPDF('','A5', 0, '', 0, 0, 0, 0, 0, 0, '');
         $mpdf->SetWatermarkImage('../SIEC/'.$post_data['gambar'],1);
         $mpdf->watermarkImgBehind = true;
         $mpdf->showWatermarkImage = true;
+        // var_dump($post_data);
+        // die();
         //$mpdf = new mPDF();
+        $counter = 1;
         foreach ($peserta as $row) {
-          $mpdf->WriteHTML($en->renderOutput($post_data['nama_top'],$post_data['nama_left'],$post_data['peran_top'],$post_data['peran_left'],$row->nama, "Peserta"));
-          $mpdf->AddPage();
+          $mpdf->WriteHTML($en->renderOutput($post_data['nama_left'],$post_data['nama_top'],$post_data['peran_top'],$post_data['peran_left'],$row->nama, "Peserta"));
+          if($counter!=$length){
+            $mpdf->AddPage();
+          }
+          $counter++;
         }
         //$mpdf->WriteHTML($en->renderOutput());
         $mpdf->Output();

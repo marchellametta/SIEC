@@ -2,10 +2,7 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 ?>
 <div class="mr-3 ml-3 mr-sm-3 ml-sm-3 mr-md-5 ml-md-5 mt-5 mb-5">
-  <?php $this->load->view('V_template_breadcrumb', ['viewName' => 'V_list_evaluasi_kelas_user']) ?>
-  <?php if($data->status_evaluasi==2):?>
-    <a href="<?php echo base_url() .'kelas-saya/isi-evaluasi/'. $data->id_ec;?>" class=""><button class="btn btn-primary"><i class="fa fa-edit mr-1 ml-1"></i>Isi Evaluasi Keseluruhan</button></a>
-  <?php endif; ?>
+  <?php $this->load->view('V_template_breadcrumb', ['viewName' => 'V_list_modul']) ?>
   <?php foreach ($topik_arr as $row): ?>
     <div class="card mt-3 shadow">
       <div class="card-body">
