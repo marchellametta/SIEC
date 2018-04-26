@@ -132,7 +132,7 @@ class C_Pembayaran extends CI_Controller{
         $this->db->trans_rollback();
       }else{
         $this->db->trans_commit();
-        //redirect('kelas/aktif', 'refresh');
+        redirect('kelas/aktif', 'refresh');
       }
     }
   }
@@ -169,7 +169,7 @@ class C_Pembayaran extends CI_Controller{
         $this->db->trans_rollback();
       }else{
         $this->db->trans_commit();
-        //redirect('kelas/aktif', 'refresh');
+        redirect('kelas/aktif', 'refresh');
       }
     }
   }

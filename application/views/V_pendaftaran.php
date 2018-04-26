@@ -29,7 +29,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
       <div class="form-row ml-2">
         <div class="form-group col-md-4 col-lg-3">
           <label for="pekerjaan">Pekerjaan</label>
-          <input type="text" class="form-control" name="pekerjaan" placeholder="Pekerjaan" value="<?php if(isset($post_data['pekerjaan'])) echo $post_data['pekerjaan'] ; if(isset($user)) echo $user->pekerjaan?>" <?php if(isset($user)) echo 'disabled'?>>
+          <input id="input-pekerjaan" type="text" class="form-control" name="text-pekerjaan" placeholder="Pekerjaan" value="<?php if(isset($post_data['pekerjaan'])) echo $post_data['pekerjaan'] ; if(isset($user)) echo $user->pekerjaan?>" <?php if(isset($user)) echo 'disabled'?>>
+          <input id="input-id-pekerjaan" class="hidden" name="pekerjaan">
           <span class="help-block text-danger"><?php if(isset($error_array['pekerjaan'])) echo $error_array['pekerjaan']?></span>
         </div>
         <div class="form-group col-md-4 col-lg-3">
@@ -180,6 +181,49 @@ $( document ).ready(function() {
     recalculate();
 });
 
+$(function () {
+  var baseUrl = '<?php echo base_url() ?>';
+
+  var inputPekerjaan= $('#input-pekerjaan');
+  var realInputPekerjaan = $('#input-id-pekerjaan');
+
+  inputPekerjaan.autocomplete({
+    source : function(req,res){
+      var postData = {
+        pekerjaan : inputPekerjaan.val()
+      };
+      var url = baseUrl + 'pekerjaan/search';
+      console.log(url);
+      $.get(url,postData).then(function(suggestions){
+          var tmp = suggestions.map(function(item){
+            return {
+              label : item.nama_pekerjaan,
+              value : item.id_pekerjaan
+            };
+          });
+          res(tmp);
+        });
+      },
+      select : function(e,ui){
+         e.preventDefault();
+         e.target.value = ui.item.label;
+         realInputPekerjaan.val(ui.item.value).keyup();
+       },
+       focus : function(e,ui){
+          e.preventDefault();
+          e.target.value = ui.item.label;
+          realInputPekerjaan.val(ui.item.value).keyup();
+        },
+       change : function(e, ui) {
+         e.preventDefault();
+         if (ui.item == null) {
+           e.target.value = '';
+           realInputPekerjaan.val('').keyup();
+         }
+       }
+  });
+ });
+
 $('.selectall').click(function() {
    if ($(this).is(':checked')) {
        $($(this).data("checked")+' input:checkbox').prop('checked', true);
@@ -215,6 +259,10 @@ $("input[type='checkbox'].justone").change(function(){
     }
 
 
+});
+
+$("form").submit(function() {
+    $("input[type='checkbox']").removeAttr("disabled");
 });
 
 var rules = JSON.parse('<?php echo $rules ?>');

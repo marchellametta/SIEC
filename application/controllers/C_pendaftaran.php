@@ -190,8 +190,8 @@ class C_Pendaftaran extends CI_Controller{
     if($this->input->method() == 'get'){
     } else if($this->input->method() == 'post'){
       $post_data = $this->input->post();
-      //var_dump($post_data);
-      //die();
+      var_dump($post_data);
+      die();
       $this->load->helper('config_rules');
 
       $status = TRUE;
@@ -228,6 +228,7 @@ class C_Pendaftaran extends CI_Controller{
          $this->load->model('T_pembayaran_peserta_tetap');
          $this->load->model('T_pembayaran_peserta_lepas');
          $this->load->model('Vw_data_ec');
+         $this->load->model('Vw_data_user_roles');
          $this->load->model('Vw_data_topik');
           $this->load->helper('upload_file_helper');
 
@@ -278,8 +279,19 @@ class C_Pendaftaran extends CI_Controller{
                 ]);
               }
               $id_peserta = $this->db->insert_id();
+              $this->T_user_roles->insert([
+                'user_id' => $id_peserta,
+                'role_id' => 2
+              ]);
             }else{
               $id_peserta = $this->session->userdata('id_user');
+              $role = $this->Vw_data_user_roles->get(2,$id_peserta);
+              if($role == NULL){
+                $this->T_user_roles->insert([
+                  'user_id' => $id_peserta,
+                  'role_id' => 2
+                ]);
+              }
             }
 
            if(isset($_POST['kelas'])){
@@ -311,15 +323,12 @@ class C_Pendaftaran extends CI_Controller{
                }
              }
            }
-           $this->T_user_roles->insert([
-             'user_id' => $id_peserta,
-             'role_id' => 2
-           ]);
+
            if ($this->db->trans_status() === FALSE){
              $this->db->trans_rollback();
            }else{
              $this->db->trans_commit();
-             //redirect('', 'refresh');
+             redirect('', 'refresh');
            }
 
       }
@@ -348,6 +357,7 @@ class C_Pendaftaran extends CI_Controller{
     if($this->input->method() == 'get'){
     } else if($this->input->method() == 'post'){
       $this->load->model('T_user');
+      $this->load->model('T_user_roles');
       $this->load->model('T_panitia_ec');
       $post_data = $this->input->post();
       $status = TRUE;
@@ -391,13 +401,14 @@ class C_Pendaftaran extends CI_Controller{
               'foto' => $post_data['gambar']
             ]);
             $id_panitia = $this->db->insert_id();
+            $this->T_user_roles->insert([
+              'user_id' => $id_panitia,
+              'role_id' => 1
+            ]);
           }else{
             $id_panitia = $post_data['id-panitia'];
           }
-          $this->T_user_roles->insert([
-            'user_id' => $id_panitia,
-            'role_id' => 1
-          ]);
+
         foreach ($post_data['kelas'] as $row) {
           $this->T_panitia_ec->attach_panitia_ec($id_panitia,$row);
         }
@@ -405,7 +416,7 @@ class C_Pendaftaran extends CI_Controller{
           $this->db->trans_rollback();
         }else{
           $this->db->trans_commit();
-          //redirect('', 'refresh');
+          redirect('', 'refresh');
         }
       }
     }

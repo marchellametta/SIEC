@@ -316,7 +316,7 @@ class C_Informasi extends CI_Controller{
          $this->db->trans_rollback();
        }else{
          $this->db->trans_commit();
-         //redirect('', 'refresh');
+         redirect('', 'refresh');
        }
       }
     }
@@ -598,7 +598,7 @@ class C_Informasi extends CI_Controller{
          $this->db->trans_rollback();
        }else{
          $this->db->trans_commit();
-         //redirect('', 'refresh');
+         redirect('', 'refresh');
        }
       }
 
@@ -692,7 +692,7 @@ class C_Informasi extends CI_Controller{
                  $this->db->trans_rollback();
                }else{
                  $this->db->trans_commit();
-                 //redirect('', 'refresh');
+                 redirect('', 'refresh');
                }
              }
            }else if($post_data['status_pdf'][$i-1]==2&&$post_data['id_pdf'][$i-1]!=0){
@@ -720,7 +720,7 @@ class C_Informasi extends CI_Controller{
                  $this->db->trans_rollback();
                }else{
                  $this->db->trans_commit();
-                 //redirect('', 'refresh');
+                 redirect('', 'refresh');
                }
              }
            }

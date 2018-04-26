@@ -54,6 +54,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <fieldset class="mt-4">
       <legend>Pengaturan Berita</legend>
       <table class="table table-hover table-striped table-bordered d-none d-sm-block">
+        <a href="<?php echo base_url().'tambah-berita'?>"><button type="button" class="btn btn-primary mb-2"><i class="fa fa-plus mr-1"></i>Tambah</button></a>
         <thead class="thead-dark">
           <tr>
             <th scope="col">Judul</th>
@@ -65,7 +66,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
           <tr>
             <td><?php echo $row->judul; ?></td>
             <td>
-              <a href="<?php echo base_url().'kelola-berita/'.$row->id?>"><button type="button" class="btn btn-primary btn-sm"><i class="fa fa-edit mr-1"></i>Edit</button></a>
+              <a href="<?php echo base_url().'kelola-berita/'.$row->id?>"><button type="button" class="btn btn-success btn-sm"><i class="fa fa-edit mr-1"></i>Edit</button></a>
               <a href="<?php echo base_url().'hapus-berita/'.$row->id?>"><button type="button" class="btn btn-danger btn-sm"><i class="fa fa-close mr-1"></i>Hapus</button></a>
             </td>
           </tr>

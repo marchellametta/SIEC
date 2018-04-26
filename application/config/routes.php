@@ -100,5 +100,6 @@ $route['kelas/pembayaran-lepas/(:num)'] = 'C_pembayaran/pembayaranLepas/$1';
 $route['kelas/cetak-sertifikat/(:num)'] = 'C_kelas_panitia/cetakSertifikat/$1';
 $route['peserta/search'] = 'C_search_api/search_peserta';
 $route['panitia/search'] = 'C_search_api/search_panitia';
+$route['pekerjaan/search'] = 'C_search_api/search_pekerjaan';
 $route['kelas-saya/isi-evaluasi/(:num)'] = 'C_evaluasi/evaluasiTema/$1';
 $route['kelas-saya/isi-evaluasi/topik/(:num)'] = 'C_evaluasi/evaluasiTopik/$1';

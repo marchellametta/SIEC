@@ -100,7 +100,7 @@ class C_Evaluasi extends CI_Controller{
     if ( !$this->acl->hasPermission($acl_test) || !$this->acl->hasTopikIdPermission($id_user,$id) ) {
       // echo "hai";
       // die();
-      //redirect('');
+      redirect('');
     }
     if($this->input->method() == 'get'){
       $this->load->model('Vw_data_ec');

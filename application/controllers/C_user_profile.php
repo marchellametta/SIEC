@@ -108,10 +108,11 @@ class C_User_profile extends CI_Controller{
            'agama' => $post_data['agama']
 
          ]);
+         redirect('profil/'.$id, 'refresh');
+         
        }
 
 
-       //redirect('profil/'.$id, 'refresh');
     } else if($this->input->method() == 'get'){
 
 

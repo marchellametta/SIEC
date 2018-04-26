@@ -21,5 +21,14 @@ class C_Search_api extends CI_Controller{
       ->set_status_header(200)
       ->set_output(json_encode($this->Stored_procedure->search_panitia_ec($nama)));
   }
+
+  public function search_pekerjaan(){
+    $this->load->model('Stored_procedure');
+    $pekerjaan = $this->input->get('pekerjaan');
+    return $this->output
+      ->set_content_type('application/json')
+      ->set_status_header(200)
+      ->set_output(json_encode($this->Stored_procedure->search_pekerjaan($pekerjaan)));
+  }
 }
 ?>

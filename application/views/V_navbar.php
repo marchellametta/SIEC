@@ -40,7 +40,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         Selamat Datang, <b><?php echo $this->session->userdata('nama') ?></b>
       </button>
       <div class="dropdown-menu bg-black" aria-labelledby="menu">
-        <a href="<?php echo base_url()."kelas/aktif"?>"><small class="dropdown-item text-white"><i class="fa fa-list-alt text-white mr-1"></i>Daftar Kelas</small></a>
+        <a><small class="dropdown-item text-white"><i class="fa fa-list-alt text-white mr-1"></i>Daftar Kelas</small></a>
+        <ul class="list-unstyled pl-4">
+          <li><a href="<?php echo base_url()."kelas/aktif"?>"><small class="dropdown-item text-white">Aktif</small></a></li>
+          <li><a href="<?php echo base_url()."kelas/riwayat"?>"><small class="dropdown-item text-white">Riwayat</small></a></li>
+        </ul>
         <div class="dropdown-divider"></div>
         <a href="<?php echo base_url()."profil/".$this->session->userdata('id_user')?>"><small class="dropdown-item text-white"><i class="fa fa-user text-white mr-1"></i>Profil Saya</small></a>
         <div class="dropdown-divider"></div>
