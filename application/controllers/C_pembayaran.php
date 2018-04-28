@@ -45,17 +45,21 @@ class C_Pembayaran extends CI_Controller{
        ]);
        $this->load->view('V_footer');
     } else if($this->input->method() == 'post'){
+      $this->pembayaranTetap($id);
+      $this->pembayaranLepas($id);
+      redirect('kelas/aktif','refresh');
     }
   }
 
-  public function pembayaranTetap($id){
+  private function pembayaranTetap($id){
     if($this->input->method() == 'post'){
       $this->load->model('Stored_procedure');
       $this->load->model('Vw_data_ec');
+      $this->load->model('Vw_data_topik');
       $this->load->model('T_pembayaran_peserta_tetap');
+      $this->load->model('Vw_data_pembayaran_peserta_tetap');
+      $this->load->model('T_peserta_topik');
       $post_data = $this->input->post();
-      var_dump($post_data);
-      die();
 
 
       $ec = $this->Vw_data_ec->get($id);
@@ -70,6 +74,18 @@ class C_Pembayaran extends CI_Controller{
           'status_pelajar' => 0
         ]);
       }
+
+      $topik_arr = $this->Vw_data_topik->getAllTopik($id);
+      $peserta = $this->Vw_data_pembayaran_peserta_tetap->getTagihanAll($id);
+
+      foreach ($peserta as $temp) {
+        foreach($topik_arr as $row){
+          $this->T_peserta_topik->edit($row->id_topik, $temp->id_user,[
+            'status_batal' => 0
+          ]);
+        }
+      }
+
 
       if(isset($_POST['potongan'])){
         foreach ($post_data['potongan'] as $row) {
@@ -128,22 +144,35 @@ class C_Pembayaran extends CI_Controller{
         }
       }
 
-
+      if(isset($_POST['batal'])){
+        foreach ($post_data['batal'] as $row) {
+          $topik = $this->Stored_procedure->get_topik_peserta($row, $id);
+          foreach ($topik as $temp) {
+            $this->T_peserta_topik->edit($temp->id_topik, $row, [
+              'status_batal' => 1
+            ]);
+          }
+          $this->T_pembayaran_peserta_tetap->edit($row, $id, [
+            'telah_bayar' => 0,
+            'status_lunas' => 0
+          ]);
+        }
+      }
 
       if ($this->db->trans_status() === FALSE){
         $this->db->trans_rollback();
       }else{
         $this->db->trans_commit();
-        redirect('kelas/aktif', 'refresh');
       }
     }
   }
 
-  public function pembayaranLepas($id){
+  private function pembayaranLepas($id){
     if($this->input->method() == 'post'){
       $this->load->model('Stored_procedure');
       $this->load->model('Vw_data_ec');
       $this->load->model('T_pembayaran_peserta_lepas');
+      $this->load->model('Vw_data_pembayaran_peserta_lepas');
       $this->load->model('T_peserta_topik');
       $this->load->model('Vw_data_topik');
       $post_data = $this->input->post();
@@ -161,8 +190,8 @@ class C_Pembayaran extends CI_Controller{
         ]);
       //}
 
-      if(isset($_POST['bayar'])){
-        foreach ($post_data['bayar'] as $key=>$value) {
+      if(isset($_POST['bayar_lepas'])){
+        foreach ($post_data['bayar_lepas'] as $key=>$value) {
           foreach ($value as $k => $v) {
             $this->T_pembayaran_peserta_lepas->edit($k, $key, [
               'status_lunas' => 1
@@ -172,20 +201,27 @@ class C_Pembayaran extends CI_Controller{
       }
 
       $topik_arr = $this->Vw_data_topik->getAllTopik($id);
-      foreach($topik_arr as $row){
-        $this->T_peserta_topik->editTopik($row->id_topik,[
-          'status_batal' => 0
-        ]);
+      $peserta = $this->Vw_data_pembayaran_peserta_lepas->getTagihanAll($id);
+
+      foreach ($peserta as $temp) {
+        foreach($topik_arr as $row){
+          $this->T_peserta_topik->edit($row->id_topik, $temp->id_user,[
+            'status_batal' => 0
+          ]);
+        }
       }
 
 
-      if(isset($_POST['batal'])){
-        foreach ($post_data['batal'] as $key=>$value) {
+      if(isset($_POST['batal_lepas'])){
+        foreach ($post_data['batal_lepas'] as $key=>$value) {
           //var_dump($key);
           foreach ($value as $k => $v) {
             //var_dump($value);
             $this->T_peserta_topik->edit($key, $k, [
               'status_batal' => 1
+            ]);
+            $this->T_pembayaran_peserta_lepas->edit($k, $key, [
+              'status_lunas' => 0
             ]);
           }
         }
@@ -197,7 +233,6 @@ class C_Pembayaran extends CI_Controller{
         $this->db->trans_rollback();
       }else{
         $this->db->trans_commit();
-        redirect('kelas/aktif', 'refresh');
       }
     }
   }

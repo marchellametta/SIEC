@@ -17,16 +17,31 @@ defined('BASEPATH') OR exit('No direct script access allowed');
           <a href="<?php echo base_url().'tambahkelas'?>" class="btn btn-primary shadow"><i class="fa fa-plus"></i>Tambah</a>
         </div>
         <div class="col-12 col-sm-8 col-lg-9 mt-2 mt-sm-0 mt-md-0 mt-lg-0">
+          <?php if($tipe=='aktif'):?>
+            <form method="post" action="<?php echo base_url() ?>informasi/aktif">
+          <?php elseif($tipe=='akan'):?>
+            <form method="post" action="<?php echo base_url() ?>informasi/akanDatang">
+          <?php else: ?>
+            <form method="post" action="<?php echo base_url() ?>informasi/riwayat">
+          <?php endif; ?>
           <div class="input-group">
-            <input type="text" class="form-control" placeholder="Search for...">
+            <input type="text" name="tema" class="form-control" placeholder="Search for...">
             <span class="input-group-btn">
-              <button class="btn btn-secondary pt-2 pb-2" type="button"><i class="fa fa-search m-1"></i></button>
+              <button type="submit" class="btn btn-secondary pt-2 pb-2" type="button"><i class="fa fa-search m-1"></i></button>
             </span>
           </div>
+        </form>
         </div>
       </div>
     </div>
   </div>
+
+  <?php if (isset($search_message)): ?>
+      <div class="alert alert-info alert-dismissable">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+        <?php echo $search_message ;?>
+      </div>
+  <?php endif ?>
 
   <?php foreach ($data as $row): ?>
   <div class="card mt-4 shadow ml-3 mr-3">

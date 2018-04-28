@@ -16,7 +16,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 <div class="tab-content">
   <div id="tetap" class="tab-pane fade show active" role="tabpanel" aria-labelledby="tetap-tab">
-    <form method="post" action="<?php echo base_url() ?>kelas/pembayaran-tetap/<?php echo $ec->id_ec ?>">
+    <form method="post" action="<?php echo base_url() ?>kelas/pembayaran/<?php echo $ec->id_ec ?>">
     <table class="table table-hover table-striped table-bordered absensi mt-5">
       <thead class="thead-dark">
         <tr>
@@ -64,14 +64,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
       <?php endforeach ?>
       </tbody>
     </table>
-    <div class="text-right">
-      <input type="submit" value="Simpan" class="btn btn-success">
-      <a href="<?php echo base_url().'kelas/aktif'?>"><button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button></a>
-    </div>
-  </form>
   </div>
   <div id="lepas" class="tab-pane fade">
-    <form method="post" action="<?php echo base_url() ?>kelas/pembayaran-lepas/<?php echo $ec->id_ec ?>">
     <table class="table table-hover table-striped table-bordered absensi mt-5">
       <thead class="thead-dark">
         <tr>
@@ -90,13 +84,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
           <td><?php echo "Rp. ".number_format($row->tagihan).",00";?></td>
           <td class="text-center">
             <div class="form-check">
-              <input class="form-check-input" type="checkbox" value="1" name= "bayar[<?php echo $row->id_topik?>][<?php echo $row->id_user?>]" <?php if($row->status_lunas==1) echo "checked"?>>
+              <input class="form-check-input" type="checkbox" value="1" name= "bayar_lepas[<?php echo $row->id_topik?>][<?php echo $row->id_user?>]" <?php if($row->status_lunas==1) echo "checked"?>>
               <label class="form-check-label">Lunas</label>
             </div>
           </td>
           <td class="text-center">
             <div class="form-check">
-              <input class="form-check-input" type="checkbox" value="1" name= "batal[<?php echo $row->id_topik?>][<?php echo $row->id_user?>]" <?php if($row->status_batal==1) echo "checked"?>>
+              <input class="form-check-input" type="checkbox" value="1" name= "batal_lepas[<?php echo $row->id_topik?>][<?php echo $row->id_user?>]" <?php if($row->status_batal==1) echo "checked"?>>
               <label class="form-check-label">Batal</label>
             </div>
           </td>
@@ -104,13 +98,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
       <?php endforeach ?>
       </tbody>
     </table>
-    <div class="text-right">
-      <input type="submit" value="Simpan" class="btn btn-success">
-      <a href="<?php echo base_url().'kelas/aktif'?>"><button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button></a>
-    </div>
-  </form>
   </div>
 </div>
+<div class="text-right">
+  <input type="submit" value="Simpan" class="btn btn-success">
+  <a href="<?php echo base_url().'kelas/aktif'?>"><button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button></a>
+</div>
+</form>
 </div>
 
 <script>

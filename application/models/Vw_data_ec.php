@@ -39,6 +39,18 @@ class Vw_data_ec extends CI_Model{
         return $this->db->get($this->table_name)->result();
     }
 
+    public function searchActive($tema){
+        /* No Error Handling yet! */
+        $this->db->where('tahun_pelaksanaan',date("Y"));
+        if(date('n')<=6){
+          $this->db->where('semester_pelaksanaan',1);
+        }else{
+          $this->db->where('semester_pelaksanaan',2);
+        }
+        $this->db->like('tema_ec',$tema);
+        return $this->db->get($this->table_name)->result();
+    }
+
     public function getRecent(){
       if(date('n')<=6){
         $this->db->where('tahun_pelaksanaan <',date("Y"));
@@ -50,6 +62,18 @@ class Vw_data_ec extends CI_Model{
       return $this->db->get($this->table_name)->result();
     }
 
+    public function searchRecent($tema){
+      if(date('n')<=6){
+        $this->db->where('tahun_pelaksanaan <',date("Y"));
+      }else{
+        $this->db->where('tahun_pelaksanaan',date("Y"));
+        $this->db->where('semester_pelaksanaan',1);
+        $this->db->or_where('tahun_pelaksanaan <',date("Y"));
+      }
+      $this->db->like('tema_ec',$tema);
+      return $this->db->get($this->table_name)->result();
+    }
+
     public function getSoon(){
       if(date('n')<=6){
           $this->db->where('tahun_pelaksanaan',date("Y"));
@@ -58,6 +82,18 @@ class Vw_data_ec extends CI_Model{
         $this->db->where('tahun_pelaksanaan >',date("Y"));
         $this->db->where('semester_pelaksanaan',1);
       }
+      return $this->db->get($this->table_name)->result();
+    }
+
+    public function searchSoon($tema){
+      if(date('n')<=6){
+          $this->db->where('tahun_pelaksanaan',date("Y"));
+          $this->db->where('semester_pelaksanaan',2);
+      }else{
+        $this->db->where('tahun_pelaksanaan >',date("Y"));
+        $this->db->where('semester_pelaksanaan',1);
+      }
+      $this->db->like('tema_ec',$tema);
       return $this->db->get($this->table_name)->result();
     }
 
