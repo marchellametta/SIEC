@@ -14,7 +14,7 @@ class C_Informasi extends CI_Controller{
       $aktif = array();
       foreach ($data as $row) {
         if($row->status_peserta==1){
-          $jumlah_peserta = $this->Stored_procedure->get_jumlah_peserta_ec($row->id_ec);
+          $jumlah_peserta = $this->Stored_procedure->get_jumlah_peserta_ec($row->id_ec,0);
           if($row->kapasitas_peserta!=0){
             $jumlah_peserta->jumlah_peserta.="/".$row->kapasitas_peserta."<br>";
           }else{
@@ -26,7 +26,7 @@ class C_Informasi extends CI_Controller{
           $all_topik = $this->Vw_data_topik->getAllTopik($row->id_ec);
           $jumlah_peserta = "";
           foreach ($all_topik as $topik) {
-            $jumlah_peserta .= $topik->nama_topik." : ". $this->Stored_procedure->get_jumlah_peserta_topik($topik->id_topik)->jumlah_peserta;
+            $jumlah_peserta .= $topik->nama_topik." : ". $this->Stored_procedure->get_jumlah_peserta_topik($topik->id_topik,0)->jumlah_peserta;
             if($row->kapasitas_peserta!=0){
               $jumlah_peserta.="/".$row->kapasitas_peserta."<br>";
             }else{
@@ -61,7 +61,7 @@ class C_Informasi extends CI_Controller{
       $riwayat = array();
       foreach ($data as $row) {
         if($row->status_peserta==1){
-          $jumlah_peserta = $this->Stored_procedure->get_jumlah_peserta_ec($row->id_ec);
+          $jumlah_peserta = $this->Stored_procedure->get_jumlah_peserta_ec($row->id_ec,0);
           if($row->kapasitas_peserta!=0){
             $jumlah_peserta->jumlah_peserta.="/".$row->kapasitas_peserta."<br>";
           }else{
@@ -73,7 +73,7 @@ class C_Informasi extends CI_Controller{
           $all_topik = $this->Vw_data_topik->getAllTopik($row->id_ec);
           $jumlah_peserta = "";
           foreach ($all_topik as $topik) {
-            $jumlah_peserta .= $topik->nama_topik." : ". $this->Stored_procedure->get_jumlah_peserta_topik($topik->id_topik)->jumlah_peserta;
+            $jumlah_peserta .= $topik->nama_topik." : ". $this->Stored_procedure->get_jumlah_peserta_topik($topik->id_topik,0)->jumlah_peserta;
             if($row->kapasitas_peserta!=0){
               $jumlah_peserta.="/".$row->kapasitas_peserta."<br>";
             }else{
@@ -107,7 +107,7 @@ class C_Informasi extends CI_Controller{
       $akan = array();
       foreach ($data as $row) {
         if($row->status_peserta==1){
-          $jumlah_peserta = $this->Stored_procedure->get_jumlah_peserta_ec($row->id_ec);
+          $jumlah_peserta = $this->Stored_procedure->get_jumlah_peserta_ec($row->id_ec,0);
           if($row->kapasitas_peserta!=0){
             $jumlah_peserta->jumlah_peserta.="/".$row->kapasitas_peserta."<br>";
           }else{
@@ -119,7 +119,7 @@ class C_Informasi extends CI_Controller{
           $all_topik = $this->Vw_data_topik->getAllTopik($row->id_ec);
           $jumlah_peserta = "";
           foreach ($all_topik as $topik) {
-            $jumlah_peserta .= $topik->nama_topik." : ". $this->Stored_procedure->get_jumlah_peserta_topik($topik->id_topik)->jumlah_peserta;
+            $jumlah_peserta .= $topik->nama_topik." : ". $this->Stored_procedure->get_jumlah_peserta_topik($topik->id_topik,0)->jumlah_peserta;
             if($row->kapasitas_peserta!=0){
               $jumlah_peserta.="/".$row->kapasitas_peserta."<br>";
             }else{

@@ -61,7 +61,7 @@ class C_Laporan extends CI_Controller{
 
        $counter = 1;
        foreach ($topik_arr as $row) {
-         $row->jumlah_peserta = $this->Stored_procedure->get_jumlah_peserta_topik($row->id_topik)->jumlah_peserta;
+         $row->jumlah_peserta = $this->Stored_procedure->get_jumlah_peserta_topik($row->id_topik,0)->jumlah_peserta;
          $row->jumlah_hadir = $this->Stored_procedure->get_jumlah_peserta_topik_hadir($row->id_topik)->jumlah_peserta;
          // if($status_evaluasi==2){
          //   $evaluasi_topik = $this->T_evaluasi_topik->get($row->id_topik);
@@ -73,7 +73,7 @@ class C_Laporan extends CI_Controller{
 
 
        $pekerjaan = $this->Stored_procedure->get_statistik_pekerjaan($id);
-       $jumlah_peserta = $this->Stored_procedure->get_jumlah_peserta_ec($id);
+       $jumlah_peserta = $this->Stored_procedure->get_jumlah_peserta_ec($id,0);
 
        $kehadiran = $this->Stored_procedure->get_persentase_kehadiran_peserta($id);
 
@@ -137,8 +137,8 @@ class C_Laporan extends CI_Controller{
         $data = $this->Stored_procedure->get_jumlah_peserta_topik_hadir($id);
         $topik_arr = $this->Vw_data_topik->getAllTopik($ec->id_ec);
         foreach ($topik_arr as $row) {
-          $row->jumlah_peserta = $this->Stored_procedure->get_jumlah_peserta_topik($row->id_topik)->jumlah_peserta;
-          $row->jumlah_hadir = $this->Stored_procedure->get_jumlah_peserta_topik_hadir($row->id_topik)->jumlah_peserta;
+          $row->jumlah_peserta = $this->Stored_procedure->get_jumlah_peserta_topik($row->id_topik,0)->jumlah_peserta;
+          $row->jumlah_hadir = $this->Stored_procedure->get_jumlah_peserta_topik_hadir($row->id_topik,0)->jumlah_peserta;
         }
         $rules = [
           'nama_topik' => 'Topik',
@@ -166,7 +166,7 @@ class C_Laporan extends CI_Controller{
         $judul = 'Statistik Pekerjaan Peserta';
         $laporan = new Excel($judul);
         $pekerjaan = $this->Stored_procedure->get_statistik_pekerjaan($id);
-        $jumlah_peserta = $this->Stored_procedure->get_jumlah_peserta_ec($id);
+        $jumlah_peserta = $this->Stored_procedure->get_jumlah_peserta_ec($id,0);
         foreach ($pekerjaan as $row) {
           $row->jumlah = ($row->jumlah/$jumlah_peserta->jumlah_peserta)*100 .'%';
         }

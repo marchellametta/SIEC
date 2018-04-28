@@ -45,7 +45,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
       <?php foreach ($pekerjaan as $row): ?>
       <tr>
         <th scope="row">1</th>
-        <td><?php echo $row->pekerjaan ?></td>
+        <td><?php echo $row->nama_pekerjaan ?></td>
         <td><?php echo ($row->jumlah/$jumlah_peserta->jumlah_peserta)*100 ?>%</td>
       </tr>
     <?php endforeach ?>

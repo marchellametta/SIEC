@@ -32,10 +32,10 @@ class C_User_profile extends CI_Controller{
        $this->load->view('V_header');
        $this->load->view('V_navbar');
 
-       $this->load->model('T_user');
+       $this->load->model('Vw_data_user');
        $this->load->helper('config_rules');
 
-       $data = $this->T_user->get($id);
+       $data = $this->Vw_data_user->get($id);
        $this->load->view('V_user_profile',[
          'data' => $data,
          'show' => '',
@@ -109,7 +109,7 @@ class C_User_profile extends CI_Controller{
 
          ]);
          redirect('profil/'.$id, 'refresh');
-         
+
        }
 
 
@@ -150,8 +150,8 @@ class C_User_profile extends CI_Controller{
          $this->load->view('V_header');
          $this->load->view('V_navbar');
 
-         $this->load->model('T_user');
-         $data = $this->T_user->get($id);
+         $this->load->model('Vw_data_user');
+         $data = $this->Vw_data_user->get($id);
          $this->load->view('V_user_profile',[
            'data' => $data,
            'error' => 'Password baru tidak sama',
@@ -170,8 +170,8 @@ class C_User_profile extends CI_Controller{
            $this->load->view('V_header');
            $this->load->view('V_navbar');
 
-           $this->load->model('T_user');
-           $data = $this->T_user->get($id);
+           $this->load->model('Vw_data_user');
+           $data = $this->Vw_data_user->get($id);
            $this->load->view('V_user_profile',[
              'data' => $data,
              'error' => 'Password lama salah',

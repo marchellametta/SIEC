@@ -30,7 +30,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <tr>
           <td>Pekerjaan</td>
           <td>:</td>
-          <td><?php echo $data->pekerjaan; ?></td>
+          <td><?php echo $data->nama_pekerjaan; ?></td>
         </tr>
         <tr>
           <td>Lembaga</td>

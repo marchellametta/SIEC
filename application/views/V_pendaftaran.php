@@ -47,6 +47,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             <option value="2" <?php if(isset($post_data['pendidikan'])) if($post_data['pendidikan']==2) echo 'selected' ; if(isset($user)) if($user->pendidikan_terakhir==2) echo 'selected'?>>D3</option>
             <option value="3" <?php if(isset($post_data['pendidikan'])) if($post_data['pendidikan']==3) echo 'selected' ; if(isset($user)) if($user->pendidikan_terakhir==3) echo 'selected'?>>S1</option>
             <option value="4" <?php if(isset($post_data['pendidikan'])) if($post_data['pendidikan']==4) echo 'selected' ; if(isset($user)) if($user->pendidikan_terakhir==4) echo 'selected'?>>S2</option>
+            <option value="5" <?php if(isset($post_data['pendidikan'])) if($post_data['pendidikan']==5) echo 'selected' ; if(isset($user)) if($user->pendidikan_terakhir==5) echo 'selected'?>>S3</option>
           </select>
           <span class="help-block text-danger"><?php if(isset($error_array['pendidikan'])) echo $error_array['pendidikan']?></span>
         </div>

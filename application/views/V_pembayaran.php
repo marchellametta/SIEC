@@ -23,8 +23,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
           <th scope="col" class="text-center w-45">Nama Peserta</th>
           <th scope="col" class="text-center w-10">Total Biaya</th>
           <th scope="col" class="text-center w-10">Telah Bayar</th>
-          <th scope="col" class="text-center w-5">Status Pembayaran</th>
           <th scope="col" class="text-center w-5">Potongan Biaya</th>
+          <th scope="col" class="text-center w-5">Status Pembayaran</th>
+          <th scope="col" class="text-center w-5">Status Pendaftaran</th>
           <th scope="col" class="text-center w-5">Aksi</th>
         </tr>
       </thead>
@@ -40,19 +41,24 @@ defined('BASEPATH') OR exit('No direct script access allowed');
           </td>
           <td class="text-center">
             <div class="form-check">
-              <input class="form-check-input lunas" type="checkbox" value="<?php echo $row->id_user?>" name= "bayar[]" <?php if($row->status_lunas=='1') echo "checked"?>>
-              <label class="form-check-label">Lunas</label>
-            </div>
-          </td>
-          <td class="text-center">
-            <div class="form-check">
               <input class="form-check-input pelajar" type="checkbox" value="<?php echo $row->id_user?>" name= "potongan[]" <?php if($row->status_pelajar=='1') echo "checked"?>>
               <label class="form-check-label">Pelajar/Mahasiswa</label>
             </div>
           </td>
           <td class="text-center">
-            <button type="button" class="btn btn-primary bayar">Bayar sebagian</button>
-            <button type="button" class="btn btn-primary lunas">Tandai Lunas</button>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" value="<?php echo $row->id_user?>" name= "bayar[]" <?php if($row->status_lunas=='1') echo "checked"?>>
+              <label class="form-check-label">Lunas</label>
+            </div>
+          </td>
+          <td class="text-center">
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" value="<?php echo $row->id_user?>" name= "batal[]" <?php if($row->status_batal=='1') echo "checked"?>>
+              <label class="form-check-label">Batal</label>
+            </div>
+          </td>
+          <td class="text-center">
+            <button type="button" class="btn btn-sm btn-primary bayar">Bayar sebagian</button>
           </td>
         </tr>
       <?php endforeach ?>
@@ -73,6 +79,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
           <th scope="col" class="text-center w-30">Nama Topik</th>
           <th scope="col" class="text-center w-10">Total Biaya</th>
           <th scope="col" class="text-center w-10">Status Pembayaran</th>
+          <th scope="col" class="text-center w-10">Status Pendaftaran</th>
         </tr>
       </thead>
       <tbody>
@@ -84,6 +91,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
           <td class="text-center">
             <div class="form-check">
               <input class="form-check-input" type="checkbox" value="1" name= "bayar[<?php echo $row->id_topik?>][<?php echo $row->id_user?>]" <?php if($row->status_lunas==1) echo "checked"?>>
+              <label class="form-check-label">Lunas</label>
+            </div>
+          </td>
+          <td class="text-center">
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" value="1" name= "batal[<?php echo $row->id_topik?>][<?php echo $row->id_user?>]" <?php if($row->status_batal==1) echo "checked"?>>
+              <label class="form-check-label">Batal</label>
             </div>
           </td>
         </tr>
@@ -108,12 +122,6 @@ $(document).ready(function(){
 
    })
 
-   $('.lunas').click(function(){
-     $(this).parent().siblings().children('.input-biaya').hide();
-     $(this).parent().siblings().children('a').show();
-     $(this).parent().siblings().children().children('.lunas').prop('checked',true);
-
-   })
 
    $('.input-biaya').number(true, 2, ',', '.');
 

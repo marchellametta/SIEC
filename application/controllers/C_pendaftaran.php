@@ -8,7 +8,7 @@ class C_Pendaftaran extends CI_Controller{
     $this->load->model('Vw_data_ec');
     $this->load->model('Vw_data_topik');
     $this->load->model('Stored_procedure');
-    $this->load->model('T_user');
+    $this->load->model('Vw_data_user');
     $this->load->helper('config_rules');
 
     $data = $this->Vw_data_ec->getActive();
@@ -20,7 +20,7 @@ class C_Pendaftaran extends CI_Controller{
     foreach ($data as $row) {
       if($row->kapasitas_peserta!=0 && $row->status_peserta==1){
         $topik_arr=="";
-        $jumlah_peserta = $this->Stored_procedure->get_jumlah_peserta_ec($row->id_ec);
+        $jumlah_peserta = $this->Stored_procedure->get_jumlah_peserta_ec($row->id_ec,0);
         $topik_aktif = $this->Vw_data_topik->getAllActiveTopik($row->id_ec);
         $topik_inaktif = $this->Vw_data_topik->getAllInactiveTopik($row->id_ec);
         $topik_arr = array();
@@ -93,7 +93,7 @@ class C_Pendaftaran extends CI_Controller{
 
       $user = null;
       if($this->session->userdata('id_user')){
-        $user = $this->T_user->get($this->session->userdata('id_user'));
+        $user = $this->Vw_data_user->get($this->session->userdata('id_user'));
       }
        $this->load->view('V_header');
        $this->load->view('V_navbar');

@@ -35,7 +35,7 @@ class C_Absensi extends CI_Controller{
        $this->load->model('Vw_data_ec');
        $this->load->view('V_header');
        $this->load->view('V_navbar');
-       $data = $this->Stored_procedure->get_all_peserta_topik($id);
+       $data = $this->Stored_procedure->get_all_peserta_topik($id,0);
        $ec = $this->Vw_data_ec->get($topik->id_ec);
        $this->load->view('V_absensi',[
          'data' => $data,
@@ -46,7 +46,7 @@ class C_Absensi extends CI_Controller{
     } else if($this->input->method() == 'post'){
       $this->load->model('Stored_procedure');
       $this->load->model('T_peserta_topik');
-      $data = $this->Stored_procedure->get_all_peserta_topik($id);
+      $data = $this->Stored_procedure->get_all_peserta_topik($id,0);
       $post_data = $this->input->post();
       foreach ($data as $row) {
         $this->T_peserta_topik->edit($id,$row->id_user,[

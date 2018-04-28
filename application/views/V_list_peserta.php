@@ -27,7 +27,33 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <td><?php echo $row->nama;?></td>
         <td><img class="w-50" src="<?php echo base_url(). $row->foto;?>"></td>
         <td><?php echo $row->alamat;?></td>
-        <td><?php echo $row->pekerjaan;?></td>
+        <td><?php echo $row->nama_pekerjaan;?></td>
+        <td><?php echo $row->lembaga;?></td>
+        <td><?php echo $row->no_hp;?></td>
+        <td><?php echo $row->email;?></td>
+      </tr>
+    <?php endforeach ?>
+    </tbody>
+  </table>
+  <table class="table table-hover table-striped table-bordered absensi mt-5">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col" class="text-center">Nama Peserta</th>
+        <th scope="col" class="text-center">Foto</th>
+        <th scope="col" class="text-center">Alamat</th>
+        <th scope="col" class="text-center">Pekerjaan</th>
+        <th scope="col" class="text-center">Lembaga</th>
+        <th scope="col" class="text-center">No. HP</th>
+        <th scope="col" class="text-center">Email</th>
+      </tr>
+    </thead>
+    <tbody>
+      <?php foreach ($data_batal as $row): ?>
+      <tr>
+        <td><?php echo $row->nama;?></td>
+        <td><img class="w-50" src="<?php echo base_url(). $row->foto;?>"></td>
+        <td><?php echo $row->alamat;?></td>
+        <td><?php echo $row->nama_pekerjaan;?></td>
         <td><?php echo $row->lembaga;?></td>
         <td><?php echo $row->no_hp;?></td>
         <td><?php echo $row->email;?></td>

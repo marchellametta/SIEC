@@ -54,6 +54,8 @@ class C_Pembayaran extends CI_Controller{
       $this->load->model('Vw_data_ec');
       $this->load->model('T_pembayaran_peserta_tetap');
       $post_data = $this->input->post();
+      var_dump($post_data);
+      die();
 
 
       $ec = $this->Vw_data_ec->get($id);
@@ -142,7 +144,11 @@ class C_Pembayaran extends CI_Controller{
       $this->load->model('Stored_procedure');
       $this->load->model('Vw_data_ec');
       $this->load->model('T_pembayaran_peserta_lepas');
+      $this->load->model('T_peserta_topik');
+      $this->load->model('Vw_data_topik');
       $post_data = $this->input->post();
+      // var_dump($post_data);
+      // die();
 
 
       $this->db->trans_begin();
@@ -163,6 +169,28 @@ class C_Pembayaran extends CI_Controller{
             ]);
           }
         }
+      }
+
+      $topik_arr = $this->Vw_data_topik->getAllTopik($id);
+      foreach($topik_arr as $row){
+        $this->T_peserta_topik->editTopik($row->id_topik,[
+          'status_batal' => 0
+        ]);
+      }
+
+
+      if(isset($_POST['batal'])){
+        foreach ($post_data['batal'] as $key=>$value) {
+          //var_dump($key);
+          foreach ($value as $k => $v) {
+            //var_dump($value);
+            $this->T_peserta_topik->edit($key, $k, [
+              'status_batal' => 1
+            ]);
+          }
+        }
+        //die();
+
       }
 
       if ($this->db->trans_status() === FALSE){
