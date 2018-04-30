@@ -5,7 +5,7 @@ class T_jenis_ec extends CI_Model{
     public $id_jenis_ec;
     public $jenis_ec;
 
-    private $table_name = 'jenisec';
+    private $table_name = 'jenis_ec';
 
     public function all(){
         /* No Error Handling yet! */

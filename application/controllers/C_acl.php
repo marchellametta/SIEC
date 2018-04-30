@@ -40,8 +40,8 @@ class C_Acl extends CI_Controller{
          foreach ($data as $temp) {
            $arr['perm_key'] = $temp->perm_key;
            $arr['perm_name'] = $temp->perm_name;
-           $arr['perm_id'] = $temp->id;
-           if($this->Vw_data_role_perms->get($row->id, $temp->id)!== NULL){
+           $arr['perm_id'] = $temp->id_perm;
+           if($this->Vw_data_role_perms->get($row->id_role, $temp->id_perm)!== NULL){
              $arr['akses'] = true;
            } else {
              $arr['akses'] =false;

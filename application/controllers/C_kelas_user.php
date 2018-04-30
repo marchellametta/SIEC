@@ -31,7 +31,7 @@ class C_Kelas_user extends CI_Controller{
       $this->load->model('T_pembayaran_peserta_lepas');
       $this->load->model('T_pembayaran_peserta_tetap');
       $this->load->model('Stored_procedure');
-      $data = $this->Stored_procedure->get_ec_peserta($id_user);
+      $data = $this->Stored_procedure->get_ec_peserta($id_user,0);
       foreach ($data as $row) {
         $tagihan = $this->T_pembayaran_peserta_tetap->get($this->session->userdata('id_user'),$row->id_ec);
         if($tagihan===NULL){
@@ -87,7 +87,7 @@ class C_Kelas_user extends CI_Controller{
       $this->load->model('T_narasumber_topik');
       $this->load->model('T_narasumber');
       $data = $this->Vw_data_ec->get($id);
-      $topik_arr = $this->Stored_procedure->get_topik_peserta($this->session->userdata('id_user'),$id);
+      $topik_arr = $this->Stored_procedure->get_topik_peserta($this->session->userdata('id_user'),$id,0);
       foreach ($topik_arr as $row) {
         $ids_narasumber= $this->T_narasumber_topik->getNarasumber($row->id_topik);
         $narasumber = array();
@@ -135,7 +135,7 @@ class C_Kelas_user extends CI_Controller{
       $this->load->model('T_narasumber_topik');
       $this->load->model('T_narasumber');
       $data = $this->Vw_data_ec->get($id);
-      $topik_arr = $this->Stored_procedure->get_topik_peserta($this->session->userdata('id_user'),$id);
+      $topik_arr = $this->Stored_procedure->get_topik_peserta($this->session->userdata('id_user'),$id,0);
       foreach ($topik_arr as $row) {
         $modul = $this->Vw_data_modul->get($row->id_topik);
         $row->modul = $modul;

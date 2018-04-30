@@ -121,6 +121,7 @@ class C_Laporan extends CI_Controller{
       redirect('');
     }
     $this->load->model('Stored_procedure');
+    $this->load->model('T_evaluasi_ecf');
     $this->load->model('Vw_data_ec');
     $this->load->model('Vw_data_topik');
     $this->load->helper('excel_helper');

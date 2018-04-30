@@ -84,7 +84,7 @@ class C_Informasi extends CI_Controller{
       $this->load->view('V_informasi',[
         'data' => $aktif,
         'tipe' => 'aktif',
-        'search_message' => count($aktif)." kelas ditemukan" 
+        'search_message' => count($aktif)." kelas ditemukan"
 
       ]);
       $this->load->view('V_footer');
@@ -762,7 +762,6 @@ class C_Informasi extends CI_Controller{
   public function uploadModul($id){
     if($this->input->method() == 'get'){
       $this->load->model('Vw_data_ec');
-      $this->load->model('T_modul_topik');
       $this->load->model('Vw_data_modul');
        $this->load->model('Vw_data_topik');
        $topik = $this->Vw_data_topik->get($id);
@@ -778,7 +777,6 @@ class C_Informasi extends CI_Controller{
        $this->load->view('V_footer');
     } else if($this->input->method() == 'post'){
       $this->load->model('T_modul');
-      $this->load->model('T_modul_topik');
        $this->load->helper('upload_file_helper');
        $post_data = $this->input->post();
        // var_dump($post_data);
@@ -806,10 +804,9 @@ class C_Informasi extends CI_Controller{
                $post_data['pdf'][$i-1] = $res;
                $this->db->trans_begin();
                $this->T_modul->insert([
-                 'link_modul' => $res
+                 'link_modul' => $res,
+                 'id_topik' => $id
                ]);
-               $id_modul = $this->db->insert_id();
-               $this->T_modul_topik->attach_modul_topik($id_modul,$id);
                if ($this->db->trans_status() === FALSE){
                  $this->db->trans_rollback();
                }else{
@@ -818,7 +815,6 @@ class C_Informasi extends CI_Controller{
                }
              }
            }else if($post_data['status_pdf'][$i-1]==2&&$post_data['id_pdf'][$i-1]!=0){
-             $this->T_modul_topik->dettach_modul_topik($post_data['id_pdf'][$i-1],$id);
              $this->T_modul->delete($post_data['id_pdf'][$i-1]);
 
              $res = upload_file($this,[
@@ -834,10 +830,9 @@ class C_Informasi extends CI_Controller{
                $post_data['pdf'][$i-1] = $res;
                $this->db->trans_begin();
                $this->T_modul->insert([
-                 'link_modul' => $res
+                 'link_modul' => $res,
+                 'id_modul' => $id
                ]);
-               $id_modul = $this->db->insert_id();
-               $this->T_modul_topik->attach_modul_topik($id_modul,$id);
                if ($this->db->trans_status() === FALSE){
                  $this->db->trans_rollback();
                }else{
@@ -847,7 +842,6 @@ class C_Informasi extends CI_Controller{
              }
            }
          }else if($post_data['status_pdf'][$i-1]==4&&$post_data['id_pdf'][$i-1]!=0){
-           $this->T_modul_topik->dettach_modul_topik($post_data['id_pdf'][$i-1],$id);
            $this->T_modul->delete($post_data['id_pdf'][$i-1]);
          }
          $i++;

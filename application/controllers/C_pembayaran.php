@@ -146,7 +146,7 @@ class C_Pembayaran extends CI_Controller{
 
       if(isset($_POST['batal'])){
         foreach ($post_data['batal'] as $row) {
-          $topik = $this->Stored_procedure->get_topik_peserta($row, $id);
+          $topik = $this->Stored_procedure->get_topik_peserta($row, $id,0);
           foreach ($topik as $temp) {
             $this->T_peserta_topik->edit($temp->id_topik, $row, [
               'status_batal' => 1

@@ -2,7 +2,7 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Stored_procedure extends CI_Model{
-    public function get_ec_peserta($id_peserta){
+    public function get_ec_peserta($id_peserta, $status_batal){
       $tahun = date("Y");
       $semester="";
       if(date('n')<=6){
@@ -10,7 +10,7 @@ class Stored_procedure extends CI_Model{
       }else{
         $semester=2;
       }
-      $query = $this->db->query("call get_ec_peserta('".$id_peserta."','".$tahun."','".$semester."')");
+      $query = $this->db->query("call get_ec_peserta('".$id_peserta."','".$tahun."','".$semester."','".$status_batal."')");
       mysqli_next_result( $this->db->conn_id );
       $result = $query->result();
       $query->free_result();
@@ -25,8 +25,8 @@ class Stored_procedure extends CI_Model{
       return $result;
     }
 
-    public function get_topik_peserta($id_peserta, $id_ec){
-      $query = $this->db->query("call get_topik_peserta('".$id_peserta."','".$id_ec."')");
+    public function get_topik_peserta($id_peserta, $id_ec, $status_batal){
+      $query = $this->db->query("call get_topik_peserta('".$id_peserta."','".$id_ec."','".$status_batal."')");
       mysqli_next_result( $this->db->conn_id );
       $result = $query->result();
       $query->free_result();

@@ -26,7 +26,7 @@ class acl
     function getPermKeyFromID($permID) {
         //$strSQL = "SELECT `permKey` FROM `".DB_PREFIX."permissions` WHERE `ID` = " . floatval($permID) . " LIMIT 1";
         $this->ci->db->select('perm_key');
-        $this->ci->db->where('id',floatval($permID));
+        $this->ci->db->where('id_perm',floatval($permID));
         $sql = $this->ci->db->get('perm_data',1);
         $data = $sql->result();
         return $data[0]->perm_key;
@@ -35,7 +35,7 @@ class acl
     function getPermNameFromID($permID) {
         //$strSQL = "SELECT `permName` FROM `".DB_PREFIX."permissions` WHERE `ID` = " . floatval($permID) . " LIMIT 1";
         $this->ci->db->select('perm_name');
-        $this->ci->db->where('id',floatval($permID));
+        $this->ci->db->where('id_perm',floatval($permID));
         $sql = $this->ci->db->get('perm_data',1);
         $data = $sql->result();
         return $data[0]->perm_name;
@@ -44,7 +44,7 @@ class acl
     function getRoleNameFromID($roleID) {
         //$strSQL = "SELECT `roleName` FROM `".DB_PREFIX."roles` WHERE `ID` = " . floatval($roleID) . " LIMIT 1";
         $this->ci->db->select('roleName');
-        $this->ci->db->where('id',floatval($roleID),1);
+        $this->ci->db->where('id_role',floatval($roleID),1);
         $sql = $this->ci->db->get('role_data');
         $data = $sql->result();
         return $data[0]->roleName;
@@ -117,7 +117,7 @@ class acl
             $this->ci->db->where(array('role_id'=>floatval($role)));
         }
 
-        $this->ci->db->order_by('id','asc');
+        //$this->ci->db->order_by('id','asc');
         $sql = $this->ci->db->get('role_perms'); //$this->db->select($roleSQL);
         $data = $sql->result();
         $perms = array();
@@ -200,7 +200,7 @@ class acl
 
     function hasECIdPermission($user_id,$id) {
       $this->ci->load->model('Stored_procedure');
-      $ec = $this->ci->Stored_procedure->get_ec_peserta($user_id);
+      $ec = $this->ci->Stored_procedure->get_ec_peserta($user_id,0);
       foreach ($ec as $row) {
         if ($row->id_ec==$id)
         {
@@ -215,7 +215,7 @@ class acl
       $this->ci->load->model('Stored_procedure');
       $id_ec = $this->ci->Vw_data_topik->get($id)->id_ec;
       //var_dump($id_ec);
-      $topik = $this->ci->Stored_procedure->get_topik_peserta($user_id,$id_ec);
+      $topik = $this->ci->Stored_procedure->get_topik_peserta($user_id,$id_ec,0);
       //var_dump($topik);
       foreach ($topik as $row) {
         if ($row->id_topik==$id)

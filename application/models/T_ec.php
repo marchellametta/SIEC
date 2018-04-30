@@ -16,7 +16,6 @@ class T_ec extends CI_Model{
   public $biaya_per_topik;
   public $kapasitas_peserta;
   public $batas_lulus;
-  public $modul_pdf;
 
 
 

@@ -2,7 +2,7 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class T_perm_data extends CI_Model{
-    public $id;
+    public $id_perm;
     public $perm_key;
     public $perm_name;
 

@@ -54,7 +54,7 @@ class C_Pendaftaran extends CI_Controller{
 
          $topik_arr = array();
          foreach ($all_topik as $topik) {
-           $jumlah_peserta = $this->Stored_procedure->get_jumlah_peserta_topik($topik->id_topik);
+           $jumlah_peserta = $this->Stored_procedure->get_jumlah_peserta_topik($topik->id_topik,0);
            if($row->kapasitas_peserta > $jumlah_peserta->jumlah_peserta)
            {
              array_push($topik_arr,$topik);

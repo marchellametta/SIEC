@@ -2,7 +2,7 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class T_role_data extends CI_Model{
-    public $id;
+    public $id_role;
     public $role_name;
 
     private $table_name = 'role_data';
