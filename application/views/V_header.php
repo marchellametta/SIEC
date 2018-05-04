@@ -181,6 +181,8 @@ table {
   background-color: #333333;
 }
 
+.ui-autocomplete { z-index:2147483647; }
+
 
 </style>
 </head>

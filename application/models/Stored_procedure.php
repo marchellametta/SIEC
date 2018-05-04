@@ -137,6 +137,14 @@ class Stored_procedure extends CI_Model{
       return $result;
     }
 
+    public function search_narasumber($nama){
+      $query = $this->db->query("call search_narasumber('".$nama."')");
+      mysqli_next_result( $this->db->conn_id );
+      $result = $query->result();
+      $query->free_result();
+      return $result;
+    }
+
     public function search_pekerjaan($pekerjaan){
       $query = $this->db->query("call search_pekerjaan('".$pekerjaan."')");
       mysqli_next_result( $this->db->conn_id );

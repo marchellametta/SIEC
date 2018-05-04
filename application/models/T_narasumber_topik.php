@@ -14,6 +14,13 @@ class T_narasumber_topik extends CI_Model{
         return $query->result();
     }
 
+    public function get($id_narasumber, $id_topik){
+        /* No Error Handling yet! */
+        $this->db->where('id_narasumber',$id_narasumber);
+        $this->db->where('id_topik',$id_topik);
+        return $this->db->get($this->table_name)->row();
+    }
+
     public function getTopik($id){
         /* No Error Handling yet! */
         $this->db->where('id_narasumber',$id);

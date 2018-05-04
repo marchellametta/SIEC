@@ -46,10 +46,10 @@ class T_ec extends CI_Model{
          return $this->db->update($this->table_name,$args);
      }
 
-    public function getActive(){
-        /* No Error Handling yet! */
-        $this->db->where('tahun_pelaksanaan',date("Y"));
-        return $this->db->get($this->table_name)->result();
-    }
+    // public function getActive(){
+    //     /* No Error Handling yet! */
+    //     $this->db->where('tahun_pelaksanaan',date("Y"));
+    //     return $this->db->get($this->table_name)->result();
+    // }
 
 }

@@ -125,11 +125,11 @@ class acl
         {
             $pK = strtolower($this->getPermKeyFromID($row->perm_id));
             if ($pK == '') { continue; }
-            if ($row->value === '1') {
+            //if ($row->value === '1') {
                 $hP = true;
-            } else {
-                $hP = false;
-            }
+            //} else {
+                //$hP = false;
+            //}
             $perms[$pK] = array('perm' => $pK,'inheritted' => true,'value' => $hP,'name' => $this->getPermNameFromID($row->perm_id),'id' => $row->perm_id);
         }
         return $perms;

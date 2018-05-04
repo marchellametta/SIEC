@@ -345,11 +345,11 @@ $(document).ready(function(){
     });
 
     $('#selesai').datetimepicker({
-      format: 'LT'
+      format: 'HH:mm'
     });
 
     $('#mulai').datetimepicker({
-      format: 'LT'
+      format: 'HH:mm'
     });
 
     $('#tahun').datetimepicker({

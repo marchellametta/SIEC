@@ -350,13 +350,6 @@ class C_Kelas_panitia extends CI_Controller{
       $mpdf->Output();
   }
 
-  public function assign(){
-    $this->load->view('V_header');
-    $this->load->view('V_navbar');
-    $this->load->view('V_assign_panitia');
-    $this->load->view('V_footer');
-  }
-
   public function pesertaTopik($id){
     $id_user = $this->session->userdata('id_user');
 

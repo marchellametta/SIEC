@@ -42,13 +42,6 @@ class T_peserta_topik extends CI_Model{
          return $this->db->update($this->table_name,$args);
      }
 
-    public function editBayar($id_topik,$id_peserta, $args){
-        /* No Error Handling yet! */
-        $this->db->where('id_topik',$id_topik);
-        $this->db->where('id_peserta',$id_peserta);
-        return $this->db->update($this->table_name,$args);
-    }
-
     public function attach_peserta_topik($id_peserta, $id_topik){
         return $this->db->insert($this->table_name,[
             'id_peserta' => $id_peserta,
