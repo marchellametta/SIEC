@@ -14,16 +14,16 @@ class Vw_data_user_roles extends CI_Model{
         return $query->result();
     }
 
-    public function getRoles($id){
+    public function getRoles($user_id){
         /* No Error Handling yet! */
-        $this->db->where('user_id',$id);
+        $this->db->where('user_id',$user_id);
         return $this->db->get($this->table_name)->result();
     }
 
-    public function get($id,$id_user){
+    public function get($role_id,$user_id){
         /* No Error Handling yet! */
-        $this->db->where('role_id',$id);
-        $this->db->where('user_id',$id_user);
+        $this->db->where('role_id',$role_id);
+        $this->db->where('user_id',$user_id);
         return $this->db->get($this->table_name)->row();
     }
 

@@ -663,7 +663,7 @@ class C_Informasi extends CI_Controller{
            $this->T_jadwal->deleteByTopik($row->id_topik);
            $id_narasumber = $this->T_narasumber_topik->getNarasumber($row->id_topik);
            foreach ($id_narasumber as $temp) {
-             $this->T_narasumber_topik->dettach_narasumber_topik($temp->id_narasumber,$row->id_topik);
+             $this->T_narasumber_topik->detach_narasumber_topik($temp->id_narasumber,$row->id_topik);
              // $this->T_narasumber->delete($temp->id_narasumber);
            }
            $this->T_topik_ec->delete($row->id_topik);
@@ -696,11 +696,8 @@ class C_Informasi extends CI_Controller{
                $data[1] =substr($data[1],4,strlen($data[1])-8);
                $data[0] =substr($data[0],3,strlen($data[0])-7);
              }
-             var_dump($data);
              //die();
               if(count($data)>=4 && trim($data[5])=="2"){
-                echo "ga";
-                die();
                if(trim($data[4])!=""){
                  $this->T_narasumber->edit(trim($data[4]),[
                    'profesi' => trim($data[1]),
@@ -724,15 +721,12 @@ class C_Informasi extends CI_Controller{
                  $this->T_narasumber_topik->attach_narasumber_topik($id_narasumber, $row->id_topik);
                }
               }else if(count($data)>=4 && trim($data[5])=="4"){
-                $this->T_narasumber_topik->dettach_narasumber_topik(trim($data[4]), $row->id_topik);
+                $this->T_narasumber_topik->detach_narasumber_topik(trim($data[4]), $row->id_topik);
              }else if(count($data)>=4 && trim($data[5])=="1"){
-               var_dump($data);
-               die();
                $this->T_narasumber_topik->attach_narasumber_topik(trim($data[4]), $row->id_topik);
              }
 
            }
-           die();
          }
        }
        if ($this->db->trans_status() === FALSE){
@@ -861,7 +855,7 @@ class C_Informasi extends CI_Controller{
              }
            }
          }else if($post_data['status_pdf'][$i-1]==4&&$post_data['id_pdf'][$i-1]!=0){
-           $this->T_modul_topik->dettach_modul_topik($post_data['id_pdf'][$i-1],$id);
+           $this->T_modul_topik->detach_modul_topik($post_data['id_pdf'][$i-1],$id);
            $this->T_modul->delete($post_data['id_pdf'][$i-1]);
          }
          $i++;

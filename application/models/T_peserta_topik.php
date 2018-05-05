@@ -28,9 +28,9 @@ class T_peserta_topik extends CI_Model{
         return $this->db->get($this->table_name)->result();
     }
 
-    public function edit($id, $id_peserta, $args){
+    public function edit($id_topik, $id_peserta, $args){
         /* No Error Handling yet! */
-        $this->db->where('id_topik',$id);
+        $this->db->where('id_topik',$id_topik);
         $this->db->where('id_peserta',$id_peserta);
         return $this->db->update($this->table_name,$args);
     }
@@ -49,7 +49,7 @@ class T_peserta_topik extends CI_Model{
         ]);
     }
 
-    public function dettach_peserta_topik($id_peserta, $id_topik){
+    public function detach_peserta_topik($id_peserta, $id_topik){
         $this->db->where('id_peserta',$id_peserta);
         $this->db->where('id_topik',$id_topik);
         if($this->db->delete($this->table_name) === false){

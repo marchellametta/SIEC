@@ -66,8 +66,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
           <tr>
             <td><?php echo $row->judul; ?></td>
             <td>
-              <a href="<?php echo base_url().'kelola-berita/'.$row->id?>"><button type="button" class="btn btn-success btn-sm"><i class="fa fa-edit mr-1"></i>Edit</button></a>
-              <a href="<?php echo base_url().'hapus-berita/'.$row->id?>"><button type="button" class="btn btn-danger btn-sm"><i class="fa fa-close mr-1"></i>Hapus</button></a>
+              <a href="<?php echo base_url().'kelola-berita/'.$row->id_berita?>"><button type="button" class="btn btn-success btn-sm"><i class="fa fa-edit mr-1"></i>Edit</button></a>
+              <a href="<?php echo base_url().'hapus-berita/'.$row->id_berita?>"><button type="button" class="btn btn-danger btn-sm"><i class="fa fa-close mr-1"></i>Hapus</button></a>
             </td>
           </tr>
         <?php endforeach ?>

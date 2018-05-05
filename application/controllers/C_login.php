@@ -4,7 +4,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class C_Login extends CI_Controller{
 
 
-  public function index(){
+  public function login(){
     if($this->session->userdata('nama') != null && $this->session->userdata('id_user') != null){
       redirect('');
     }

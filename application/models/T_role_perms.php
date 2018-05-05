@@ -35,9 +35,9 @@ class T_role_perms extends CI_Model{
         return $this->db->update($this->table_name,$args);
     }
 
-    public function delete(){
-      $this->db->where('1','1');
-      $this->db->delete($this->table_name);
-      return $this->db->affected_rows() > 0;
-    }
+    // public function delete(){
+    //   $this->db->where('1','1');
+    //   $this->db->delete($this->table_name);
+    //   return $this->db->affected_rows() > 0;
+    // }
 }

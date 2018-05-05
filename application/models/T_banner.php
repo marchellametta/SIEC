@@ -13,7 +13,7 @@ class T_banner extends CI_Model{
         return $query->result();
     }
 
-    public function get($id){
+    public function get($id_banner){
         /* No Error Handling yet! */
         $this->db->where('id_banner',$id);
         return $this->db->get($this->table_name)->row();
@@ -25,14 +25,14 @@ class T_banner extends CI_Model{
         return $this->db->insert($this->table_name,$args);
    }
 
-   public function edit($id,$args){
+   public function edit($id_banner,$args){
         /* No Error Handling yet! */
         $this->db->where('id_banner',$id);
         return $this->db->update($this->table_name,$args);
     }
 
-    public function delete($id){
-      $this->db->where('id',$id);
+    public function delete($id_banner){
+      $this->db->where('id_banner',$id);
       $this->db->delete($this->table_name);
       return $this->db->affected_rows() > 0;
     }

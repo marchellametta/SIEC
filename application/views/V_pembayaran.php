@@ -35,7 +35,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
           <td><?php echo $row->nama;?></td>
           <td><?php echo "Rp. ".number_format($row->tagihan).",00 / Rp. ".number_format($row->tagihan_pelajar).",00";?><small> (khusus pelajar/mahsiswa)</small></td>
           <td>
-            <input type="text" placeholder="Biaya" class="form-control input-biaya hidden">
+            <input type="text" placeholder="Bayar sebagian" class="form-control input-biaya hidden">
             <input type="number" name="telah-bayar[<?php echo $row->id_user ?>]" class="hidden real-input-biaya">
             <a><?php echo "Rp. ".number_format($row->telah_bayar).",00"; ?></a>
           </td>

@@ -29,5 +29,11 @@ class T_jenis_ec extends CI_Model{
         /* No Error Handling yet! */
         $this->db->where('id_jenis_ec',$id);
         return $this->db->update($this->table_name,$args);
-    }
+  }
+
+  public function delete($id){
+    $this->db->where('id_jenis_ec',$id);
+    $this->db->delete($this->table_name);
+    return $this->db->affected_rows() > 0;
+  }
 }

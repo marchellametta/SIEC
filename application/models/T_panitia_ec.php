@@ -20,11 +20,11 @@ class T_panitia_ec extends CI_Model{
         return $this->db->get($this->table_name)->row();
     }
 
-    public function getListEC($id_panitia){
-        /* No Error Handling yet! */
-        $this->db->where('id_panitia',$id_panitia);
-        return $this->db->get($this->table_name)->result();
-    }
+    // public function getListEC($id_panitia){
+    //     /* No Error Handling yet! */
+    //     $this->db->where('id_panitia',$id_panitia);
+    //     return $this->db->get($this->table_name)->result();
+    // }
 
     public function attach_panitia_ec($id_panitia, $id_ec){
         return $this->db->insert($this->table_name,[
@@ -33,7 +33,7 @@ class T_panitia_ec extends CI_Model{
         ]);
     }
 
-    public function dettach_peserta_topik($id_panitia, $id_ec){
+    public function detach_panitia_ec($id_panitia, $id_ec){
         $this->db->where('id_panitia',$id_panitia);
         $this->db->where('id_ec',$id_ec);
         if($this->db->delete($this->table_name) === false){
@@ -43,10 +43,10 @@ class T_panitia_ec extends CI_Model{
         }
     }
 
-   public function edit($id_panitia,$id_ec,$args){
-       /* No Error Handling yet! */
-       $this->db->where('id_panitia',$id_panitia);
-       $this->db->where('id_ec',$id_ec);
-        return $this->db->update($this->table_name,$args);
-    }
+   // public function edit($id_panitia,$id_ec,$args){
+   //     /* No Error Handling yet! */
+   //     $this->db->where('id_panitia',$id_panitia);
+   //     $this->db->where('id_ec',$id_ec);
+   //      return $this->db->update($this->table_name,$args);
+   //  }
 }

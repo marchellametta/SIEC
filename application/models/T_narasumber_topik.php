@@ -47,7 +47,7 @@ class T_narasumber_topik extends CI_Model{
         ]);
     }
 
-    public function dettach_narasumber_topik($id_narasumber, $id_topik){
+    public function detach_narasumber_topik($id_narasumber, $id_topik){
         $this->db->where('id_narasumber',$id_narasumber);
         $this->db->where('id_topik',$id_topik);
         if($this->db->delete($this->table_name) === false){

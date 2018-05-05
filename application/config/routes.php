@@ -53,7 +53,7 @@ $route['default_controller'] = 'C_beranda/index';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
 
-$route['login'] = 'C_login/index';
+$route['login'] = 'C_login/login';
 $route['logout'] = 'C_login/logout';
 $route['acl'] = 'C_acl/index';
 $route['change-role/(:num)'] = 'C_login/changeRole/$1';

@@ -17,9 +17,6 @@ class T_ec extends CI_Model{
   public $kapasitas_peserta;
   public $batas_lulus;
 
-
-
-
     private $table_name = 'ec';
 
     public function all(){
