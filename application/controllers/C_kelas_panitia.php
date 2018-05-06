@@ -231,6 +231,7 @@ class C_Kelas_panitia extends CI_Controller{
     if($this->input->method() == 'get'){
       $this->load->model('Vw_data_ec');
       $this->load->model('T_Sertifikat');
+      $this->load->helper('link');
       $ec = $this->Vw_data_ec->get($id);
       $sertifikat = $this->T_Sertifikat->get($id);
 
@@ -238,7 +239,8 @@ class C_Kelas_panitia extends CI_Controller{
       $this->load->view('V_navbar');
       $this->load->view('V_cetak_sertifikat',[
         'ec' => $ec,
-        'sertifikat' => $sertifikat
+        'sertifikat' => $sertifikat,
+        'link' => get_periode_ec($this,$id)
       ]);
       $this->load->view('V_footer');
     }else if($this->input->method() == 'post'){
@@ -383,15 +385,17 @@ class C_Kelas_panitia extends CI_Controller{
       $this->load->model('Vw_data_ec');
       $this->load->view('V_header');
       $this->load->view('V_navbar');
+      $this->load->helper('link');
       $data = $this->Stored_procedure->get_all_peserta_topik($id,0);
       $data_batal = $this->Stored_procedure->get_all_peserta_topik($id,1);
       $topik = $this->Vw_data_topik->get($id);
-      $ec = $this->Vw_data_ec->get($topik->id_ec);
+
       $this->load->view('V_list_peserta',[
         'data' => $data,
         'data_batal' => $data_batal,
         'topik' => $topik,
-        'ec' => $ec
+        'ec' => $ec,
+        'link' => get_periode_topik($this,$id)
       ]);
       $this->load->view('V_footer');
     } else if($this->input->method() == 'post'){
@@ -422,13 +426,15 @@ class C_Kelas_panitia extends CI_Controller{
       $this->load->model('Vw_data_ec');
       $this->load->view('V_header');
       $this->load->view('V_navbar');
+      $this->load->helper('link');
       $data = $this->Stored_procedure->get_all_peserta_ec($id,0);
       $data_batal = $this->Stored_procedure->get_all_peserta_ec($id,1);
       $ec = $this->Vw_data_ec->get($id);
       $this->load->view('V_list_peserta',[
         'data' => $data,
         'data_batal' => $data_batal,
-        'ec' => $ec
+        'ec' => $ec,
+        'link' => get_periode_ec($this,$id)
       ]);
       $this->load->view('V_footer');
     } else if($this->input->method() == 'post'){

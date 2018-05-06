@@ -206,9 +206,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
   <?php endif; ?>
 
 </div>
-  <div class="text-right">
+<div class="row">
+  <div class="col-xs-6">
+    <a href="<?php echo base_url() . 'kelas/'.$link ?>" id="btn-kembali" class="btn btn-secondary"><span class="fa fa-chevron-left mr-2"></span>Kembali</a>
+  </div>
+  <div class="col-xs-6 ml-auto">
     <input type="submit" id="simpan" value="Unduh Laporan" class="btn btn-primary">
   </div>
+</div>
 </form>
 <div class="container col-md-6 hidden">
   <div id="chartContainer" style="position: relative; left: 50px; border: 2px solid #73AD21; height: 360px; width: 90%;"></div>

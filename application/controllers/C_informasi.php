@@ -749,6 +749,7 @@ class C_Informasi extends CI_Controller{
       $this->load->model('Vw_data_topik');
       $this->load->model('T_narasumber_topik');
       $this->load->model('T_narasumber');
+      $this->load->helper('link');
       $data = $this->Vw_data_ec->get($id);
       $topik_arr = $this->Vw_data_topik->getAllTopik($id);
       foreach ($topik_arr as $row) {
@@ -763,7 +764,8 @@ class C_Informasi extends CI_Controller{
        $this->load->view('V_navbar');
        $this->load->view('V_detail',[
          'data' => $data,
-         'topik_arr' => $topik_arr
+         'topik_arr' => $topik_arr,
+         'link' => get_periode_ec($this,$id)
        ]);
        $this->load->view('V_footer');
     } else if($this->input->method() == 'post'){

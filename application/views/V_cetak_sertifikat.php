@@ -79,9 +79,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
          <span class="help-block"></span>
        </div>
      </fieldset>
-     <div class="text-right mt-3">
-       <input type="submit" value="Cetak" class="btn btn-success">
-       <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
+     <div class="row">
+       <div class="col-xs-6">
+         <a href="<?php echo base_url() . 'kelas/'.$link ?>" id="btn-kembali" class="btn btn-secondary"><span class="fa fa-chevron-left mr-2"></span>Kembali</a>
+       </div>
+       <div class="col-xs-6 ml-auto">
+         <input type="submit" value="Cetak" class="btn btn-success">
+         <a href="<?php echo base_url().'kelas/'.$link?>"><button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button></a>
+       </div>
      </div>
     </form>
   </div>

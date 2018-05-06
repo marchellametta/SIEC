@@ -33,4 +33,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     </div>
     <?php endforeach ?>
   <?php endif; ?>
+  <div class="col-xs-6 mt-3">
+    <a href="<?php echo base_url() . 'informasi/'.$link ?>" id="btn-kembali" class="btn btn-secondary"><span class="fa fa-chevron-left mr-2"></span>Kembali</a>
+  </div>
   </div>

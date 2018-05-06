@@ -14,7 +14,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
           <h2 class="card-title"><?php echo $row->tema_ec;?></h2>
           <p class="card-text"><?php echo $row->deskripsi;?></p>
           <?php if($row->status_peserta==1):?>
-          <p class="card-text text-muted mt-5"><?php echo "Jumlah Peserta: <a href=".base_url()."/kelas/peserta/".$row->id_ec.">". $row->jumlah_peserta;?></p>
+          <p class="card-text text-muted mt-5"><?php echo "<a href=".base_url()."/kelas/peserta/".$row->id_ec."> Jumlah Peserta: ". $row->jumlah_peserta;?></p>
           <?php endif; ?>
           <?php if($row->status_peserta==2):?>
           <p class="card-text text-muted mt-5"><i class="fa fa-info-circle mr-1"></i>Peserta lepas diperbolehkan</p>

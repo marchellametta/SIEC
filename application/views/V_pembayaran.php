@@ -100,9 +100,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     </table>
   </div>
 </div>
-<div class="text-right">
-  <input type="submit" value="Simpan" class="btn btn-success">
-  <a href="<?php echo base_url().'kelas/aktif'?>"><button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button></a>
+<div class="row">
+  <div class="col-xs-6">
+    <a href="<?php echo base_url() . 'kelas/'.$link ?>" id="btn-kembali" class="btn btn-secondary"><span class="fa fa-chevron-left mr-2"></span>Kembali</a>
+  </div>
+  <div class="col-xs-6 ml-auto">
+    <input type="submit" value="Simpan" class="btn btn-success">
+    <a href="<?php echo base_url().'kelas/'.$link?>"><button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button></a>
+  </div>
 </div>
 </form>
 </div>

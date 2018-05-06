@@ -12,6 +12,7 @@ class C_Jadwal extends CI_Controller{
        $this->load->model('Vw_data_ec');
        $this->load->view('V_header');
        $this->load->view('V_navbar');
+       $this->load->helper('link');
        $data = $this->Stored_procedure->get_jadwal_ec($id);
        foreach ($data as $row) {
          $ids_narasumber= $this->T_narasumber_topik->getNarasumber($row->id_topik);
@@ -24,7 +25,8 @@ class C_Jadwal extends CI_Controller{
        $ec = $this->Vw_data_ec->get($id);
        $this->load->view('V_jadwal',[
          'data' =>$data,
-         'ec' => $ec
+         'ec' => $ec,
+         'link' => get_periode_ec($this,$id)
        ]);
        $this->load->view('V_footer');
     } else if($this->input->method() == 'post'){

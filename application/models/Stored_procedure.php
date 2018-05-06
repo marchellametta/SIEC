@@ -89,8 +89,8 @@ class Stored_procedure extends CI_Model{
       return $result;
     }
 
-    public function get_statistik_pekerjaan($id_ec){
-      $query = $this->db->query("call get_statistik_pekerjaan('".$id_ec."')");
+    public function get_statistik_pekerjaan($id_ec,$status_batal){
+      $query = $this->db->query("call get_statistik_pekerjaan('".$id_ec."','".$status_batal."')");
       mysqli_next_result( $this->db->conn_id );
       $result = $query->result();
       $query->free_result();

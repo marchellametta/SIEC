@@ -61,9 +61,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <?php endforeach ?>
     </tbody>
   </table>
-  <div class="text-right">
-    <input type="submit" value="Simpan" class="btn btn-success">
-    <input type="submit" value="Batal" class="btn btn-danger">
-  </div>
 </form>
+<div class="col-xs-6 mt-3">
+  <a href="<?php echo base_url() . 'kelas/'.$link ?>" id="btn-kembali" class="btn btn-secondary"><span class="fa fa-chevron-left mr-2"></span>Kembali</a>
+</div>
 </div>

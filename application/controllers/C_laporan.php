@@ -36,6 +36,7 @@ class C_Laporan extends CI_Controller{
        $this->load->model('T_evaluasi_tema');
        $this->load->model('T_evaluasi_topik');
        $this->load->model('Vw_data_topik');
+       $this->load->helper('link');
 
        $ec = $this->Vw_data_ec->get($id);
        $status_evaluasi = $ec->status_evaluasi;
@@ -72,7 +73,7 @@ class C_Laporan extends CI_Controller{
        }
 
 
-       $pekerjaan = $this->Stored_procedure->get_statistik_pekerjaan($id);
+       $pekerjaan = $this->Stored_procedure->get_statistik_pekerjaan($id,0);
        $jumlah_peserta = $this->Stored_procedure->get_jumlah_peserta_ec($id,0);
 
        $kehadiran = $this->Stored_procedure->get_persentase_kehadiran_peserta($id);
@@ -90,7 +91,8 @@ class C_Laporan extends CI_Controller{
          'evaluasi_tema' => $evaluasi_tema,
          'evaluasi_topik' => $evaluasi_topik,
          'saran_tema' => $saran_tema,
-         'saran_topik' => $saran_topik
+         'saran_topik' => $saran_topik,
+         'link' => get_periode_ec($this,$id)
        ]);
        $this->load->view('V_footer');
     } else if($this->input->method() == 'post'){

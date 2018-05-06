@@ -35,13 +35,15 @@ class C_Pembayaran extends CI_Controller{
       $this->load->model('Vw_data_pembayaran_peserta_lepas');
        $this->load->view('V_header');
        $this->load->view('V_navbar');
+       $this->load->helper('link');
        $ec = $this->Vw_data_ec->get($id);
        $tagihan_tetap = $this->Vw_data_pembayaran_peserta_tetap->getTagihanAll($id);
        $tagihan_lepas = $this->Vw_data_pembayaran_peserta_lepas->getTagihanAll($id);
        $this->load->view('V_pembayaran',[
          'tetap' => $tagihan_tetap,
          'lepas' => $tagihan_lepas,
-         'ec' => $ec
+         'ec' => $ec,
+         'link' => get_periode_ec($this,$id)
        ]);
        $this->load->view('V_footer');
     } else if($this->input->method() == 'post'){
