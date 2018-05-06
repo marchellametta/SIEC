@@ -2,7 +2,15 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 ?>
 <div class="mr-3 ml-3 mr-sm-3 ml-sm-3 mr-md-5 ml-md-5 mt-5 mb-5">
-  <?php $this->load->view('V_template_breadcrumb', ['viewName' => 'V_lokasi']) ?>
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="<?php echo base_url() ?> "><i class="fa fa-home mr-1"></i>Beranda</a></li>
+      <li class="breadcrumb-item" ><a href="<?php echo base_url() .'kelas-saya/'?>">Kelas Saya</a></li>
+      <li class="breadcrumb-item" ><a href="<?php echo base_url()."kelas-saya/detail/". $ec->id_ec ?>">Daftar Kelas Saya</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Isi Evaluasi</li>
+
+    </ol>
+  </nav>
   <div class="text-left ml-3"><h5>Lembar Evaluasi <?php echo $ec->jenis_ec. " : " . $ec->tema_ec ; ?></h5></div>
   <?php if(isset($topik)):?>
     <div class="text-left ml-3"><h5>Topik : <?php echo $topik->nama_topik; ?></h5></div>

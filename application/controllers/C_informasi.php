@@ -779,6 +779,8 @@ class C_Informasi extends CI_Controller{
       $this->load->model('Vw_data_ec');
       $this->load->model('Vw_data_modul');
        $this->load->model('Vw_data_topik');
+       $this->load->helper('link');
+
        $topik = $this->Vw_data_topik->get($id);
        $modul = $this->Vw_data_modul->get($id);
        $ec = $this->Vw_data_ec->get($topik->id_ec);
@@ -787,7 +789,8 @@ class C_Informasi extends CI_Controller{
        $this->load->view('V_upload_modul',[
          'topik'=> $topik,
          'ec' => $ec,
-         'modul' => $modul
+         'modul' => $modul,
+         'link' => get_periode_ec($this,$id)
        ]);
        $this->load->view('V_footer');
     } else if($this->input->method() == 'post'){

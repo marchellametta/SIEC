@@ -2,7 +2,7 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 ?>
 <div class="mr-3 ml-3 mr-sm-3 ml-sm-3 mr-md-5 ml-md-5 mt-5 mb-5">
-
+<?php $this->load->view('V_template_breadcrumb', ['viewName' => 'V_list_peserta']) ?>
 <?php if(isset($topik)): ?>
   <div class="text-left ml-3"><h5><?php echo 'Daftar Peserta ' . $topik->nama_topik ?></h5></div>
   <div class="text-left ml-3"><h6><?php echo $ec->jenis_ec. " : " . $ec->tema_ec; ?></h6></div>

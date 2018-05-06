@@ -2,7 +2,15 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 ?>
 <div class="mr-3 ml-3 mr-sm-3 ml-sm-3 mr-md-5 ml-md-5 mt-5 mb-5">
-  <?php $this->load->view('V_template_breadcrumb', ['viewName' => 'V_edit_beranda']) ?>
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="<?php echo base_url() ?> "><i class="fa fa-home mr-1"></i>Beranda</a></li>
+      <li class="breadcrumb-item" ><a href="<?php echo base_url() .'informasi/'. $link?>">Informasi</a></li>
+      <li class="breadcrumb-item" ><a href="<?php echo base_url()."informasi/detail". $ec->id_ec ?>">Detail</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Upload Modul</li>
+
+    </ol>
+  </nav>
   <div class="text-left ml-3"><h5>Upload Modul</h5></div>
   <div class="col-md-8 col-lg-6">
     <form method="post" action="<?php echo base_url().'upload-modul/'.$topik->id_topik; ?>" enctype="multipart/form-data">

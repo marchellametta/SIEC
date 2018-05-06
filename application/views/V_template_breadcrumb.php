@@ -38,6 +38,19 @@ $breadcrumbRules = [
       ]
     ]
   ],
+  'V_tambah_kelas' => [
+    'crumbs' => [
+      1 => [
+        'text' => 'Informasi',
+        'link' => $base_url.'informasi/aktif',
+      ],
+      2 => [
+        'text' => 'Tambah Kelas Baru',
+        'link' => '#',
+        'active' => true
+      ]
+    ]
+  ],
   'V_lokasi' => [
     'crumbs' => [
       1 => [
@@ -100,6 +113,19 @@ $breadcrumbRules = [
       ]
     ]
   ],
+  'V_list_modul' => [
+    'crumbs' => [
+      1 => [
+        'text' => 'Kelas Saya',
+        'link' => $base_url.'kelas-saya',
+      ],
+      2 => [
+        'text' => 'Modul',
+        'link' => '#',
+        'active' => true
+      ]
+    ]
+  ],
   'V_daftar_kelas_aktif' => [
     'crumbs' => [
       1 => [
@@ -153,6 +179,19 @@ $breadcrumbRules = [
       ]
     ]
   ],
+  'V_list_peserta' => [
+    'crumbs' => [
+      1 => [
+        'text' => 'Daftar Kelas',
+        'link' => $base_url.'kelas/aktif',
+      ],
+      2 => [
+        'text' => 'Daftar Peserta',
+        'link' => '#',
+        'active' => true
+      ]
+    ]
+  ],
   'V_cetak_sertifikat' => [
     'crumbs' => [
       1 => [
@@ -192,6 +231,32 @@ $breadcrumbRules = [
       ],
       2 => [
         'text' => 'Kelola Berita',
+        'link' => '#',
+        'active' => true
+      ]
+    ]
+  ],
+  'V_tambah_berita' => [
+    'crumbs' => [
+      1 => [
+        'text' => 'Kelola Beranda',
+        'link' => $base_url.'kelola-beranda',
+      ],
+      2 => [
+        'text' => 'Tambah Berita Baru',
+        'link' => '#',
+        'active' => true
+      ]
+    ]
+  ],
+  'V_laporan' => [
+    'crumbs' => [
+      1 => [
+        'text' => 'Daftar Kelas',
+        'link' => $base_url.'kelas/aktif',
+      ],
+      2 => [
+        'text' => 'Laporan',
         'link' => '#',
         'active' => true
       ]

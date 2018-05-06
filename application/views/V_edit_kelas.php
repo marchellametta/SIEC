@@ -2,6 +2,15 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 ?>
 <div class="mr-3 ml-3 mr-sm-3 ml-sm-3 mr-md-5 ml-md-5 mt-5 mb-5">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="<?php echo base_url() ?> "><i class="fa fa-home mr-1"></i>Beranda</a></li>
+      <li class="breadcrumb-item" ><a href="<?php echo base_url() .'informasi/'. $link?>">Informasi</a></li>
+      <li class="breadcrumb-item" ><a href="<?php echo base_url()."informasi/detail". $ec->id_ec ?>">Detail</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Edit</li>
+
+    </ol>
+  </nav>
   <?php if (isset($error_message)): ?>
       <div class="alert alert-danger alert-dismissable">
         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
