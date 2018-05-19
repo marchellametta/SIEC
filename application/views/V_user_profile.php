@@ -107,7 +107,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
           <div class="form-row ml-2">
             <div class="form-group col-md-4">
               <label for="pekerjaan">Pekerjaan</label>
-              <input type="text" value="<?php echo (isset($post_data['pekerjaan']) ? $post_data['pekerjaan'] : $data->pekerjaan) ?>" class="form-control" name="pekerjaan" placeholder="Pekerjaan">
+              <input type="text" value="<?php echo (isset($post_data['pekerjaan']) ? $post_data['pekerjaan'] : $data->nama_pekerjaan) ?>" class="form-control" name="pekerjaan" placeholder="Pekerjaan">
               <span class="help-block text-danger"><?php if(isset($error_array['pekerjaan'])) echo $error_array['pekerjaan']?></span>
             </div>
             <div class="form-group col-md-4">

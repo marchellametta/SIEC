@@ -51,30 +51,30 @@ defined('BASEPATH') OR exit('No direct script access allowed');
       </fieldset>
       <input type="submit" id="simpan" value="Simpan" class="btn btn-success mt-3">
     </form>
-    <fieldset class="mt-4">
-      <legend>Pengaturan Berita</legend>
-      <table class="table table-hover table-striped table-bordered d-none d-sm-block">
-        <a href="<?php echo base_url().'tambah-berita'?>"><button type="button" class="btn btn-primary mb-2"><i class="fa fa-plus mr-1"></i>Tambah</button></a>
-        <thead class="thead-dark">
-          <tr>
-            <th scope="col">Judul</th>
-            <th scope="col">Aksi</th>
-          </tr>
-        </thead>
-        <tbody>
-          <?php foreach ($data as $row): ?>
-          <tr>
-            <td><?php echo $row->judul; ?></td>
-            <td>
-              <a href="<?php echo base_url().'kelola-berita/'.$row->id_berita?>"><button type="button" class="btn btn-success btn-sm"><i class="fa fa-edit mr-1"></i>Edit</button></a>
-              <a href="<?php echo base_url().'hapus-berita/'.$row->id_berita?>"><button type="button" class="btn btn-danger btn-sm"><i class="fa fa-close mr-1"></i>Hapus</button></a>
-            </td>
-          </tr>
-        <?php endforeach ?>
-        </tbody>
-      </table>
-    </fieldset>
   </div>
+  <fieldset class="mt-4">
+    <legend>Pengaturan Berita</legend>
+    <table class="table table-hover table-striped table-bordered">
+      <a href="<?php echo base_url().'tambah-berita'?>"><button type="button" class="btn btn-primary mb-2"><i class="fa fa-plus mr-1"></i>Tambah</button></a>
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col">Judul</th>
+          <th scope="col">Aksi</th>
+        </tr>
+      </thead>
+      <tbody>
+        <?php foreach ($data as $row): ?>
+        <tr>
+          <td><?php echo $row->judul; ?></td>
+          <td>
+            <a href="<?php echo base_url().'kelola-berita/'.$row->id_berita?>"><button type="button" class="btn btn-success btn-sm"><i class="fa fa-edit mr-1"></i>Edit</button></a>
+            <a href="<?php echo base_url().'hapus-berita/'.$row->id_berita?>"><button type="button" class="btn btn-danger btn-sm"><i class="fa fa-close mr-1"></i>Hapus</button></a>
+          </td>
+        </tr>
+      <?php endforeach ?>
+      </tbody>
+    </table>
+  </fieldset>
 </div>
 
 <script>

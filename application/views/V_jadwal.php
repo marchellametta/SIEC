@@ -31,7 +31,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
       <tr>
         <td><?php echo date($this->config->item('view_date_format'),strtotime($row->tanggal));?></td>
         <td><?php echo $row->lokasi;?></td>
-        <td><?php echo $row->jam_mulai . " - " . $row->jam_selesai;?></td>
+        <td><?php echo date('H:i',strtotime($row->jam_mulai)) ." - ". date('H:i',strtotime($row->jam_selesai)); ?></td>
         <td><?php echo $row->nama_topik;?></td>
         <td>
           <?php foreach ($row->narasumber as $temp):?>

@@ -5,7 +5,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
   <?php $this->load->view('V_template_breadcrumb', ['viewName' => 'V_edit_berita']) ?>
   <div class="text-left ml-3"><h5>Kelola Berita</h5></div>
   <div class="col-md-8 col-lg-6">
-    <form method="post" action="<?php echo base_url().'kelola-berita/'.$berita->id; ?>" enctype="multipart/form-data">
+    <form method="post" action="<?php echo base_url().'kelola-berita/'.$berita->id_berita; ?>" enctype="multipart/form-data">
       <fieldset class="mt-4">
         <div class="form-group col-md-12">
           <label for="judul" class="control-label">Judul</label>

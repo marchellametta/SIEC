@@ -8,7 +8,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <div class="card mt-3 shadow">
       <div class="card-body">
         <h4 class="card-title"><?php echo $row->nama_topik;?></h4>
-        <a href="<?php echo base_url()?>kelas/absensi/<?php echo $row->id_topik?>" class="btn btn-sm btn-primary"><i class="fa fa-edit"></i>Isi Absensi</a>
+        <a href="<?php echo base_url()?>kelas/absensi/<?php echo $row->id_topik?>" class="btn btn-sm btn-primary"><i class="fa fa-edit"></i>Isi Presensi</a>
       </div>
     </div>
     <?php endforeach ?>

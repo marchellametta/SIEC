@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class C_Absensi extends CI_Controller{
+class C_Presensi extends CI_Controller{
   public function __construct(){
     parent::__construct();
     if($this->session->userdata('nama') == null && $this->session->userdata('id_user') == null){

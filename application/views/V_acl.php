@@ -19,7 +19,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <td>
           <?php foreach ($temp->perm as $row):?>
             <div class="form-check">
-              <input class="form-check-input" type="checkbox" value="<?php echo $temp->id ?>" name="<?php echo $row['perm_id'].'[]'; ?>" <?php if ($row['akses'] == true) echo "checked" ?>>
+              <input class="form-check-input" type="checkbox" value="<?php echo $temp->id_role ?>" name="<?php echo $row['perm_id'].'[]'; ?>" <?php if ($row['akses'] == true) echo "checked" ?>>
                 <label class="form-check-label" for="<?php echo $row['perm_key'].'[]'; ?>">
                   <?php echo $row['perm_name']; ?>
                </label>

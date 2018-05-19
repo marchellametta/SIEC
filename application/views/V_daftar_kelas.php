@@ -22,7 +22,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
           <?php endif; ?>
           <a href="<?php echo base_url() .'informasi/detail/'. $row->id_ec;?>" class="<?php if($tipe!=='akan') echo 'border-right border-dark'?> pr-2 "><i class="fa fa-external-link mr-1 ml-1"></i>Detail</a>
           <?php if($tipe=='aktif'):?>
-          <a href="<?php echo base_url() .'kelas/absensi/daftar-topik/'. $row->id_ec;?>" class="border-right pr-2 border-dark"><i class="fa fa-edit mr-1 ml-1"></i>Absensi</a>
+          <a href="<?php echo base_url() .'kelas/absensi/daftar-topik/'. $row->id_ec;?>" class="border-right pr-2 border-dark"><i class="fa fa-edit mr-1 ml-1"></i>Presensi</a>
           <?php endif; ?>
           <?php if($tipe=='aktif' || $tipe=='riwayat'):?>
           <a href="<?php echo base_url() .'kelas/pembayaran/'. $row->id_ec;?>" class="border-right pr-2 border-dark"><i class="fa fa-edit mr-1 ml-1"></i>Status Pembayaran</a>

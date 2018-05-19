@@ -860,7 +860,6 @@ class C_Informasi extends CI_Controller{
              }
            }
          }else if($post_data['status_pdf'][$i-1]==4&&$post_data['id_pdf'][$i-1]!=0){
-           $this->T_modul_topik->detach_modul_topik($post_data['id_pdf'][$i-1],$id);
            $this->T_modul->delete($post_data['id_pdf'][$i-1]);
          }
          $i++;

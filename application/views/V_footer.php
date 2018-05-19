@@ -20,7 +20,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
       <i class="big-icon fa fa-facebook mr-1 mt-1"></i>
       <i class="big-icon -circle fa fa-twitter mr-1 mt-1"></i>
       <i class="big-icon fa fa-envelope mr-1 mt-1"></i>
-      <i class="big-icon fa fa-envelope mr-1 mt-1"></i>
     </div>
     <div class="col-md-4 text-center">
       <h3 class="mt-3 text-center">UNPAR OFFICIAL WEBSITE</h3>

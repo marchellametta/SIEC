@@ -311,7 +311,7 @@ class C_Kelas_panitia extends CI_Controller{
         $peserta = $this->Stored_procedure->get_peserta_lulus($id,$post_data['batas_lulus']);
         $length = count($peserta);
         $this->load->helper('template_engine');
-        $en = new TemplateEngine($this,$id);
+        $en = new TemplateEngine($this);
         $mpdf=new mPDF('','A5', 0, '', 0, 0, 0, 0, 0, 0, '');
         $mpdf->SetWatermarkImage('../SIEC/'.$post_data['gambar'],1);
         $mpdf->watermarkImgBehind = true;
@@ -340,7 +340,7 @@ class C_Kelas_panitia extends CI_Controller{
       $this->load->model('T_user');
       $peserta = $this->T_user->get($post_data['id_peserta']);
       $this->load->helper('template_engine');
-      $en = new TemplateEngine($this,$id);
+      $en = new TemplateEngine($this);
       $mpdf=new mPDF('','A5', 0, '', 0, 0, 0, 0, 0, 0, '');
       $mpdf->SetWatermarkImage('../SIEC/'.$post_data['gambar'],1);
       $mpdf->watermarkImgBehind = true;
@@ -389,6 +389,8 @@ class C_Kelas_panitia extends CI_Controller{
       $data = $this->Stored_procedure->get_all_peserta_topik($id,0);
       $data_batal = $this->Stored_procedure->get_all_peserta_topik($id,1);
       $topik = $this->Vw_data_topik->get($id);
+      $ec = $this->Vw_data_ec->get($topik->id_topik);
+
 
       $this->load->view('V_list_peserta',[
         'data' => $data,

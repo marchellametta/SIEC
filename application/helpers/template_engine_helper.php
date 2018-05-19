@@ -2,12 +2,8 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class TemplateEngine{
-    protected $template;
-    protected $data;
     protected $ctrl;
-    private $minimumNumberOfAset = 10;
-    private $tipe_output;
-    public function __construct($ctrl,$id_ec){
+    public function __construct($ctrl){
         $this->ctrl = $ctrl;
     }
 

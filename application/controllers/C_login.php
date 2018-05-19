@@ -30,6 +30,8 @@ class C_Login extends CI_Controller{
       } else {
         session_start();
         $user = $this->T_user->login($email);
+        var_dump($user);
+        die();
         if($user!=NULL){
           $roles = $this->Vw_data_user_roles->getRoles($user->id_user);
 
