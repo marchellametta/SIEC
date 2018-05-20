@@ -519,6 +519,7 @@ class C_Informasi extends CI_Controller{
        $this->load->model('T_narasumber');
        $this->load->model('T_narasumber_topik');
        $this->load->helper('config_rules');
+       $this->load->helper('link');
 
        $jenis_ec = $this->T_jenis_ec->all();
        $ec = $this->Vw_data_ec->get($id);
@@ -543,7 +544,8 @@ class C_Informasi extends CI_Controller{
          'topik' => $topik,
          'rules' => json_encode(get_rules('form-ec')),
          'biaya_topik_rules' => json_encode(get_rules('validasi-biaya-topik')),
-         'kapasitas_rules' => json_encode(get_rules('validasi-kapasitas-peserta'))
+         'kapasitas_rules' => json_encode(get_rules('validasi-kapasitas-peserta')),
+         'link' => get_periode_ec($this,$id)
        ]);
        $this->load->view('V_footer');
     } else if($this->input->method() == 'post'){

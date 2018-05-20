@@ -35,7 +35,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
        <div class="form-group col-md-3">
          <label for="tahun">Tahun Pelaksanaan</label>
          <div class="input-group date" id="tahun" data-target-input="nearest">
-           <input type="text" id="tahun-text" name="tahun" class="form-control datetimepicker-input" value="<?php if(isset($post_data['tahun'])) echo $post_data['tahun']?>" data-target="#tahun"/>
+           <input type="number" id="tahun-text" name="tahun" class="form-control datetimepicker-input" value="<?php if(isset($post_data['tahun'])) echo $post_data['tahun']?>" data-target="#tahun"/>
              <div class="input-group-append" data-target="#tahun" data-toggle="datetimepicker">
                <div class="input-group-text"><i class="fa fa-calendar"></i></div>
              </div>
