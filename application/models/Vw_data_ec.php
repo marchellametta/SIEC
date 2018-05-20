@@ -39,7 +39,7 @@ class Vw_data_ec extends CI_Model{
         return $this->db->get($this->table_name)->result();
     }
 
-    public function searchActive($tema){
+    public function searchActive($tema, $jenis){
         /* No Error Handling yet! */
         $this->db->where('tahun_pelaksanaan',date("Y"));
         if(date('n')<=6){
@@ -48,6 +48,19 @@ class Vw_data_ec extends CI_Model{
           $this->db->where('semester_pelaksanaan',2);
         }
         $this->db->like('tema_ec',$tema);
+
+        reset($jenis);
+        $first = key($jenis);
+        $this->db->group_start();
+        foreach ($jenis as $key => $value) {
+          if ($key === $first){
+            $this->db->where('id_jenis_ec',$value);
+          }else{
+            $this->db->or_where('id_jenis_ec',$value);
+          }
+
+        }
+        $this->db->group_end();
         return $this->db->get($this->table_name)->result();
     }
 
@@ -62,7 +75,7 @@ class Vw_data_ec extends CI_Model{
       return $this->db->get($this->table_name)->result();
     }
 
-    public function searchRecent($tema){
+    public function searchRecent($tema, $jenis){
       if(date('n')<=6){
         $this->db->where('tahun_pelaksanaan <',date("Y"));
       }else{
@@ -71,6 +84,19 @@ class Vw_data_ec extends CI_Model{
         $this->db->or_where('tahun_pelaksanaan <',date("Y"));
       }
       $this->db->like('tema_ec',$tema);
+
+      reset($jenis);
+      $first = key($jenis);
+      $this->db->group_start();
+      foreach ($jenis as $key => $value) {
+        if ($key === $first){
+          $this->db->where('id_jenis_ec',$value);
+        }else{
+          $this->db->or_where('id_jenis_ec',$value);
+        }
+
+      }
+      $this->db->group_end();
       return $this->db->get($this->table_name)->result();
     }
 
@@ -85,7 +111,7 @@ class Vw_data_ec extends CI_Model{
       return $this->db->get($this->table_name)->result();
     }
 
-    public function searchSoon($tema){
+    public function searchSoon($tema, $jenis){
       if(date('n')<=6){
           $this->db->where('tahun_pelaksanaan',date("Y"));
           $this->db->where('semester_pelaksanaan',2);
@@ -94,6 +120,18 @@ class Vw_data_ec extends CI_Model{
         $this->db->where('semester_pelaksanaan',1);
       }
       $this->db->like('tema_ec',$tema);
+      reset($jenis);
+      $first = key($jenis);
+      $this->db->group_start();
+      foreach ($jenis as $key => $value) {
+        if ($key === $first){
+          $this->db->where('id_jenis_ec',$value);
+        }else{
+          $this->db->or_where('id_jenis_ec',$value);
+        }
+
+      }
+      $this->db->group_end();
       return $this->db->get($this->table_name)->result();
     }
 

@@ -41,6 +41,20 @@ class Vw_data_ec_panitia extends CI_Model{
         return $this->db->get($this->table_name)->result();
     }
 
+    public function searchActive($id, $tema, $jenis){
+      die();
+        /* No Error Handling yet! */
+        $this->db->where('id_panitia',$id);
+        $this->db->where('tahun_pelaksanaan',date("Y"));
+        if(date('n')<=6){
+          $this->db->where('semester_pelaksanaan',1);
+        }else{
+          $this->db->where('semester_pelaksanaan',2);
+        }
+        $this->db->like('tema_ec',$tema);
+        return $this->db->get($this->table_name)->result();
+    }
+
     public function getRecent($id){
       $this->db->where('id_panitia',$id);
       if(date('n')<=6){
@@ -50,6 +64,19 @@ class Vw_data_ec_panitia extends CI_Model{
         $this->db->where('semester_pelaksanaan',1);
         $this->db->or_where('tahun_pelaksanaan <',date("Y"));
       }
+      return $this->db->get($this->table_name)->result();
+    }
+
+    public function searchRecent($id, $tema){
+        $this->db->where('id_panitia',$id);
+      if(date('n')<=6){
+        $this->db->where('tahun_pelaksanaan <',date("Y"));
+      }else{
+        $this->db->where('tahun_pelaksanaan',date("Y"));
+        $this->db->where('semester_pelaksanaan',1);
+        $this->db->or_where('tahun_pelaksanaan <',date("Y"));
+      }
+      $this->db->like('tema_ec',$tema);
       return $this->db->get($this->table_name)->result();
     }
 

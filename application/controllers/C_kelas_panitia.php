@@ -4,6 +4,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 require_once('application/helpers/mpdf60/mpdf.php');
 
 class C_Kelas_panitia extends CI_Controller{
+
+  private $limit = 3;
+
   public function __construct(){
     parent::__construct();
     if($this->session->userdata('nama') == null && $this->session->userdata('user_id') == null){
@@ -37,8 +40,17 @@ class C_Kelas_panitia extends CI_Controller{
       $this->load->model('Vw_data_ec_panitia');
       $this->load->model('Vw_data_topik');
 
+      $start = 0;
+      $end = $this->limit;
+      if($this->input->get('page')!=NULL){
+        $end = $this->input->get('page')*$this->limit;
+        $start = $end- $this->limit;
+      }
+
 
       $data = $this->Vw_data_ec_panitia->getActive($id_user);
+      $page = ceil(count($data)/$this->limit);
+      $data = array_slice($data, $start, $end);
       $complete = array();
       foreach ($data as $row) {
         if($row->status_peserta==1){
@@ -70,11 +82,53 @@ class C_Kelas_panitia extends CI_Controller{
        $this->load->view('V_navbar');
        $this->load->view('V_daftar_kelas',[
          'data' => $complete,
-         'tipe' => 'aktif'
+         'tipe' => 'aktif',
+         'page' => $page
        ]);
        $this->load->view('V_footer');
     } else if($this->input->method() == 'post'){
+      $this->load->model('Vw_data_ec_panitia');
+      $this->load->model('Vw_data_topik');
+      $this->load->model('Stored_procedure');
+      $post_data = $this->input->post();
 
+      $data = $this->Vw_data_ec_panitia->searchActive($id_user,$post_data['tema']);
+      $aktif = array();
+      foreach ($data as $row) {
+        if($row->status_peserta==1){
+          $jumlah_peserta = $this->Stored_procedure->get_jumlah_peserta_ec($row->id_ec,0);
+          if($row->kapasitas_peserta!=0){
+            $jumlah_peserta->jumlah_peserta.="/".$row->kapasitas_peserta."<br>";
+          }else{
+            $jumlah_peserta->jumlah_peserta.="<br>";
+          }
+          $row->jumlah_peserta = $jumlah_peserta->jumlah_peserta;
+          array_push($aktif,$row);
+        }else{
+          $all_topik = $this->Vw_data_topik->getAllTopik($row->id_ec);
+          $jumlah_peserta = "";
+          foreach ($all_topik as $topik) {
+            $jumlah_peserta .= $topik->nama_topik." : ". $this->Stored_procedure->get_jumlah_peserta_topik($topik->id_topik,0)->jumlah_peserta;
+            if($row->kapasitas_peserta!=0){
+              $jumlah_peserta.="/".$row->kapasitas_peserta."<br>";
+            }else{
+              $jumlah_peserta.="<br>";
+            }
+          }
+          $row->jumlah_peserta = $jumlah_peserta;
+          array_push($aktif,$row);
+         }
+      }
+
+      $this->load->view('V_header');
+      $this->load->view('V_navbar');
+      $this->load->view('V_daftar_kelas',[
+        'data' => $aktif,
+        'tipe' => 'aktif',
+        'search_message' => count($aktif)." kelas ditemukan"
+
+      ]);
+      $this->load->view('V_footer');
 
     }
   }
@@ -103,7 +157,16 @@ class C_Kelas_panitia extends CI_Controller{
       $this->load->model('Vw_data_topik');
       $this->load->model('Stored_procedure');
 
+      $start = 0;
+      $end = $this->limit;
+      if($this->input->get('page')!=NULL){
+        $end = $this->input->get('page')*$this->limit;
+        $start = $end- $this->limit;
+      }
+
       $data = $this->Vw_data_ec_panitia->getRecent($id_user);
+      $page = ceil(count($data)/$this->limit);
+      $data = array_slice($data, $start, $end);
 
       $riwayat = array();
       foreach ($data as $row) {
@@ -135,12 +198,52 @@ class C_Kelas_panitia extends CI_Controller{
       $this->load->view('V_navbar');
       $this->load->view('V_daftar_kelas',[
         'data' => $riwayat,
-        'tipe' => 'riwayat'
+        'tipe' => 'riwayat',
+        'page' => $page
       ]);
       $this->load->view('V_footer');
     } else if($this->input->method() == 'post'){
+      $this->load->model('Vw_data_ec');
+      $this->load->model('Vw_data_topik');
+      $this->load->model('Stored_procedure');
+      $post_data = $this->input->post();
 
+      $data = $this->Vw_data_ec_panitia->searchRecent($id_user, $post_data['tema']);
 
+      $riwayat = array();
+      foreach ($data as $row) {
+        if($row->status_peserta==1){
+          $jumlah_peserta = $this->Stored_procedure->get_jumlah_peserta_ec($row->id_ec,0);
+          if($row->kapasitas_peserta!=0){
+            $jumlah_peserta->jumlah_peserta.="/".$row->kapasitas_peserta."<br>";
+          }else{
+            $jumlah_peserta->jumlah_peserta.="<br>";
+          }
+          $row->jumlah_peserta = $jumlah_peserta->jumlah_peserta;
+          array_push($riwayat,$row);
+        }else{
+          $all_topik = $this->Vw_data_topik->getAllTopik($row->id_ec);
+          $jumlah_peserta = "";
+          foreach ($all_topik as $topik) {
+            $jumlah_peserta .= $topik->nama_topik." : ". $this->Stored_procedure->get_jumlah_peserta_topik($topik->id_topik,0)->jumlah_peserta;
+            if($row->kapasitas_peserta!=0){
+              $jumlah_peserta.="/".$row->kapasitas_peserta."<br>";
+            }else{
+              $jumlah_peserta.="<br>";
+            }
+          }
+          $row->jumlah_peserta = $jumlah_peserta;
+          array_push($riwayat,$row);
+         }
+      }
+      $this->load->view('V_header');
+      $this->load->view('V_navbar');
+      $this->load->view('V_daftar_kelas',[
+        'data' => $riwayat,
+        'tipe' => 'riwayat',
+        'search_message' => count($riwayat)." kelas ditemukan"
+      ]);
+      $this->load->view('V_footer');
     }
   }
 

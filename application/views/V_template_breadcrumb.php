@@ -275,12 +275,12 @@ if (isset($viewName) && isset($breadcrumbRules[$viewName])) {
         <li class="breadcrumb-item"><a href="<?php echo $base_url ?>"><i class="fa fa-home mr-1"></i>Beranda</a></li>
         <?php if (isset($selectedBreadcrumbRule)): ?>
           <?php foreach ($selectedBreadcrumbRule['crumbs'] as $crumb): ?>
-            <li class="breadcrumb-item <?php if (isset($crumb['active']) && $crumb['active'] == true) echo 'active' ?>" >
-              <?php if (isset($crumb['link'])): ?>
+            <li class="breadcrumb-item <?php if (isset($crumb['active']) && $crumb['active'] == true) echo 'active' ?>" aria-current="page">
+              <?php if (isset($crumb['link']) && !(isset($crumb['active']) && $crumb['active'] == true)): ?>
                 <a href="<?php echo $crumb['link'] ?>">
               <?php endif ?>
               <?php echo $crumb['text'] ?>
-              <?php if (isset($crumb['link'])): ?>
+              <?php if (isset($crumb['link']) && !(isset($crumb['active']) && $crumb['active'] == true)): ?>
                 </a>
               <?php endif ?>
             </li>

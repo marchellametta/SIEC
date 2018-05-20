@@ -17,6 +17,21 @@ class Stored_procedure extends CI_Model{
       return $result;
     }
 
+    public function search_ec_peserta($id_peserta, $status_batal, $tema){
+      $tahun = date("Y");
+      $semester="";
+      if(date('n')<=6){
+        $semester = 1;
+      }else{
+        $semester=2;
+      }
+      $query = $this->db->query("call search_ec_peserta('".$id_peserta."','".$tahun."','".$semester."','".$status_batal."','".$tema."')");
+      mysqli_next_result( $this->db->conn_id );
+      $result = $query->result();
+      $query->free_result();
+      return $result;
+    }
+
     public function get_ec_panitia($id_panitia, $tahun, $semester){
       $query = $this->db->query("call get_ec_peserta('".$id_peserta."','".$tahun."','".$semester."')");
       mysqli_next_result( $this->db->conn_id );

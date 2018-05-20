@@ -2,6 +2,10 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class C_Kelas_user extends CI_Controller{
+
+  private $limit = 3;
+
+
   public function __construct(){
     parent::__construct();
     if($this->session->userdata('nama') == null && $this->session->userdata('id_user') == null){
@@ -31,7 +35,19 @@ class C_Kelas_user extends CI_Controller{
       $this->load->model('T_pembayaran_peserta_lepas');
       $this->load->model('T_pembayaran_peserta_tetap');
       $this->load->model('Stored_procedure');
+
+      $start = 0;
+      $end = $this->limit;
+      if($this->input->get('page')!=NULL){
+        $end = $this->input->get('page')*$this->limit;
+        $start = $end- $this->limit;
+      }
+
+
       $data = $this->Stored_procedure->get_ec_peserta($id_user,0);
+      $page = ceil(count($data)/$this->limit);
+      $data = array_slice($data, $start, $end);
+
       foreach ($data as $row) {
         $tagihan = $this->T_pembayaran_peserta_tetap->get($this->session->userdata('id_user'),$row->id_ec);
         if($tagihan===NULL){
@@ -53,16 +69,47 @@ class C_Kelas_user extends CI_Controller{
       $this->load->view('V_header');
       $this->load->view('V_navbar');
       $this->load->view('V_kelas_user',[
-        'data' => $data
+        'data' => $data,
+        'page' => $page
       ]);
       $this->load->view('V_footer');
     } else if($this->input->method() == 'post'){
+      $this->load->model('T_pembayaran_peserta_lepas');
+      $this->load->model('T_pembayaran_peserta_tetap');
+      $this->load->model('Stored_procedure');
+      $post_data = $this->input->post();
 
+      $data = $this->Stored_procedure->search_ec_peserta($id_user,0,$post_data['tema']);
+      foreach ($data as $row) {
+        $tagihan = $this->T_pembayaran_peserta_tetap->get($this->session->userdata('id_user'),$row->id_ec);
+        if($tagihan===NULL){
+          $tagihan = $this->T_pembayaran_peserta_lepas->get($this->session->userdata('id_user'),$row->id_ec);
+          $temp = 0;
+          foreach ($tagihan as $tagihan_row) {
+            if($tagihan_row->status_lunas!=1){
+              $temp = $temp + $tagihan_row->tagihan;
+            }
+          }
+          $row->tagihan = $temp;
+          $row->bayar = 'true';
+        }else{
+          $row->tagihan = $tagihan->tagihan - $tagihan->telah_bayar;
+          $row->bayar = ($tagihan->status_lunas==1? 'false': '1 ');
+        }
+      }
+
+      $this->load->view('V_header');
+      $this->load->view('V_navbar');
+      $this->load->view('V_kelas_user',[
+        'data' => $data,
+        'search_message' => count($data)." kelas ditemukan"
+      ]);
+      $this->load->view('V_footer');
 
     }
   }
 
-  
+
 
   public function modul($id){
     // // Use whatever user script you would like, just make sure it has an ID field to tie into the ACL with

@@ -3,7 +3,37 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 ?>
 <div class="mr-3 ml-3 mr-sm-3 ml-sm-3 mr-md-5 ml-md-5 mt-5 mb-5">
 <?php $this->load->view('V_template_breadcrumb', ['viewName' => 'V_daftar_kelas_'.$tipe]) ?>
-  <div class="text-left ml-3"><h5>DAFTAR KELAS</h5></div>
+<div class="row ml-3 mr-3">
+  <?php if($tipe=='aktif'):?>
+    <div class="text-left ml-3 col-md-5"><h5>DAFTAR KELAS AKTIF</h5></div>
+  <?php else: ?>
+    <div class="text-left ml-3 col-md-5"><h5>DAFTAR RIWAYAT KELAS</h5></div>
+  <?php endif; ?>
+
+  <div class="col-md-6 mt-2 mt-sm-0 mt-md-0 mt-lg-0">
+    <?php if($tipe=='aktif'):?>
+      <form method="post" action="<?php echo base_url() ?>kelas/aktif">
+    <?php else: ?>
+      <form method="post" action="<?php echo base_url() ?>kelas/riwayat">
+    <?php endif; ?>
+    <form method="post" action="<?php echo base_url() ?>kelas/aktif">
+    <div class="input-group">
+      <input type="text" name="tema" class="form-control" placeholder="Search for...">
+      <span class="input-group-btn">
+        <button type="submit" class="btn btn-secondary pt-2 pb-2" type="button"><i class="fa fa-search m-1"></i></button>
+      </span>
+    </div>
+  </form>
+  </div>
+ </div>
+
+ <?php if (isset($search_message)): ?>
+     <div class="alert alert-info alert-dismissable">
+       <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+       <?php echo $search_message ;?>
+     </div>
+ <?php endif ?>
+
   <?php foreach ($data as $row): ?>
   <div class="card mt-4 shadow ml-3 mr-3">
     <div class="card-body">
@@ -36,6 +66,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     </div>
   </div>
   <?php endforeach ?>
+  <?php if(isset($page)) :?>
+    <ul class="pagination pagination-sm justify-content-end mt-3">
+      <li class="page-item disabled">
+        <a class="page-link" href="#">Halaman</a>
+      </li>
+      <?php $i =1; ?>
+      <?php while($i <= $page) {?>
+        <li class="page-item"><a class="page-link" href="?page=<?php echo $i?>"><?php echo $i; ?></a></li>
+        <?php $i++; ?>
+      <?php } ?>
+    </ul>
+  <?php endif; ?>
 </div>
 
 
