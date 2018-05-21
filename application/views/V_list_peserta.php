@@ -9,7 +9,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <?php else :?>
   <div class="text-left ml-3"><h5><?php echo 'Daftar Peserta ' .$ec->jenis_ec. " : " . $ec->tema_ec; ?></h5></div>
 <?php endif; ?>
-  <table class="table table-hover table-striped table-bordered absensi mt-5">
+<div class="text-left ml-3 mt-5"><h6><b>PESERTA AKTIF</b></h6></div>
+  <table class="table table-hover table-striped table-bordered absensi">
     <thead class="thead-dark">
       <tr>
         <th scope="col" class="text-center">Nama Peserta</th>
@@ -35,7 +36,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <?php endforeach ?>
     </tbody>
   </table>
-  <table class="table table-hover table-striped table-bordered absensi mt-5">
+  <div class="text-left ml-3 mt-5"><h6><b>PESERTA YANG MEMBATALKAN</b></h6></div>
+  <table class="table table-hover table-striped table-bordered absensi">
     <thead class="thead-dark">
       <tr>
         <th scope="col" class="text-center">Nama Peserta</th>
