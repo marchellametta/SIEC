@@ -355,7 +355,6 @@ $(document).ready(function(){
                 lembaga : item.lembaga
               };
             });
-            console.log(tmp);
             res(tmp);
           });
         },
@@ -378,7 +377,7 @@ $(document).ready(function(){
          change : function(e, ui) {
            e.preventDefault();
            if (ui.item == null) {
-             e.target.value = '';
+             //e.target.value = '';
              realId.val('').keyup();
              realProfesi.val('').keyup();
              realJabatan.val('').keyup();
@@ -594,6 +593,9 @@ $(document).ready(function(){
     $('#tahun').datetimepicker({
       format: 'YYYY'
     });
+    $('#tahun').on("change.datetimepicker", function (e) {
+      $('#tahun-text').trigger("keyup");
+   });
 
     $('#simpan').click(function() {
       sendTableArticles();
@@ -669,7 +671,7 @@ $(document).ready(function(){
       for(var j=0; j<length;j++){
         //console.log(narasumber_arr);
         var narasumber = narasumber_arr[j].split(',');
-        console.log(narasumber[4]);
+        console.log(narasumber_arr);
         $('#modal #narasumber'+(j+1)).val($.trim(narasumber[0]).substr(3,narasumber[0].length-7));
         if(narasumber[1]!=' ') $('#modal #profesi'+(j+1)).val($.trim(narasumber[1]).substr(4,narasumber[1].length-8));
         if(narasumber[2]!=' ') $('#modal #lembaga'+(j+1)).val($.trim(narasumber[2]).substr(4,narasumber[2].length-8));

@@ -22,7 +22,7 @@ class C_Informasi extends CI_Controller{
       $data = $this->Vw_data_ec->getActive();
       $jenis = $this->T_jenis_ec->all();
       $page = ceil(count($data)/$this->limit);
-      $data = array_slice($data, $start, $end);
+      $data = array_slice($data, $start, $this->limit);
       $aktif = array();
       foreach ($data as $row) {
         if($row->status_peserta==1){
@@ -67,6 +67,9 @@ class C_Informasi extends CI_Controller{
       $post_data = $this->input->post();
       // var_dump($post_data);
       // die();
+
+      $post_data['tema'] = (isset($post_data['tema']) ? $post_data['tema'] : "");
+      $post_data['jenis'] = (isset($post_data['jenis']) ? $post_data['jenis'] : array());
 
       $data = $this->Vw_data_ec->searchActive($post_data['tema'], $post_data['jenis']);
       $jenis = $this->T_jenis_ec->all();
@@ -128,7 +131,7 @@ class C_Informasi extends CI_Controller{
       $data = $this->Vw_data_ec->getRecent();
       $jenis = $this->T_jenis_ec->all();
       $page = ceil(count($data)/$this->limit);
-      $data = array_slice($data, $start, $end);
+      $data = array_slice($data, $start, $this->limit);
       $riwayat = array();
       foreach ($data as $row) {
         if($row->status_peserta==1){
@@ -170,6 +173,9 @@ class C_Informasi extends CI_Controller{
       $this->load->model('T_jenis_ec');
       $this->load->model('Stored_procedure');
       $post_data = $this->input->post();
+
+      $post_data['tema'] = (isset($post_data['tema']) ? $post_data['tema'] : "");
+      $post_data['jenis'] = (isset($post_data['jenis']) ? $post_data['jenis'] : array());
 
       $data = $this->Vw_data_ec->searchRecent($post_data['tema'], $post_data['jenis']);
       $jenis = $this->T_jenis_ec->all();
@@ -230,7 +236,7 @@ class C_Informasi extends CI_Controller{
       $data = $this->Vw_data_ec->getSoon();
       $jenis = $this->T_jenis_ec->all();
       $page = ceil(count($data)/$this->limit);
-      $data = array_slice($data, $start, $end);
+      $data = array_slice($data, $start, $this->limit);
       $akan = array();
       foreach ($data as $row) {
         if($row->status_peserta==1){
@@ -272,6 +278,9 @@ class C_Informasi extends CI_Controller{
       $this->load->model('T_jenis_ec');
       $this->load->model('Stored_procedure');
       $post_data = $this->input->post();
+
+      $post_data['tema'] = (isset($post_data['tema']) ? $post_data['tema'] : "");
+      $post_data['jenis'] = (isset($post_data['jenis']) ? $post_data['jenis'] : array());
 
       $data = $this->Vw_data_ec->searchSoon($post_data['tema'], $post_data['jenis']);
       $jenis = $this->T_jenis_ec->all();
@@ -349,14 +358,14 @@ class C_Informasi extends CI_Controller{
        $this->load->view('V_footer');
     } else if($this->input->method() == 'post'){
       $post_data = $this->input->post();
-      //var_dump($post_data);
+      // var_dump($post_data);
       // $topik = json_decode($post_data['topik']);
       // var_dump($topik);
       // foreach ($topik as $row) {
       //   var_dump($row->file);
       // }
       // var_dump($_FILES);
-      //die();
+      // die();
       $this->load->helper('config_rules');
 
 
@@ -470,16 +479,32 @@ class C_Informasi extends CI_Controller{
 
            foreach ($row->narasumber as $tmp) {
              $data = explode(",",$tmp);
-             if(count($data)>=4){
-               $this->T_narasumber->insert([
-                 'profesi' => $data[1],
-                 'jabatan' => $data[3],
-                 'lembaga' => $data[2],
-                 'nama' => $data[0]
-               ]);
-               $id_narasumber = $this->db->insert_id();
 
-               $this->T_narasumber_topik->attach_narasumber_topik($id_narasumber, $id_topik);
+             if(count($data)>=4){
+               $data[4] =substr($data[4],0,strlen($data[4])-4);
+               $data[3] =substr($data[3],0,strlen($data[3])-18);
+               if(trim($data[4])!=""){
+                 $edit = $this->T_narasumber->edit(trim($data[4]),[
+                   'profesi' => trim($data[1]),
+                   'jabatan' => trim($data[3]),
+                   'lembaga' => trim($data[2]),
+                   'nama' => trim($data[0])
+                 ]);
+                 $hasil = $this->T_narasumber_topik->attach_narasumber_topik(trim($data[4]), $id_topik);
+                 // var_dump($edit);
+                 // var_dump($hasil);
+                 // die();
+               }else{
+                 $this->T_narasumber->insert([
+                   'profesi' => trim($data[1]),
+                   'jabatan' => trim($data[3]),
+                   'lembaga' => trim($data[2]),
+                   'nama' => trim($data[0])
+                 ]);
+                 $id_narasumber = $this->db->insert_id();
+
+                 $this->T_narasumber_topik->attach_narasumber_topik($id_narasumber, $id_topik);
+               }
              }
            }
          }

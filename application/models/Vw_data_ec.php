@@ -51,16 +51,18 @@ class Vw_data_ec extends CI_Model{
 
         reset($jenis);
         $first = key($jenis);
-        $this->db->group_start();
-        foreach ($jenis as $key => $value) {
-          if ($key === $first){
-            $this->db->where('id_jenis_ec',$value);
-          }else{
-            $this->db->or_where('id_jenis_ec',$value);
-          }
+        if(count($jenis)>0){
+          $this->db->group_start();
+          foreach ($jenis as $key => $value) {
+            if ($key === $first){
+              $this->db->where('id_jenis_ec',$value);
+            }else{
+              $this->db->or_where('id_jenis_ec',$value);
+            }
 
+          }
+          $this->db->group_end();
         }
-        $this->db->group_end();
         return $this->db->get($this->table_name)->result();
     }
 
@@ -87,16 +89,18 @@ class Vw_data_ec extends CI_Model{
 
       reset($jenis);
       $first = key($jenis);
-      $this->db->group_start();
-      foreach ($jenis as $key => $value) {
-        if ($key === $first){
-          $this->db->where('id_jenis_ec',$value);
-        }else{
-          $this->db->or_where('id_jenis_ec',$value);
-        }
+      if(count($jenis)>0){
+        $this->db->group_start();
+        foreach ($jenis as $key => $value) {
+          if ($key === $first){
+            $this->db->where('id_jenis_ec',$value);
+          }else{
+            $this->db->or_where('id_jenis_ec',$value);
+          }
 
+        }
+        $this->db->group_end();
       }
-      $this->db->group_end();
       return $this->db->get($this->table_name)->result();
     }
 
@@ -122,16 +126,18 @@ class Vw_data_ec extends CI_Model{
       $this->db->like('tema_ec',$tema);
       reset($jenis);
       $first = key($jenis);
-      $this->db->group_start();
-      foreach ($jenis as $key => $value) {
-        if ($key === $first){
-          $this->db->where('id_jenis_ec',$value);
-        }else{
-          $this->db->or_where('id_jenis_ec',$value);
-        }
+      if(count($jenis)>0){
+        $this->db->group_start();
+        foreach ($jenis as $key => $value) {
+          if ($key === $first){
+            $this->db->where('id_jenis_ec',$value);
+          }else{
+            $this->db->or_where('id_jenis_ec',$value);
+          }
 
+        }
+        $this->db->group_end();
       }
-      $this->db->group_end();
       return $this->db->get($this->table_name)->result();
     }
 

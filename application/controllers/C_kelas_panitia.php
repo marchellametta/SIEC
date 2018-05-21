@@ -50,7 +50,7 @@ class C_Kelas_panitia extends CI_Controller{
 
       $data = $this->Vw_data_ec_panitia->getActive($id_user);
       $page = ceil(count($data)/$this->limit);
-      $data = array_slice($data, $start, $end);
+      $data = array_slice($data, $start, $this->limit);
       $complete = array();
       foreach ($data as $row) {
         if($row->status_peserta==1){
@@ -166,7 +166,7 @@ class C_Kelas_panitia extends CI_Controller{
 
       $data = $this->Vw_data_ec_panitia->getRecent($id_user);
       $page = ceil(count($data)/$this->limit);
-      $data = array_slice($data, $start, $end);
+      $data = array_slice($data, $start, $this->limit);
 
       $riwayat = array();
       foreach ($data as $row) {

@@ -46,7 +46,7 @@ class C_Kelas_user extends CI_Controller{
 
       $data = $this->Stored_procedure->get_ec_peserta($id_user,0);
       $page = ceil(count($data)/$this->limit);
-      $data = array_slice($data, $start, $end);
+      $data = array_slice($data, $start, $this->limit);
 
       foreach ($data as $row) {
         $tagihan = $this->T_pembayaran_peserta_tetap->get($this->session->userdata('id_user'),$row->id_ec);

@@ -175,6 +175,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                   <div class="form-group col-md-12">
                     <label for="jabatan">Jabatan</label>
                     <input type="text" class="form-control jabatan" id="jabatan1" data-urutan="1" placeholder="Jabatan">
+                    <input type="text" class="form-control id_narasumber hidden" id="id_narasumber1" data-urutan="1">
                   </div>
                 </div>
               </div>
@@ -235,13 +236,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <script>
 
 $(document).ready(function(){
+  $(".narasumber").each(function(index) {
+  enableAutoComplete($(this));
+});
+
   var i = 1;
   $('[data-toggle="tooltip"]').tooltip();
   $("#tambah-narasumber").click(function(){
     i = i+1;
     $("#nara").append('<div class="block_nara"><div class="row ml-1"><div class="form-group col-md-10">'+
       '<label for="narasumber">Narasumber</label>'+
-      '<input type="text" class="form-control narasumber" id="narasumber1" data-urutan="1" placeholder="Narasumber">'+
+      '<input type="text" class="form-control narasumber" id="narasumber'+i+'" data-urutan="1" placeholder="Narasumber">'+
     '</div>'+
     '<div class="col-md-2 pr-0">'+
       '<a class=" hapus-narasumber button btn-danger rounded text-white pl-1 pr-1" data-toggle="tooltip" title="Hapus narasumber"><i class="fa fa-times"></i></a>'+
@@ -257,8 +262,77 @@ $(document).ready(function(){
     '<div class="form-group col-md-12">'+
       '<label for="jabatan">Jabatan</label>'+
       '<input type="text" class="form-control jabatan" id="jabatan'+i+'" data-urutan="'+i+'" placeholder="Jabatan">'+
+      '<input type="text" class="form-control id_narasumber hidden" id="id_narasumber'+i+'" data-urutan="1">'+
     '</div></div>');
+    $(".narasumber").each(function(index) {
+    enableAutoComplete($(this));
   });
+  });
+
+  function enableAutoComplete($element) {
+    var baseUrl = '<?php echo base_url() ?>';
+    var input = '';
+    var realId = '';
+    var realProfesi = '';
+    var realJabatan = '';
+    var realLembaga = '';
+    $element.autocomplete({
+      source : function(req,res){
+        input = $('#'+($element.prop("id")));
+        //alert('#'+($element.prop("id")));
+        realId = $('#'+input.parent().parent().siblings().children('.id_narasumber').prop("id"));
+        realProfesi = $('#'+input.parent().parent().siblings().children('.profesi').prop("id"));
+        realJabatan = $('#'+input.parent().parent().siblings().children('.jabatan').prop("id"));
+        realLembaga = $('#'+input.parent().parent().siblings().children('.lembaga').prop("id"));
+        //alert(realInput);
+        var postData = {
+          narasumber : input.val()
+        };
+        var url = baseUrl + 'narasumber/search';
+        $.get(url,postData).then(function(suggestions){
+            var tmp = suggestions.map(function(item){
+              return {
+                label : item.nama,
+                value : item.id_narasumber,
+                profesi : item.profesi,
+                jabatan : item.jabatan,
+                lembaga : item.lembaga
+              };
+            });
+            console.log(tmp);
+            res(tmp);
+          });
+        },
+        select : function(e,ui){
+           e.preventDefault();
+           e.target.value = ui.item.label;
+           realId.val(ui.item.value).keyup();
+           realProfesi.val(ui.item.profesi).keyup();
+           realJabatan.val(ui.item.jabatan).keyup();
+           realLembaga.val(ui.item.lembaga).keyup();
+         },
+         focus : function(e,ui){
+            e.preventDefault();
+            e.target.value = ui.item.label;
+            realId.val(ui.item.value).keyup();
+            realProfesi.val(ui.item.profesi).keyup();
+            realJabatan.val(ui.item.jabatan).keyup();
+            realLembaga.val(ui.item.lembaga).keyup();
+          },
+         change : function(e, ui) {
+           e.preventDefault();
+           if (ui.item == null) {
+             //e.target.value = '';
+             realId.val('').keyup();
+             realProfesi.val('').keyup();
+             realJabatan.val('').keyup();
+             realLembaga.val('').keyup();
+           }
+         }
+    });
+  }
+
+
     $("#tambah-topik-submit").click(function(){
        var topik = $('#topik').val();
        var tanggal = $('#tanggal-text').val();
@@ -276,7 +350,7 @@ $(document).ready(function(){
          narasumber = narasumber+ $(this).val()+', ';
          narasumber = narasumber+ $(this).parent().parent().siblings().children('.profesi').val()+', ';
          narasumber = narasumber+ $(this).parent().parent().siblings().children('.lembaga').val()+', ';
-         narasumber = narasumber+ $(this).parent().parent().siblings().children('.jabatan').val();
+         narasumber = narasumber+ $(this).parent().parent().siblings().children('.jabatan').val()+'<a class="hidden">,'+$(this).parent().parent().siblings().children('.id_narasumber').val()+'</a>';
          narasumber = narasumber+ '<br>';
        });
 
@@ -309,8 +383,12 @@ $(document).ready(function(){
       '<div class="form-group col-md-12">'+
         '<label for="jabatan">Jabatan</label>'+
         '<input type="text" class="form-control jabatan" id="jabatan1" data-urutan="1" placeholder="Jabatan">'+
+        '<input type="text" class="form-control id_narasumber hidden" id="id_narasumber'+i+'" data-urutan="1">'+
       '</div></div>');
       i=1;
+      $(".narasumber").each(function(index) {
+      enableAutoComplete($(this));
+    });
 
     });
 
@@ -356,6 +434,9 @@ $(document).ready(function(){
     $('#tahun').datetimepicker({
       format: 'YYYY'
     });
+    $('#tahun').on("change.datetimepicker", function (e) {
+      $('#tahun-text').trigger("keyup");
+   });
 
     $('#simpan').click(function() {
       sendTableArticles();
@@ -405,17 +486,20 @@ $(document).ready(function(){
           '<div class="form-group col-md-12">'+
             '<label for="jabatan">Jabatan</label>'+
             '<input type="text" class="form-control jabatan" id="jabatan'+i+'" data-urutan="'+i+'" placeholder="Jabatan">'+
+            '<input type="text" class="form-control id_narasumber hidden" id="id_narasumber'+i+'" data-urutan="1">'+
           '</div>');
           i = i+1;
         }
       }
-      for(var j=0; j<=length;j++){
+      for(var j=0; j<length;j++){
         console.log(narasumber_arr);
         var narasumber = narasumber_arr[j].split(',');
-        $('#modal #narasumber'+(j+1)).val(narasumber[0]);
-        if(narasumber[1]!=' ') $('#modal #profesi'+(j+1)).val(narasumber[1]);
-        if(narasumber[2]!=' ') $('#modal #lembaga'+(j+1)).val(narasumber[2]);
-        if(narasumber[3]!=' ') $('#modal #jabatan'+(j+1)).val(narasumber[3]);
+          $('#modal #narasumber'+(j+1)).val(narasumber[0]);
+          if(narasumber[1]!=' ') $('#modal #profesi'+(j+1)).val($.trim(narasumber[1]));
+          if(narasumber[2]!=' ') $('#modal #lembaga'+(j+1)).val($.trim(narasumber[2]));
+          if(narasumber[3]!=' ') $('#modal #jabatan'+(j+1)).val($.trim(narasumber[3]).substr(0,narasumber[3].length-19));
+          if(narasumber[4]!=' ') $('#modal #id_narasumber'+(j+1)).val($.trim(narasumber[4]).substr(0,narasumber[4].length-4));
+
       }
 
       $('#modal').modal('show');
@@ -441,7 +525,7 @@ $(document).ready(function(){
            narasumber = narasumber+ $(this).val()+', ';
            narasumber = narasumber+ $(this).parent().parent().siblings().children('.profesi').val()+', ';
            narasumber = narasumber+ $(this).parent().parent().siblings().children('.lembaga').val()+', ';
-           narasumber = narasumber+ $(this).parent().parent().siblings().children('.jabatan').val();
+           narasumber = narasumber+ $(this).parent().parent().siblings().children('.jabatan').val()+'<a class="hidden">,'+$(this).parent().parent().siblings().children('.id_narasumber').val()+'</a>';
            narasumber = narasumber+ '<br>';
          });
 
