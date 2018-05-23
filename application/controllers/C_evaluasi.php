@@ -37,7 +37,8 @@ class C_Evaluasi extends CI_Controller{
       $data = $this->Vw_data_ec->get($id);
       $topik_arr = $this->Stored_procedure->get_topik_peserta($this->session->userdata('id_user'),$id,0);
       foreach ($topik_arr as $row) {
-        if($row->tanggal<date("Y-m-d")){
+        $exist = $this->T_evaluasi_topik->checkExist($row->id_topik, $id_user);
+        if($row->tanggal < date("Y-m-d") && $exist == NULL){
           $row->aktif = 1;
         }else{
           $row->aktif = 0;
@@ -83,8 +84,15 @@ class C_Evaluasi extends CI_Controller{
     }
     if($this->input->method() == 'get'){
       $this->load->model('Vw_data_ec');
+      $this->load->model('T_evaluasi_ecf');
+      $this->load->model('T_evaluasi_tema');
+
       $ec = $this->Vw_data_ec->get($id);
       if($ec->jenis_ec == "Extension Course Filsafat"){
+        $exist = $this->T_evaluasi_ecf->checkExist($id, $id_user);
+        if($exist){
+          redirect('kelas-saya', 'refresh');
+        }
         $this->load->view('V_header');
         $this->load->view('V_navbar');
         $this->load->view('V_evaluasi_ecf',[
@@ -92,6 +100,10 @@ class C_Evaluasi extends CI_Controller{
         ]);
         $this->load->view('V_footer');
       }else{
+        $exist = $this->T_evaluasi_tema->checkExist($id, $id_user);
+        if($exist){
+          redirect('kelas-saya', 'refresh');
+        }
         $this->load->view('V_header');
         $this->load->view('V_navbar');
         $this->load->view('V_evaluasi_eccr_ecl',[
@@ -158,11 +170,13 @@ class C_Evaluasi extends CI_Controller{
     if($this->input->method() == 'get'){
       $this->load->model('Vw_data_ec');
       $this->load->model('Vw_data_topik');
+      $this->load->model('T_evaluasi_topik');
 
       $topik = $this->Vw_data_topik->get($id);
       $ec = $this->Vw_data_ec->get($topik->id_ec);
-      if($ec->status_evaluasi==1){
-        redirect('');
+      $exist = $this->T_evaluasi_topik->checkExist($id, $id_user);
+      if($ec->status_evaluasi==1 || $exist){
+        redirect('kelas-saya', 'refresh');
       }
       if($ec->jenis_ec == "Extension Course Filsafat"){
         $this->load->view('V_header');
