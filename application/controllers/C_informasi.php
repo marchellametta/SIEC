@@ -463,7 +463,8 @@ class C_Informasi extends CI_Controller{
          if($row->status==1 || $row->status==2){
            $this->T_topik_ec->insert([
              'id_ec' => $id_ec,
-             'nama_topik' => $row->topik
+             'nama_topik' => $row->topik,
+             'log_panitia' => $id_user
            ]);
 
            $jam = explode(" - ",$row->jam);
@@ -475,6 +476,7 @@ class C_Informasi extends CI_Controller{
              'lokasi' => $row->lokasi,
              'jam_mulai' => $jam[0],
              'jam_selesai' => $jam[1],
+             'log_panitia' => $id_user
            ]);
 
            foreach ($row->narasumber as $tmp) {
@@ -691,7 +693,8 @@ class C_Informasi extends CI_Controller{
          if($row->status==1 || ($row->status==2&&$row->id_topik=="")){
            $this->T_topik_ec->insert([
              'id_ec' => $id,
-             'nama_topik' => $row->topik
+             'nama_topik' => $row->topik,
+             'log_panitia' => $id_user
            ]);
 
            $jam = explode(" - ",$row->jam);
@@ -703,6 +706,7 @@ class C_Informasi extends CI_Controller{
              'lokasi' => $row->lokasi,
              'jam_mulai' => $jam[0],
              'jam_selesai' => $jam[1],
+             'log_panitia' => $id_user
            ]);
 
            foreach ($row->narasumber as $tmp) {

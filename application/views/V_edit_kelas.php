@@ -291,6 +291,25 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     </div>
   </div>
 </div>
+<div class="modal fade" id="konfirmasi">
+  <div class="modal-dialog modal-dialog-centered">
+   <div class="modal-content">
+     <div class="modal-header">
+       <a class="modal-title"><b>Konfirmasi</b></a>
+       <button type="button" class="close" data-dismiss="modal">&times;</button>
+     </div>
+     <div class="modal-body">
+       Apakah Anda yakin untuk menghapus topik ini?
+     </div>
+     <div class="modal-footer">
+       <div class="text-right">
+         <button type="button" class="btn btn-success" id="konfirmasihapus" data-dismiss="modal">Hapus</button>
+         <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
+       </div>
+     </div>
+   </div>
+ </div>
+</div>
 
 <script>
 
@@ -502,7 +521,7 @@ $(document).ready(function(){
     var jammulai = $('#jammulai').val();
     var jamselesai = $('#jamselesai').val();
     var lokasi = $('#lokasi').val();
-    var button = '<button type="button" class="btn btn-danger btn-sm hapus ml-2"><i class="fa fa-close mr-1"></i>Hapus</button>';
+    var button = '<button type="button" class="btn btn-danger btn-sm ml-2 hapus" data-toggle="modal" data-target="#konfirmasi"><i class="fa fa-close mr-1"></i>Hapus</button>';
     var buttonedit = '<button type="button" class="btn btn-success btn-sm edit"><i class="fa fa-edit mr-1"></i>Edit</button>';
     var status = '<span>'+1+'</span>';
     var file = '<span>'+$('#input-pdf-file').prop('files')+'</span>';
@@ -602,14 +621,20 @@ $(document).ready(function(){
     });
 
     $(document).on('click', '.hapus', function(){
+      //alert('hai');
+      $('tr.selected').removeClass('selected');
+      $(this).closest('tr').addClass('selected');
+    });
+
+    $(document).on('click', '#konfirmasihapus', function(){
       //alert($(this).closest('tr').find('.status span').text());
-      if(($(this).closest('tr').find('.status span').text()==3) || ($(this).closest('tr').find('.status span').text()==2&&$(this).closest('tr').find('.id_topik span').text()!='')){
+      if(($('tr.selected').find('.status span').text()==3) || ($(this).closest('tr').find('.status span').text()==2&&$(this).closest('tr').find('.id_topik span').text()!='')){
         //alert("hai");
-        $(this).closest('tr').find('.status span').text("4");
-        $(this).closest('tr').hide();
+        $('tr.selected').find('.status span').text("4");
+        $('tr.selected').hide();
       }else{
         //alert("nahloh");
-        $(this).closest('tr').remove();
+        $('tr.selected').remove();
       }
     });
 
@@ -696,7 +721,7 @@ $(document).ready(function(){
          var jammulai = $('#jammulai').val();
          var jamselesai = $('#jamselesai').val();
          var lokasi = $('#lokasi').val();
-         var button = '<button type="button" class="btn btn-danger btn-sm hapus ml-2"><i class="fa fa-close mr-1"></i>Hapus</button>';
+         var button = '<button type="button" class="btn btn-danger btn-sm ml-2 hapus" data-toggle="modal" data-target="#konfirmasi"><i class="fa fa-close mr-1"></i>Hapus</button>';
          var buttonedit = '<button type="button" class="btn btn-success btn-sm edit"><i class="fa fa-edit mr-1"></i>Edit</button>';
          var status = '<span>'+2+'</span>';
          var file = '<span>'+$('#input-pdf-file').prop('files')+'</span>';

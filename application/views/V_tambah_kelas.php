@@ -232,6 +232,25 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     </div>
   </div>
 </div>
+<div class="modal fade" id="konfirmasi">
+  <div class="modal-dialog modal-dialog-centered">
+   <div class="modal-content">
+     <div class="modal-header">
+       <a class="modal-title"><b>Konfirmasi</b></a>
+       <button type="button" class="close" data-dismiss="modal">&times;</button>
+     </div>
+     <div class="modal-body">
+       Apakah Anda yakin untuk menghapus topik ini?
+     </div>
+     <div class="modal-footer">
+       <div class="text-right">
+         <button type="button" class="btn btn-success" id="konfirmasihapus" data-dismiss="modal">Hapus</button>
+         <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
+       </div>
+     </div>
+   </div>
+ </div>
+</div>
 
 <script>
 
@@ -339,7 +358,7 @@ $(document).ready(function(){
        var jammulai = $('#jammulai').val();
        var jamselesai = $('#jamselesai').val();
        var lokasi = $('#lokasi').val();
-       var button = '<button type="button" class="btn btn-danger btn-sm hapus ml-2"><i class="fa fa-close mr-1"></i>Hapus</button>';
+       var button = '<button type="button" class="btn btn-danger btn-sm ml-2 hapus" data-toggle="modal" data-target="#konfirmasi"><i class="fa fa-close mr-1"></i>Hapus</button>';
        var buttonedit = '<button type="button" class="btn btn-success btn-sm edit"><i class="fa fa-edit mr-1"></i>Edit</button>';
        var status = '<span>'+1+'</span>';
        var file = '<span>'+$('#input-pdf-file').prop('files')+'</span>';
@@ -443,7 +462,15 @@ $(document).ready(function(){
     });
 
     $(document).on('click', '.hapus', function(){
-      $(this).closest('tr').remove();
+      //alert('hai');
+      $('tr.selected').removeClass('selected');
+      $(this).closest('tr').addClass('selected');
+    });
+
+    $(document).on('click', '#konfirmasihapus', function(){
+      //alert('hapus');
+      // $(this).closest('tr').remove();
+      $('tr.selected').remove();
     });
 
     $(document).on('click', '#tambah-topik-btn', function(){
@@ -515,7 +542,7 @@ $(document).ready(function(){
          var jammulai = $('#jammulai').val();
          var jamselesai = $('#jamselesai').val();
          var lokasi = $('#lokasi').val();
-         var button = '<button type="button" class="btn btn-danger btn-sm hapus ml-2"><i class="fa fa-close mr-1"></i>Hapus</button>';
+         var button = '<button type="button" class="btn btn-danger btn-sm ml-2 hapus" data-toggle="modal" data-target="#konfirmasi"><i class="fa fa-close mr-1"></i>Hapus</button>';
          var buttonedit = '<button type="button" class="btn btn-success btn-sm edit"><i class="fa fa-edit mr-1"></i>Edit</button>';
          var status = '<span>'+2+'</span>';
          var file = '<span>'+$('#input-pdf-file').prop('files')+'</span>';
