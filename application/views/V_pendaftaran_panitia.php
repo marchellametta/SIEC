@@ -29,8 +29,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
       <div class="form-row ml-2">
         <div class="form-group col-md-4 col-lg-3">
           <label for="pekerjaan">Pekerjaan</label>
-          <input id="input-pekerjaan" type="text" class="form-control" name="text-pekerjaan" placeholder="Pekerjaan" value="<?php if(isset($post_data['pekerjaan'])) echo $post_data['pekerjaan'] ; if(isset($user)) echo $user->pekerjaan?>" <?php if(isset($user)) echo 'disabled'?>>
-          <input id="input-id-pekerjaan" class="hidden" name="pekerjaan">
+          <input id="input-pekerjaan" type="text" class="form-control" name="text-pekerjaan" placeholder="Pekerjaan" value="<?php if(isset($post_data['text-pekerjaan'])) echo $post_data['text-pekerjaan'] ; if(isset($user)) echo $user->nama_pekerjaan?>" <?php if(isset($user)) echo 'disabled'?>>
+          <input id="input-id-pekerjaan" class="hidden" name="pekerjaan" value="<?php if(isset($post_data['pekerjaan'])) echo $post_data['pekerjaan'] ; if(isset($user)) echo $user->pekerjaan?>">
           <span class="help-block text-danger"><?php if(isset($error_array['pekerjaan'])) echo $error_array['pekerjaan']?></span>
         </div>
         <div class="form-group col-md-4 col-lg-3">
