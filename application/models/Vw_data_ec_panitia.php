@@ -41,8 +41,7 @@ class Vw_data_ec_panitia extends CI_Model{
         return $this->db->get($this->table_name)->result();
     }
 
-    public function searchActive($id, $tema, $jenis){
-      die();
+    public function searchActive($id, $tema){
         /* No Error Handling yet! */
         $this->db->where('id_panitia',$id);
         $this->db->where('tahun_pelaksanaan',date("Y"));

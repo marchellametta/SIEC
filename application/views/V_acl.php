@@ -32,7 +32,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
   </table>
   <div class="text-right">
     <input type="submit" value="Simpan" class="btn btn-success">
-    <input type="submit" value="Batal" class="btn btn-danger">
+    <a href="<?php echo base_url() ?>"><button type="button" class="btn btn-danger">Batal</button></a>
   </div>
 </form>
 </div>

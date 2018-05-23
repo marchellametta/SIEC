@@ -47,7 +47,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
       <tr>
         <th scope="row">1</th>
         <td><?php echo $row->nama_pekerjaan ?></td>
-        <td><?php echo ($row->jumlah/$jumlah_peserta->jumlah_peserta)*100 ?>%</td>
+        <td><?php echo round(($row->jumlah/$jumlah_peserta->jumlah_peserta)*100, 2) ?>%</td>
       </tr>
     <?php endforeach ?>
     </tbody>
@@ -65,7 +65,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
       <tr>
         <th scope="row">1</th>
         <td><?php echo $row->nama ?></td>
-        <td><?php echo $row->persentase ?>%</td>
+        <td><?php echo round($row->persentase,2) ?>%</td>
       </tr>
     <?php endforeach ?>
     </tbody>
