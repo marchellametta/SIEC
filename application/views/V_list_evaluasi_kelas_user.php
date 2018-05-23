@@ -14,7 +14,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <?php foreach ($row->narasumber as $temp):?>
           <p class="card-text"><?php echo $temp->nama .", ". $temp->profesi .", ". $temp->lembaga .", ". $temp->jabatan;?></p>
         <?php endforeach; ?>
-        <a href="<?php echo base_url().'kelas-saya/isi-evaluasi/topik/'. $row->id_topik?>" class="btn btn-primary"><i class="fa fa-edit"></i>Isi Evaluasi</a>
+        <a href="<?php echo base_url().'kelas-saya/isi-evaluasi/topik/'. $row->id_topik?>" class="btn <?php echo ($row->aktif==1?  'btn-primary' :  'btn-secondary')?>" <?php if($row->aktif==0) echo 'onclick="return false;"'?>><i class="fa fa-edit"></i>Isi Evaluasi</a>
       </div>
     </div>
     <?php endforeach ?>

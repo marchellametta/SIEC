@@ -141,7 +141,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
      </fieldset>
      <div class="text-right">
-       <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal_konfirmasi">
+       <button type="button" class="btn btn-primary mt-3" data-toggle="modal" data-target="#modal_konfirmasi">
          Daftar
        </button>
      </div>

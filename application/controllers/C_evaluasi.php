@@ -33,9 +33,15 @@ class C_Evaluasi extends CI_Controller{
       $this->load->model('Vw_data_ec');
       $this->load->model('T_narasumber_topik');
       $this->load->model('T_narasumber');
+      $this->load->model('T_evaluasi_topik');
       $data = $this->Vw_data_ec->get($id);
       $topik_arr = $this->Stored_procedure->get_topik_peserta($this->session->userdata('id_user'),$id,0);
       foreach ($topik_arr as $row) {
+        if($row->tanggal<date("Y-m-d")){
+          $row->aktif = 1;
+        }else{
+          $row->aktif = 0;
+        }
         $ids_narasumber= $this->T_narasumber_topik->getNarasumber($row->id_topik);
         $narasumber = array();
         foreach ($ids_narasumber as $temp) {
