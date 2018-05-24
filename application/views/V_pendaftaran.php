@@ -272,7 +272,7 @@ if($("#buat").is(':checked')){
 }
 $('#form').applyRules({
   formRules : rules,
-  externalErrors : ''
+  //externalErrors : ''
 });
 
 $("#buat").on('change',function(){
@@ -284,7 +284,7 @@ $("#buat").on('change',function(){
   console.log(currentRules);
   $('#form').applyRules({
     formRules : currentRules,
-    externalErrors : ''
+    //externalErrors : ''
   });
 });
 

@@ -203,7 +203,7 @@ class C_Kelas_panitia extends CI_Controller{
       ]);
       $this->load->view('V_footer');
     } else if($this->input->method() == 'post'){
-      $this->load->model('Vw_data_ec');
+      $this->load->model('Vw_data_ec_panitia');
       $this->load->model('Vw_data_topik');
       $this->load->model('Stored_procedure');
       $post_data = $this->input->post();
@@ -415,7 +415,7 @@ class C_Kelas_panitia extends CI_Controller{
         $length = count($peserta);
         $this->load->helper('template_engine');
         $en = new TemplateEngine($this);
-        $mpdf=new mPDF('','A5', 0, '', 0, 0, 0, 0, 0, 0, '');
+        $mpdf=new mPDF('',$post_data['ukuran'], 0, '', 0, 0, 0, 0, 0, 0, '');
         $mpdf->SetWatermarkImage('../SIEC/'.$post_data['gambar'],1);
         $mpdf->watermarkImgBehind = true;
         $mpdf->showWatermarkImage = true;
@@ -444,13 +444,13 @@ class C_Kelas_panitia extends CI_Controller{
       $peserta = $this->T_user->get($post_data['id_peserta']);
       $this->load->helper('template_engine');
       $en = new TemplateEngine($this);
-      $mpdf=new mPDF('','A5', 0, '', 0, 0, 0, 0, 0, 0, '');
+      $mpdf=new mPDF('',$post_data['ukuran'], 0, '', 0, 0, 0, 0, 0, 0, '');
       $mpdf->SetWatermarkImage('../SIEC/'.$post_data['gambar'],1);
       $mpdf->watermarkImgBehind = true;
       $mpdf->showWatermarkImage = true;
       //$mpdf = new mPDF();
       $mpdf->WriteHTML($en->renderOutput($post_data['nama_top'],$post_data['nama_left'],$post_data['peran_top'],$post_data['peran_left'],$peserta->nama, "Peserta"));
-      $mpdf->AddPage();
+      //$mpdf->AddPage();
       //$mpdf->WriteHTML($en->renderOutput());
       $mpdf->Output();
   }

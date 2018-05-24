@@ -51,6 +51,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
       <div class="alert alert-info alert-dismissable mt-2">
         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
         <?php echo $search_message ;?>
+        <?php if($tipe=='aktif'):?>
+          <a href="<?php echo base_url() ?>informasi/aktif">Reset Pencarian</a>
+        <?php elseif($tipe=='akan'):?>
+          <a href="<?php echo base_url() ?>informasi/akanDatang">Reset Pencarian</a>
+      <?php else: ?>
+        <a href="<?php echo base_url() ?>informasi/riwayat">Reset Pencarian</a>
+      <?php endif; ?>
       </div>
   <?php endif ?>
 

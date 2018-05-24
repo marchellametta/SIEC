@@ -29,6 +29,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             </div>
           </div>
         </div>
+        <div class="form-group col-md-3">
+          <label for="ukuran">Ukuran kertas</label>
+          <select class="form-control" name="ukuran">
+            <option value="A4">A4</option>
+            <option value="A5">A5</option>
+          </select>
+          <span class="help-block text-danger"><?php if(isset($error_array['semester'])) echo $error_array['semester']?></span>
+        </div>
       </fieldset>
      <fieldset class="mt-4">
        <legend>Pengaturan Letak Nama</legend>
@@ -99,6 +107,9 @@ $(function () {
                $("#peserta_toggle").show();
            } else {
                $("#peserta_toggle").hide();
+               $("#input-peserta").val('');
+               $("#input-id-peserta").val('');
+
            }
        });
    });

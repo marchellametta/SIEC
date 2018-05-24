@@ -200,7 +200,7 @@ $( document ).ready(function() {
           var rules = JSON.parse('<?php echo $rules ?>');
           $('#form').applyRules({
             formRules : rules,
-            externalErrors : ''
+            //externalErrors : ''
           });
 
 });

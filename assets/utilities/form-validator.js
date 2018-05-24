@@ -1,11 +1,11 @@
 (function( $ ){
 
     /* Polyfill */
-    Number.isInteger = Number.isInteger || function(value) {
-        return typeof value === 'number' &&
-            isFinite(value) &&
-            Math.floor(value) === value;
-    };
+    // Number.isInteger = Number.isInteger || function(value) {
+    //     return typeof value === 'number' &&
+    //         isFinite(value) &&
+    //         Math.floor(value) === value;
+    // };
     /* End of Polyfill */
 
 /// rules-rules yang diadaptasi dari rules form-validation code igniter
@@ -21,84 +21,84 @@
         },
         exact_length : function( val, cons){
             return (val + '').length == Number(cons);
-        },
-        greater_than : function( val, cons){
-            return this.numeric(val) && val > Number(cons);
-        },
-        greater_than_equal_to : function( val, cons){
-            return this.numeric(val) && val >= Number(cons);
-        },
-        less_than : function(val, cons){
-            return this.numeric(val) && val < Number(cons);
-        },
-        less_than_equal_to : function(val, cons){
-            return this.numeric(val) && val <= Number(cons);
-        },
-        in_list : function( val, list){
-            var stat = false;
-            list.split(',').forEach(function(item){
-                if(item == val) stat = true;
-            });
-            return stat;
-        },
-        alpha : function( val){
-            return /^[a-zA-Z]+$/.test(val);
-        },
-        alpha_numeric : function ( val){
-            return /^[a-zA-Z\d]+$/.test(val);
-        },
-        alpha_numeric_spaces : function( val){
-            return /^[a-zA-Z\d\s]+$/.test(val);
-        },
-        alpha_dash : function( val){
-            return /^[a-zA-Z\d\-_]+$/.test(val);
-        },
-        numeric : function( val){
-            return $.isNumeric(val);
-        },
-        integer : function( val){
-            return Number.isInteger(val);
-        },
-        decimal : function( val){
-            return Number(val) + "" === val + "";
-        },
-        is_natural : function( val){
-            return /^\d+$/.test(val);
-        },
-        is_natural_no_zero : function( val){
-            return /^[1-9]+$/.test(val);
-        },
-        valid_url : function ( val){
-            var pattern = new RegExp('^(https?:\/\/)?'+
-                '((([a-z\d]([a-z\d-]*[a-z\d])*)\.)+[a-z]{2,}|'+
-                '((\d{1,3}\.){3}\d{1,3}))'+
-                '(\:\d+)?(\/[-a-z\d%_.~+]*)*'+
-                '(\?[;&a-z\d%_.~+=-]*)?'+
-                '(\#[-a-z\d_]*)?$','i');
-            return pattern.test(val);
-        },
-        valid_email : function ( val){
-            return /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-                .test(val);
-        },
-        valid_emails : function ( val){
-            var emails = val.split(" ");
-            var stat = true;
-            emails.forEach(function(email){
-                if(! this.valid_email(email.trim())){
-                    stat = false;
-                }
-            });
-            return stat;
-        },
-        valid_ip : function( val){
-            return
-            /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/
-                .test(val);
-        },
-        valid_base64 : function( val){
-            return /^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$/.test(val);
         }
+        // greater_than : function( val, cons){
+        //     return this.numeric(val) && val > Number(cons);
+        // },
+        // greater_than_equal_to : function( val, cons){
+        //     return this.numeric(val) && val >= Number(cons);
+        // },
+        // less_than : function(val, cons){
+        //     return this.numeric(val) && val < Number(cons);
+        // },
+        // less_than_equal_to : function(val, cons){
+        //     return this.numeric(val) && val <= Number(cons);
+        // },
+        // in_list : function( val, list){
+        //     var stat = false;
+        //     list.split(',').forEach(function(item){
+        //         if(item == val) stat = true;
+        //     });
+        //     return stat;
+        // },
+        // alpha : function( val){
+        //     return /^[a-zA-Z]+$/.test(val);
+        // },
+        // alpha_numeric : function ( val){
+        //     return /^[a-zA-Z\d]+$/.test(val);
+        // },
+        // alpha_numeric_spaces : function( val){
+        //     return /^[a-zA-Z\d\s]+$/.test(val);
+        // },
+        // alpha_dash : function( val){
+        //     return /^[a-zA-Z\d\-_]+$/.test(val);
+        // },
+        // numeric : function( val){
+        //     return $.isNumeric(val);
+        // },
+        // integer : function( val){
+        //     return Number.isInteger(val);
+        // },
+        // decimal : function( val){
+        //     return Number(val) + "" === val + "";
+        // },
+        // is_natural : function( val){
+        //     return /^\d+$/.test(val);
+        // },
+        // is_natural_no_zero : function( val){
+        //     return /^[1-9]+$/.test(val);
+        // },
+        // valid_url : function ( val){
+        //     var pattern = new RegExp('^(https?:\/\/)?'+
+        //         '((([a-z\d]([a-z\d-]*[a-z\d])*)\.)+[a-z]{2,}|'+
+        //         '((\d{1,3}\.){3}\d{1,3}))'+
+        //         '(\:\d+)?(\/[-a-z\d%_.~+]*)*'+
+        //         '(\?[;&a-z\d%_.~+=-]*)?'+
+        //         '(\#[-a-z\d_]*)?$','i');
+        //     return pattern.test(val);
+        // },
+        // valid_email : function ( val){
+        //     return /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+        //         .test(val);
+        // },
+        // valid_emails : function ( val){
+        //     var emails = val.split(" ");
+        //     var stat = true;
+        //     emails.forEach(function(email){
+        //         if(! this.valid_email(email.trim())){
+        //             stat = false;
+        //         }
+        //     });
+        //     return stat;
+        // },
+        // valid_ip : function( val){
+        //     return
+        //     /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/
+        //         .test(val);
+        // },
+        // valid_base64 : function( val){
+        //     return /^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$/.test(val);
+        // }
     };
 
 
@@ -227,13 +227,13 @@
                 }
             }
         /// jika field memiliki 'externalError' atau error yang berasal dari server-side utamakan 'externalError'
-            if(settings.externalErrors[field]){
-                var messageElement = curr.siblings(settings.messageSelector);
-                if(messageElement.length < 1){
-                    messageElement = curr.parent().siblings(settings.messageSelector);
-                }
-                messageElement.html(settings.externalErrors[field]);
-            }
+            // if(settings.externalErrors[field]){
+            //     var messageElement = curr.siblings(settings.messageSelector);
+            //     if(messageElement.length < 1){
+            //         messageElement = curr.parent().siblings(settings.messageSelector);
+            //     }
+            //     messageElement.html(settings.externalErrors[field]);
+            // }
 
         /// jika elemen mendapat event 'focus' maka element menjadi 'unclean'
             curr.on('focus',unclean);

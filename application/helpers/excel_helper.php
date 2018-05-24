@@ -19,13 +19,13 @@ class Excel{
     ];
 
 
-  private $maxNumOfCol;
+  //private $maxNumOfCol;
 
   public function __construct($title){
     if(! isset($title) || empty($title)){
       throw new Exception('Error: judul laporan kosong.');
     }
-    $this->maxNumOfCol = 0;
+    //$this->maxNumOfCol = 0;
     $this->title = $title;
     $this->workbook = new PHPExcel();
     $this->sheet = $this->workbook->getActiveSheet();
@@ -51,9 +51,9 @@ class Excel{
     return $tmpData;
   }
 
-  public function buildFromMysqlRows($rows,$rules,$header=true){
+  public function buildFromMysqlRows($rows,$rules){
     $tmpData = $this->mysqlRowsToArray($rows,$rules);
-    if($header){
+    //if($header){
       $richText = new PHPExcel_RichText();
       $richText->createTextRun('No')->getFont()->setBold(true);
       $headerArray = [$richText];
@@ -62,7 +62,10 @@ class Excel{
         $richText->createTextRun($value)->getFont()->setBold(true);
         array_push($headerArray,$richText);
       }
-    }
+    //}
+    // var_dump(json_encode($headerArray));
+    // var_dump([$headerArray]);
+    // die();
     $this->rawData = (array_merge($this->rawData,[$headerArray],$tmpData));
   }
 

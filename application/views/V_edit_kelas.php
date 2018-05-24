@@ -179,7 +179,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 </td>
                 <td>
                   <button type="button" class="btn btn-success btn-sm edit"><i class="fa fa-edit mr-1"></i>Edit</button>
-                  <button type="button" class="btn btn-danger btn-sm hapus ml-2"><i class="fa fa-close mr-1"></i>Hapus</button>
+                  <button type="button" class="btn btn-danger btn-sm hapus ml-2" data-toggle="modal" data-target="#konfirmasi"><i class="fa fa-close mr-1"></i>Hapus</button>
                 </td>
               </tr>
             <?php endforeach;?>
@@ -806,7 +806,7 @@ $(document).ready(function(){
                     console.log(rules);
                     form.applyRules({
                       formRules : rules,
-                      externalErrors : ''
+                      //externalErrors : ''
                     });
 
 
@@ -821,7 +821,7 @@ $(document).ready(function(){
 
             					form.applyRules({
             						formRules : currentRules,
-                      	externalErrors : ''
+                      	//externalErrors : ''
             					});
             				});
 
@@ -835,7 +835,7 @@ $(document).ready(function(){
             					}
                       form.applyRules({
             						formRules : currentRules,
-                      	externalErrors : ''
+                      	//externalErrors : ''
             					});
             				});
 

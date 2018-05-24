@@ -31,6 +31,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
      <div class="alert alert-info alert-dismissable">
        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
        <?php echo $search_message ;?>
+       <?php if($tipe=='aktif'):?>
+         <a href="<?php echo base_url() ?>kelas/aktif">Reset Pencarian</a>
+       <?php else: ?>
+         <a href="<?php echo base_url() ?>kelas/riwayat">Reset Pencarian</a>
+       <?php endif; ?>
      </div>
  <?php endif ?>
 

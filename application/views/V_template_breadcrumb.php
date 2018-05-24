@@ -5,7 +5,7 @@ $breadcrumbRules = [
   'V_informasi_aktif' => [
     'crumbs' => [
       1 => [
-        'text' => 'Informasi Kelas yang Sedang Berlangsung',
+        'text' => 'Informasi Kelas yang Sedang Berjalan',
         'link' => '#',
         'active' => true
       ]

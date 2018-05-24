@@ -130,7 +130,8 @@ class acl
             //} else {
                 //$hP = false;
             //}
-            $perms[$pK] = array('perm' => $pK,'inheritted' => true,'value' => $hP,'name' => $this->getPermNameFromID($row->perm_id),'id' => $row->perm_id);
+            //$perms[$pK] = array('perm' => $pK,'inheritted' => true,'value' => $hP,'name' => $this->getPermNameFromID($row->perm_id),'id' => $row->perm_id);
+            $perms[$pK] = array('perm' => $pK,'value' => $hP,'name' => $this->getPermNameFromID($row->perm_id),'id' => $row->perm_id);
         }
         return $perms;
     }
@@ -146,13 +147,14 @@ class acl
         foreach( $data as $row )
         {
             $pK = strtolower($this->getPermKeyFromID($row->permID));
-            if ($pK == '') { continue; }
-            if ($row->value == '1') {
+          //  if ($pK == '') { continue; }
+            //if ($row->value == '1') {
                 $hP = true;
-            } else {
-                $hP = false;
-            }
-            $perms[$pK] = array('perm' => $pK,'inheritted' => false,'value' => $hP,'name' => $this->getPermNameFromID($row->permID),'id' => $row->permID);
+            //} else {
+              //  $hP = false;
+            //}
+            //$perms[$pK] = array('perm' => $pK,'inheritted' => false,'value' => $hP,'name' => $this->getPermNameFromID($row->permID),'id' => $row->permID);
+            $perms[$pK] = array('perm' => $pK,'value' => $hP,'name' => $this->getPermNameFromID($row->permID),'id' => $row->permID);
         }
         return $perms;
     }

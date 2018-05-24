@@ -43,12 +43,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
       </tr>
     </thead>
     <tbody>
+      <?php $counter = 1; ?>
       <?php foreach ($pekerjaan as $row): ?>
       <tr>
-        <th scope="row">1</th>
+        <th scope="row"><?php echo $counter ?></th>
         <td><?php echo $row->nama_pekerjaan ?></td>
         <td><?php echo round(($row->jumlah/$jumlah_peserta->jumlah_peserta)*100, 2) ?>%</td>
       </tr>
+      <?php $counter++; ?>
     <?php endforeach ?>
     </tbody>
   </table>
@@ -61,12 +63,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
       </tr>
     </thead>
     <tbody>
+      <?php $counter = 1; ?>
       <?php foreach ($kehadiran as $row): ?>
       <tr>
-        <th scope="row">1</th>
+        <th scope="row"><?php echo $counter ?></th>
         <td><?php echo $row->nama ?></td>
         <td><?php echo round($row->persentase,2) ?>%</td>
       </tr>
+      <?php $counter++; ?>
     <?php endforeach ?>
     </tbody>
   </table>

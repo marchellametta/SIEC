@@ -21,6 +21,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <div class="alert alert-info alert-dismissable">
       <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
       <?php echo $search_message ;?>
+      <a href="<?php echo base_url() ?>kelas-saya">Reset Pencarian</a>
     </div>
 <?php endif ?>
 

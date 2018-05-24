@@ -612,7 +612,7 @@ $(document).ready(function(){
                     console.log(rules);
                     form.applyRules({
                       formRules : rules,
-                      externalErrors : ''
+                      //externalErrors : ''
                     });
 
 
@@ -627,7 +627,7 @@ $(document).ready(function(){
 
             					form.applyRules({
             						formRules : currentRules,
-                      	externalErrors : ''
+                      	//externalErrors : ''
             					});
             				});
 
@@ -641,7 +641,7 @@ $(document).ready(function(){
             					}
                       form.applyRules({
             						formRules : currentRules,
-                      	externalErrors : ''
+                      //	externalErrors : ''
             					});
             				});
 });
