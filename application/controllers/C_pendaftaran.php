@@ -9,6 +9,7 @@ class C_Pendaftaran extends CI_Controller{
     $this->load->model('Vw_data_topik');
     $this->load->model('Stored_procedure');
     $this->load->model('Vw_data_user');
+    $this->load->model('T_user');
     $this->load->helper('config_rules');
 
     $data = $this->Vw_data_ec->getActive();
@@ -114,7 +115,7 @@ class C_Pendaftaran extends CI_Controller{
       }
       $user = null;
       if($this->session->userdata('id_user')){
-        $user = $this->T_user->get($this->session->userdata('id_user'));
+        $user = $this->Vw_data_user->get($this->session->userdata('id_user'));
       }
       $this->load->view('V_header');
       $this->load->view('V_navbar');
