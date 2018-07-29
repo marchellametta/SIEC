@@ -26,156 +26,40 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td>Materi yang diberikan sesuai dengan harapan dan kebutuhan saya</td>
-          <td>
-            <div class="form-check form-check-inline">
-              <label class="form-check-label">
-                <input class="form-check-input" type="radio" name="soal1" value="1"> 1
-              </label>
-            </div>
-            <div class="form-check form-check-inline">
-              <label class="form-check-label">
-                <input class="form-check-input" type="radio" name="soal1" value="2"> 2
-              </label>
-            </div>
-            <div class="form-check form-check-inline">
-              <label class="form-check-label">
-                <input class="form-check-input" type="radio" name="soal1" value="3"> 3
-              </label>
-            </div>
-            <div class="form-check form-check-inline">
-              <label class="form-check-label">
-                <input class="form-check-input" type="radio" name="soal1" value="4"> 4
-              </label>
-            </div>
-            <div class="form-check form-check-inline">
-              <label class="form-check-label">
-                <input class="form-check-input" type="radio" name="soal1" value="5"> 5
-              </label>
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td>Materi yang diberikan dapat dipraktikkan/ diterapkan</td>
-          <td>
-            <div class="form-check form-check-inline">
-              <label class="form-check-label">
-                <input class="form-check-input" type="radio" name="soal2" value="1"> 1
-              </label>
-            </div>
-            <div class="form-check form-check-inline">
-              <label class="form-check-label">
-                <input class="form-check-input" type="radio" name="soal2" value="2"> 2
-              </label>
-            </div>
-            <div class="form-check form-check-inline">
-              <label class="form-check-label">
-                <input class="form-check-input" type="radio" name="soal2" value="3"> 3
-              </label>
-            </div>
-            <div class="form-check form-check-inline">
-              <label class="form-check-label">
-                <input class="form-check-input" type="radio" name="soal2" value="4"> 4
-              </label>
-            </div>
-            <div class="form-check form-check-inline">
-              <label class="form-check-label">
-                <input class="form-check-input" type="radio" name="soal2" value="5"> 5
-              </label>
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td>Pembicara menyampaikan materi secara jelas dan sistematis</td>
-          <td>
-            <div class="form-check form-check-inline">
-              <label class="form-check-label">
-                <input class="form-check-input" type="radio" name="soal3" value="1"> 1
-              </label>
-            </div>
-            <div class="form-check form-check-inline">
-              <label class="form-check-label">
-                <input class="form-check-input" type="radio" name="soal3" value="2"> 2
-              </label>
-            </div>
-            <div class="form-check form-check-inline">
-              <label class="form-check-label">
-                <input class="form-check-input" type="radio" name="soal3" value="3"> 3
-              </label>
-            </div>
-            <div class="form-check form-check-inline">
-              <label class="form-check-label">
-                <input class="form-check-input" type="radio" name="soal3" value="4"> 4
-              </label>
-            </div>
-            <div class="form-check form-check-inline">
-              <label class="form-check-label">
-                <input class="form-check-input" type="radio" name="soal3" value="5"> 5
-              </label>
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td>Respon para peserta tampak positif</td>
-          <td>
-            <div class="form-check form-check-inline">
-              <label class="form-check-label">
-                <input class="form-check-input" type="radio" name="soal4" value="1"> 1
-              </label>
-            </div>
-            <div class="form-check form-check-inline">
-              <label class="form-check-label">
-                <input class="form-check-input" type="radio" name="soal4" value="2"> 2
-              </label>
-            </div>
-            <div class="form-check form-check-inline">
-              <label class="form-check-label">
-                <input class="form-check-input" type="radio" name="soal4" value="3"> 3
-              </label>
-            </div>
-            <div class="form-check form-check-inline">
-              <label class="form-check-label">
-                <input class="form-check-input" type="radio" name="soal4" value="4"> 4
-              </label>
-            </div>
-            <div class="form-check form-check-inline">
-              <label class="form-check-label">
-                <input class="form-check-input" type="radio" name="soal4" value="5"> 5
-              </label>
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td>Suasana pertemuan dan fasilitas terasa mendukung</td>
-          <td>
-            <div class="form-check form-check-inline">
-              <label class="form-check-label">
-                <input class="form-check-input" type="radio" name="soal5" value="1"> 1
-              </label>
-            </div>
-            <div class="form-check form-check-inline">
-              <label class="form-check-label">
-                <input class="form-check-input" type="radio" name="soal5" value="2"> 2
-              </label>
-            </div>
-            <div class="form-check form-check-inline">
-              <label class="form-check-label">
-                <input class="form-check-input" type="radio" name="soal5" value="3"> 3
-              </label>
-            </div>
-            <div class="form-check form-check-inline">
-              <label class="form-check-label">
-                <input class="form-check-input" type="radio" name="soal5" value="4"> 4
-              </label>
-            </div>
-            <div class="form-check form-check-inline">
-              <label class="form-check-label">
-                <input class="form-check-input" type="radio" name="soal5" value="5"> 5
-              </label>
-            </div>
-          </td>
-        </tr>
+      <?php $i = 1 ?>
+      <?php foreach ($data as $row) :?>
+      <tr>
+        <td><?php echo $row ?></td>
+        <td>
+          <div class="form-check form-check-inline">
+            <label class="form-check-label">
+              <input class="form-check-input" type="radio" name="soal<?php echo $i?>" value="1"> 1
+            </label>
+          </div>
+          <div class="form-check form-check-inline">
+            <label class="form-check-label">
+              <input class="form-check-input" type="radio" name="soal<?php echo $i?>" value="2"> 2
+            </label>
+          </div>
+          <div class="form-check form-check-inline">
+            <label class="form-check-label">
+              <input class="form-check-input" type="radio" name="soal<?php echo $i?>" value="3"> 3
+            </label>
+          </div>
+          <div class="form-check form-check-inline">
+            <label class="form-check-label">
+              <input class="form-check-input" type="radio" name="soal<?php echo $i?>" value="4"> 4
+            </label>
+          </div>
+          <div class="form-check form-check-inline">
+            <label class="form-check-label">
+              <input class="form-check-input" type="radio" name="soal<?php echo $i?>" value="5"> 5
+            </label>
+          </div>
+        </td>
+      </tr>
+      <?php $i++ ?>
+      <?php endforeach ?>
       </tbody>
     </table>
     <div class="form-group col-12">

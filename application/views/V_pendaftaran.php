@@ -149,6 +149,19 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
      <small class="text-muted ml-3 mt-3">*Kelas yang ada dalam daftar pilihan adalah kelas dengan kursi yang masih tersedia</small>
      <div class="ml-3 mt-3"><a id="total-biaya"></a></div>
+     <div class="mt-3">
+       <div class="col-md-12"><a><b>Metode Pembayaran</b></a></div>
+       <div class="ml-3 form-check-inline">
+         <label class="form-check-label">
+           <input type="radio" class="form-check-input" name="metode" value="1" checked>Tunai
+        </label>
+      </div>
+      <div class="form-check-inline">
+        <label class="form-check-label">
+          <input type="radio" class="form-check-input" name="metode" value="2">Transfer
+        </label>
+      </div>
+     </div>
      </fieldset>
      <div class="text-right">
        <button type="button" class="btn btn-primary mt-3" data-toggle="modal" data-target="#modal_konfirmasi">
@@ -234,6 +247,15 @@ $('.selectall').click(function() {
        recalculate();
 
    }
+});
+
+$('input[type=radio][name=optradio]').change(function() {
+    if (this.value == 'transfer') {
+        $('#pembayaran').show();
+    }
+    else if (this.value == 'tunai') {
+        $('#pembayaran').hides();
+    }
 });
 
 $('#input-gambar').add('#input-gambar-icon').on('click', function(event) {

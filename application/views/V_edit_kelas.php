@@ -598,7 +598,7 @@ $(document).ready(function(){
     });
 
     $('#tanggal').datetimepicker({
-      format: 'L'
+      format: 'DD-MM-YYYY'
     });
 
     $('#selesai').datetimepicker({

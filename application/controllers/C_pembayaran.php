@@ -33,12 +33,54 @@ class C_Pembayaran extends CI_Controller{
       $this->load->model('Vw_data_ec');
       $this->load->model('Vw_data_pembayaran_peserta_tetap');
       $this->load->model('Vw_data_pembayaran_peserta_lepas');
+      $this->load->model('T_tagihan_bayar_lepas');
+      $this->load->model('T_tagihan_bayar_tetap');
+      $this->load->model('T_data_transfer');
        $this->load->view('V_header');
        $this->load->view('V_navbar');
        $this->load->helper('link');
        $ec = $this->Vw_data_ec->get($id);
        $tagihan_tetap = $this->Vw_data_pembayaran_peserta_tetap->getTagihanAll($id);
+       foreach ($tagihan_tetap as $row) {
+         $data = $this->T_tagihan_bayar_tetap->getByIdTagihan($row->id_tagihan);
+         if($data != NULL){
+           $row->transfer = true;
+           $data_transfer = $this->T_data_transfer->get($data->id_data_transfer);
+           $string_data = "Nama Bank: " . $data_transfer->nama_bank ."</br>";
+           $string_data .= "Nomor Rekening: " . $data_transfer->no_rekening ."</br>";
+           $string_data .= "Nama Pemilik Rek: " . $data_transfer->nama_pemilik_rekening ."</br>";
+           $string_data .= "Tanggal Transfer: " . date($this->config->item('view_date_format'),strtotime($data_transfer->tanggal_transfer)) ."</br>";
+           $string_data .= "Nominal Transfer: " . $data_transfer->nominal_transfer ."</br>";
+           $string_data .= "Keterangan: " . $data_transfer->keterangan;
+
+           $row->data_transfer = $string_data;
+         }else{
+           $row->transfer = false;
+           $row->data_transfer=null;
+         }
+       }
        $tagihan_lepas = $this->Vw_data_pembayaran_peserta_lepas->getTagihanAll($id);
+       foreach ($tagihan_lepas as $row) {
+         $data = $this->T_tagihan_bayar_lepas->getByIdTagihan($row->id_tagihan);
+         // var_dump($data);
+         if($data != NULL){
+           $row->transfer = true;
+           $data_transfer = $this->T_data_transfer->get($data->id_data_transfer);
+           $data_transfer = $this->T_data_transfer->get($data->id_data_transfer);
+           $string_data = "Nama Bank: " . $data_transfer->nama_bank ."</br>";
+           $string_data .= "Nomor Rekening: " . $data_transfer->no_rekening ."</br>";
+           $string_data .= "Nama Pemilik Rek: " . $data_transfer->nama_pemilik_rekening ."</br>";
+           $string_data .= "Tanggal Transfer: " . date($this->config->item('view_date_format'),strtotime($data_transfer->tanggal_transfer)) ."</br>";
+           $string_data .= "Nominal Transfer: " . $data_transfer->nominal_transfer ."</br>";
+           $string_data .= "Keterangan: " . $data_transfer->keterangan;
+           $row->data_transfer = $string_data;
+         }else{
+           $row->transfer = false;
+           $row->data_transfer=null;
+         }
+       }
+       // var_dump($tagihan_lepas);
+       // die();
        $this->load->view('V_pembayaran',[
          'tetap' => $tagihan_tetap,
          'lepas' => $tagihan_lepas,
@@ -49,7 +91,7 @@ class C_Pembayaran extends CI_Controller{
     } else if($this->input->method() == 'post'){
       $this->pembayaranTetap($id);
       $this->pembayaranLepas($id);
-      redirect('kelas/aktif','refresh');
+      //redirect('kelas/aktif','refresh');
     }
   }
 
@@ -61,7 +103,11 @@ class C_Pembayaran extends CI_Controller{
       $this->load->model('T_pembayaran_peserta_tetap');
       $this->load->model('Vw_data_pembayaran_peserta_tetap');
       $this->load->model('T_peserta_topik');
+      $this->load->model('T_data_transfer');
+      $this->load->model('T_tagihan_bayar_tetap');
+
       $post_data = $this->input->post();
+
 
 
       $ec = $this->Vw_data_ec->get($id);
@@ -94,6 +140,51 @@ class C_Pembayaran extends CI_Controller{
           $this->T_pembayaran_peserta_tetap->edit($row, $id, [
             'status_pelajar' => 1,
           ]);
+        }
+      }
+
+      if(isset($_POST['metodetetap'])){
+        foreach ($post_data['metodetetap'] as $key=>$value) {
+          $this->T_pembayaran_peserta_tetap->edit($key, $id, [
+            'metode_pembayaran' => $value,
+          ]);
+          if($value==1){
+            $data_tagihan = $this->T_pembayaran_peserta_tetap->get($key, $id);
+            $id_tagihan = $data_tagihan->id_tagihan;
+            $id_data_transfer = $this->T_tagihan_bayar_tetap->getByIdTagihan($id_tagihan)->id_data_transfer;
+            $this->T_tagihan_bayar_tetap->detach($id_tagihan);
+            $this->T_data_transfer->delete($id_data_transfer);
+          }
+        }
+      }
+
+      if(isset($_POST['detailpembayarantetap'])){
+        foreach ($post_data['detailpembayarantetap'] as $key=>$value) {
+          //var_dump($value);
+          $data_arr = explode(",", $value);
+          if(count($data_arr)>1){
+            //var_dump(date($this->config->item('db_date_format'),strtotime($data_arr[3])));
+            //die();
+            $this->T_data_transfer->insert([
+              'nama_bank' => $data_arr[0],
+              'no_rekening' => $data_arr[1],
+              'nama_pemilik_rekening' => $data_arr[2],
+              'tanggal_transfer' => date($this->config->item('db_date_format'),strtotime($data_arr[3])),
+              'nominal_transfer' => $data_arr[4],
+              'keterangan' => $data_arr[5]
+            ]);
+            $id_bayar = $this->db->insert_id();
+            $data_tagihan = $this->T_pembayaran_peserta_tetap->get($key, $id);
+            $id_tagihan = $data_tagihan->id_tagihan;
+
+            $exist = $this->T_tagihan_bayar_tetap->getByIdTagihan($id_tagihan);
+
+            if($exist){
+              $this->T_tagihan_bayar_tetap->detach($id_tagihan);
+              $this->T_data_transfer->delete($exist->id_data_transfer);
+            }
+            $this->T_tagihan_bayar_tetap->attach($id_tagihan, $id_bayar);
+          }
         }
       }
 
@@ -177,6 +268,9 @@ class C_Pembayaran extends CI_Controller{
       $this->load->model('Vw_data_pembayaran_peserta_lepas');
       $this->load->model('T_peserta_topik');
       $this->load->model('Vw_data_topik');
+      $this->load->model('T_data_transfer');
+      $this->load->model('T_tagihan_bayar_lepas');
+
       $post_data = $this->input->post();
       // var_dump($post_data);
       // die();
@@ -198,6 +292,55 @@ class C_Pembayaran extends CI_Controller{
             $this->T_pembayaran_peserta_lepas->edit($k, $key, [
               'status_lunas' => 1
             ]);
+          }
+        }
+      }
+
+      if(isset($_POST['metodelepas'])){
+        foreach ($post_data['metodelepas'] as $key=>$value) {
+          foreach ($value as $k => $v) {
+            $this->T_pembayaran_peserta_lepas->edit($k, $key, [
+              'metode_pembayaran' => $v
+            ]);
+            if($v==1){
+              $data_tagihan = $this->T_pembayaran_peserta_lepas->get($k, $key);
+              $id_tagihan = $data_tagihan->id_tagihan;
+              $id_data_transfer = $this->T_tagihan_bayar_lepas->getByIdTagihan($id_tagihan)->id_data_transfer;
+
+              $this->T_tagihan_bayar_lepas->detach($id_tagihan);
+              $this->T_data_transfer->delete($id_data_transfer);
+            }
+          }
+        }
+      }
+
+      if(isset($_POST['detailpembayaranlepas'])){
+        foreach ($post_data['detailpembayaranlepas'] as $key=>$value) {
+          foreach ($value as $k => $v) {
+            $data_arr = explode(",", $v);
+            if(count($data_arr)>1){
+              $this->T_data_transfer->insert([
+                'nama_bank' => $data_arr[0],
+                'no_rekening' => $data_arr[1],
+                'nama_pemilik_rekening' => $data_arr[2],
+                'tanggal_transfer' => date($this->config->item('db_date_format'),strtotime($data_arr[3])),
+                'nominal_transfer' => $data_arr[4],
+                'keterangan' => $data_arr[5]
+              ]);
+
+              $id_bayar = $this->db->insert_id();
+              $data_tagihan = $this->T_pembayaran_peserta_lepas->getByTopik($k, $key);
+              $id_tagihan = $data_tagihan->id_tagihan;
+
+              $exist = $this->T_tagihan_bayar_tetap->getByIdTagihan($id_tagihan);
+
+              if($exist){
+                $this->T_tagihan_bayar_tetap->detach($id_tagihan);
+                $this->T_data_transfer->delete($exist->id_data_transfer);
+              }
+
+              $this->T_tagihan_bayar_lepas->attach($id_tagihan, $id_bayar);
+            }
           }
         }
       }

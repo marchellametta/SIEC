@@ -306,6 +306,7 @@ class C_Pendaftaran extends CI_Controller{
                  'id_ec' => $row,
                  'tagihan' => $ec->biaya,
                  'tagihan_pelajar' => $ec->biaya_pelajar,
+                 'metode_pembayaran' => $post_data['metode']
                ]);
                foreach ($topik as $row) {
                  $this->T_peserta_topik->attach_peserta_topik($id_peserta,$row->id_topik);
@@ -320,7 +321,8 @@ class C_Pendaftaran extends CI_Controller{
                    'id_peserta' => $id_peserta,
                    'id_ec' => $id_ec,
                    'id_topik' => $id_topik,
-                   'tagihan' => $ec->biaya
+                   'tagihan' => $ec->biaya,
+                   'metode_pembayaran' => $post_data['metode']
                  ]);
                  $this->T_peserta_topik->attach_peserta_topik($id_peserta,$row);
                }

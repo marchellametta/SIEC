@@ -104,10 +104,12 @@ class C_Evaluasi extends CI_Controller{
         if($exist){
           redirect('kelas-saya', 'refresh');
         }
+        $data = array("Materi yang diberikan sesuai dengan harapan dan kebutuhan saya","Materi yang diberikan dapat dipraktikkan/diterapkan", "Pembicara menyampaikan materi secara jelas dan sistematis","Respon para peserta tampak positif","Suasana pertemuan dan fasilitas terasa mendukung");
         $this->load->view('V_header');
         $this->load->view('V_navbar');
         $this->load->view('V_evaluasi_eccr_ecl',[
-          'ec' => $ec
+          'ec' => $ec,
+          'data' => $data
         ]);
         $this->load->view('V_footer');
       }
@@ -187,11 +189,14 @@ class C_Evaluasi extends CI_Controller{
         ]);
         $this->load->view('V_footer');
       }else{
+        $data = array("Materi yang diberikan sesuai dengan harapan dan kebutuhan saya","Materi yang diberikan dapat dipraktikkan/diterapkan", "Pembicara menyampaikan materi secara jelas dan sistematis","Respon para peserta tampak positif","Suasana pertemuan dan fasilitas terasa mendukung");
+
         $this->load->view('V_header');
         $this->load->view('V_navbar');
         $this->load->view('V_evaluasi_eccr_ecl',[
           'ec' => $ec,
-          'topik' => $topik
+          'topik' => $topik,
+          'data' => $data
         ]);
         $this->load->view('V_footer');
       }

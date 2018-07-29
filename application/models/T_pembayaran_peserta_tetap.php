@@ -2,12 +2,14 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class T_pembayaran_peserta_tetap extends CI_Model{
+    public $id_tagihan;
     public $id_peserta;
     public $id_ec;
     public $tagihan;
     public $telah_bayar;
     public $status_lunas;
     public $status_pelajar;
+    public $metode_pembayaran;
 
     private $table_name = 'pembayaran_peserta_tetap';
 

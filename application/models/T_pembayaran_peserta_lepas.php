@@ -2,11 +2,13 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class T_pembayaran_peserta_lepas extends CI_Model{
+    public $id_tagihan;
     public $id_peserta;
     public $id_ec;
     public $id_topik;
     public $tagihan;
     public $status_lunas;
+    public $metode_pembayaran;
 
     private $table_name = 'pembayaran_peserta_lepas';
 
@@ -28,6 +30,13 @@ class T_pembayaran_peserta_lepas extends CI_Model{
         $this->db->where('id_peserta',$id_peserta);
         $this->db->where('id_ec',$id_ec);
         return $this->db->get($this->table_name)->result();
+    }
+
+    public function getByTopik($id_peserta,$id_topik){
+        /* No Error Handling yet! */
+        $this->db->where('id_peserta',$id_peserta);
+        $this->db->where('id_topik',$id_topik);
+        return $this->db->get($this->table_name)->row();
     }
 
     public function insert($args)
